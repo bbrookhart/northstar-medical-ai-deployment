@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "catalog_id": "NS-VER-001",
-  "as_of_date": "2026-08-11",
+  "as_of_date": "2026-08-13",
   "verifications": [
     {
       "id": "VER-GOV-001",
@@ -9,7 +9,9 @@
       "kind": "automated_test",
       "status": "verified",
       "owner": "AI Security Lead",
-      "test_locations": ["tests/test_traceability.py::test_repository_traceability_is_complete"]
+      "test_locations": [
+        "tests/test_traceability.py::test_repository_traceability_is_complete"
+      ]
     },
     {
       "id": "VER-REV-001",
@@ -17,7 +19,9 @@
       "kind": "document_review",
       "status": "verified",
       "owner": "AI Security Program Lead",
-      "artifact_refs": ["docs/assurance/M02-multidisciplinary-review.md"]
+      "artifact_refs": [
+        "docs/assurance/M02-multidisciplinary-review.md"
+      ]
     },
     {
       "id": "VER-REV-002",
@@ -25,7 +29,10 @@
       "kind": "document_review",
       "status": "verified",
       "owner": "Compliance Lead",
-      "artifact_refs": ["docs/governance/approved-prohibited-use.md", "docs/assurance/M02-multidisciplinary-review.md"]
+      "artifact_refs": [
+        "docs/governance/approved-prohibited-use.md",
+        "docs/assurance/M02-multidisciplinary-review.md"
+      ]
     },
     {
       "id": "VER-REV-003",
@@ -33,7 +40,10 @@
       "kind": "document_review",
       "status": "verified",
       "owner": "Data Steward",
-      "artifact_refs": ["docs/risk/data-flow-inventory.md", "docs/risk/privacy-impact-assessment.md"]
+      "artifact_refs": [
+        "docs/risk/data-flow-inventory.md",
+        "docs/risk/privacy-impact-assessment.md"
+      ]
     },
     {
       "id": "VER-REV-004",
@@ -41,7 +51,11 @@
       "kind": "document_review",
       "status": "verified",
       "owner": "AI Security Program Lead",
-      "artifact_refs": ["docs/assurance/M03-control-owner-review.md", "docs/governance/control-standard.md", "docs/governance/ai-system-card.md"]
+      "artifact_refs": [
+        "docs/assurance/M03-control-owner-review.md",
+        "docs/governance/control-standard.md",
+        "docs/governance/ai-system-card.md"
+      ]
     },
     {
       "id": "VER-REV-005",
@@ -49,7 +63,14 @@
       "kind": "document_review",
       "status": "verified",
       "owner": "AI Security Lead",
-      "artifact_refs": ["docs/architecture/decisions/ADR-003-oidc-and-delegation.md", "docs/architecture/decisions/ADR-004-central-authorization-contract.md", "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md", "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md", "docs/architecture/decisions/ADR-007-durable-identity-signals.md", "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md"]
+      "artifact_refs": [
+        "docs/architecture/decisions/ADR-003-oidc-and-delegation.md",
+        "docs/architecture/decisions/ADR-004-central-authorization-contract.md",
+        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md",
+        "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md"
+      ]
     },
     {
       "id": "VER-AUT-001",
@@ -81,7 +102,9 @@
       "kind": "automated_test",
       "status": "verified",
       "owner": "IAM Lead",
-      "test_locations": ["tests/test_health_and_auth.py::test_missing_or_invalid_purpose_is_rejected"]
+      "test_locations": [
+        "tests/test_health_and_auth.py::test_missing_or_invalid_purpose_is_rejected"
+      ]
     },
     {
       "id": "VER-AUT-004",
@@ -101,7 +124,9 @@
       "kind": "automated_test",
       "status": "verified",
       "owner": "Privacy Officer",
-      "test_locations": ["tests/test_patient_access.py::test_part2_style_data_requires_specific_authorization"]
+      "test_locations": [
+        "tests/test_patient_access.py::test_part2_style_data_requires_specific_authorization"
+      ]
     },
     {
       "id": "VER-AUT-006",
@@ -131,7 +156,9 @@
       "kind": "automated_test",
       "status": "verified",
       "owner": "Engineering Lead",
-      "test_locations": ["tests/test_actions.py::test_clinical_action_content_is_rejected"]
+      "test_locations": [
+        "tests/test_actions.py::test_clinical_action_content_is_rejected"
+      ]
     },
     {
       "id": "VER-AUT-009",
@@ -517,6 +544,36 @@
         "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md",
         "docs/operations/okta-continuous-access-gap-recovery.md",
         "evidence/milestones/M04-identity-fhir-foundation.md"
+      ]
+    },
+    {
+      "id": "VER-AUT-030",
+      "title": "Durable Okta gap-recovery page application, cursor compare-and-swap, and multi-signal exit gate",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_okta_gap_recovery.py::test_pages_apply_exactly_once_and_only_invalidate",
+        "tests/test_okta_gap_recovery.py::test_duplicate_provider_event_is_counted_and_never_reapplied",
+        "tests/test_okta_gap_recovery.py::test_stale_worker_page_is_discarded_on_cursor_conflict",
+        "tests/test_okta_gap_recovery.py::test_audit_failure_rolls_back_the_whole_page",
+        "tests/test_okta_gap_recovery.py::test_applied_cursor_and_events_survive_restart",
+        "tests/test_okta_gap_recovery.py::test_exit_requires_every_recovery_signal",
+        "tests/test_okta_gap_recovery.py::test_empty_first_page_alone_never_recovers",
+        "tests/test_okta_gap_recovery.py::test_cursor_sequencing_rejects_skips_rewinds_and_rebinding",
+        "tests/test_okta_gap_recovery.py::test_tampered_incident_counters_fail_integrity",
+        "tests/test_okta_gap_recovery.py::test_controller_rejects_unsafe_configuration",
+        "tests/test_okta_gap_recovery.py::test_recovered_events_and_incidents_reject_unsafe_shapes",
+        "tests/test_okta_gap_recovery.py::test_one_open_incident_per_stream"
+      ],
+      "artifact_refs": [
+        "src/polaris/security/okta_gap_recovery.py",
+        "src/polaris/security/okta_recovery.py",
+        "src/polaris/services/state.py",
+        "src/polaris/domain.py",
+        "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md",
+        "docs/operations/okta-continuous-access-gap-recovery.md",
+        "evidence/milestones/M04-gate-decision.md"
       ]
     },
     {

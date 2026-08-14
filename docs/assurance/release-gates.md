@@ -33,10 +33,10 @@ minimal, free of secrets/PHI, and traceable to the implementation or operating e
 | Approval-bound execution | Digest, independent approval, signature, expiry, reauthorization, idempotency | Pass |
 | Tamper-evident audit | HMAC hash chain and mutation test | Pass for in-memory slice |
 | Automated quality gates | Lint, strict typing, 30 tests, 90.52% coverage | Pass locally |
-| Hosted CI result | First GitHub Actions run | Not assessed |
+| Hosted CI result | `EVD-M04-002`; GitHub Actions `quality` job green at a named revision | Pass |
 
-**Decision:** M01 passes locally. It is not yet a production, cloud, compliance, clinical-safety,
-or hosted-CI authorization.
+**Decision:** M01 passes locally and, since `EVD-M04-002`, on a hosted runner. It is not a
+production, cloud, compliance, or clinical-safety authorization.
 
 ## Current gate assessment — M02/M03
 
@@ -52,19 +52,19 @@ or hosted-CI authorization.
 | Machine integrity and drift | Typed validator, four traceability tests, deterministic reports, CI check | Pass locally |
 | Simulated control-owner review | `docs/assurance/M03-control-owner-review.md` | Pass for role-based simulation |
 | Actual enterprise approvals | Named accountable people and independent assurance | Not assessed |
-| Hosted CI result | First GitHub Actions run | Not assessed |
+| Hosted CI result | `EVD-M04-002`; GitHub Actions `quality` job green at a named revision | Pass |
 
 **Decision:** M02 and M03 pass as local simulation baselines, authorizing M04 synthetic
 identity/policy/FHIR work only. Six blockers remain explicit. This is not residual-risk acceptance,
 real-PHI/pilot/production authorization, a compliance determination, or clinical validation.
 
-## Current gate assessment — M04 first vertical increment
+## Current gate assessment — M04
 
 | Criterion | Evidence | Result |
 |---|---|---|
 | Identity architecture | `ADR-003`, `ADR-007`, `ADR-008` | Pass for staged local design and named-provider documentation profile |
 | Access-token/JWKS contract | Static verifier plus trusted discovery/rotation/cache adversarial tests | Pass with generated RSA keys and injected transports; enterprise IdP not assessed |
-| Revocation, entitlement-change, and stream lifecycle behavior | Durable signed-SET receiver with credential change, bounded push and strict final-SSF management, desired/observed/status-read recovery, lease/cadence alerts, correlated/unsolicited verification policy, and Okta same-origin/path/filter System Log cursor read/normalization; binding, ambiguity, retry, lease, race, tamper, replay, order, restart, malformed-page, and cursor-substitution tests | Pass for strict scripted/local SSF/CAEP/RFC 8935-shaped and Okta compensating-read boundaries; enterprise TLS/mTLS, live provider conformance/operations, approved flood controls, atomic provider-page application/cursor recovery, deployed telemetry/pages, authoritative entitlements, approved objectives, and conformance not assessed |
+| Revocation, entitlement-change, and stream lifecycle behavior | Durable signed-SET receiver with credential change, bounded push and strict final-SSF management, desired/observed/status-read recovery, lease/cadence alerts, correlated/unsolicited verification policy, and Okta same-origin/path/filter System Log cursor read/normalization; binding, ambiguity, retry, lease, race, tamper, replay, order, restart, malformed-page, and cursor-substitution tests | Pass for strict scripted/local SSF/CAEP/RFC 8935-shaped and Okta compensating-read boundaries; enterprise TLS/mTLS, live provider conformance/operations, approved flood controls, deployed telemetry/pages, authoritative entitlements, approved objectives, and conformance not assessed |
 | Central policy contract | `ADR-004`, decision table, policy contract tests | Pass for in-process deterministic evaluator |
 | FHIR boundary | `ADR-005`, HTTP/in-memory broker and negative contract tests | Pass for bounded local synthetic adapters |
 | Denial before full read | Broker read-count and cross-context tests | Pass locally |
@@ -72,11 +72,20 @@ real-PHI/pilot/production authorization, a compliance determination, or clinical
 | Consent policy | Explicit permit/deny/unknown decisions, no-full-read denial, post-read recheck | Pass for synthetic Consent profile only; not legal sufficiency |
 | Downstream delegation | RFC 8693 reauthentication, fixed audience/resource/SMART scopes, response validation, and no-passthrough tests | Pass for isolated contract; confidential-client transport and enterprise STS/FHIR enforcement not assessed |
 | Transactional state/audit | `ADR-006`; shared store, restart, atomic rollback, concurrent replay, tamper, schema, and readiness tests | Pass for single-node local SQLite; PostgreSQL/HA, backup/restore, retention, WORM/SIEM, and external-task reconciliation not assessed |
-| Complete local quality gate | `EVD-M04-001`; 310 default-suite tests plus one HAPI integration; 85.66% coverage | Pass |
-| Hosted CI and branch protection | Remote workflow run and repository settings | Not assessed |
+| Durable gap-recovery application | `VER-AUT-030`; compare-and-swap cursor, exactly-once application, audit-failure rollback, restart, and multi-signal exit-gate tests | Pass for the scripted local boundary; live tenant operation not assessed |
+| Complete local quality gate | `EVD-M04-003`; 323 default-suite tests plus one HAPI integration; 85.50% coverage | Pass |
+| Hosted CI | `EVD-M04-002`; GitHub Actions `quality` job green at a named revision | Pass |
+| Branch protection | GitHub API rejects protection for a private repository on this plan | Not assessed |
+| Simulated owner review | `docs/assurance/M04-owner-review.md` | Pass for role-based simulation |
 
-**Decision:** The completed local M04 identity/delegation/continuous-access contracts, policy, and
-Synthea/Consent/HAPI and transactional-state slices may support continued synthetic development.
-The M04 gate does not pass until enterprise identity/delegation/TLS edge and live signal operations,
-production persistence/recovery, and gate-review work are verified. This is not pilot, production,
-real-PHI, SSF/CAEP/SMART/FHIR conformance, or enterprise identity authorization.
+**Decision:** **Conditional pass.** The authorization matrix passes across role, facility, patient,
+purpose, sensitivity, and Consent dimensions; identity, policy, and FHIR failure degrades safely and
+is auditable; and the compensating gap-recovery path is durable rather than advisory.
+
+The condition is that these four owner-approved, time-bound exceptions remain live and unmodified:
+`NS-EXC-001` enterprise identity and TLS edge, `NS-EXC-002` live provider conformance and flood
+controls, `NS-EXC-003` deployed scheduler, telemetry, and objectives, and `NS-EXC-004` production
+persistence and audit custody. Any expiry, revocation, or scope change reopens this gate.
+
+This is not pilot, production, real-PHI, SSF/CAEP/SMART/FHIR conformance, or enterprise identity
+authorization, and it does not accept residual risk for a real deployment.

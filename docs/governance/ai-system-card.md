@@ -65,8 +65,9 @@ block pilot/production.
 
 ## Current assurance results
 
-As of this card version, local verification passes formatting, lint/security rules, strict typing,
-310 default-suite tests plus one HAPI integration test, and 85.66% coverage against the 85% floor.
+As of this card version, verification passes locally and on a hosted CI runner: formatting,
+lint/security rules, strict typing, 323 default-suite tests plus one HAPI integration test, and
+85.50% coverage against the 85% floor.
 The validator reports 100% structural mapping of 70 requirements, 25 registered risks, and 78
 THR/PRI/MIS/HAZ scenarios to the control system. This proves repository traceability—not operating
 effectiveness for planned controls or residual-risk acceptance.

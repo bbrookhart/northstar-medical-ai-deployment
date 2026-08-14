@@ -1,8 +1,8 @@
 # Project Polaris Status
 
-**Status date:** 2026-08-11  
-**Current milestone:** M04 — Identity, policy, and synthetic FHIR  
-**Last gate:** M03 passes; M04 identity/delegation/continuous-access, policy/Synthea/Consent/HAPI, and single-node transactional-state slices are locally verified, but the M04 gate remains open  
+**Status date:** 2026-08-13  
+**Current milestone:** M05 — Secure RAG (M04 closed)  
+**Last gate:** M04 conditional pass on four time-bound exceptions (`EVD-M04-003`); the repository is under version control with a green hosted CI run  
 **Overall status:** On track for the authorized synthetic simulation scope
 
 ## Completed
@@ -28,7 +28,7 @@
   explicit separation from real Legal, Privacy, Clinical Safety, and independent approval
 - M03 control/evidence standard, 31-control canonical library, framework source registry, 28-item
   verification catalog, 21-item evidence catalog, AI system card, and assurance templates
-- M04 traceability extension to 45 verification definitions and 22 evidence definitions without
+- M04 traceability extension to 46 verification definitions and 24 evidence definitions without
   changing the 31-control canonical baseline
 - Machine-readable coverage of all 70 requirements, 25 registered risks, and 78
   threat/privacy/misuse/safety scenarios, enforced by typed validation and CI drift checks
@@ -98,19 +98,32 @@
   concurrent single-task execution, integrity/schema/tamper checks, and fail-closed readiness
 - Transactional state/recovery ADR separating the local simulation from required PostgreSQL/HA,
   backup/PITR, retention/WORM audit, and external-task outbox/reconciliation designs
+- Version control landing of the previously untracked tree and the first green hosted GitHub Actions
+  run of the full quality gate at a named revision (`EVD-M04-002`)
+- Durable Okta gap-recovery page application: compare-and-swap cursor sequencing, exactly-once
+  application with duplicate suppression, invalidate-only recovered events, no checkpoint
+  advancement, atomic rollback, restart safety, and a multi-signal exit gate that refuses to close on
+  an empty page alone (`VER-AUT-030`, schema 9)
+- `ADR-009` production persistence topology, audit custody separation, and recovery objectives, with
+  a six-exercise specification whose results table is deliberately empty
+- `NS-ARC-002` authoritative treatment-relationship and Consent integration design
+- Four owner-approved, time-bound exception records (`NS-EXC-001` to `NS-EXC-004`) and the simulated
+  M04 owner review with five findings
 
 ## Not yet assessed or approved
 
-- Hosted GitHub Actions execution and branch-protection behavior
-- Enterprise IdP/STS integration, confidential workload client authentication and TLS/mTLS signal
-  edge, live-provider SSF discovery/lifecycle, approved unsolicited-event enablement and
-  production edge/global rate limits,
-  live Okta/final-SSF conformance, atomic provider-page application/cursor and gap-incident state,
-  complete gap recovery, deployed HA scheduling, metric/SIEM/page delivery,
-  approved continuous-access objectives,
-  authoritative entitlement sources, and SMART authorization/interoperability conformance
+- Branch protection and change control on `main` (rejected by the GitHub API for a private
+  repository on this plan); repository publication and licensing (`DEC-001`)
+- Enterprise IdP/STS integration, confidential workload client authentication, and a TLS/mTLS
+  signal edge (`NS-EXC-001`)
+- Live-provider SSF discovery and lifecycle, approved unsolicited-event enablement, production
+  edge/global rate limits, and live Okta/final-SSF conformance (`NS-EXC-002`)
+- Deployed HA scheduling, metric/SIEM/page delivery, and approved continuous-access objectives
+  (`NS-EXC-003`)
 - Production PostgreSQL/HA persistence, backup/restore and measured RTO/RPO, approved retention/legal
-  hold, immutable audit/SIEM, and external-task outcome reconciliation
+  hold, immutable audit custody, and external-task outcome reconciliation (`NS-EXC-004`)
+- Authoritative treatment-relationship and Consent sources, authoritative entitlement sources, and
+  SMART authorization/interoperability conformance
 - Attributable real-world owner, Legal, Privacy, Clinical Safety, Records, and independent approval
 - Any pilot/production, hosted-model, real-PHI, clinical, compliance, or certification decision
 
@@ -120,16 +133,18 @@
 |---|---|
 | Formatting | Pass |
 | Ruff lint/security rules | Pass |
-| Strict mypy across `src` and `tests` | Pass; 56 source/test files |
-| Pytest | Pass; 310 default-suite tests plus 1 HAPI integration test |
-| Coverage | 85.66%; enforced floor 85% |
+| Strict mypy across `src` and `tests` | Pass; 58 source/test files |
+| Pytest | Pass; 323 default-suite tests plus 1 HAPI integration test |
+| Coverage | 85.50%; enforced floor 85% |
 | Governance traceability | Pass; 70/70 requirements, 25/25 risks, 78/78 scenarios |
 | Generated-report drift check | Pass |
-| Hosted GitHub Actions | Not assessed; workflow created |
+| Hosted GitHub Actions | Pass; `quality` job green at a named revision (`EVD-M04-002`) |
+| Branch protection | Not assessed; rejected for a private repository on this plan |
 
 See `evidence/milestones/M01-local-verification.md` for the M01 result and
 `evidence/milestones/M03-local-verification.md`,
-`evidence/milestones/M04-identity-fhir-foundation.md`, and
+`evidence/milestones/M04-identity-fhir-foundation.md`,
+`evidence/milestones/M04-hosted-ci.md`, `evidence/milestones/M04-gate-decision.md`, and
 `evidence/reports/M03-traceability-report.md` for the current assurance result.
 
 ## Decisions
@@ -144,7 +159,8 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 | ADR-005 | Put synthetic FHIR R4 access behind a pre-authorized minimizing read broker | Accepted; local Synthea/HAPI slice verified |
 | ADR-006 | Store workflow and audit transitions atomically behind a shared state boundary | Accepted; single-node SQLite local slice verified |
 | ADR-007 | Persist strict signed continuous-access events, authenticate bounded push delivery, strictly manage and correlate verification of streams, and fail authentication/health on stale state | Accepted; strict scripted/local SSF/CAEP and RFC 8935-shaped subsets verified |
-| ADR-008 | Use Okta as the named M04 reference profile and its constrained System Log cursor feed as compensating gap evidence, never mislabeled as SSF replay | Accepted for local simulation; live conformance, durable application/cursor state, procurement, and production recovery unverified |
+| ADR-008 | Use Okta as the named M04 reference profile and its constrained System Log cursor feed as compensating gap evidence, never mislabeled as SSF replay | Accepted for local simulation; durable compare-and-swap page application and exit gate verified; live conformance, procurement, and production recovery unverified |
+| ADR-009 | Specify the production persistence topology, audit custody separation, and recovery objectives as testable targets rather than implemented capability | Accepted as a design target; every exercise result is not assessed |
 
 ## Open risks and limitations
 
@@ -152,10 +168,10 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 |---|---|---|
 | LIM-001 | Scope may expand faster than assurance depth | Enforce roadmap gates and v1 boundary |
 | LIM-002 | Documentation may drift from behavior | Trace requirements/controls/tests/evidence in M03 |
-| LIM-003 | Discovery/rotation, delegation, final-SSF management/recovery/verification, and the Okta System Log gap-feed boundary use generated identities and injected/scripted transports; the Okta adapter does not apply pages or persist cursors; default fixtures still use HS256 | Add enterprise IdP/STS, confidential-client transport, TLS/mTLS edge, live Okta/final-SSF conformance and lifecycle, approved unsolicited-event limits, atomic page application/cursor and gap state, HA scheduling plus metric/SIEM/page delivery, authoritative entitlements, and approved objectives; never enable HS256 or local bearer adapters in production or attach the unauthenticated HAPI lab |
-| LIM-004 | Local SQLite state/audit is single-node and shares one trust domain; disposable HAPI H2 is non-durable; neither provides production HA, backup/PITR, retention/WORM, or external-task recovery | Design and test PostgreSQL/HA, backup/restore, approved records controls, protected audit export, and outbox/outcome-unknown reconciliation before pilot |
+| LIM-003 | Discovery/rotation, delegation, final-SSF management/recovery/verification, and the Okta System Log gap feed use generated identities and injected/scripted transports; treatment relationship and Consent are fixtures; default fixtures still use HS256 | `NS-EXC-001` to `NS-EXC-003` with stop conditions and expiries; integration designs in `ADR-003` and `NS-ARC-002`; never enable HS256 or local bearer adapters in production or attach the unauthenticated HAPI lab |
+| LIM-004 | Local SQLite state/audit is single-node and shares one trust domain; disposable HAPI H2 is non-durable; neither provides production HA, backup/PITR, retention/WORM, or external-task recovery | `NS-EXC-004`; `ADR-009` specifies the topology, custody separation, and objectives, and `docs/operations/persistence-recovery-exercises.md` specifies six exercises — none executed — that must pass before pilot |
 | LIM-005 | Deterministic keyword retrieval is not representative of model/RAG quality | Preserve baseline; introduce evaluated adapters in M05–M06 |
-| LIM-006 | Hosted CI has not run | Run workflow after repository publication and record result |
+| LIM-006 | Branch protection and change control are unproven; hosted CI itself now passes (`EVD-M04-002`) and does not run `synthetic-data-verify` | Enable protection at publication (gated on `DEC-001`) and close the CI/Makefile divergence in M08 |
 | LIM-007 | Retention/deletion/legal-hold periods are undecided | `BLK-001`; obtain Records/Privacy/Legal approval and exercise deletion before pilot |
 | LIM-008 | Human factors, fixed emergency behavior, and accessible trusted UI are incomplete | `BLK-003`; implement and run clinician/representative-user validation |
 | LIM-009 | Provider due diligence and operating/resilience evidence do not exist | `BLK-004`/`BLK-005`; no hosted model or pilot until verified |
@@ -164,13 +180,15 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 
 ## Next safe increment
 
-Continue M04 by atomically applying normalized Okta pages and advancing a durable compare-and-swap
-cursor/gap incident record, then bind recovery exit to current status plus a fresh correlated
-verification. Add live synthetic-tenant final-SSF conformance evidence only after approved
-credentials/TLS, external HA scheduler and metric/SIEM/page integration, approved unsolicited-event
-enablement/limits, and owner approval of the continuous-access SLO. In parallel, complete
-authoritative relationship/Consent integration design, the PostgreSQL/outbox recovery-test
-specification, and simulated M04 owner review. Preserve the deterministic identity/delegation/signal
-clients, local HAPI, and
-transactional-state adapters as security oracles and add no real PHI, hosted model, production
-service, or broader autonomy.
+Begin M05 secure RAG: authorized corpus ingestion with provenance and classification, an ACL-aware
+index that filters before retrieval rather than after, citation verification, and corpus/version
+rollback. The retrieval evaluation set — golden answers, unanswerable questions, conflicting
+sources, freshness, and poisoning cases — is part of the increment, not a follow-up, because the M05
+gate is "no unauthorized chunk reaches model context."
+
+Do not start the hosted-model adapter (M06) before that gate. Preserve the deterministic identity,
+delegation, signal, local HAPI, and transactional-state adapters as security oracles.
+
+Watch the four M04 exceptions rather than letting them lapse quietly: each expires 2027-02-13 or at
+the first pilot decision, and an expired exception fails closed. Add no real PHI, hosted model,
+production service, or broader autonomy.

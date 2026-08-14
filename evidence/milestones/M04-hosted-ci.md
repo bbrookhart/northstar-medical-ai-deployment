@@ -81,8 +81,8 @@ recorded divergence, not a silent one; closing it is tracked as remaining M04 wo
 - Any secret-scanning, dependency-review, SBOM, artifact-signing, or provenance control. Those are
   M08 supply-chain scope; only the quality gate runs today.
 - Supply-chain integrity of the runner itself beyond the pinned action SHAs and pinned uv/Python.
-- Anything about the *content* of the gate. A passing hosted run means the same 310 tests and the
-  same 85% coverage floor passed on a clean machine. It is not release evidence, control-operation
+- Anything about the *content* of the gate. A passing hosted run means the same tests and the same
+  85% coverage floor passed on a clean machine. It is not release evidence, control-operation
   evidence, or authorization for a pilot, production, real-PHI, or compliance claim.
 
 ## Reproduction

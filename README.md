@@ -39,8 +39,10 @@ The first executable slice provides:
   single-flight execution, expired-lease reclaim, stale-worker suppression, and warning/critical
   alert-state escalation and clear;
 - an Okta Identity Engine reference profile with a separately authorized, same-origin/path/filter
-  constrained System Log cursor adapter that minimizes the documented SSF source events while
-  explicitly stopping before durable gap application or any live-provider conformance claim;
+  constrained System Log cursor adapter that minimizes the documented SSF source events, and durable
+  gap-recovery application behind a compare-and-swap cursor with exactly-once page application,
+  invalidate-only recovered events, and a multi-signal exit gate that refuses to close on an empty
+  page — none of which is a live-provider conformance claim;
 - an isolated RFC 8693 downstream broker that reauthenticates the subject, fixes the FHIR
   resource/audience and exact SMART Patient/Consent scopes, rejects token passthrough or broadened
   credentials, and redacts the result;
@@ -57,21 +59,25 @@ The first executable slice provides:
 - signed approval receipts, expiry, reauthorization, and idempotent execution;
 - shared transactional workflow/audit state with in-memory and single-node SQLite adapters, atomic
   rollback, restart recovery, concurrency controls, tamper detection, and fail-closed readiness;
-- 310 passing default-suite tests plus one HAPI integration test, 85.66% coverage against the 85%
-  floor, under strict lint and typing gates;
+- 323 passing default-suite tests plus one HAPI integration test, 85.50% coverage against the 85%
+  floor, under strict lint and typing gates, green on a hosted CI runner;
 - a typed, CI-enforced control system covering 70 requirements, 25 risks, and 78 scenarios;
-- 31 canonical controls with 45 verification definitions, 22 evidence definitions, framework
+- 31 canonical controls with 46 verification definitions, 24 evidence definitions, framework
   mappings, and honest implemented/partial/planned status; and
-- an AI system card plus simulated M02 multidisciplinary and M03 control-owner reviews.
+- an AI system card plus simulated M02 multidisciplinary, M03 control-owner, and M04 owner reviews,
+  with M04 closed as a conditional pass on four time-bound exception records.
 
 The local identity, delegation, data, retrieval, state, and audit adapters are deliberately
-non-production baselines. In particular, SQLite is a single-node simulation, the token-exchange
-transport and HAPI lab are not connected, and the local signal clients/adapters do not prove an
-enterprise TLS/mTLS edge, live provider lifecycle or approved unsolicited-event enablement and
-production edge/global flood controls, durable provider-page application/cursor recovery, a
-deployed HA scheduler, metrics/SIEM/page delivery, live provider conformance,
-approved continuous-access objectives, or SSF/CAEP/SMART conformance. Their
-limitations are explicit in [PROJECT_STATUS.md](PROJECT_STATUS.md).
+non-production baselines. SQLite is a single-node simulation; the token-exchange transport and HAPI
+lab are not connected; treatment relationship and Consent are fixtures rather than authoritative
+sources; and no local signal client has ever contacted a live provider, so nothing here demonstrates
+an enterprise TLS/mTLS edge, provider lifecycle, production flood controls, a deployed HA scheduler,
+metrics/SIEM/page delivery, or SSF/CAEP/SMART conformance.
+
+Those gaps are not hand-waved. Each is recorded as a time-bound exception — `NS-EXC-001` through
+`NS-EXC-004` in [docs/assurance/exceptions/](docs/assurance/exceptions/) — with compensating
+controls, objective stop conditions, and a remediation owner, and the limitations are listed in
+[PROJECT_STATUS.md](PROJECT_STATUS.md).
 
 ## Safety boundary
 
@@ -127,12 +133,19 @@ The lab is synthetic-only, loopback-only, and intentionally has no production au
 - [AI system card](docs/governance/ai-system-card.md)
 - [M03 control-owner review](docs/assurance/M03-control-owner-review.md)
 - [M03 traceability report](evidence/reports/M03-traceability-report.md)
+- [M04 gate decision](evidence/milestones/M04-gate-decision.md)
+- [M04 owner review](docs/assurance/M04-owner-review.md)
+- [Deferral exception records](docs/assurance/exceptions/)
 - [Security threat model](docs/risk/threat-model.md)
 - [Privacy impact assessment](docs/risk/privacy-impact-assessment.md)
 - [Clinical safety hazards](docs/risk/clinical-safety-hazard-analysis.md)
 - [Release gates](docs/assurance/release-gates.md)
 - [Local verification evidence](evidence/milestones/M01-local-verification.md)
 - [M04 identity/FHIR foundation evidence](evidence/milestones/M04-identity-fhir-foundation.md)
+- [Hosted CI evidence](evidence/milestones/M04-hosted-ci.md)
+- [Production persistence and recovery targets ADR](docs/architecture/decisions/ADR-009-production-persistence-and-recovery-targets.md)
+- [Persistence and recovery exercise specification](docs/operations/persistence-recovery-exercises.md)
+- [Authoritative relationship and Consent integration design](docs/architecture/authoritative-relationship-and-consent-integration.md)
 - [Active delivery backlog](docs/program/backlog.md)
 - [Recruiter package plan](portfolio/README.md)
 - [Training product plan](training/README.md)

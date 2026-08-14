@@ -2,10 +2,10 @@
 
 This directory will package evidence already proven elsewhere; it will not invent stronger claims.
 The first complete evidence-tour backbone now exists: 70 requirements and 25 risks resolve through
-31 controls to implementation, 45 verification definitions, 22 evidence definitions, framework
-references, and six visible gate blockers. The generated M03 report is the canonical source for
-portfolio traceability claims; the M04 identity/continuous-access/FHIR/transactional-state record
-adds the current engineering increment.
+31 controls to implementation, 46 verification definitions, 24 evidence definitions, framework
+references, six visible gate blockers, and four time-bound deferral exceptions. The generated M03 report is the canonical source for
+portfolio traceability claims; `EVD-M04-003` records the M04 conditional-pass gate decision, and
+`EVD-M04-002` records the first hosted CI run.
 
 Planned outputs:
 

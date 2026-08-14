@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "catalog_id": "NS-EVD-001",
-  "as_of_date": "2026-08-11",
+  "as_of_date": "2026-08-13",
   "claim_rule": "Existing and generated evidence supports only the stated local synthetic simulation scope. Planned evidence supports no implementation claim.",
   "evidence": [
     {
@@ -83,6 +83,22 @@
       "owner": "Engineering Lead",
       "artifact_path": "evidence/milestones/M04-identity-fhir-foundation.md",
       "scope": "Local trusted OIDC discovery/JWKS rotation, isolated audience-bound token exchange, and a strict signed-SET subset with durable CAEP invalidation including final-SSF credential-change, authenticated/bounded RFC 8935-shaped push, injected final-SSF stream configuration/status/delete/subject operations, durable desired/observed status reconciliation, bounded rate-limit-aware safe status-read recovery, a restart-safe lease/cadence/alert-state controller seam with concurrency, lease-reclaim, stale-worker, escalation/clear, clock, and tamper tests, signed stream-updated handling, durable single-use correlated verification health, an explicit default-reject/opt-in delivery-only unsolicited-verification policy with durable quota, and an Okta reference profile with a constrained, separately authorized System Log cursor read/normalization adapter; reproducible Synthea-derived FHIR R4, explicit Consent/Provenance, pinned loopback HAPI interoperability, and minimizing broker; plus single-node SQLite workflow/audit durability with atomic rollback, restart, concurrent-idempotency, tamper, and readiness tests. No enterprise IdP/STS, TLS/mTLS edge, live provider operation or approved unsolicited-event enablement, live final-SSF provider conformance, durable provider-page application/cursor state, complete event-gap recovery, deployed HA scheduler, metric/SIEM/page delivery, approved production SLO, production FHIR/SMART conformance, PostgreSQL/HA, backup/restore, retention/legal hold, external-task outbox/reconciliation, or hosted CI claim"
+    },
+    {
+      "id": "EVD-M04-002",
+      "title": "First hosted continuous-integration execution of the repository quality gate",
+      "status": "existing",
+      "owner": "Engineering Lead",
+      "artifact_path": "evidence/milestones/M04-hosted-ci.md",
+      "scope": "Version-control landing of the previously untracked working tree and a green hosted GitHub Actions run of governance traceability, formatting, lint, strict typing, tests, and the coverage floor on a clean runner at a named revision. Closes LIM-006 for hosted execution only. Branch protection is not assessed because the private repository plan rejects it; no supply-chain, secret-scanning, SBOM, signing, or provenance control is claimed"
+    },
+    {
+      "id": "EVD-M04-003",
+      "title": "M04 gate decision with durable gap recovery, deferral exceptions, and residual risk",
+      "status": "existing",
+      "owner": "AI Security Program Lead",
+      "artifact_path": "evidence/milestones/M04-gate-decision.md",
+      "scope": "Conditional-pass M04 gate record covering durable Okta gap-recovery page application with compare-and-swap cursor sequencing and a multi-signal exit gate, the ADR-009 persistence and recovery target design, the authoritative relationship/Consent integration design, and four owner-approved time-bound exception records for enterprise identity, live provider conformance, deployed scheduling/telemetry, and production persistence. Simulated role review only; no real accountable approval, pilot, production, real-PHI, or conformance authorization"
     },
     {
       "id": "EVD-VER-001",

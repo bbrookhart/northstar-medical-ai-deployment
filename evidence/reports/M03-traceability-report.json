@@ -88,7 +88,9 @@
         "src/polaris/services/actions.py",
         "src/polaris/services/container.py",
         "src/polaris/services/state.py",
-        "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md"
+        "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md",
+        "docs/architecture/decisions/ADR-009-production-persistence-and-recovery-targets.md",
+        "docs/operations/persistence-recovery-exercises.md"
       ],
       "objective": "Verify receipt, digest, expiry, single-use state, destination, current authorization, policy, idempotency, and outcome before execution.",
       "owner": "Engineering Lead",
@@ -437,7 +439,8 @@
         "data/synthetic/toolchain-lock.json",
         "infrastructure/local/compose.fhir.yml",
         "docs/risk/data-flow-inventory.md",
-        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md"
+        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md",
+        "docs/architecture/authoritative-relationship-and-consent-integration.md"
       ],
       "objective": "Keep repository data demonstrably synthetic and minimize labeled data throughout authorized workflows.",
       "owner": "Data Steward",
@@ -478,7 +481,8 @@
       "id": "CTL-DAT-002",
       "implementation_refs": [
         "docs/risk/data-flow-inventory.md",
-        "docs/risk/privacy-impact-assessment.md"
+        "docs/risk/privacy-impact-assessment.md",
+        "docs/architecture/authoritative-relationship-and-consent-integration.md"
       ],
       "objective": "Define and test lifecycle handling for each data object, derivative, backup, and provider copy.",
       "owner": "Records Owner",
@@ -513,7 +517,8 @@
       "id": "CTL-DAT-003",
       "implementation_refs": [
         "src/polaris/services/audit.py",
-        "src/polaris/domain.py"
+        "src/polaris/domain.py",
+        "docs/architecture/authoritative-relationship-and-consent-integration.md"
       ],
       "objective": "Keep raw restricted content, secrets, tokens, and hidden reasoning out of routine telemetry.",
       "owner": "SRE Lead",
@@ -665,7 +670,9 @@
       "evidence_ids": [
         "EVD-VER-001",
         "EVD-M04-001",
-        "EVD-PLN-001"
+        "EVD-PLN-001",
+        "EVD-M04-003",
+        "EVD-M04-002"
       ],
       "framework_reference_ids": [
         "FW-CSF-PR-AA",
@@ -695,7 +702,8 @@
         "docs/operations/continuous-access-recovery.md",
         "docs/operations/okta-continuous-access-gap-recovery.md",
         "docs/operations/ssf-recovery-scheduling.md",
-        "docs/operations/ssf-verification-policy.md"
+        "docs/operations/ssf-verification-policy.md",
+        "src/polaris/security/okta_gap_recovery.py"
       ],
       "objective": "Validate enterprise identity and carry bound end-user context into every downstream decision without token passthrough.",
       "owner": "IAM Lead",
@@ -727,6 +735,7 @@
         "VER-AUT-027",
         "VER-AUT-028",
         "VER-AUT-029",
+        "VER-AUT-030",
         "VER-REV-005",
         "VER-PLN-001"
       ]
@@ -756,7 +765,8 @@
         "src/polaris/services/state.py",
         "docs/architecture/decisions/ADR-004-central-authorization-contract.md",
         "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
-        "docs/architecture/authorization-decision-table.md"
+        "docs/architecture/authorization-decision-table.md",
+        "docs/architecture/authoritative-relationship-and-consent-integration.md"
       ],
       "objective": "Authorize independently of model content using role, facility, patient relationship, purpose, sensitivity, resource, action, and current state.",
       "owner": "IAM Lead",
@@ -892,7 +902,9 @@
       "control_type": "detective",
       "evidence_ids": [
         "EVD-M04-001",
-        "EVD-PLN-006"
+        "EVD-PLN-006",
+        "EVD-M04-003",
+        "EVD-M04-002"
       ],
       "framework_reference_ids": [
         "FW-CSF-DE",
@@ -911,7 +923,8 @@
         "docs/operations/ssf-recovery-scheduling.md",
         "docs/operations/okta-continuous-access-gap-recovery.md",
         "docs/risk/threat-model.md",
-        "docs/assurance/release-gates.md"
+        "docs/assurance/release-gates.md",
+        "src/polaris/security/okta_gap_recovery.py"
       ],
       "objective": "Detect identity, injection, poisoning, DLP, tool, action, resource, drift, and control-disablement events and execute tested playbooks.",
       "owner": "Incident Response Lead",
@@ -934,6 +947,7 @@
       "verification_ids": [
         "VER-AUT-028",
         "VER-AUT-029",
+        "VER-AUT-030",
         "VER-PLN-006"
       ]
     },
@@ -960,7 +974,9 @@
         "docs/operations/continuous-access-recovery.md",
         "docs/operations/ssf-recovery-scheduling.md",
         "docs/risk/clinical-safety-hazard-analysis.md",
-        "docs/assurance/release-gates.md"
+        "docs/assurance/release-gates.md",
+        "docs/architecture/decisions/ADR-009-production-persistence-and-recovery-targets.md",
+        "docs/operations/persistence-recovery-exercises.md"
       ],
       "objective": "Stop read/write/model capabilities independently and recover through tested rollback, fallback, backup, restore, and reconciliation.",
       "owner": "SRE Lead",
@@ -2433,6 +2449,8 @@
       "disposition": "partial",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M04-002",
+        "EVD-M04-003",
         "EVD-PLN-001",
         "EVD-VER-001"
       ],
@@ -2467,6 +2485,7 @@
         "VER-AUT-027",
         "VER-AUT-028",
         "VER-AUT-029",
+        "VER-AUT-030",
         "VER-PLN-001",
         "VER-REV-005"
       ]
@@ -2478,6 +2497,8 @@
       "disposition": "partial",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M04-002",
+        "EVD-M04-003",
         "EVD-PLN-001",
         "EVD-VER-001"
       ],
@@ -2512,6 +2533,7 @@
         "VER-AUT-027",
         "VER-AUT-028",
         "VER-AUT-029",
+        "VER-AUT-030",
         "VER-PLN-001",
         "VER-REV-005"
       ]
@@ -2609,6 +2631,8 @@
       "disposition": "partial",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M04-002",
+        "EVD-M04-003",
         "EVD-PLN-001",
         "EVD-VER-001"
       ],
@@ -2643,6 +2667,7 @@
         "VER-AUT-027",
         "VER-AUT-028",
         "VER-AUT-029",
+        "VER-AUT-030",
         "VER-PLN-001",
         "VER-REV-005"
       ]
@@ -2941,6 +2966,8 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M04-002",
+        "EVD-M04-003",
         "EVD-PLN-006"
       ],
       "framework_reference_ids": [
@@ -2967,6 +2994,7 @@
       "verification_ids": [
         "VER-AUT-028",
         "VER-AUT-029",
+        "VER-AUT-030",
         "VER-PLN-006"
       ]
     },
@@ -2977,6 +3005,8 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M04-002",
+        "EVD-M04-003",
         "EVD-PLN-006"
       ],
       "framework_reference_ids": [
@@ -3003,6 +3033,7 @@
       "verification_ids": [
         "VER-AUT-028",
         "VER-AUT-029",
+        "VER-AUT-030",
         "VER-PLN-006"
       ]
     },
@@ -5113,11 +5144,11 @@
     },
     "evidence": {
       "by_status": {
-        "existing": 11,
+        "existing": 13,
         "generated": 1,
         "planned": 10
       },
-      "total": 22
+      "total": 24
     },
     "framework_sources": {
       "by_status": {
@@ -5156,9 +5187,9 @@
     "verifications": {
       "by_status": {
         "planned": 10,
-        "verified": 35
+        "verified": 36
       },
-      "total": 45
+      "total": 46
     }
   },
   "validation": {
