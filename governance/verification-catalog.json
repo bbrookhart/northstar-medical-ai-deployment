@@ -1,0 +1,603 @@
+{
+  "schema_version": "1.0",
+  "catalog_id": "NS-VER-001",
+  "as_of_date": "2026-08-11",
+  "verifications": [
+    {
+      "id": "VER-GOV-001",
+      "title": "Machine traceability integrity validation",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Lead",
+      "test_locations": ["tests/test_traceability.py::test_repository_traceability_is_complete"]
+    },
+    {
+      "id": "VER-REV-001",
+      "title": "Simulated multidisciplinary M02 gate review",
+      "kind": "document_review",
+      "status": "verified",
+      "owner": "AI Security Program Lead",
+      "artifact_refs": ["docs/assurance/M02-multidisciplinary-review.md"]
+    },
+    {
+      "id": "VER-REV-002",
+      "title": "Approved/prohibited use and claims review",
+      "kind": "document_review",
+      "status": "verified",
+      "owner": "Compliance Lead",
+      "artifact_refs": ["docs/governance/approved-prohibited-use.md", "docs/assurance/M02-multidisciplinary-review.md"]
+    },
+    {
+      "id": "VER-REV-003",
+      "title": "Data-flow, provenance, and minimization design review",
+      "kind": "document_review",
+      "status": "verified",
+      "owner": "Data Steward",
+      "artifact_refs": ["docs/risk/data-flow-inventory.md", "docs/risk/privacy-impact-assessment.md"]
+    },
+    {
+      "id": "VER-REV-004",
+      "title": "Simulated M03 control-owner challenge and gate review",
+      "kind": "document_review",
+      "status": "verified",
+      "owner": "AI Security Program Lead",
+      "artifact_refs": ["docs/assurance/M03-control-owner-review.md", "docs/governance/control-standard.md", "docs/governance/ai-system-card.md"]
+    },
+    {
+      "id": "VER-REV-005",
+      "title": "M04 identity, continuous-access signals, authorization, FHIR, and transactional-state architecture decision review",
+      "kind": "document_review",
+      "status": "verified",
+      "owner": "AI Security Lead",
+      "artifact_refs": ["docs/architecture/decisions/ADR-003-oidc-and-delegation.md", "docs/architecture/decisions/ADR-004-central-authorization-contract.md", "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md", "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md", "docs/architecture/decisions/ADR-007-durable-identity-signals.md", "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md"]
+    },
+    {
+      "id": "VER-AUT-001",
+      "title": "Typed fail-closed configuration",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AppSec Lead",
+      "test_locations": [
+        "tests/test_config.py::test_test_settings_are_valid",
+        "tests/test_config.py::test_invalid_configuration_fails_closed",
+        "tests/test_config.py::test_reused_keys_are_rejected"
+      ]
+    },
+    {
+      "id": "VER-AUT-002",
+      "title": "Authentication, expiry, and API security headers",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_health_and_auth.py::test_health_endpoints_and_security_headers",
+        "tests/test_health_and_auth.py::test_missing_bearer_token_is_rejected",
+        "tests/test_health_and_auth.py::test_expired_token_is_rejected"
+      ]
+    },
+    {
+      "id": "VER-AUT-003",
+      "title": "Purpose validation and fail-closed context",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": ["tests/test_health_and_auth.py::test_missing_or_invalid_purpose_is_rejected"]
+    },
+    {
+      "id": "VER-AUT-004",
+      "title": "Patient, facility, assignment, purpose, and minimization matrix",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_patient_access.py::test_assigned_patient_summary_is_minimized_and_labeled_synthetic",
+        "tests/test_patient_access.py::test_cross_patient_and_cross_facility_access_are_concealed",
+        "tests/test_patient_access.py::test_wrong_purpose_is_denied_without_confirming_patient_existence"
+      ]
+    },
+    {
+      "id": "VER-AUT-005",
+      "title": "Sensitive Part 2-style access policy",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Privacy Officer",
+      "test_locations": ["tests/test_patient_access.py::test_part2_style_data_requires_specific_authorization"]
+    },
+    {
+      "id": "VER-AUT-006",
+      "title": "Versioned citation and abstention behavior",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Business Owner",
+      "test_locations": [
+        "tests/test_policy_retrieval.py::test_policy_query_returns_versioned_citations",
+        "tests/test_policy_retrieval.py::test_unanswerable_policy_query_abstains"
+      ]
+    },
+    {
+      "id": "VER-AUT-007",
+      "title": "Prompt injection cannot grant authority or create action",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Lead",
+      "test_locations": [
+        "tests/test_policy_retrieval.py::test_invisible_prompt_injection_is_normalized_and_cannot_create_action",
+        "tests/test_policy_retrieval.py::test_role_without_policy_access_is_denied"
+      ]
+    },
+    {
+      "id": "VER-AUT-008",
+      "title": "Allowlisted non-clinical action schema",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Engineering Lead",
+      "test_locations": ["tests/test_actions.py::test_clinical_action_content_is_rejected"]
+    },
+    {
+      "id": "VER-AUT-009",
+      "title": "Independent authorized approval",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Engineering Lead",
+      "test_locations": [
+        "tests/test_actions.py::test_requester_cannot_approve_own_action",
+        "tests/test_actions.py::test_unapproved_and_wrong_role_execution_are_denied"
+      ]
+    },
+    {
+      "id": "VER-AUT-010",
+      "title": "Digest, receipt integrity, and expiry",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Engineering Lead",
+      "test_locations": [
+        "tests/test_actions.py::test_changed_digest_cannot_be_approved",
+        "tests/test_actions.py::test_expired_proposal_cannot_be_approved",
+        "tests/test_actions.py::test_tampered_approval_receipt_blocks_execution"
+      ]
+    },
+    {
+      "id": "VER-AUT-011",
+      "title": "Execution authorization and idempotency",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Engineering Lead",
+      "test_locations": [
+        "tests/test_actions.py::test_happy_path_requires_independent_bound_approval_and_is_idempotent",
+        "tests/test_actions.py::test_unapproved_and_wrong_role_execution_are_denied"
+      ]
+    },
+    {
+      "id": "VER-AUT-012",
+      "title": "Audit access and tamper-evident chain",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "SRE Lead",
+      "test_locations": [
+        "tests/test_audit.py::test_audit_verification_is_access_controlled",
+        "tests/test_audit.py::test_tampered_audit_event_breaks_chain"
+      ]
+    },
+    {
+      "id": "VER-AUT-013",
+      "title": "Repository quality, types, tests, coverage, and governance gate",
+      "kind": "command",
+      "status": "verified",
+      "owner": "Engineering Lead",
+      "command": "make verify"
+    },
+    {
+      "id": "VER-AUT-014",
+      "title": "OIDC access-token profile, JWKS, revocation, and operation scope",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_oidc_auth.py::test_valid_oidc_access_token_maps_typed_principal",
+        "tests/test_oidc_auth.py::test_oidc_verifier_rejects_wrong_context_and_malformed_claims",
+        "tests/test_oidc_auth.py::test_revoked_token_and_subject_are_rejected",
+        "tests/test_oidc_auth.py::test_static_jwks_rejects_missing_or_unsafe_keys",
+        "tests/test_oidc_auth.py::test_api_uses_injected_oidc_verifier_and_enforces_operation_scope"
+      ]
+    },
+    {
+      "id": "VER-AUT-015",
+      "title": "Pre-authorized FHIR broker, consent, minimization, label, failure, and TOCTOU suite",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Data Steward",
+      "test_locations": [
+        "tests/test_fhir_broker.py::test_authorized_read_projects_only_minimum_synthetic_summary",
+        "tests/test_fhir_broker.py::test_authorization_denial_occurs_before_full_fhir_read",
+        "tests/test_fhir_broker.py::test_part2_style_label_is_denied_before_full_read_without_specific_role",
+        "tests/test_fhir_broker.py::test_unavailable_fhir_dependency_fails_closed_and_is_audited",
+        "tests/test_fhir_broker.py::test_unknown_security_label_is_rejected_before_full_read",
+        "tests/test_fhir_broker.py::test_invalid_full_resource_is_rejected_after_authorization",
+        "tests/test_fhir_broker.py::test_post_authorization_context_change_is_blocked_and_audited",
+        "tests/test_fhir_broker.py::test_consent_change_after_authorization_is_blocked_and_audited",
+        "tests/test_fhir_broker.py::test_allowed_decision_without_minimization_obligations_fails_before_full_read",
+        "tests/test_fhir_broker.py::test_non_permit_consent_fails_closed_before_full_read"
+      ]
+    },
+    {
+      "id": "VER-AUT-016",
+      "title": "Central authorization contract, policy obligations, and protected-operation purpose",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_authorization_policy.py::test_central_contract_denies_missing_operation_context",
+        "tests/test_authorization_policy.py::test_patient_allow_decision_returns_enforceable_minimization_obligations",
+        "tests/test_actions.py::test_approval_and_execution_require_operations_purpose_at_policy_boundary",
+        "tests/test_audit.py::test_audit_verification_is_access_controlled"
+      ]
+    },
+    {
+      "id": "VER-AUT-017",
+      "title": "Reproducible synthetic FHIR dataset and pinned HAPI interoperability contract",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Data Steward",
+      "test_locations": [
+        "tests/test_synthetic_data.py::test_committed_synthetic_dataset_passes_integrity_and_safety_checks",
+        "tests/test_synthetic_data.py::test_synthea_transformation_is_deterministic_and_removes_source_ids",
+        "tests/test_synthetic_data.py::test_synthetic_dataset_tampering_is_detected",
+        "tests/test_fhir_http.py::test_http_gateway_uses_minimum_context_then_reads_full_patient",
+        "tests/integration/test_hapi_fhir.py::test_hapi_fhir_satisfies_shared_patient_gateway_contract"
+      ],
+      "artifact_refs": [
+        "data/synthetic/fhir-r4/manifest.json",
+        "data/synthetic/toolchain-lock.json",
+        "infrastructure/local/compose.fhir.yml",
+        "evidence/reports/M04-hapi-fhir-lab.json"
+      ]
+    },
+    {
+      "id": "VER-AUT-018",
+      "title": "Trusted OIDC discovery, JWKS rotation, bounded stale keys, and least-privilege token exchange",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_oidc_remote.py::test_discovery_provider_authenticates_with_trusted_cross_origin_jwks",
+        "tests/test_oidc_remote.py::test_discovery_rejects_trust_substitution_and_untrusted_jwks_urls",
+        "tests/test_oidc_remote.py::test_unknown_kid_forces_one_rotation_refresh_then_observes_cooldown",
+        "tests/test_oidc_remote.py::test_successful_rotation_that_removes_old_key_revokes_it_immediately",
+        "tests/test_oidc_remote.py::test_known_key_has_bounded_stale_availability_then_fails_closed",
+        "tests/test_delegation.py::test_exchange_is_fixed_scope_audience_bound_and_secret_redacted",
+        "tests/test_delegation.py::test_broker_reauthenticates_subject_token_before_contacting_sts",
+        "tests/test_delegation.py::test_broker_rejects_unsafe_token_exchange_response_shapes",
+        "tests/test_delegation.py::test_delegated_validator_rejects_wrong_context_broadened_rights_and_long_life"
+      ],
+      "artifact_refs": [
+        "docs/architecture/decisions/ADR-003-oidc-and-delegation.md",
+        "evidence/milestones/M04-identity-fhir-foundation.md"
+      ]
+    },
+    {
+      "id": "VER-AUT-019",
+      "title": "Transactional state/audit durability, rollback, concurrency, tamper, and readiness",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Engineering Lead",
+      "test_locations": [
+        "tests/test_durable_state.py::test_sqlite_workflow_and_audit_survive_restart_with_idempotency",
+        "tests/test_durable_state.py::test_nested_transaction_failure_rolls_back_state_and_audit_together",
+        "tests/test_durable_state.py::test_concurrent_sqlite_execution_creates_one_task_and_one_replay",
+        "tests/test_durable_state.py::test_sqlite_audit_tamper_and_invalid_state_make_readiness_fail_closed",
+        "tests/test_durable_state.py::test_sqlite_schema_version_and_path_validation_fail_closed"
+      ],
+      "artifact_refs": [
+        "src/polaris/services/state.py",
+        "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md",
+        "evidence/milestones/M04-identity-fhir-foundation.md"
+      ]
+    },
+    {
+      "id": "VER-AUT-020",
+      "title": "Durable SSF/CAEP revocation and entitlement invalidation, replay, ordering, restart, and freshness",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_identity_signals.py::test_subject_signal_watermark_survives_restart_and_never_regresses",
+        "tests/test_identity_signals.py::test_token_claim_change_is_targeted_replay_safe_and_collision_detecting",
+        "tests/test_identity_signals.py::test_stale_or_missing_signal_stream_fails_authentication_and_readiness",
+        "tests/test_identity_signals.py::test_invalid_or_confusable_security_event_tokens_are_rejected_and_audited"
+      ],
+      "artifact_refs": [
+        "src/polaris/security/identity_signals.py",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "evidence/milestones/M04-identity-fhir-foundation.md"
+      ]
+    },
+    {
+      "id": "VER-AUT-021",
+      "title": "Authenticated bounded RFC 8935-shaped SET push delivery and acknowledgement",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_identity_signal_delivery.py::test_authenticated_push_persists_and_acknowledges_new_and_replayed_set",
+        "tests/test_identity_signal_delivery.py::test_push_transport_authenticates_before_accepting_stream_or_media_types",
+        "tests/test_identity_signal_delivery.py::test_push_rejects_invalid_empty_non_ascii_and_oversized_bodies",
+        "tests/test_identity_signal_delivery.py::test_push_does_not_acknowledge_event_id_payload_collision",
+        "tests/test_identity_signal_delivery.py::test_push_endpoint_is_disabled_without_an_explicit_delivery_adapter"
+      ],
+      "artifact_refs": [
+        "src/polaris/security/signal_delivery.py",
+        "src/polaris/main.py",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "evidence/milestones/M04-identity-fhir-foundation.md"
+      ]
+    },
+    {
+      "id": "VER-AUT-022",
+      "title": "Trusted final-SSF transmitter discovery, stream status, and asynchronous verification request",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_ssf_operations.py::test_discovers_path_issuer_then_reads_status_and_requests_verification",
+        "tests/test_ssf_operations.py::test_discovery_rejects_version_trust_and_metadata_substitution",
+        "tests/test_ssf_operations.py::test_failed_rediscovery_invalidates_previously_accepted_configuration",
+        "tests/test_ssf_operations.py::test_status_fails_closed_on_binding_state_cache_media_and_status_errors",
+        "tests/test_ssf_operations.py::test_verification_requires_empty_noncacheable_204",
+        "tests/test_ssf_operations.py::test_transport_returns_bounded_response_and_refuses_redirects_and_failures"
+      ],
+      "artifact_refs": [
+        "src/polaris/security/ssf_operations.py",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "evidence/milestones/M04-identity-fhir-foundation.md"
+      ]
+    },
+    {
+      "id": "VER-AUT-023",
+      "title": "Durable correlated final-SSF verification receipt, timeout, and stream health",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_ssf_verification.py::test_async_verification_receipt_is_durable_hashed_and_restart_safe",
+        "tests/test_ssf_verification.py::test_synchronous_callback_race_is_correlated_before_dispatch_returns",
+        "tests/test_ssf_verification.py::test_confirmed_callback_wins_over_ambiguous_dispatch_failure",
+        "tests/test_ssf_verification.py::test_wrong_or_reused_state_returns_registered_invalid_state_without_commit",
+        "tests/test_ssf_verification.py::test_timeout_expires_pending_challenge_and_late_event_fails_closed",
+        "tests/test_ssf_verification.py::test_fresh_success_remains_healthy_during_new_probe_then_timeout_marks_unhealthy",
+        "tests/test_ssf_verification.py::test_verification_record_binding_tamper_fails_sqlite_integrity"
+      ],
+      "artifact_refs": [
+        "src/polaris/security/ssf_verification.py",
+        "src/polaris/security/identity_signals.py",
+        "src/polaris/services/state.py",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "evidence/milestones/M04-identity-fhir-foundation.md"
+      ]
+    },
+    {
+      "id": "VER-AUT-024",
+      "title": "Strict final-SSF stream configuration, status, deletion, and subject management",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_ssf_operations.py::test_stream_configuration_status_subject_and_delete_lifecycle_is_strictly_bound",
+        "tests/test_ssf_operations.py::test_stream_configuration_rejects_issuer_audience_delivery_and_event_substitution",
+        "tests/test_ssf_operations.py::test_stream_mutations_reject_pending_or_unbound_responses",
+        "tests/test_ssf_operations.py::test_subject_management_rejects_unsafe_identifiers_before_credentials_or_transport",
+        "tests/test_ssf_operations.py::test_subject_acknowledgement_is_empty_noncacheable_and_non_enumerating",
+        "tests/test_ssf_operations.py::test_mutation_inputs_and_empty_responses_fail_closed"
+      ],
+      "artifact_refs": [
+        "src/polaris/security/ssf_operations.py",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "docs/risk/data-flow-inventory.md",
+        "docs/risk/threat-model.md",
+        "evidence/milestones/M04-identity-fhir-foundation.md"
+      ]
+    },
+    {
+      "id": "VER-AUT-025",
+      "title": "Durable final-SSF desired/observed status reconciliation and signed stream-updated handling",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_ssf_stream_state.py::test_status_intent_response_and_reason_digest_survive_restart",
+        "tests/test_ssf_stream_state.py::test_ambiguous_dispatch_is_outcome_unknown_until_signed_event_reconciles",
+        "tests/test_ssf_stream_state.py::test_synchronous_signed_callback_wins_ambiguous_response_failure",
+        "tests/test_ssf_stream_state.py::test_paused_or_drifted_stream_fails_authorization_health_gate",
+        "tests/test_ssf_stream_state.py::test_signed_observations_are_monotonic_and_same_time_conflicts_roll_back",
+        "tests/test_ssf_stream_state.py::test_stream_updated_rejects_unbound_or_invalid_state",
+        "tests/test_ssf_stream_state.py::test_sqlite_observation_binding_tamper_fails_integrity"
+      ],
+      "artifact_refs": [
+        "src/polaris/security/ssf_stream_state.py",
+        "src/polaris/security/identity_signals.py",
+        "src/polaris/services/state.py",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "evidence/milestones/M04-identity-fhir-foundation.md"
+      ]
+    },
+    {
+      "id": "VER-AUT-026",
+      "title": "Bounded safe final-SSF status-read recovery, rate-limit handling, and gap boundary",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_ssf_operations.py::test_status_errors_expose_only_bounded_retry_metadata",
+        "tests/test_ssf_stream_state.py::test_safe_status_read_recovers_ambiguous_write_and_survives_restart",
+        "tests/test_ssf_stream_state.py::test_status_read_persists_drift_and_refreshes_stale_observation",
+        "tests/test_ssf_stream_state.py::test_status_read_honors_retry_after_then_uses_bounded_backoff",
+        "tests/test_ssf_stream_state.py::test_failed_status_read_is_durable_and_does_not_retry_unsafely",
+        "tests/test_ssf_stream_state.py::test_status_read_retry_exhaustion_is_bounded_and_durable",
+        "tests/test_ssf_stream_state.py::test_concurrent_newer_status_intent_supersedes_old_read_result",
+        "tests/test_ssf_stream_state.py::test_newer_signed_observation_supersedes_in_flight_read_result",
+        "tests/test_ssf_stream_state.py::test_sqlite_reconciliation_binding_tamper_fails_integrity"
+      ],
+      "artifact_refs": [
+        "src/polaris/security/ssf_operations.py",
+        "src/polaris/security/ssf_stream_state.py",
+        "src/polaris/services/state.py",
+        "docs/operations/continuous-access-recovery.md",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "evidence/milestones/M04-identity-fhir-foundation.md"
+      ]
+    },
+    {
+      "id": "VER-AUT-027",
+      "title": "Explicit final-SSF unsolicited verification policy, durable quota, and health isolation",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_ssf_verification.py::test_unsolicited_verification_is_rejected_by_default_policy",
+        "tests/test_ssf_verification.py::test_unsolicited_delivery_only_receipt_is_durable_and_health_isolated",
+        "tests/test_ssf_verification.py::test_delivery_only_policy_does_not_accept_uncorrelated_state",
+        "tests/test_ssf_verification.py::test_unsolicited_verification_rate_limit_replay_and_window_reset_are_durable",
+        "tests/test_ssf_verification.py::test_unsolicited_rate_limit_maps_to_push_access_denied",
+        "tests/test_ssf_verification.py::test_unsolicited_quota_is_atomic_under_concurrent_delivery",
+        "tests/test_ssf_verification.py::test_unsolicited_receipt_binding_tamper_fails_sqlite_integrity"
+      ],
+      "artifact_refs": [
+        "src/polaris/security/ssf_verification.py",
+        "src/polaris/security/identity_signals.py",
+        "src/polaris/services/state.py",
+        "docs/operations/ssf-verification-policy.md",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "evidence/milestones/M04-identity-fhir-foundation.md"
+      ]
+    },
+    {
+      "id": "VER-AUT-028",
+      "title": "Durable SSF recovery cadence, lease safety, and alert-state escalation",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "SRE Lead",
+      "test_locations": [
+        "tests/test_ssf_recovery.py::test_recovery_cadence_is_durable_restart_safe_and_not_early",
+        "tests/test_ssf_recovery.py::test_recovery_failures_escalate_then_success_clears_alert",
+        "tests/test_ssf_recovery.py::test_recovery_persists_drift_and_unconfigured_state",
+        "tests/test_ssf_recovery.py::test_active_lease_blocks_duplicate_concurrent_run",
+        "tests/test_ssf_recovery.py::test_expired_lease_is_reclaimed_and_stale_worker_cannot_overwrite",
+        "tests/test_ssf_recovery.py::test_recovery_clock_rollback_and_configuration_fail_closed",
+        "tests/test_ssf_recovery.py::test_recovery_schedule_tamper_fails_sqlite_integrity"
+      ],
+      "artifact_refs": [
+        "src/polaris/security/ssf_recovery.py",
+        "src/polaris/security/ssf_stream_state.py",
+        "src/polaris/services/state.py",
+        "docs/operations/continuous-access-recovery.md",
+        "docs/operations/ssf-recovery-scheduling.md",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "evidence/milestones/M04-identity-fhir-foundation.md"
+      ]
+    },
+    {
+      "id": "VER-AUT-029",
+      "title": "Okta credential-change interoperability and constrained System Log gap feed",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_identity_signals.py::test_final_ssf_credential_change_invalidates_subject_sessions",
+        "tests/test_okta_recovery.py::test_okta_profile_and_cursor_page_normalize_only_documented_success_events",
+        "tests/test_okta_recovery.py::test_empty_polling_page_is_caught_up_but_still_advances_cursor",
+        "tests/test_okta_recovery.py::test_recovery_configuration_fails_closed",
+        "tests/test_okta_recovery.py::test_recovery_cursor_rejects_origin_path_query_and_fragment_substitution",
+        "tests/test_okta_recovery.py::test_provider_http_failures_expose_only_retry_classification",
+        "tests/test_okta_recovery.py::test_transport_and_credential_failures_do_not_leak_secrets",
+        "tests/test_okta_recovery.py::test_malformed_or_out_of_profile_system_log_events_fail_the_whole_page",
+        "tests/test_okta_recovery.py::test_duplicate_event_and_invalid_link_or_media_type_fail_closed"
+      ],
+      "artifact_refs": [
+        "src/polaris/security/identity_signals.py",
+        "src/polaris/security/okta_recovery.py",
+        "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md",
+        "docs/operations/okta-continuous-access-gap-recovery.md",
+        "evidence/milestones/M04-identity-fhir-foundation.md"
+      ]
+    },
+    {
+      "id": "VER-PLN-001",
+      "title": "Enterprise OIDC, delegation, revocation, and privileged-access matrix",
+      "kind": "planned_test",
+      "status": "planned",
+      "owner": "IAM Lead",
+      "acceptance": "Validate issuer/audience/algorithm/token ID, downstream audience/scope, revocation, step-up, entitlement change, and TOCTOU against enterprise adapters."
+    },
+    {
+      "id": "VER-PLN-002",
+      "title": "Retention, legal hold, deletion, backup, and provider deletion exercise",
+      "kind": "planned_exercise",
+      "status": "planned",
+      "owner": "Records Owner",
+      "acceptance": "Prove approved periods and deletion propagation for every data and derived-data object."
+    },
+    {
+      "id": "VER-PLN-003",
+      "title": "Production corpus ingestion, isolation, poison, export, and rollback suite",
+      "kind": "planned_test",
+      "status": "planned",
+      "owner": "Data Steward",
+      "acceptance": "Exercise owner promotion, content review, signatures/checksums, partitions, metadata/cache/backup isolation, canaries, conflicts, and rollback."
+    },
+    {
+      "id": "VER-PLN-004",
+      "title": "Provider contract, data path, change, continuity, and exit verification",
+      "kind": "planned_review",
+      "status": "planned",
+      "owner": "Vendor Risk Lead",
+      "acceptance": "Approve model/provider data use, no-training, retention, region, subprocessor, BAA/DPA, security, incident, audit, continuity, and exit criteria."
+    },
+    {
+      "id": "VER-PLN-005",
+      "title": "Orchestration limits, tool inventory, fuzz, load, fault, and denial-of-wallet suite",
+      "kind": "planned_test",
+      "status": "planned",
+      "owner": "AI Security Lead",
+      "acceptance": "Verify explicit state and caps across tokens, steps, tools, fan-out, time, concurrency, retries, cost, payloads, and all dependency failures."
+    },
+    {
+      "id": "VER-PLN-006",
+      "title": "Telemetry content, detection-as-code, and AI incident tabletop",
+      "kind": "planned_exercise",
+      "status": "planned",
+      "owner": "Incident Response Lead",
+      "acceptance": "Prove privacy-safe events, detection coverage, evidence preservation, response playbooks, tuning, and containment."
+    },
+    {
+      "id": "VER-PLN-007",
+      "title": "Kill, rollback, backup/restore, fallback, and reconciliation game day",
+      "kind": "planned_exercise",
+      "status": "planned",
+      "owner": "SRE Lead",
+      "acceptance": "Meet approved stop, RTO, RPO, rollback, restore, manual-fallback, queue-drain, and reconciliation objectives."
+    },
+    {
+      "id": "VER-PLN-008",
+      "title": "Clinical boundary, emergency, trusted UI, accessibility, and human-factors evaluation",
+      "kind": "planned_study",
+      "status": "planned",
+      "owner": "Clinical Safety Officer",
+      "acceptance": "Clinician and representative-user review covers fixed emergency behavior, hidden changes, completion state, comprehension, bias, fatigue, WCAG 2.2 AA target, language, and non-AI fallback."
+    },
+    {
+      "id": "VER-PLN-009",
+      "title": "Production secure-development and signed supply-chain release bundle",
+      "kind": "planned_test",
+      "status": "planned",
+      "owner": "AppSec Lead",
+      "acceptance": "Enforce review, secret/SAST/SCA/container/IaC scans, protected branch, immutable CI, SBOM/AIBOM, provenance, signatures, vulnerabilities, and remediation."
+    },
+    {
+      "id": "VER-PLN-010",
+      "title": "Role training, support/correction journey, public claims, lab safety, and retirement exercise",
+      "kind": "planned_exercise",
+      "status": "planned",
+      "owner": "Product Owner",
+      "acceptance": "Validate training competence, escalation, rights/support, fallback, claims review, isolated labs, and complete access/data/provider retirement."
+    }
+  ]
+}

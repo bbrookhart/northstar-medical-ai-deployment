@@ -1,0 +1,184 @@
+{
+  "schema_version": "1.0",
+  "catalog_id": "NS-EVD-001",
+  "as_of_date": "2026-08-11",
+  "claim_rule": "Existing and generated evidence supports only the stated local synthetic simulation scope. Planned evidence supports no implementation claim.",
+  "evidence": [
+    {
+      "id": "EVD-GOV-001",
+      "title": "Stakeholder accountability matrix",
+      "status": "existing",
+      "owner": "AI System Owner",
+      "artifact_path": "docs/executive/stakeholder-raci.md",
+      "scope": "Simulated role accountability; no named-person approval"
+    },
+    {
+      "id": "EVD-DES-002",
+      "title": "Approved and prohibited use baseline",
+      "status": "existing",
+      "owner": "Compliance Lead",
+      "artifact_path": "docs/governance/approved-prohibited-use.md",
+      "scope": "Design policy for the synthetic simulation"
+    },
+    {
+      "id": "EVD-DES-003",
+      "title": "Data-flow and trust-boundary inventory",
+      "status": "existing",
+      "owner": "Data Steward",
+      "artifact_path": "docs/risk/data-flow-inventory.md",
+      "scope": "Design inventory; retention decisions remain open"
+    },
+    {
+      "id": "EVD-RSK-001",
+      "title": "Initial inherent-risk register",
+      "status": "existing",
+      "owner": "AI System Owner",
+      "artifact_path": "docs/risk/risk-register.md",
+      "scope": "Inherent risk and treatment intent; not residual-risk acceptance"
+    },
+    {
+      "id": "EVD-M02-001",
+      "title": "M02 simulated multidisciplinary review",
+      "status": "existing",
+      "owner": "AI Security Program Lead",
+      "artifact_path": "docs/assurance/M02-multidisciplinary-review.md",
+      "scope": "Conditional local-development decision only"
+    },
+    {
+      "id": "EVD-GOV-002",
+      "title": "Control statement and evidence standard",
+      "status": "existing",
+      "owner": "AI Security Program Lead",
+      "artifact_path": "docs/governance/control-standard.md",
+      "scope": "M03 catalog, status, verification, evidence, mapping, and change rules"
+    },
+    {
+      "id": "EVD-GOV-003",
+      "title": "Polaris AI system card",
+      "status": "existing",
+      "owner": "AI System Owner",
+      "artifact_path": "docs/governance/ai-system-card.md",
+      "scope": "Current local simulation purpose, data/model inventory, results, limits, and blockers"
+    },
+    {
+      "id": "EVD-M03-001",
+      "title": "M03 simulated control-owner review",
+      "status": "existing",
+      "owner": "AI Security Program Lead",
+      "artifact_path": "docs/assurance/M03-control-owner-review.md",
+      "scope": "Control-system baseline decision for continued local synthetic development only"
+    },
+    {
+      "id": "EVD-M03-002",
+      "title": "M02/M03 assurance baseline local verification",
+      "status": "existing",
+      "owner": "Engineering Lead",
+      "artifact_path": "evidence/milestones/M03-local-verification.md",
+      "scope": "Local governance validation, quality gates, 34 tests, and 89.13% coverage; hosted CI not assessed"
+    },
+    {
+      "id": "EVD-M04-001",
+      "title": "M04 identity, continuous-access signals, synthetic FHIR, and transactional-state foundation local verification",
+      "status": "existing",
+      "owner": "Engineering Lead",
+      "artifact_path": "evidence/milestones/M04-identity-fhir-foundation.md",
+      "scope": "Local trusted OIDC discovery/JWKS rotation, isolated audience-bound token exchange, and a strict signed-SET subset with durable CAEP invalidation including final-SSF credential-change, authenticated/bounded RFC 8935-shaped push, injected final-SSF stream configuration/status/delete/subject operations, durable desired/observed status reconciliation, bounded rate-limit-aware safe status-read recovery, a restart-safe lease/cadence/alert-state controller seam with concurrency, lease-reclaim, stale-worker, escalation/clear, clock, and tamper tests, signed stream-updated handling, durable single-use correlated verification health, an explicit default-reject/opt-in delivery-only unsolicited-verification policy with durable quota, and an Okta reference profile with a constrained, separately authorized System Log cursor read/normalization adapter; reproducible Synthea-derived FHIR R4, explicit Consent/Provenance, pinned loopback HAPI interoperability, and minimizing broker; plus single-node SQLite workflow/audit durability with atomic rollback, restart, concurrent-idempotency, tamper, and readiness tests. No enterprise IdP/STS, TLS/mTLS edge, live provider operation or approved unsolicited-event enablement, live final-SSF provider conformance, durable provider-page application/cursor state, complete event-gap recovery, deployed HA scheduler, metric/SIEM/page delivery, approved production SLO, production FHIR/SMART conformance, PostgreSQL/HA, backup/restore, retention/legal hold, external-task outbox/reconciliation, or hosted CI claim"
+    },
+    {
+      "id": "EVD-VER-001",
+      "title": "M01 local verification record",
+      "status": "existing",
+      "owner": "Engineering Lead",
+      "artifact_path": "evidence/milestones/M01-local-verification.md",
+      "scope": "Local deterministic slice at the recorded revision/configuration"
+    },
+    {
+      "id": "EVD-TRC-001",
+      "title": "Generated M03 coverage and traceability report",
+      "status": "generated",
+      "owner": "AI Security Lead",
+      "artifact_path": "evidence/reports/M03-traceability-report.json",
+      "scope": "Catalog integrity, coverage, status, and reference resolution"
+    },
+    {
+      "id": "EVD-PLN-001",
+      "title": "Enterprise identity and delegation evidence bundle",
+      "status": "planned",
+      "owner": "IAM Lead",
+      "planned_artifact_path": "evidence/enterprise/identity-and-delegation/",
+      "scope": "OIDC, downstream delegation, revocation, and privileged access"
+    },
+    {
+      "id": "EVD-PLN-002",
+      "title": "Approved retention and deletion evidence bundle",
+      "status": "planned",
+      "owner": "Records Owner",
+      "planned_artifact_path": "evidence/privacy/retention-and-deletion/",
+      "scope": "Lifecycle decisions and deletion proof"
+    },
+    {
+      "id": "EVD-PLN-003",
+      "title": "Production corpus and retrieval assurance bundle",
+      "status": "planned",
+      "owner": "Data Steward",
+      "planned_artifact_path": "evidence/rag/corpus-and-isolation/",
+      "scope": "Ingestion, poison resistance, isolation, provenance, export, and rollback"
+    },
+    {
+      "id": "EVD-PLN-004",
+      "title": "Provider and model due-diligence decision bundle",
+      "status": "planned",
+      "owner": "Vendor Risk Lead",
+      "planned_artifact_path": "evidence/vendor/model-provider-decision/",
+      "scope": "Contract, data use, security, continuity, monitoring, and exit"
+    },
+    {
+      "id": "EVD-PLN-005",
+      "title": "Orchestration, tool, load, and fault evaluation bundle",
+      "status": "planned",
+      "owner": "AI Security Lead",
+      "planned_artifact_path": "evidence/evaluations/orchestration-and-tools/",
+      "scope": "Resource bounds, tool authority, robustness, and dependency failure"
+    },
+    {
+      "id": "EVD-PLN-006",
+      "title": "Detection and AI incident-response exercise bundle",
+      "status": "planned",
+      "owner": "Incident Response Lead",
+      "planned_artifact_path": "evidence/operations/detection-and-ir/",
+      "scope": "Telemetry, detection, response, containment, and preservation"
+    },
+    {
+      "id": "EVD-PLN-007",
+      "title": "Kill, rollback, resilience, and recovery exercise bundle",
+      "status": "planned",
+      "owner": "SRE Lead",
+      "planned_artifact_path": "evidence/operations/resilience/",
+      "scope": "Stop authority, rollback, fallback, recovery, restore, and reconciliation"
+    },
+    {
+      "id": "EVD-PLN-008",
+      "title": "Clinical safety, accessibility, and human-factors bundle",
+      "status": "planned",
+      "owner": "Clinical Safety Officer",
+      "planned_artifact_path": "evidence/safety/human-factors/",
+      "scope": "Clinical boundary, emergency path, UI, accessibility, comprehension, and fatigue"
+    },
+    {
+      "id": "EVD-PLN-009",
+      "title": "Production secure-development and supply-chain bundle",
+      "status": "planned",
+      "owner": "AppSec Lead",
+      "planned_artifact_path": "evidence/release/supply-chain/",
+      "scope": "Scans, SBOM/AIBOM, provenance, signatures, vulnerabilities, and gate decision"
+    },
+    {
+      "id": "EVD-PLN-010",
+      "title": "Training, support, claims, lab-safety, and retirement bundle",
+      "status": "planned",
+      "owner": "Product Owner",
+      "planned_artifact_path": "evidence/lifecycle/enablement-and-retirement/",
+      "scope": "Competence, support, rights, safe training, claims, and retirement"
+    }
+  ]
+}

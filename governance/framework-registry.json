@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0",
+  "catalog_id": "NS-FWK-001",
+  "as_of_date": "2026-08-11",
+  "mapping_notice": "Mappings express Northstar's control interpretation; they do not establish compliance or certification.",
+  "sources": [
+    {
+      "id": "SRC-NIST-AI-RMF",
+      "title": "NIST AI Risk Management Framework 1.0 and Generative AI Profile",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "status": "reviewed",
+      "note": "AI RMF 1.0 remains the mapped baseline while NIST revises it; AI 600-1 supplements GenAI risks."
+    },
+    {
+      "id": "SRC-NIST-CSF",
+      "title": "NIST Cybersecurity Framework 2.0",
+      "url": "https://www.nist.gov/cyberframework",
+      "status": "reviewed",
+      "note": "Function and category mappings use the CSF 2.0 Core."
+    },
+    {
+      "id": "SRC-NIST-PRIVACY",
+      "title": "NIST Privacy Framework 1.0",
+      "url": "https://www.nist.gov/privacy-framework",
+      "status": "reviewed",
+      "note": "Function-level mappings support privacy-risk management; they are not legal determinations."
+    },
+    {
+      "id": "SRC-NIST-SSDF",
+      "title": "NIST SP 800-218 Secure Software Development Framework 1.1",
+      "url": "https://csrc.nist.gov/pubs/sp/800/218/final",
+      "status": "reviewed",
+      "note": "Practice-group mappings use PO, PS, PW, and RV."
+    },
+    {
+      "id": "SRC-OWASP-AGENTIC-2026",
+      "title": "OWASP Top 10 for Agentic Applications 2026",
+      "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+      "status": "reviewed",
+      "note": "Exact ASI01 through ASI10 titles were verified against the official December 2025 publication."
+    },
+    {
+      "id": "SRC-OWASP-LLM-2026",
+      "title": "OWASP GenAI LLM Top 10 2026",
+      "url": "https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/",
+      "status": "provisional",
+      "note": "The official release page was verified, but the category artifact endpoint was unavailable during review. No exact category mappings are claimed."
+    },
+    {
+      "id": "SRC-HIPAA-SR",
+      "title": "HIPAA Security Rule",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/security/index.html",
+      "status": "reviewed",
+      "note": "Safeguard-family mappings are simulated applicability aids, not a compliance opinion."
+    },
+    {
+      "id": "SRC-HL7-FHIR-SEC",
+      "title": "HL7 FHIR Security and Privacy Module",
+      "url": "https://hl7.org/fhir/security.html",
+      "status": "reviewed",
+      "note": "Used as the integration security baseline for future enterprise FHIR adapters."
+    }
+  ],
+  "references": [
+    {"id": "FW-AIRMF-GOV", "source_id": "SRC-NIST-AI-RMF", "reference": "GOVERN"},
+    {"id": "FW-AIRMF-MAP", "source_id": "SRC-NIST-AI-RMF", "reference": "MAP"},
+    {"id": "FW-AIRMF-MEASURE", "source_id": "SRC-NIST-AI-RMF", "reference": "MEASURE"},
+    {"id": "FW-AIRMF-MANAGE", "source_id": "SRC-NIST-AI-RMF", "reference": "MANAGE"},
+    {"id": "FW-CSF-GV", "source_id": "SRC-NIST-CSF", "reference": "GOVERN"},
+    {"id": "FW-CSF-ID", "source_id": "SRC-NIST-CSF", "reference": "IDENTIFY"},
+    {"id": "FW-CSF-PR-AA", "source_id": "SRC-NIST-CSF", "reference": "PR.AA Identity Management, Authentication, and Access Control"},
+    {"id": "FW-CSF-PR-DS", "source_id": "SRC-NIST-CSF", "reference": "PR.DS Data Security"},
+    {"id": "FW-CSF-PR-PS", "source_id": "SRC-NIST-CSF", "reference": "PR.PS Platform Security"},
+    {"id": "FW-CSF-DE", "source_id": "SRC-NIST-CSF", "reference": "DETECT"},
+    {"id": "FW-CSF-RS", "source_id": "SRC-NIST-CSF", "reference": "RESPOND"},
+    {"id": "FW-CSF-RC", "source_id": "SRC-NIST-CSF", "reference": "RECOVER"},
+    {"id": "FW-PRIVACY-ID-P", "source_id": "SRC-NIST-PRIVACY", "reference": "IDENTIFY-P"},
+    {"id": "FW-PRIVACY-GV-P", "source_id": "SRC-NIST-PRIVACY", "reference": "GOVERN-P"},
+    {"id": "FW-PRIVACY-CT-P", "source_id": "SRC-NIST-PRIVACY", "reference": "CONTROL-P"},
+    {"id": "FW-PRIVACY-CM-P", "source_id": "SRC-NIST-PRIVACY", "reference": "COMMUNICATE-P"},
+    {"id": "FW-PRIVACY-PT-P", "source_id": "SRC-NIST-PRIVACY", "reference": "PROTECT-P"},
+    {"id": "FW-SSDF-PO", "source_id": "SRC-NIST-SSDF", "reference": "PO Prepare the Organization"},
+    {"id": "FW-SSDF-PS", "source_id": "SRC-NIST-SSDF", "reference": "PS Protect the Software"},
+    {"id": "FW-SSDF-PW", "source_id": "SRC-NIST-SSDF", "reference": "PW Produce Well-Secured Software"},
+    {"id": "FW-SSDF-RV", "source_id": "SRC-NIST-SSDF", "reference": "RV Respond to Vulnerabilities"},
+    {"id": "FW-ASI01", "source_id": "SRC-OWASP-AGENTIC-2026", "reference": "ASI01 Agent Goal Hijack"},
+    {"id": "FW-ASI02", "source_id": "SRC-OWASP-AGENTIC-2026", "reference": "ASI02 Tool Misuse and Exploitation"},
+    {"id": "FW-ASI03", "source_id": "SRC-OWASP-AGENTIC-2026", "reference": "ASI03 Identity and Privilege Abuse"},
+    {"id": "FW-ASI04", "source_id": "SRC-OWASP-AGENTIC-2026", "reference": "ASI04 Agentic Supply Chain Vulnerabilities"},
+    {"id": "FW-ASI05", "source_id": "SRC-OWASP-AGENTIC-2026", "reference": "ASI05 Unexpected Code Execution (RCE)"},
+    {"id": "FW-ASI06", "source_id": "SRC-OWASP-AGENTIC-2026", "reference": "ASI06 Memory and Context Poisoning"},
+    {"id": "FW-ASI07", "source_id": "SRC-OWASP-AGENTIC-2026", "reference": "ASI07 Insecure Inter-Agent Communication"},
+    {"id": "FW-ASI08", "source_id": "SRC-OWASP-AGENTIC-2026", "reference": "ASI08 Cascading Failures"},
+    {"id": "FW-ASI09", "source_id": "SRC-OWASP-AGENTIC-2026", "reference": "ASI09 Human-Agent Trust Exploitation"},
+    {"id": "FW-ASI10", "source_id": "SRC-OWASP-AGENTIC-2026", "reference": "ASI10 Rogue Agents"},
+    {"id": "FW-HIPAA-ADMIN", "source_id": "SRC-HIPAA-SR", "reference": "45 CFR 164.308 Administrative Safeguards"},
+    {"id": "FW-HIPAA-PHYSICAL", "source_id": "SRC-HIPAA-SR", "reference": "45 CFR 164.310 Physical Safeguards"},
+    {"id": "FW-HIPAA-TECH", "source_id": "SRC-HIPAA-SR", "reference": "45 CFR 164.312 Technical Safeguards"},
+    {"id": "FW-FHIR-AUTHN", "source_id": "SRC-HL7-FHIR-SEC", "reference": "Authentication"},
+    {"id": "FW-FHIR-AUTHZ", "source_id": "SRC-HL7-FHIR-SEC", "reference": "Authorization and Access Control"},
+    {"id": "FW-FHIR-AUDIT", "source_id": "SRC-HL7-FHIR-SEC", "reference": "Audit Logging"},
+    {"id": "FW-FHIR-LABEL", "source_id": "SRC-HL7-FHIR-SEC", "reference": "Security Labels"}
+  ]
+}
