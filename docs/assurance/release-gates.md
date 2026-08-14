@@ -271,3 +271,41 @@ unmet, and no one has standing to authorize anything. A simulated signature on a
 not produce a weaker authorization; it produces a counterfeit one.
 
 What is authorized is continued synthetic development within the existing boundary. Nothing else.
+
+## Current gate assessment — M12
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Portfolio claims trace to repository evidence | `VER-LCM-004`, `EVD-M12-002`; 11 documents, 78 identifiers resolved, 0 findings | Pass |
+| No overstated claim language | `VER-LCM-004`; compliance, certification, clearance, readiness, absolute-security, and gate-overstatement phrases rejected, with denial permitted and tested | Pass |
+| Documented commands are real | `VER-LCM-004`; every `make` command in the material is a declared target | Pass |
+| Labs reproducible by an independent learner | `EVD-M12-001`; commands and artifacts verified structurally | Pass structurally; **never taught to a cohort** |
+| Lab safety contract | `training/lab-safety-contract.md` | Pass |
+| Full twelve-module course | `training/curriculum.md`; three labs complete, nine outlined | **Partial**, and stated as such |
+| Accessibility review of course material | — | **Not assessed** |
+| Licensing and attribution | `DEC-001` | **Not assessed**; nothing is cleared for publication |
+
+**Decision:** **Pass.** Every claim in the portfolio and training material resolves to a repository
+artifact, and the check runs in CI rather than being asserted here.
+
+The gate is met because it asks for a property of the material, which can be verified — unlike
+human-factors evidence, an operator demonstration, or a governance authorization, which need people.
+
+## Program summary
+
+| Milestone | Outcome |
+|---|---|
+| M00–M03 | Pass |
+| M04 | Conditional pass — `NS-EXC-001` to `NS-EXC-004` |
+| M05 | Pass |
+| M06 | Pass |
+| M07 | **Gate not met** — no human-factors evidence (`BLK-003`) |
+| M08 | Conditional pass — `NS-EXC-005` |
+| M09 | **Gate not met** — four high findings open |
+| M10 | **Gate not met** — no operator, no tabletop (`BLK-005`) |
+| M11 | **Gate not met by decision** — pilot authorization refused |
+| M12 | Pass |
+
+Six gates unmet or conditional, five live exceptions, six open blockers, and a refused pilot
+authorization. No release, pilot, production, real-PHI, hosted-model, or clinical use is authorized,
+and no residual risk has been accepted.

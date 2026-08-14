@@ -3,7 +3,7 @@
 **Owner:** AI Security Program Lead  
 **Baseline date:** 2026-08-11 (updated 2026-08-13)  
 **Delivery model:** Evidence-gated increments; one production-shaped vertical slice  
-**Current position:** M00–M11 built as local simulations, with M04 a conditional pass on four
+**Current position:** M00–M12 delivered as local simulations, with M04 a conditional pass on four
 time-bound exceptions and M05/M06 passing their gates for the deterministic baseline; the repository
 is under version control with a green hosted CI run; enterprise integration, live provider operation,
 hosted-model due diligence, authoritative relationship/Consent sources, and production
@@ -12,8 +12,9 @@ its gate is not met without human-factors evidence (`BLK-003`); M08 is a conditi
 signing, provenance, and scanning deferred under `NS-EXC-005`; M09's campaign contains every attack
 yet its gate is not met because four high-severity findings are open; M10's drills are executed but
 its gate is not met without operators or a tabletop; M11's mechanisms work and its pilot
-authorization is refused; M12 recruiter case study and training conversion is next, and is the only
-remaining gate this program can meet
+authorization is refused; M12 passes with every portfolio and training claim verified in CI. The
+program is complete as a simulation: six gates unmet or conditional, five live exceptions, six open
+blockers, and no authorization of any kind
 
 ## Delivery doctrine
 
@@ -54,7 +55,7 @@ test or operating record is not release evidence.
 | M09 | Full assurance and red team | Functional/safety/privacy/security/robustness/performance evals, adversarial campaigns, remediation ledger, independent review simulation | No open critical/high release blockers; residual risk receives named approval | **Gate not met** — 21 attacks across all 14 required classes were contained with control attribution, and the release evaluation declares all 11 dimensions with four not assessed; four high-severity findings remain open (`RT-F1`, `RE-F1`, `RE-F4`, `RE-F5`) so no release may proceed and no residual risk is accepted |
 | M10 | Operations and incident readiness | Telemetry, detections, dashboards, SLOs, runbooks, incident playbooks, tabletop, backup/restore, rollback drills | Operators demonstrate detection, containment, safe degradation, and recovery | **Gate not met** — telemetry content rules, ten detection rules across all ten required categories, and five executed drills (kill switch, corpus rollback, degraded mode, restart, backup/restore with audit-chain verification) all pass; no operator demonstrated anything, no tabletop has been run (`BLK-005`), and dashboards, paging, SLOs, and production recovery remain deferred |
 | M11 | Pilot, change control, audit, retirement | Pilot plan, training, support, monitoring thresholds, change impact, audit package, exit/retirement plan | Simulated governance board authorizes pilot and later production/retirement decisions | **Gate not met by decision** — change-impact analysis over the AIBOM, an audit package indexing 24 artifacts with open blockers and unmet gates, and an executed retirement (revoke, delete, retain the audit chain, serve nothing) all pass; pilot authorization is **refused** because all seven entry conditions are unmet and no accountable person exists to authorize it |
-| M12 | Recruiter case study and paid training | Executive brief, architecture/evidence tour, demo script/video plan, lab guides, solutions, assessments, instructor notes | Independent learner can reproduce labs; portfolio claims trace to repository evidence | Planned |
+| M12 | Recruiter case study and paid training | Executive brief, architecture/evidence tour, demo script/video plan, lab guides, solutions, assessments, instructor notes | Independent learner can reproduce labs; portfolio claims trace to repository evidence | **Pass** — 11 documents and 78 identifiers verified in CI against the catalogs, links, and make targets, with overstated claim language rejected and denial permitted; three labs complete with assessments and nine modules explicitly outlined; never taught to a cohort and no accessibility review |
 
 ## Critical path
 

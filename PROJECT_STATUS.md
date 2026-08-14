@@ -1,9 +1,9 @@
 # Project Polaris Status
 
 **Status date:** 2026-08-14  
-**Current milestone:** M12 — Recruiter case study and training conversion  
-**Last gate:** **M11 does not pass by decision** — pilot authorization is refused because all seven entry conditions are unmet and no accountable person exists to grant it (`EVD-M11-001`); M07, M09, and M10 also do not pass, and M04 and M08 are conditional  
-**Overall status:** On track for the authorized synthetic simulation scope
+**Current milestone:** None — M00 to M12 are delivered as local simulations  
+**Last gate:** **M12 passes** (`EVD-M12-001`): every portfolio and training claim resolves to a repository artifact, verified in CI. Six gates remain unmet or conditional  
+**Overall status:** Complete as a synthetic simulation. Nothing is authorized: no release, pilot, production, real-PHI, hosted-model, or clinical use, and no residual risk has been accepted
 
 ## Completed
 
@@ -169,6 +169,9 @@
 - An executed retirement: capabilities revoked before deletion, operational data removed, the audit
   chain and revocation record retained, and the retired deployment confirmed to serve nothing
 - A simulated governance board decision that **refuses** pilot authorization
+- A portfolio and training package whose every identifier, link, and documented command is verified
+  against the repository in CI, and whose overstated-claim language is rejected while denial of a
+  claim is permitted
 
 ## Not yet assessed or approved
 
@@ -193,9 +196,10 @@
 |---|---|
 | Formatting | Pass |
 | Ruff lint/security rules | Pass |
-| Strict mypy across `src` and `tests` | Pass; 100 source/test files |
-| Pytest | Pass; 465 default-suite tests plus 1 HAPI integration test |
-| Coverage | 87.88%; enforced floor 85% |
+| Strict mypy across `src` and `tests` | Pass; 103 source/test files |
+| Pytest | Pass; 482 default-suite tests plus 1 HAPI integration test |
+| Coverage | 88.02%; enforced floor 85% |
+| Portfolio claims | Pass; 78 identifiers resolved across 11 documents, 0 findings |
 | Game-day drills | Pass; 5/5 objectives met for the local scope |
 | Retirement exercise | Pass; 5/5 steps met for local synthetic data |
 | Audit package | Pass; 24 artifacts indexed, 0 missing |
@@ -257,20 +261,35 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 | LIM-010 | Exact OWASP GenAI LLM Top 10 2026 category mapping is provisional | `BLK-006`; acquire and review the official category artifact before exact coverage claims |
 | DEC-001 | Repository and training-content licensing/IP terms are undecided | Select deliberately before public release; do not assume open-source rights |
 
+## Where the program stands
+
+All twelve milestones are delivered. Six gates are unmet or conditional, and that is the result
+rather than a shortfall:
+
+| Milestone | Outcome |
+|---|---|
+| M00–M03, M05, M06, M12 | Pass |
+| M04, M08 | Conditional pass on time-bound exceptions |
+| M07 | Gate not met — no human-factors evidence (`BLK-003`) |
+| M09 | Gate not met — four high findings open |
+| M10 | Gate not met — no operator, no tabletop (`BLK-005`) |
+| M11 | Gate not met by decision — pilot authorization refused |
+
 ## Next safe increment
 
-Begin M12 recruiter case study and training conversion. It is the only remaining gate this program
-can meet, because it asks for materials whose claims trace to repository evidence rather than for
-authorization from people who do not exist.
+There is no engineering increment that moves a gate. Every remaining item needs people this
+simulation does not have:
 
-The material to draw on is unusually specific: five gates unmet or conditional, five live exceptions,
-six open blockers, a refused pilot authorization, and a set of defects that only surfaced by running
-things — a scanner that rejected the policy prohibiting diagnosis, a drill that asserted the wrong
-half of a control, a vacuous red-team case, a virtualenv that failed after relocation.
+- clinicians in a human-factors session (`BLK-003`, `NS-ASR-005`) — this unblocks M07 and one of
+  M09's high findings;
+- an operator running the incident tabletop (`BLK-005`, `NS-ASR-008`) — this unblocks M10;
+- an independent red team authoring attacks (`RT-F3`);
+- a Records, Privacy, and Legal decision on retention and deletion (`BLK-001`); and
+- a named accountable owner who can hold the rest.
 
-Every claim in the portfolio and the training material must trace to one of those artifacts. A
-case study that presents the refusals as the result is more credible than one that presents a green
-board, and it is also the only version that is true.
+Until then the correct action is to change nothing and claim nothing. The five exceptions expire on
+2027-02-14 and fail closed; `DEC-001` licensing must be decided before anything is published; and no
+hosted model, real PHI, production service, or broader autonomy may be added.
 
 Do not connect a hosted provider. `REQ-AI-002`'s criteria and `BLK-004`'s due diligence are both
 still open, and the adapter is deliberately inert until they close.

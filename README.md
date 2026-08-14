@@ -7,6 +7,12 @@ It is built as evidence, not a slideware architecture: business intake, governan
 scope, threat and privacy engineering, secure implementation, approval-bound agency, assurance,
 operations, audit, retirement, a recruiter case study, and reusable training labs.
 
+All twelve milestones are delivered. **Six gates are unmet or conditional** — M07 for want of
+human-factors evidence, M09 on four open high findings, M10 with no operator or tabletop, M11 by a
+refused pilot authorization, and M04 and M08 conditionally on five live exceptions. That is the
+result, not a shortfall: a program of this shape reporting twelve green gates would be the warning
+sign. Start with [the case study](portfolio/case-study.md).
+
 ## What works today
 
 The first executable slice provides:
@@ -81,7 +87,7 @@ The first executable slice provides:
 - signed approval receipts, expiry, reauthorization, and idempotent execution;
 - shared transactional workflow/audit state with in-memory and single-node SQLite adapters, atomic
   rollback, restart recovery, concurrency controls, tamper detection, and fail-closed readiness;
-- 465 passing default-suite tests plus one HAPI integration test, 87.88% coverage against the 85%
+- 482 passing default-suite tests plus one HAPI integration test, 88.02% coverage against the 85%
   floor, under strict lint and typing gates, green on a hosted CI runner;
 - an offline release gate that fails the build on an unpinned Action, an unpinned image, an
   unbounded dependency, a missing container hardening control, or a secret marker in a tracked file,
@@ -109,7 +115,7 @@ The first executable slice provides:
   gates, and an executed retirement that revokes capabilities, deletes operational data, and keeps
   the audit chain that proves the deletion happened;
 - a typed, CI-enforced control system covering 70 requirements, 25 risks, and 78 scenarios;
-- 31 canonical controls with 70 verification definitions, 38 evidence definitions, framework
+- 31 canonical controls with 71 verification definitions, 40 evidence definitions, framework
   mappings, and honest implemented/partial/planned status; and
 - an AI system card plus simulated M02 multidisciplinary, M03 control-owner, and M04 owner reviews,
   with M04 closed as a conditional pass on four time-bound exception records.
@@ -218,6 +224,10 @@ The lab is synthetic-only, loopback-only, and intentionally has no production au
 - [M11 lifecycle evidence — pilot refused](evidence/milestones/M11-lifecycle.md)
 - [Governance board decision — pilot authorization refused](docs/assurance/M11-governance-board-decision.md)
 - [Pilot protocol and monitoring thresholds](docs/program/pilot-protocol.md)
+- [Case study](portfolio/case-study.md)
+- [Evidence tour](portfolio/evidence-tour.md)
+- [Demo script](portfolio/demo-script.md)
+- [Training curriculum and labs](training/curriculum.md)
 - [M04 owner review](docs/assurance/M04-owner-review.md)
 - [Deferral exception records](docs/assurance/exceptions/)
 - [Security threat model](docs/risk/threat-model.md)

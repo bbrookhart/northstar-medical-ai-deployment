@@ -994,6 +994,31 @@
       ]
     },
     {
+      "id": "VER-LCM-004",
+      "title": "Portfolio and training claims resolve to artifacts with no overstated language",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Program Lead",
+      "test_locations": [
+        "tests/test_portfolio_claims.py::test_every_portfolio_and_training_claim_traces_to_an_artifact",
+        "tests/test_portfolio_claims.py::test_the_material_covers_both_the_portfolio_and_the_training_package",
+        "tests/test_portfolio_claims.py::test_an_unresolved_identifier_is_a_finding",
+        "tests/test_portfolio_claims.py::test_a_broken_link_is_a_finding",
+        "tests/test_portfolio_claims.py::test_an_undeclared_command_is_a_finding",
+        "tests/test_portfolio_claims.py::test_prose_mentioning_make_is_not_treated_as_a_command",
+        "tests/test_portfolio_claims.py::test_overstated_claims_are_rejected",
+        "tests/test_portfolio_claims.py::test_denying_a_claim_is_permitted",
+        "tests/test_portfolio_claims.py::test_the_generated_claims_report_is_committed_and_current"
+      ],
+      "artifact_refs": [
+        "src/polaris/portfolio/claims.py",
+        "scripts/portfolio.py",
+        "portfolio/case-study.md",
+        "training/curriculum.md",
+        "evidence/reports/M12-portfolio-claims.json"
+      ]
+    },
+    {
       "id": "VER-PLN-012",
       "title": "AI incident tabletop across all required incident classes",
       "kind": "planned_exercise",

@@ -69,18 +69,23 @@
         "docs/governance/approved-prohibited-use.md",
         "docs/governance/ai-system-card.md",
         "README.md",
-        "training/README.md"
+        "training/README.md",
+        "src/polaris/portfolio/claims.py",
+        "portfolio/case-study.md"
       ],
       "verification_ids": [
         "VER-AUT-008",
         "VER-REV-002",
-        "VER-PLN-010"
+        "VER-PLN-010",
+        "VER-LCM-004"
       ],
       "evidence_ids": [
         "EVD-DES-002",
         "EVD-GOV-003",
         "EVD-M02-001",
-        "EVD-PLN-010"
+        "EVD-PLN-010",
+        "EVD-M12-001",
+        "EVD-M12-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-GOV",
@@ -1431,15 +1436,20 @@
         "docs/risk/clinical-safety-hazard-analysis.md",
         "src/polaris/lifecycle/retirement.py",
         "docs/program/pilot-protocol.md",
-        "docs/assurance/M11-governance-board-decision.md"
+        "docs/assurance/M11-governance-board-decision.md",
+        "src/polaris/portfolio/claims.py",
+        "portfolio/case-study.md"
       ],
       "verification_ids": [
         "VER-PLN-010",
-        "VER-LCM-002"
+        "VER-LCM-002",
+        "VER-LCM-004"
       ],
       "evidence_ids": [
         "EVD-PLN-010",
-        "EVD-M11-001"
+        "EVD-M11-001",
+        "EVD-M12-001",
+        "EVD-M12-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-GOV",

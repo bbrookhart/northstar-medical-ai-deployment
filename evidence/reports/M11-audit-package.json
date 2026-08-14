@@ -221,14 +221,34 @@
       "title": "M11 change impact, audit package, executed retirement, and refused pilot authorization"
     },
     {
-      "bytes": 10328,
+      "bytes": 11160,
       "evidence_id": "EVD-M11-002",
       "owner": "Records Owner",
       "path": "evidence/reports/M11-audit-package.json",
       "present": true,
-      "sha256": "1b2e534c34fd4d96c98b8494c9c9b523a809c42169e1471510ebe671864d0d14",
+      "sha256": "2ff9d978eb776c4f4844df5c933032fbc080d4ca36b6c78795b2d4f55458b91c",
       "status": "generated",
       "title": "Generated audit package index and retirement exercise report"
+    },
+    {
+      "bytes": 5064,
+      "evidence_id": "EVD-M12-001",
+      "owner": "AI Security Program Lead",
+      "path": "evidence/milestones/M12-portfolio-and-training.md",
+      "present": true,
+      "sha256": "1179de597641ca55b784589d816f4656556a830f3d935fb1b796982eecca3ece",
+      "status": "existing",
+      "title": "M12 portfolio case study, evidence tour, demo, and training package with verified claims"
+    },
+    {
+      "bytes": 877,
+      "evidence_id": "EVD-M12-002",
+      "owner": "AI Security Program Lead",
+      "path": "evidence/reports/M12-portfolio-claims.json",
+      "present": true,
+      "sha256": "e40d6dfa81885e4333c206d38c200b9555dd52b1635f112619bcda9ce50ad06a",
+      "status": "generated",
+      "title": "Generated portfolio and training claims verification report"
     },
     {
       "bytes": 7887,
@@ -241,12 +261,12 @@
       "title": "Initial inherent-risk register"
     },
     {
-      "bytes": 136065,
+      "bytes": 136842,
       "evidence_id": "EVD-TRC-001",
       "owner": "AI Security Lead",
       "path": "evidence/reports/M03-traceability-report.json",
       "present": true,
-      "sha256": "0824113e0c3f5123c47eee1f0f5706224ca56a6cb63cff2ed5fdbb99eb02cf04",
+      "sha256": "6cbb0f80db22ca8fb9a510033fd3a7286875243fd439bdb5eb9d79f356e757ee",
       "status": "generated",
       "title": "Generated M03 coverage and traceability report"
     },
@@ -270,13 +290,13 @@
     "BLK-006"
   ],
   "summary": {
-    "artifacts": 26,
+    "artifacts": 28,
     "complete": true,
     "controls": 31,
     "missing": 0,
     "note": "This index lets an assessor sample evidence and confirm each artifact exists at a known digest. It is not an assurance opinion, and a complete index does not mean the gates it references passed.",
-    "present": 26,
-    "verifications": 70
+    "present": 28,
+    "verifications": 71
   },
   "unmet_gates": [
     "M04: conditional pass",

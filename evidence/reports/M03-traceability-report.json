@@ -629,7 +629,9 @@
         "EVD-DES-002",
         "EVD-GOV-003",
         "EVD-M02-001",
-        "EVD-PLN-010"
+        "EVD-PLN-010",
+        "EVD-M12-001",
+        "EVD-M12-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-GOV",
@@ -643,7 +645,9 @@
         "docs/governance/approved-prohibited-use.md",
         "docs/governance/ai-system-card.md",
         "README.md",
-        "training/README.md"
+        "training/README.md",
+        "src/polaris/portfolio/claims.py",
+        "portfolio/case-study.md"
       ],
       "objective": "Enforce approved uses and data boundaries and prevent unsupported compliance, clinical, or production-readiness claims.",
       "owner": "Compliance Lead",
@@ -664,7 +668,8 @@
       "verification_ids": [
         "VER-AUT-008",
         "VER-REV-002",
-        "VER-PLN-010"
+        "VER-PLN-010",
+        "VER-LCM-004"
       ]
     },
     {
@@ -864,7 +869,9 @@
       "control_type": "governance",
       "evidence_ids": [
         "EVD-PLN-010",
-        "EVD-M11-001"
+        "EVD-M11-001",
+        "EVD-M12-001",
+        "EVD-M12-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-GOV",
@@ -880,7 +887,9 @@
         "docs/risk/clinical-safety-hazard-analysis.md",
         "src/polaris/lifecycle/retirement.py",
         "docs/program/pilot-protocol.md",
-        "docs/assurance/M11-governance-board-decision.md"
+        "docs/assurance/M11-governance-board-decision.md",
+        "src/polaris/portfolio/claims.py",
+        "portfolio/case-study.md"
       ],
       "objective": "Provide competent role-specific use and escalation, accessible support/correction/fallback, and verified secure retirement.",
       "owner": "Product Owner",
@@ -901,7 +910,8 @@
       "title": "Role training, support, rights, fallback, and retirement",
       "verification_ids": [
         "VER-PLN-010",
-        "VER-LCM-002"
+        "VER-LCM-002",
+        "VER-LCM-004"
       ]
     },
     {
@@ -2341,6 +2351,8 @@
         "EVD-DES-002",
         "EVD-GOV-003",
         "EVD-M02-001",
+        "EVD-M12-001",
+        "EVD-M12-002",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -2361,6 +2373,7 @@
       "statement": "Secondary use for training, marketing, workforce scoring, or unrelated analytics MUST be denied absent a new approved assessment.",
       "verification_ids": [
         "VER-AUT-008",
+        "VER-LCM-004",
         "VER-PLN-010",
         "VER-REV-002"
       ]
@@ -2469,6 +2482,8 @@
         "EVD-DES-002",
         "EVD-GOV-003",
         "EVD-M02-001",
+        "EVD-M12-001",
+        "EVD-M12-002",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -2489,6 +2504,7 @@
       "statement": "Approved/prohibited uses, populations, data, tools, autonomy, and deployment boundaries MUST be technically and procedurally enforced.",
       "verification_ids": [
         "VER-AUT-008",
+        "VER-LCM-004",
         "VER-PLN-010",
         "VER-REV-002"
       ]
@@ -2582,6 +2598,8 @@
         "EVD-DES-002",
         "EVD-GOV-003",
         "EVD-M02-001",
+        "EVD-M12-001",
+        "EVD-M12-002",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -2602,6 +2620,7 @@
       "statement": "Public/internal claims MUST trace to evidence and MUST NOT assert compliance, certification, clinical validity, or production readiness without authority.",
       "verification_ids": [
         "VER-AUT-008",
+        "VER-LCM-004",
         "VER-PLN-010",
         "VER-REV-002"
       ]
@@ -2959,6 +2978,8 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M11-001",
+        "EVD-M12-001",
+        "EVD-M12-002",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -2981,6 +3002,7 @@
       "statement": "Users, approvers, operators, responders, developers, and auditors MUST receive role-specific limitations, safe-use, escalation, and incident training.",
       "verification_ids": [
         "VER-LCM-002",
+        "VER-LCM-004",
         "VER-PLN-010"
       ]
     },
@@ -2991,6 +3013,8 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M11-001",
+        "EVD-M12-001",
+        "EVD-M12-002",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -3013,6 +3037,7 @@
       "statement": "Users MUST have support, feedback, correction, privacy complaint, safety report, and non-AI fallback paths.",
       "verification_ids": [
         "VER-LCM-002",
+        "VER-LCM-004",
         "VER-PLN-010"
       ]
     },
@@ -3025,6 +3050,8 @@
         "EVD-DES-002",
         "EVD-GOV-003",
         "EVD-M02-001",
+        "EVD-M12-001",
+        "EVD-M12-002",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -3045,6 +3072,7 @@
       "statement": "Training labs MUST use isolated synthetic targets, explicit authorization/rules of engagement, resets, and no real credentials/data.",
       "verification_ids": [
         "VER-AUT-008",
+        "VER-LCM-004",
         "VER-PLN-010",
         "VER-REV-002"
       ]
@@ -3056,6 +3084,8 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M11-001",
+        "EVD-M12-001",
+        "EVD-M12-002",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -3078,6 +3108,7 @@
       "statement": "Retirement MUST revoke access/credentials, stop providers/tools, export required records, delete data/embeddings per schedule, dispose artifacts, update inventory, and verify downstream termination.",
       "verification_ids": [
         "VER-LCM-002",
+        "VER-LCM-004",
         "VER-PLN-010"
       ]
     },
@@ -5434,11 +5465,11 @@
     },
     "evidence": {
       "by_status": {
-        "existing": 20,
-        "generated": 6,
+        "existing": 21,
+        "generated": 7,
         "planned": 12
       },
-      "total": 38
+      "total": 40
     },
     "framework_sources": {
       "by_status": {
@@ -5477,9 +5508,9 @@
     "verifications": {
       "by_status": {
         "planned": 12,
-        "verified": 58
+        "verified": 59
       },
-      "total": 70
+      "total": 71
     }
   },
   "validation": {
