@@ -72,14 +72,19 @@ The first executable slice provides:
   a looping run;
 - independent durable MODEL/READ/WRITE kill switches, and a hosted-provider seam that refuses every
   call until its vendor criteria are approved;
+- untrusted text rendered inert server-side, and an approval preview whose displayed fields and
+  digest both come from the same canonical action, so a surface cannot show one action while the
+  approver signs another;
+- workflow states where only execution implies completion, uncertainty a surface cannot drop, and
+  fixed emergency-channel routing that has nowhere to record an urgency assessment;
 - non-clinical action proposals with independent, digest-bound human approval;
 - signed approval receipts, expiry, reauthorization, and idempotent execution;
 - shared transactional workflow/audit state with in-memory and single-node SQLite adapters, atomic
   rollback, restart recovery, concurrency controls, tamper detection, and fail-closed readiness;
-- 379 passing default-suite tests plus one HAPI integration test, 86.14% coverage against the 85%
+- 417 passing default-suite tests plus one HAPI integration test, 86.41% coverage against the 85%
   floor, under strict lint and typing gates, green on a hosted CI runner;
 - a typed, CI-enforced control system covering 70 requirements, 25 risks, and 78 scenarios;
-- 31 canonical controls with 54 verification definitions, 27 evidence definitions, framework
+- 31 canonical controls with 59 verification definitions, 29 evidence definitions, framework
   mappings, and honest implemented/partial/planned status; and
 - an AI system card plus simulated M02 multidisciplinary, M03 control-owner, and M04 owner reviews,
   with M04 closed as a conditional pass on four time-bound exception records.
@@ -89,8 +94,9 @@ non-production baselines. SQLite is a single-node simulation; the token-exchange
 lab are not connected; treatment relationship and Consent are fixtures rather than authoritative
 sources; retrieval is deterministic keyword matching over an in-memory corpus, so the M05 thresholds
 measure the controls and say nothing about answer quality; the model adapter is a deterministic
-policy rather than a language model, so M06 proves containment and not capability; and no local
-signal client has ever
+policy rather than a language model, so M06 proves containment and not capability; the M07
+presentation contract is verified but no human-factors session has been run, so the milestone's gate
+is explicitly **not met**; and no local signal client has ever
 contacted a live provider, so nothing here demonstrates an enterprise TLS/mTLS edge, provider
 lifecycle, production flood controls, a deployed HA scheduler, metrics/SIEM/page delivery, or
 SSF/CAEP/SMART conformance.
@@ -144,6 +150,7 @@ The lab is synthetic-only, loopback-only, and intentionally has no production au
 - [Transactional state, audit, and recovery ADR](docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md)
 - [Secure retrieval boundary ADR](docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md)
 - [Bounded agent and model boundary ADR](docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md)
+- [Trusted presentation boundary ADR](docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md)
 - [Durable continuous-access identity signals ADR](docs/architecture/decisions/ADR-007-durable-identity-signals.md)
 - [Okta continuous-access reference profile ADR](docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md)
 - [Okta gap-recovery runbook](docs/operations/okta-continuous-access-gap-recovery.md)
@@ -158,6 +165,8 @@ The lab is synthetic-only, loopback-only, and intentionally has no production au
 - [M04 gate decision](evidence/milestones/M04-gate-decision.md)
 - [M05 secure retrieval evidence](evidence/milestones/M05-secure-retrieval.md)
 - [M06 bounded agent evidence](evidence/milestones/M06-bounded-agent.md)
+- [M07 trusted presentation evidence — gate not met](evidence/milestones/M07-trusted-presentation.md)
+- [Human-factors validation protocol](docs/assurance/human-factors-validation-protocol.md)
 - [M04 owner review](docs/assurance/M04-owner-review.md)
 - [Deferral exception records](docs/assurance/exceptions/)
 - [Security threat model](docs/risk/threat-model.md)

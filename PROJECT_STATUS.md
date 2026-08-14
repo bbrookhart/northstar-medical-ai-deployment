@@ -1,8 +1,8 @@
 # Project Polaris Status
 
 **Status date:** 2026-08-14  
-**Current milestone:** M07 — User experience and approval safety (M06 closed)  
-**Last gate:** M06 passes for the deterministic baseline (`EVD-M06-001`); M04 remains a conditional pass on four time-bound exceptions  
+**Current milestone:** M08 — Secure platform and supply chain  
+**Last gate:** **M07 does not pass** — its presentation contract is verified (`EVD-M07-001`) but the human-factors evidence the gate requires does not exist (`BLK-003`); M06 passed for the deterministic baseline and M04 remains a conditional pass on four time-bound exceptions  
 **Overall status:** On track for the authorized synthetic simulation scope
 
 ## Completed
@@ -132,6 +132,14 @@
 - A compromised-model suite in which scripted hostile intents cannot widen retrieval, read an
   unassigned patient, execute, draft clinical direction, emit secrets, answer ungrounded, or exceed
   a bound
+- Server-side inert rendering of untrusted text against script, attribute, executable-scheme,
+  terminal-escape, bidirectional-override, and control-character cases (`ADR-012`)
+- An approval preview whose fields and digest are both derived from the canonical action, with a
+  display-binding check that fails on any divergence, behind approver authorization
+- Workflow states where only execution implies completion, labels and severity that cannot disagree
+  with state, and uncertainty a surface cannot drop to render an abstention as an answer
+- Fixed emergency-channel routing whose result type has nowhere to record an urgency assessment,
+  checked before the model is consulted
 
 ## Not yet assessed or approved
 
@@ -156,9 +164,9 @@
 |---|---|
 | Formatting | Pass |
 | Ruff lint/security rules | Pass |
-| Strict mypy across `src` and `tests` | Pass; 72 source/test files |
-| Pytest | Pass; 379 default-suite tests plus 1 HAPI integration test |
-| Coverage | 86.14%; enforced floor 85% |
+| Strict mypy across `src` and `tests` | Pass; 80 source/test files |
+| Pytest | Pass; 417 default-suite tests plus 1 HAPI integration test |
+| Coverage | 86.41%; enforced floor 85% |
 | Retrieval evaluation | Pass; security 100% (floor 100%), quality 100% (floor 90%) |
 | Governance traceability | Pass; 70/70 requirements, 25/25 risks, 78/78 scenarios |
 | Generated-report drift check | Pass |
@@ -187,6 +195,7 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 | ADR-009 | Specify the production persistence topology, audit custody separation, and recovery objectives as testable targets rather than implemented capability | Accepted as a design target; every exercise result is not assessed |
 | ADR-010 | Admit corpus sources by recorded decision, authorize before scoring, treat retrieved text as data, and make corpus versions identifiable and rollback-capable | Accepted; local synthetic corpus verified |
 | ADR-011 | Treat the model as an untrusted requester behind a bounded loop, re-derive authorization per call, validate output before use, and keep the hosted-provider seam inert | Accepted; compromised-model containment verified with a deterministic adapter |
+| ADR-012 | Render untrusted text inert server-side, derive the approval preview and its digest from one canonical action, and make state, uncertainty, and emergency routing structural | Accepted; contract verified, human-factors evidence outstanding |
 
 ## Open risks and limitations
 
@@ -203,19 +212,20 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 | LIM-014 | Agent capabilities default to enabled when no record exists, and the agent has no user-facing surface, approval workload monitoring, concurrency, retry, or cost control | Invert the default to explicit enablement before deployment; add the M07 trusted renderer, `CTL-ACT-004` monitoring, and provider-side bounds when a provider exists |
 | LIM-006 | Branch protection and change control are unproven; hosted CI itself now passes (`EVD-M04-002`) and does not run `synthetic-data-verify` | Enable protection at publication (gated on `DEC-001`) and close the CI/Makefile divergence in M08 |
 | LIM-007 | Retention/deletion/legal-hold periods are undecided | `BLK-001`; obtain Records/Privacy/Legal approval and exercise deletion before pilot |
-| LIM-008 | Human factors, fixed emergency behavior, and accessible trusted UI are incomplete | `BLK-003`; implement and run clinician/representative-user validation |
+| LIM-008 | The presentation contract and fixed emergency behavior are implemented, but no human-factors session has been run, no UI exists, and WCAG conformance is unassessed | `BLK-003`; run `NS-ASR-005` with clinician and assistive-technology participants before any pilot, and design `CTL-ACT-004` from its HF-08 result |
 | LIM-009 | Provider due diligence and operating/resilience evidence do not exist | `BLK-004`/`BLK-005`; no hosted model or pilot until verified |
 | LIM-010 | Exact OWASP GenAI LLM Top 10 2026 category mapping is provisional | `BLK-006`; acquire and review the official category artifact before exact coverage claims |
 | DEC-001 | Repository and training-content licensing/IP terms are undecided | Select deliberately before public release; do not assume open-source rights |
 
 ## Next safe increment
 
-Begin M07 user experience and approval safety. The agent has no user surface by design: exposing one
-needs an accessible trusted renderer that displays the exact canonical action before approval, safe
-rendering of untrusted retrieved text, transparent sources and uncertainty, and reauthentication at
-the approval step. `BLK-003` blocks the milestone until clinician and representative-user validation
-exists, so build the renderer and the human-factors protocol together rather than shipping a surface
-and studying it later.
+Begin M08 secure platform and supply chain, which is fully buildable without human participants:
+container and local compose hardening, a CI security suite, SBOM and AIBOM generation, signed
+artifacts and provenance, and secrets and IaC patterns. `LIM-006` already records that branch
+protection is unassessed, so change control belongs in the same increment.
+
+M07 stays open rather than complete. Its presentation contract is verified, but the gate asks whether
+real people approve safely, and that reopens only when `NS-ASR-005` sessions can be run.
 
 Do not connect a hosted provider. `REQ-AI-002`'s criteria and `BLK-004`'s due diligence are both
 still open, and the adapter is deliberately inert until they close.

@@ -768,16 +768,21 @@
       ],
       "implementation_refs": [
         "src/polaris/services/actions.py",
-        "src/polaris/config.py"
+        "src/polaris/config.py",
+        "src/polaris/presentation/approval.py",
+        "src/polaris/security/digest.py",
+        "docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md"
       ],
       "verification_ids": [
         "VER-AUT-009",
         "VER-AUT-010",
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PRS-002"
       ],
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-008"
+        "EVD-PLN-008",
+        "EVD-M07-001"
       ],
       "framework_reference_ids": [
         "FW-ASI02",
@@ -847,13 +852,16 @@
       ],
       "implementation_refs": [
         "docs/risk/clinical-safety-hazard-analysis.md",
-        "docs/risk/abuse-and-misuse-cases.md"
+        "docs/risk/abuse-and-misuse-cases.md",
+        "docs/assurance/human-factors-validation-protocol.md"
       ],
       "verification_ids": [
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PLN-011"
       ],
       "evidence_ids": [
-        "EVD-PLN-008"
+        "EVD-PLN-008",
+        "EVD-PLN-011"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MEASURE",
@@ -905,7 +913,7 @@
       "title": "Inert accessible output rendering",
       "objective": "Render untrusted output with contextual encoding, restrictive CSP, safe links, no remote active content, and an accessible trusted preview.",
       "owner": "Frontend Lead",
-      "status": "planned",
+      "status": "partial",
       "control_type": "preventive",
       "frequency": "Every rendered response and proposal",
       "requirement_ids": [
@@ -920,13 +928,19 @@
       ],
       "implementation_refs": [
         "docs/risk/threat-model.md",
-        "docs/risk/clinical-safety-hazard-analysis.md"
+        "docs/risk/clinical-safety-hazard-analysis.md",
+        "src/polaris/presentation/rendering.py",
+        "src/polaris/presentation/views.py",
+        "docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md"
       ],
       "verification_ids": [
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PRS-001",
+        "VER-PRS-003"
       ],
       "evidence_ids": [
-        "EVD-PLN-008"
+        "EVD-PLN-008",
+        "EVD-M07-001"
       ],
       "framework_reference_ids": [
         "FW-CSF-PR-DS",
@@ -991,15 +1005,19 @@
       ],
       "implementation_refs": [
         "src/polaris/services/actions.py",
-        "docs/governance/approved-prohibited-use.md"
+        "docs/governance/approved-prohibited-use.md",
+        "src/polaris/presentation/emergency.py",
+        "src/polaris/agent/orchestrator.py"
       ],
       "verification_ids": [
         "VER-AUT-008",
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-SAF-001"
       ],
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-008"
+        "EVD-PLN-008",
+        "EVD-M07-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",
@@ -1012,7 +1030,7 @@
       "title": "Trusted state, comprehension, and accessibility",
       "objective": "Make identity, source, uncertainty, action, destination, state, and material changes understandable and accessible with a non-AI path.",
       "owner": "Product Owner",
-      "status": "planned",
+      "status": "partial",
       "control_type": "preventive",
       "frequency": "Each design/release and representative user study",
       "requirement_ids": [
@@ -1028,13 +1046,21 @@
       ],
       "implementation_refs": [
         "docs/risk/ai-impact-assessment.md",
-        "docs/risk/clinical-safety-hazard-analysis.md"
+        "docs/risk/clinical-safety-hazard-analysis.md",
+        "src/polaris/presentation/views.py",
+        "src/polaris/presentation/answer.py",
+        "docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md",
+        "docs/assurance/human-factors-validation-protocol.md"
       ],
       "verification_ids": [
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PRS-003",
+        "VER-PLN-011"
       ],
       "evidence_ids": [
-        "EVD-PLN-008"
+        "EVD-PLN-008",
+        "EVD-M07-001",
+        "EVD-PLN-011"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MEASURE",

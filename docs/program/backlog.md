@@ -60,14 +60,31 @@ injection campaign belongs to M09 against a real provider; `LIM-013` and `LIM-01
 adapter is deterministic and that the agent has no user surface, workload monitoring, or provider-side
 bounds.
 
-## Now — M07 user experience and approval safety
+## Open — M07 user experience and approval safety
 
-- Accessible trusted renderer showing the exact canonical action before approval
-- Safe rendering of untrusted retrieved text and transparent sources and uncertainty
-- Reauthentication at the approval step and fixed emergency behavior
-- Clinician and representative-user human-factors validation (`BLK-003`)
+**The M07 gate is not met** (`EVD-M07-001`). The server-side presentation contract is implemented and
+verified: inert rendering, an approval preview bound to the canonical action and its recomputed
+digest, states where only execution implies completion, uncertainty a surface cannot drop, and fixed
+emergency routing.
 
-M07 gate: human-factors tests show informed approval and safe refusal or degraded behavior.
+What the gate actually asks — whether real people approve safely — has no evidence. `NS-ASR-005`
+specifies eight tasks with pass criteria and an empty results table.
+
+| State | Work item | Exit evidence |
+|---|---|---|
+| Complete | Server-side presentation contract | `VER-PRS-001` to `VER-PRS-003`, `VER-SAF-001`, `EVD-M07-001` |
+| Blocked | Clinician and assistive-technology human-factors sessions | `VER-PLN-011`, `EVD-PLN-011`, `BLK-003` |
+| Blocked | Accessible UI built with the human-factors findings | Depends on the sessions above |
+| Planned | Approval workload and anti-fatigue monitoring (`CTL-ACT-004`) | Designed from the HF-08 result |
+
+## Now — M08 secure platform and supply chain
+
+- Container and local compose hardening, and a reproducible build
+- CI security suite, dependency and container scanning, and branch protection (`LIM-006`)
+- SBOM and AIBOM generation, signed artifacts, and provenance attestation
+- Secrets management and IaC patterns
+
+M08 gate: a reproducible build and deploy passes the vulnerability and configuration release policy.
 
 ## Later — M07 through M12
 

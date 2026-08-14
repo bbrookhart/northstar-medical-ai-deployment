@@ -23,7 +23,7 @@ from polaris.domain import (
     PurposeOfUse,
 )
 from polaris.main import create_app
-from polaris.services.actions import action_digest
+from polaris.security.digest import action_digest
 from polaris.services.audit import AuditLedger
 from polaris.services.state import (
     InMemoryStateStore,

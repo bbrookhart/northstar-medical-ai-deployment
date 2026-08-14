@@ -528,6 +528,29 @@ def test_disabling_the_model_leaves_deterministic_retrieval_available() -> None:
     assert kill_switch.is_enabled(AgentCapability.READ) is True
 
 
+def test_emergency_language_stops_the_run_before_the_model_is_reached() -> None:
+    model = ScriptedModel(
+        ModelIntent(kind=AgentIntentKind.ANSWER, answer="Here is what to do.", cited_chunk_ids=()),
+    )
+    agent, _, audit = _agent(model)
+
+    result = agent.run(
+        principal=_principal(),
+        purpose=PurposeOfUse.HEALTHCARE_OPERATIONS,
+        question="This is an emergency, the patient has chest pain and is unresponsive",
+        correlation_id="corr-emergency",
+    )
+
+    assert result.state is AgentRunState.REFUSED
+    assert result.refusal_reason is AgentRefusalReason.EMERGENCY_ROUTED
+    assert result.answer == ""
+    assert "established Northstar emergency channels" in result.safety_guidance
+    # The system routes rather than assessing urgency, and never consults the model at all.
+    assert "cannot assess how" in result.safety_guidance
+    assert model.requests == []
+    assert audit.verify()
+
+
 def test_the_deterministic_adapter_answers_with_citations_from_context() -> None:
     agent, _, _ = _agent(DeterministicModelAdapter())
 

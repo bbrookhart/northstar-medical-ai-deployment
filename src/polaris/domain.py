@@ -681,6 +681,7 @@ class AgentRefusalReason(StrEnum):
     PROHIBITED_CLINICAL_CONTENT = "PROHIBITED_CLINICAL_CONTENT"
     OVERSIZED_OUTPUT = "OVERSIZED_OUTPUT"
     MODEL_UNAVAILABLE = "MODEL_UNAVAILABLE"
+    EMERGENCY_ROUTED = "EMERGENCY_ROUTED"
 
 
 class AgentStep(BaseModel):
@@ -704,6 +705,8 @@ class AgentRunResult(BaseModel):
     citations: tuple[Citation, ...] = ()
     proposal_id: Identifier | None = None
     refusal_reason: AgentRefusalReason | None = None
+    # Fixed, pre-approved safety text. It is not drafted content and is allowed on a refusal.
+    safety_guidance: str = ""
     steps: tuple[AgentStep, ...] = ()
     tool_calls: int = Field(default=0, ge=0, le=100)
 
@@ -724,6 +727,8 @@ class AgentRunResult(BaseModel):
             raise ValueError("A non-completed run must record why")
         if self.state is not AgentRunState.COMPLETED and (self.answer or self.citations):
             raise ValueError("A refused, halted, or failed run returns no drafted content")
+        if self.safety_guidance and self.refusal_reason is not AgentRefusalReason.EMERGENCY_ROUTED:
+            raise ValueError("Fixed safety guidance belongs only to an emergency routing")
         return self
 
 

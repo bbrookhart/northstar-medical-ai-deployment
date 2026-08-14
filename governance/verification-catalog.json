@@ -734,6 +734,89 @@
       ]
     },
     {
+      "id": "VER-PRS-001",
+      "title": "Inert rendering of untrusted retrieved and drafted text",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AppSec Lead",
+      "test_locations": [
+        "tests/test_trusted_presentation.py::test_untrusted_text_renders_inert",
+        "tests/test_trusted_presentation.py::test_unusual_source_content_is_flagged_for_the_reviewer",
+        "tests/test_trusted_presentation.py::test_ordinary_punctuation_is_not_flagged_as_active_content",
+        "tests/test_trusted_presentation.py::test_inert_rendering_preserves_readable_policy_text",
+        "tests/test_trusted_presentation.py::test_inert_rendering_bounds_length_and_marks_truncation",
+        "tests/test_trusted_presentation.py::test_source_excerpts_are_rendered_inert_and_flagged"
+      ],
+      "artifact_refs": [
+        "src/polaris/presentation/rendering.py",
+        "docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md",
+        "evidence/milestones/M07-trusted-presentation.md"
+      ]
+    },
+    {
+      "id": "VER-PRS-002",
+      "title": "Approval preview bound to the canonical action and its recomputed digest",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Engineering Lead",
+      "test_locations": [
+        "tests/test_trusted_presentation.py::test_approval_preview_is_bound_to_the_canonical_action",
+        "tests/test_trusted_presentation.py::test_a_proposal_whose_stored_digest_drifted_is_refused_not_displayed",
+        "tests/test_trusted_presentation.py::test_an_executed_proposal_has_no_approval_preview",
+        "tests/test_trusted_presentation.py::test_untrusted_summary_content_is_rendered_inert_and_warned_about",
+        "tests/test_trusted_presentation.py::test_the_approval_preview_endpoint_requires_approver_authorization"
+      ],
+      "artifact_refs": [
+        "src/polaris/presentation/approval.py",
+        "src/polaris/security/digest.py",
+        "src/polaris/services/actions.py",
+        "src/polaris/main.py"
+      ]
+    },
+    {
+      "id": "VER-PRS-003",
+      "title": "Workflow state, uncertainty, and accessibility presentation contract",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Clinical Safety Lead",
+      "test_locations": [
+        "tests/test_trusted_presentation.py::test_only_execution_implies_completion",
+        "tests/test_trusted_presentation.py::test_a_view_cannot_mislabel_its_own_state",
+        "tests/test_trusted_presentation.py::test_an_abstention_cannot_be_presented_as_an_answer",
+        "tests/test_trusted_presentation.py::test_a_conflict_must_be_presented_as_an_abstention"
+      ],
+      "artifact_refs": [
+        "src/polaris/presentation/views.py",
+        "src/polaris/presentation/answer.py",
+        "docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md"
+      ]
+    },
+    {
+      "id": "VER-SAF-001",
+      "title": "Fixed emergency-channel routing without urgency assessment",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Clinical Safety Lead",
+      "test_locations": [
+        "tests/test_trusted_presentation.py::test_emergency_language_returns_fixed_guidance_without_assessing_urgency",
+        "tests/test_trusted_presentation.py::test_routine_administrative_text_does_not_trigger_emergency_routing",
+        "tests/test_agent_boundary.py::test_emergency_language_stops_the_run_before_the_model_is_reached"
+      ],
+      "artifact_refs": [
+        "src/polaris/presentation/emergency.py",
+        "src/polaris/agent/orchestrator.py",
+        "evidence/milestones/M07-trusted-presentation.md"
+      ]
+    },
+    {
+      "id": "VER-PLN-011",
+      "title": "Approval human-factors validation sessions with clinician participants",
+      "kind": "planned_study",
+      "status": "planned",
+      "owner": "Clinical Safety Lead",
+      "acceptance": "Run NS-ASR-005 with 8-12 clinician participants including assistive-technology users. Informed approval and substituted-action detection at 90%, abstention comprehension and emergency routing at 100%, state comprehension at 95%, and accessibility completion without facilitator assistance. Any abstention or emergency failure is critical."
+    },
+    {
       "id": "VER-PLN-001",
       "title": "Enterprise OIDC, delegation, revocation, and privileged-access matrix",
       "kind": "planned_test",

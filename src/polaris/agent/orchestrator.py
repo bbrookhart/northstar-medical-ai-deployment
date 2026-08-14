@@ -39,6 +39,7 @@ from polaris.domain import (
     RetrievedChunk,
 )
 from polaris.errors import PolarisError
+from polaris.presentation.emergency import check_emergency_language
 from polaris.services.actions import ActionService
 from polaris.services.audit import AuditLedger, utc_now
 from polaris.services.patients import PatientService
@@ -205,6 +206,18 @@ class AgentOrchestrator:
         question: str,
         correlation_id: str,
     ) -> AgentRunResult:
+        emergency = check_emergency_language(question)
+        if emergency.triggered:
+            # The system does not assess urgency. It stops and routes to a human channel.
+            return self._refuse(
+                context,
+                AgentRefusalReason.EMERGENCY_ROUTED,
+                principal=principal,
+                correlation_id=correlation_id,
+                detail="emergency language routed to established channels",
+                safety_guidance=emergency.guidance,
+            )
+
         self._kill_switch.assert_enabled(AgentCapability.MODEL)
         context.transition(AgentRunState.AUTHORIZED, "model capability enabled")
 
@@ -485,6 +498,7 @@ class AgentOrchestrator:
         tool_calls: int = 0,
         state: AgentRunState = AgentRunState.REFUSED,
         from_state: AgentRunState | None = None,
+        safety_guidance: str = "",
     ) -> AgentRunResult:
         if from_state is not None:
             context.state = from_state
@@ -501,6 +515,7 @@ class AgentOrchestrator:
             run_id=context.run_id,
             state=state,
             refusal_reason=reason,
+            safety_guidance=safety_guidance,
             steps=tuple(context.steps),
             tool_calls=tool_calls,
         )

@@ -125,6 +125,22 @@
       "scope": "Local synthetic simulation with a deterministic model adapter and no hosted provider. Scripted hostile model intents cannot reach an unapproved tool, broaden retrieval beyond the caller, read an unassigned patient, execute rather than propose, draft clinical direction, emit secrets or context-envelope markers, answer without grounding, exceed step/tool/output budgets, or fabricate success on model failure. Model requests carry no credential, identity, or prior-run state, and MODEL/READ/WRITE kill switches are independent and survive restart. No claim about language-model behavior or answer quality, no red-team campaign against a real provider, no provider due diligence or authorized hosted connection, no concurrency/retry/cost controls, and no user-facing surface"
     },
     {
+      "id": "EVD-M07-001",
+      "title": "M07 trusted presentation contract verification",
+      "status": "existing",
+      "owner": "Clinical Safety Lead",
+      "artifact_path": "evidence/milestones/M07-trusted-presentation.md",
+      "scope": "Server-side presentation contract only. Inert rendering of untrusted text against script, attribute, executable-scheme, terminal-escape, bidirectional-override, and control-character cases; approval preview derived from the canonical action with a recomputed digest and a display-binding check that fails on any field divergence; workflow states where only execution implies completion and severity is never the only carrier of meaning; uncertainty that cannot be dropped so an abstention cannot render as an answer; and fixed emergency routing whose result type cannot record an urgency assessment. Establishes no human comprehension, no WCAG conformance, no user interface, and no approval-workload monitoring; the M07 gate does not pass"
+    },
+    {
+      "id": "EVD-PLN-011",
+      "title": "Approval human-factors validation results",
+      "status": "planned",
+      "owner": "Clinical Safety Lead",
+      "scope": "Eight specified tasks covering informed approval, substituted-action detection, abstention comprehension, state comprehension, emergency routing, untrusted content, accessibility with assistive technology, and approval workload. No session has been run; the results table is empty and BLK-003 remains open",
+      "planned_artifact_path": "evidence/assurance/human-factors/"
+    },
+    {
       "id": "EVD-VER-001",
       "title": "M01 local verification record",
       "status": "existing",

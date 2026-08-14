@@ -157,3 +157,26 @@ resource bound.
 
 This is a containment result, not a capability result. It authorizes M07 user-experience work only,
 and it is not a pilot, production, real-PHI, hosted-model, or conformance authorization.
+
+## Current gate assessment — M07
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Inert rendering of untrusted text | `VER-PRS-001`; script, attribute, executable-scheme, terminal-escape, bidirectional-override, and control-character cases | Pass for the server-side contract |
+| Exact canonical action preview | `VER-PRS-002`; every field and the digest derived from the same canonical action, binding fails on any divergence | Pass |
+| Trusted state and uncertainty | `VER-PRS-003`; only execution implies completion, labels and severity cannot disagree with state, an abstention cannot render as an answer | Pass |
+| Fixed emergency routing | `VER-SAF-001`; fixed guidance with no field able to record an urgency assessment, checked before the model is consulted | Pass |
+| Authorized preview surface | `VER-PRS-002`; the preview requires the same authorization as the decision | Pass |
+| Informed approval by real users | `VER-PLN-011`; protocol specified, no session run | **Not assessed** |
+| Automation-bias and comprehension | `VER-PLN-011` HF-02/HF-03/HF-04 | **Not assessed** |
+| WCAG 2.2 AA conformance | `VER-PLN-011` HF-07 | **Not assessed** |
+| Approval workload and anti-fatigue | `CTL-ACT-004`; unbuilt, HF-08 is its primary input | **Not assessed** |
+| User interface | — | Not built; the server-side contract a UI must honor exists instead |
+
+**Decision:** **Fail — the gate is not met.** The exit criterion is human-factors evidence, and none
+exists. `BLK-003` stays open and `NS-ASR-005` carries an empty results table.
+
+This is not a defect in the increment. The presentation contract is implemented and verified, and
+recording the milestone as passed on that basis would substitute an implementation for an operating
+control — the exact failure this gate standard exists to prevent. M07 reopens when sessions can be
+run with real clinician participants.
