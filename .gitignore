@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.venv/
+.uv-cache/
+dist/
+build/
+*.egg-info/
+
+# JavaScript
+node_modules/
+.next/
+coverage/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+
+# Local data and state
+*.db
+*.sqlite
+*.sqlite3
+.local/
+artifacts/runtime/
+
+# IDE and OS
+.DS_Store
+.idea/
+.vscode/settings.json
