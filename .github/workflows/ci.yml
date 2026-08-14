@@ -43,6 +43,9 @@ jobs:
       - name: Check the release supply-chain policy and generated SBOM/AIBOM
         run: uv run python scripts/supply_chain.py --check
 
+      - name: Run the adversarial campaign and check the release evaluation
+        run: uv run python scripts/red_team.py --check
+
       - name: Verify synthetic dataset integrity and safety
         run: uv run python scripts/synthetic_fhir.py verify
 

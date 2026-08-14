@@ -81,7 +81,7 @@ The first executable slice provides:
 - signed approval receipts, expiry, reauthorization, and idempotent execution;
 - shared transactional workflow/audit state with in-memory and single-node SQLite adapters, atomic
   rollback, restart recovery, concurrency controls, tamper detection, and fail-closed readiness;
-- 429 passing default-suite tests plus one HAPI integration test, 86.65% coverage against the 85%
+- 436 passing default-suite tests plus one HAPI integration test, 87.06% coverage against the 85%
   floor, under strict lint and typing gates, green on a hosted CI runner;
 - an offline release gate that fails the build on an unpinned Action, an unpinned image, an
   unbounded dependency, a missing container hardening control, or a secret marker in a tracked file,
@@ -90,8 +90,14 @@ The first executable slice provides:
   tool, bound, kill-switch, and evaluation definitions, both committed and drift-checked;
 - a hardened container that runs non-root on a read-only filesystem with no package manager,
   compiler, or fetch tool;
+- an adversarial campaign of 21 attacks across all 14 classes the requirements baseline names —
+  direct, indirect, stored, obfuscated, multilingual, and encoded injection, exfiltration, poisoning,
+  tool and identity abuse, action mutation and replay, output injection, and consumption — each
+  naming the control expected to stop it, all contained, enforced by CI;
+- a release evaluation that declares all 11 required dimensions, marks four of them honestly not
+  assessed, and refuses a release rather than collapsing partial evidence into a readiness claim;
 - a typed, CI-enforced control system covering 70 requirements, 25 risks, and 78 scenarios;
-- 31 canonical controls with 61 verification definitions, 31 evidence definitions, framework
+- 31 canonical controls with 63 verification definitions, 33 evidence definitions, framework
   mappings, and honest implemented/partial/planned status; and
 - an AI system card plus simulated M02 multidisciplinary, M03 control-owner, and M04 owner reviews,
   with M04 closed as a conditional pass on four time-bound exception records.
@@ -103,7 +109,9 @@ sources; retrieval is deterministic keyword matching over an in-memory corpus, s
 measure the controls and say nothing about answer quality; the model adapter is a deterministic
 policy rather than a language model, so M06 proves containment and not capability; the M07
 presentation contract is verified but no human-factors session has been run, so the milestone's gate
-is explicitly **not met**; and no local signal client has ever
+is explicitly **not met**; the adversarial campaign contains every attack yet the M09 gate is also
+**not met**, because four high-severity findings are open and no release may proceed; and no local
+signal client has ever
 contacted a live provider, so nothing here demonstrates an enterprise TLS/mTLS edge, provider
 lifecycle, production flood controls, a deployed HA scheduler, metrics/SIEM/page delivery, or
 SSF/CAEP/SMART conformance.
@@ -187,6 +195,9 @@ The lab is synthetic-only, loopback-only, and intentionally has no production au
 - [M07 trusted presentation evidence — gate not met](evidence/milestones/M07-trusted-presentation.md)
 - [Human-factors validation protocol](docs/assurance/human-factors-validation-protocol.md)
 - [M08 supply chain evidence](evidence/milestones/M08-supply-chain.md)
+- [M09 assurance and red team evidence — gate not met](evidence/milestones/M09-assurance-and-red-team.md)
+- [M09 remediation ledger](docs/assurance/M09-remediation-ledger.md)
+- [M09 independent review](docs/assurance/M09-independent-review.md)
 - [M04 owner review](docs/assurance/M04-owner-review.md)
 - [Deferral exception records](docs/assurance/exceptions/)
 - [Security threat model](docs/risk/threat-model.md)

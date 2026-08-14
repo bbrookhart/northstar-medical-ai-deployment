@@ -295,7 +295,8 @@
       "evidence_ids": [
         "EVD-VER-001",
         "EVD-PLN-005",
-        "EVD-M06-001"
+        "EVD-M06-001",
+        "EVD-M09-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MEASURE",
@@ -335,7 +336,8 @@
         "VER-AUT-011",
         "VER-PLN-005",
         "VER-AGT-002",
-        "VER-AGT-003"
+        "VER-AGT-003",
+        "VER-SDL-003"
       ]
     },
     {
@@ -669,7 +671,8 @@
         "EVD-RSK-001",
         "EVD-M02-001",
         "EVD-M03-001",
-        "EVD-TRC-001"
+        "EVD-TRC-001",
+        "EVD-M09-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-GOV",
@@ -707,7 +710,8 @@
       "verification_ids": [
         "VER-GOV-001",
         "VER-REV-001",
-        "VER-REV-004"
+        "VER-REV-004",
+        "VER-SDL-003"
       ]
     },
     {
@@ -1355,7 +1359,9 @@
         "EVD-VER-001",
         "EVD-M02-001",
         "EVD-M03-002",
-        "EVD-PLN-009"
+        "EVD-PLN-009",
+        "EVD-M09-001",
+        "EVD-M09-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MEASURE",
@@ -1369,7 +1375,12 @@
       "implementation_refs": [
         "tests",
         "docs/risk/abuse-and-misuse-cases.md",
-        "docs/assurance/release-gates.md"
+        "docs/assurance/release-gates.md",
+        "src/polaris/assurance/redteam.py",
+        "src/polaris/assurance/release_eval.py",
+        "scripts/red_team.py",
+        "docs/assurance/M09-remediation-ledger.md",
+        "docs/assurance/M09-independent-review.md"
       ],
       "objective": "Require versioned functional, authorization, privacy, security, safety, grounding, robustness, accessibility, performance, cost, and recovery evaluation.",
       "owner": "AI Security Lead",
@@ -1394,7 +1405,9 @@
         "VER-AUT-013",
         "VER-PLN-005",
         "VER-PLN-008",
-        "VER-PLN-009"
+        "VER-PLN-009",
+        "VER-SDL-003",
+        "VER-SDL-004"
       ]
     }
   ],
@@ -1857,6 +1870,7 @@
       "disposition": "partial",
       "evidence_ids": [
         "EVD-M06-001",
+        "EVD-M09-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1884,7 +1898,8 @@
         "VER-AUT-006",
         "VER-AUT-008",
         "VER-AUT-011",
-        "VER-PLN-005"
+        "VER-PLN-005",
+        "VER-SDL-003"
       ]
     },
     {
@@ -1894,6 +1909,7 @@
       "disposition": "partial",
       "evidence_ids": [
         "EVD-M06-001",
+        "EVD-M09-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1921,7 +1937,8 @@
         "VER-AUT-006",
         "VER-AUT-008",
         "VER-AUT-011",
-        "VER-PLN-005"
+        "VER-PLN-005",
+        "VER-SDL-003"
       ]
     },
     {
@@ -2450,6 +2467,7 @@
         "EVD-GOV-002",
         "EVD-M02-001",
         "EVD-M03-001",
+        "EVD-M09-001",
         "EVD-RSK-001",
         "EVD-TRC-001"
       ],
@@ -2472,7 +2490,8 @@
       "verification_ids": [
         "VER-GOV-001",
         "VER-REV-001",
-        "VER-REV-004"
+        "VER-REV-004",
+        "VER-SDL-003"
       ]
     },
     {
@@ -2484,6 +2503,7 @@
         "EVD-GOV-002",
         "EVD-M02-001",
         "EVD-M03-001",
+        "EVD-M09-001",
         "EVD-RSK-001",
         "EVD-TRC-001"
       ],
@@ -2506,7 +2526,8 @@
       "verification_ids": [
         "VER-GOV-001",
         "VER-REV-001",
-        "VER-REV-004"
+        "VER-REV-004",
+        "VER-SDL-003"
       ]
     },
     {
@@ -3743,6 +3764,8 @@
       "evidence_ids": [
         "EVD-M02-001",
         "EVD-M03-002",
+        "EVD-M09-001",
+        "EVD-M09-002",
         "EVD-PLN-009",
         "EVD-VER-001"
       ],
@@ -3772,7 +3795,9 @@
         "VER-AUT-013",
         "VER-PLN-005",
         "VER-PLN-008",
-        "VER-PLN-009"
+        "VER-PLN-009",
+        "VER-SDL-003",
+        "VER-SDL-004"
       ]
     },
     {
@@ -3783,6 +3808,8 @@
       "evidence_ids": [
         "EVD-M02-001",
         "EVD-M03-002",
+        "EVD-M09-001",
+        "EVD-M09-002",
         "EVD-PLN-009",
         "EVD-VER-001"
       ],
@@ -3812,7 +3839,9 @@
         "VER-AUT-013",
         "VER-PLN-005",
         "VER-PLN-008",
-        "VER-PLN-009"
+        "VER-PLN-009",
+        "VER-SDL-003",
+        "VER-SDL-004"
       ]
     },
     {
@@ -3824,6 +3853,7 @@
         "EVD-GOV-002",
         "EVD-M02-001",
         "EVD-M03-001",
+        "EVD-M09-001",
         "EVD-RSK-001",
         "EVD-TRC-001"
       ],
@@ -3846,7 +3876,8 @@
       "verification_ids": [
         "VER-GOV-001",
         "VER-REV-001",
-        "VER-REV-004"
+        "VER-REV-004",
+        "VER-SDL-003"
       ]
     },
     {
@@ -3858,6 +3889,7 @@
         "EVD-GOV-002",
         "EVD-M02-001",
         "EVD-M03-001",
+        "EVD-M09-001",
         "EVD-RSK-001",
         "EVD-TRC-001"
       ],
@@ -3880,7 +3912,8 @@
       "verification_ids": [
         "VER-GOV-001",
         "VER-REV-001",
-        "VER-REV-004"
+        "VER-REV-004",
+        "VER-SDL-003"
       ]
     }
   ],
@@ -5326,11 +5359,11 @@
     },
     "evidence": {
       "by_status": {
-        "existing": 17,
-        "generated": 3,
+        "existing": 18,
+        "generated": 4,
         "planned": 11
       },
-      "total": 31
+      "total": 33
     },
     "framework_sources": {
       "by_status": {
@@ -5369,9 +5402,9 @@
     "verifications": {
       "by_status": {
         "planned": 11,
-        "verified": 50
+        "verified": 52
       },
-      "total": 61
+      "total": 63
     }
   },
   "validation": {

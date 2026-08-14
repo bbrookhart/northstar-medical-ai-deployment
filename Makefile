@@ -1,6 +1,6 @@
 export UV_CACHE_DIR ?= $(CURDIR)/.uv-cache
 
-.PHONY: install format lint type test test-cov governance governance-report retrieval-eval retrieval-eval-check supply-chain supply-chain-check container-build container-scan synthea-pull synthea-tool synthea-generate synthea-reproduce synthetic-data-build synthetic-data-verify verify run fhir-up fhir-seed fhir-integration fhir-down
+.PHONY: install format lint type test test-cov governance governance-report retrieval-eval retrieval-eval-check supply-chain supply-chain-check red-team red-team-check container-build container-scan synthea-pull synthea-tool synthea-generate synthea-reproduce synthetic-data-build synthetic-data-verify verify run fhir-up fhir-seed fhir-integration fhir-down
 
 install:
 	uv sync --all-groups
@@ -40,6 +40,12 @@ supply-chain:
 supply-chain-check:
 	uv run python scripts/supply_chain.py --check
 
+red-team:
+	uv run python scripts/red_team.py
+
+red-team-check:
+	uv run python scripts/red_team.py --check
+
 container-build:
 	docker build -f infrastructure/container/Dockerfile -t northstar-polaris:local .
 
@@ -65,7 +71,7 @@ synthetic-data-build:
 synthetic-data-verify:
 	uv run python scripts/synthetic_fhir.py verify
 
-verify: governance retrieval-eval-check supply-chain-check synthetic-data-verify lint type test-cov
+verify: governance retrieval-eval-check supply-chain-check red-team-check synthetic-data-verify lint type test-cov
 
 run:
 	uv run uvicorn polaris.main:create_app --factory --env-file .env --host 127.0.0.1 --port 8000

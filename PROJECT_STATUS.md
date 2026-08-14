@@ -1,8 +1,8 @@
 # Project Polaris Status
 
 **Status date:** 2026-08-14  
-**Current milestone:** M09 — Full assurance and red team  
-**Last gate:** M08 conditional pass (`EVD-M08-001`) with signing, provenance, and scanning deferred under `NS-EXC-005`; **M07 does not pass** for want of human-factors evidence (`BLK-003`); M04 remains a conditional pass on four time-bound exceptions  
+**Current milestone:** M10 — Operations and incident readiness  
+**Last gate:** **M09 does not pass** — every attack was contained but four high-severity findings are open (`EVD-M09-001`), so no release may proceed and no residual risk is accepted; M08 is a conditional pass under `NS-EXC-005`; M07 does not pass for want of human-factors evidence (`BLK-003`)  
 **Overall status:** On track for the authorized synthetic simulation scope
 
 ## Completed
@@ -147,6 +147,14 @@
   tool, bound, kill-switch, and evaluation definitions, both committed and drift-checked
 - A hardened application container, built and smoke-tested: non-root on a read-only filesystem, no
   package manager, compiler, or fetch tool, serving both health endpoints
+- An adversarial campaign of 21 cases across all 14 classes `REQ-SDL-004` requires, run against a
+  stack rebuilt per case, each naming the control expected to stop it; all contained, deterministic,
+  and class coverage asserted by test
+- A release evaluation declaring all 11 `REQ-SDL-003` dimensions with four honestly not assessed,
+  separating blocking gaps from missing evidence so `release_ready` is false despite zero blocking
+  gaps
+- A remediation ledger and a simulated independent review that refuses a release rather than
+  reclassifying findings
 
 ## Not yet assessed or approved
 
@@ -171,10 +179,12 @@
 |---|---|
 | Formatting | Pass |
 | Ruff lint/security rules | Pass |
-| Strict mypy across `src` and `tests` | Pass; 85 source/test files |
-| Pytest | Pass; 429 default-suite tests plus 1 HAPI integration test |
-| Coverage | 86.65%; enforced floor 85% |
+| Strict mypy across `src` and `tests` | Pass; 90 source/test files |
+| Pytest | Pass; 436 default-suite tests plus 1 HAPI integration test |
+| Coverage | 87.06%; enforced floor 85% |
 | Release supply-chain policy | Pass; 0 blockers across 4 pinned definitions |
+| Adversarial campaign | Pass; 21/21 contained across 14/14 classes |
+| Release readiness | **Not ready**; 4 dimensions unassessed, 4 high findings open |
 | Retrieval evaluation | Pass; security 100% (floor 100%), quality 100% (floor 90%) |
 | Governance traceability | Pass; 70/70 requirements, 25/25 risks, 78/78 scenarios |
 | Generated-report drift check | Pass |
@@ -220,6 +230,7 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 | LIM-013 | The model adapter is a deterministic policy, not a language model; the compromised-model suite scripts hostile intents rather than exercising a real provider | Keep the deterministic adapter as the regression oracle; no hosted connection until `REQ-AI-002` and `BLK-004` close, then run the M09 injection campaign against it |
 | LIM-014 | Agent capabilities default to enabled when no record exists, and the agent has no user-facing surface, approval workload monitoring, concurrency, retry, or cost control | Invert the default to explicit enablement before deployment; add the M07 trusted renderer, `CTL-ACT-004` monitoring, and provider-side bounds when a provider exists |
 | LIM-006 | Branch protection and change control are unproven, so reviewed source changes hold by convention rather than enforcement | Enable protection at publication (gated on `DEC-001`); the CI/Makefile divergence closed in M08 |
+| LIM-016 | The adversarial campaign runs against a deterministic adapter and its cases were authored by the implementer, so it encodes the same assumptions as the controls | `RT-F1`/`RT-F3`; rerun against a hosted provider once `BLK-004` closes, and obtain independent adversarial authorship before any release claim |
 | LIM-015 | No artifact signature, build provenance, or vulnerability scan result exists, and the build is reproducible in the pinning sense only | `NS-EXC-005`; add non-blocking scanning with a review cadence, then provenance attestation and signing with a verification step a consumer runs, before publishing anything |
 | LIM-007 | Retention/deletion/legal-hold periods are undecided | `BLK-001`; obtain Records/Privacy/Legal approval and exercise deletion before pilot |
 | LIM-008 | The presentation contract and fixed emergency behavior are implemented, but no human-factors session has been run, no UI exists, and WCAG conformance is unassessed | `BLK-003`; run `NS-ASR-005` with clinician and assistive-technology participants before any pilot, and design `CTL-ACT-004` from its HF-08 result |
@@ -229,16 +240,17 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 
 ## Next safe increment
 
-Begin M09 full assurance and red team. The adversarial campaign `REQ-SDL-004` requires — direct,
-indirect, stored, obfuscated, multilingual, and encoded injection, exfiltration, poisoning, tool and
-identity abuse, action mutation and replay, and consumption — is the part M06 explicitly deferred,
-and it can be run against the deterministic stack today: the corpus admission path, the retrieval
-partition, the tool registry, and the approval binding are all in place to attack.
+Begin M10 operations and incident readiness. The campaign proved which events are detectable; the
+next step is making them observable: telemetry content rules that carry correlation, decision, and
+version without prohibited content, detection-as-code for the refusal and containment outcomes the
+campaign produces, runbooks, and an AI incident tabletop.
 
-Pair it with the versioned evaluation manifest `REQ-SDL-003` asks for, so results are traceable to a
-revision, configuration, and dataset rather than to a run.
+Prioritise the kill, rollback, and degraded-mode exercises. `RE-F4` — recovery unassessed — is one of
+the four high findings blocking a release, and it is the only one M10 can close without a real
+provider, real clinicians, or a real deployment.
 
-M07 stays open rather than complete, and `NS-EXC-005` stays live until there is something to sign.
+Three milestones now stand explicitly unfinished: M07 for want of human-factors evidence, M09 for
+open high findings, and M08 conditionally under `NS-EXC-005`. None should be reported as complete.
 
 Do not connect a hosted provider. `REQ-AI-002`'s criteria and `BLK-004`'s due diligence are both
 still open, and the adapter is deliberately inert until they close.

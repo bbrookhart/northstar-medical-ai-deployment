@@ -852,6 +852,44 @@
       ]
     },
     {
+      "id": "VER-SDL-003",
+      "title": "Adversarial campaign covering every required attack class with control attribution",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Lead",
+      "test_locations": [
+        "tests/test_red_team.py::test_the_campaign_covers_every_required_attack_class",
+        "tests/test_red_team.py::test_every_attack_is_contained_by_the_deterministic_stack",
+        "tests/test_red_team.py::test_critical_and_high_cases_admit_no_partial_credit",
+        "tests/test_red_team.py::test_the_campaign_report_is_deterministic"
+      ],
+      "artifact_refs": [
+        "src/polaris/assurance/attacks.py",
+        "src/polaris/assurance/redteam.py",
+        "scripts/red_team.py",
+        "evidence/reports/M09-red-team.json",
+        "evidence/milestones/M09-assurance-and-red-team.md"
+      ]
+    },
+    {
+      "id": "VER-SDL-004",
+      "title": "Release evaluation manifest separating blocking gaps from unassessed dimensions",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Program Lead",
+      "test_locations": [
+        "tests/test_red_team.py::test_the_release_evaluation_separates_blocking_gaps_from_missing_evidence",
+        "tests/test_red_team.py::test_every_required_evaluation_dimension_is_declared",
+        "tests/test_red_team.py::test_generated_assurance_reports_are_committed_and_current"
+      ],
+      "artifact_refs": [
+        "src/polaris/assurance/release_eval.py",
+        "evidence/reports/M09-release-evaluation.json",
+        "docs/assurance/M09-remediation-ledger.md",
+        "docs/assurance/M09-independent-review.md"
+      ]
+    },
+    {
       "id": "VER-PLN-011",
       "title": "Approval human-factors validation sessions with clinician participants",
       "kind": "planned_study",

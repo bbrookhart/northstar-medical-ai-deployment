@@ -90,14 +90,31 @@ and hardened container are implemented and tested.
 | Deferred | Vulnerability scanning, artifact signing, build provenance | `NS-EXC-005` |
 | Blocked | Protected-branch release gate | `LIM-006`; needs a plan that permits it |
 
-## Now — M09 full assurance and red team
+## Open — M09 full assurance and red team
 
-- Versioned evaluation manifest tying results to a revision, configuration, and dataset (`REQ-SDL-003`)
-- Direct, indirect, stored, obfuscated, multilingual, and encoded injection campaign (`REQ-SDL-004`)
-- Exfiltration, poisoning, tool and identity abuse, action mutation and replay, and consumption
-- Remediation ledger and independent review simulation
+**The M09 gate is not met** (`EVD-M09-001`). The campaign and evaluation are built and enforced; the
+gate fails on open findings, not on missing work.
 
-M09 gate: no open critical or high release blockers, and residual risk receives named approval.
+| State | Work item | Exit evidence |
+|---|---|---|
+| Complete | Adversarial campaign across all 14 classes with control attribution | `VER-SDL-003` |
+| Complete | Release evaluation across all 11 dimensions | `VER-SDL-004` |
+| Complete | Remediation ledger and simulated independent review | `NS-ASR-006`, `NS-ASR-007` |
+| Open (high) | Campaign against a real language model | `RT-F1`; `BLK-004` |
+| Open (high) | Accessibility evidence | `RE-F1`; `BLK-003` |
+| Open (high) | Executed recovery exercises | `RE-F4`; `NS-EXC-004` |
+| Open (high) | DPIA re-review and clinician-reviewed safety suite | `RE-F5` |
+| Open (medium) | Independent adversarial authorship | `RT-F3` |
+
+## Now — M10 operations and incident readiness
+
+- Telemetry content rules carrying correlation, decision, and versions without prohibited content
+- Detection-as-code for the refusal and containment outcomes the campaign produces
+- Runbooks, dashboards, and an AI incident tabletop
+- Kill, rollback, degraded-mode, and restore exercises — the only high M09 finding closable without a
+  real provider, real clinicians, or a real deployment (`RE-F4`)
+
+M10 gate: operators demonstrate detection, containment, safe degradation, and recovery.
 
 ## Later — M07 through M12
 

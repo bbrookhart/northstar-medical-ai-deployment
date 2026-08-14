@@ -205,3 +205,27 @@ Signing, provenance, and scanning need a publishing pipeline that does not exist
 would produce artifacts nobody verifies, which is why they are deferred explicitly rather than
 approximated. This is not a SLSA level claim, a vulnerability posture claim, or authorization to
 publish anything.
+
+## Current gate assessment — M09
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Adversarial coverage of every required class | `VER-SDL-003`; 14/14 classes, coverage asserted by test | Pass |
+| Containment with control attribution | `EVD-M09-002`; 21/21 contained, each naming the control that held | Pass for the deterministic stack |
+| Campaign determinism and drift enforcement | `VER-SDL-003`; identical across runs, checked by `make verify` and CI | Pass |
+| Release evaluation across all required dimensions | `VER-SDL-004`; 11 dimensions declared with status and thresholds | Pass |
+| Function, authorization, security, grounding | `EVD-M09-001` | Assessed |
+| Privacy, safety, robustness | `EVD-M09-001` | Partial |
+| Accessibility, performance, cost, recovery | `EVD-M09-001` | **Not assessed** |
+| Campaign against a real language model | `RT-F1`; blocked by `BLK-004`/`REQ-AI-002` | **Not assessed** |
+| Independent adversarial authorship | `RT-F3`; same author as the controls | **Not assessed** |
+| No open critical or high blocker | `docs/assurance/M09-remediation-ledger.md`; four high findings open | **Fail** |
+| Named residual-risk approval | — | **Not assessed**; no real accountable person exists |
+
+**Decision:** **Fail — the gate is not met.** Every attack was contained, and the release evaluation
+still refuses a release: `RT-F1`, `RE-F1`, `RE-F4`, and `RE-F5` are open high-severity findings, and
+`REQ-SDL-005` forbids proceeding with any of them.
+
+Passing an attack suite is not the same as being releasable. No finding was reclassified to fit a
+decision, and no residual risk is accepted — a simulated signature on a release decision would be the
+most misleading artifact in this repository.
