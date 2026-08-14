@@ -1,8 +1,8 @@
 # Project Polaris Status
 
 **Status date:** 2026-08-14  
-**Current milestone:** M11 — Pilot, change control, audit, and retirement  
-**Last gate:** **M10 does not pass** — five drills executed and met their objectives, but no operator demonstrated anything and no tabletop has been run (`EVD-M10-001`); M09, M07 also do not pass, and M08 is conditional under `NS-EXC-005`  
+**Current milestone:** M12 — Recruiter case study and training conversion  
+**Last gate:** **M11 does not pass by decision** — pilot authorization is refused because all seven entry conditions are unmet and no accountable person exists to grant it (`EVD-M11-001`); M07, M09, and M10 also do not pass, and M04 and M08 are conditional  
 **Overall status:** On track for the authorized synthetic simulation scope
 
 ## Completed
@@ -162,6 +162,13 @@
   proven by test
 - Five executed game-day drills: independent kill switch, corpus rollback, safe degraded mode,
   restart recovery, and SQLite backup/restore with audit-chain verification
+- Change-impact analysis over the AI bill of materials, deciding what a model, prompt, corpus, tool,
+  autonomy, evaluation, or dependency change obliges before release
+- An audit package indexing every existing evidence artifact by digest alongside the open blockers
+  and unmet gates, read from the gate record rather than restated
+- An executed retirement: capabilities revoked before deletion, operational data removed, the audit
+  chain and revocation record retained, and the retired deployment confirmed to serve nothing
+- A simulated governance board decision that **refuses** pilot authorization
 
 ## Not yet assessed or approved
 
@@ -186,10 +193,13 @@
 |---|---|
 | Formatting | Pass |
 | Ruff lint/security rules | Pass |
-| Strict mypy across `src` and `tests` | Pass; 95 source/test files |
-| Pytest | Pass; 451 default-suite tests plus 1 HAPI integration test |
-| Coverage | 87.45%; enforced floor 85% |
+| Strict mypy across `src` and `tests` | Pass; 100 source/test files |
+| Pytest | Pass; 465 default-suite tests plus 1 HAPI integration test |
+| Coverage | 87.88%; enforced floor 85% |
 | Game-day drills | Pass; 5/5 objectives met for the local scope |
+| Retirement exercise | Pass; 5/5 steps met for local synthetic data |
+| Audit package | Pass; 24 artifacts indexed, 0 missing |
+| Pilot authorization | **Refused**; 7/7 entry conditions unmet |
 | Release supply-chain policy | Pass; 0 blockers across 4 pinned definitions |
 | Adversarial campaign | Pass; 21/21 contained across 14/14 classes |
 | Release readiness | **Not ready**; 4 dimensions unassessed, 4 high findings open |
@@ -249,18 +259,18 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 
 ## Next safe increment
 
-Begin M11 pilot, change control, audit, and retirement. Its gate — a simulated governance board
-authorizing a pilot — is precisely the artifact this program has refused to produce, so expect it to
-fail honestly too.
+Begin M12 recruiter case study and training conversion. It is the only remaining gate this program
+can meet, because it asks for materials whose claims trace to repository evidence rather than for
+authorization from people who do not exist.
 
-The buildable parts are real: a change-impact process that decides when a modification requires
-re-evaluation, an audit package that assembles the existing evidence into something an assessor
-could sample, and an executable data-deletion and access-revocation exercise for the retirement path.
+The material to draw on is unusually specific: five gates unmet or conditional, five live exceptions,
+six open blockers, a refused pilot authorization, and a set of defects that only surfaced by running
+things — a scanner that rejected the policy prohibiting diagnosis, a drill that asserted the wrong
+half of a control, a vacuous red-team case, a virtualenv that failed after relocation.
 
-Four milestones now stand explicitly unfinished — M07 (human factors), M08 (conditional under
-`NS-EXC-005`), M09 (open high findings), and M10 (no operators, no tabletop). None should be
-reported as complete, and the count going up rather than down is the honest result of gates that
-ask for evidence a simulation cannot produce.
+Every claim in the portfolio and the training material must trace to one of those artifacts. A
+case study that presents the refusals as the result is more credible than one that presents a green
+board, and it is also the only version that is true.
 
 Do not connect a hosted provider. `REQ-AI-002`'s criteria and `BLK-004`'s due diligence are both
 still open, and the adapter is deliberately inert until they close.

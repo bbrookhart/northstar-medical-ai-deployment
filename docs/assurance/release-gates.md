@@ -249,3 +249,25 @@ no operator demonstrated anything and no tabletop has been run.
 
 Recovery moves from **not assessed** to **partial**: the local drills are real, and the production
 exercises that `RE-F4` refers to remain unexecuted.
+
+## Current gate assessment — M11
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Change-impact process | `VER-LCM-001`; AIBOM diff across model, prompt, corpus, tool, autonomy, evaluation, and dependency classes with the obligations each triggers | Pass as a mechanism |
+| Audit package | `VER-LCM-003`; 24 artifacts indexed by digest, plus open blockers and unmet gates read from this record | Pass |
+| Retirement exercise | `VER-LCM-002`; capability revoked before deletion, operational data removed, audit chain and revocation retained, no service afterwards | Pass for local synthetic data |
+| Pilot entry conditions | `NS-PRG-003`; seven conditions, none met | **Fail** |
+| Change-impact review actually conducted | — | **Not assessed**; the analyzer is a tool, a review is people using it |
+| Provider deletion, backup expiry, legal hold, downstream termination | `BLK-001`, `REQ-DAT-007` | **Not assessed** |
+| Training, support, and correction journey | `REQ-LCM-001`, `REQ-LCM-002` | **Not assessed** |
+| Governance board authorizes a pilot | `docs/assurance/M11-governance-board-decision.md` | **Refused** |
+
+**Decision:** **Fail — the gate is not met, by decision rather than by omission.**
+
+Producing the authorization the gate asks for would have been trivial: write the document and sign it
+with role placeholders. `NS-ASR-009` refuses on two grounds — all seven pilot entry conditions are
+unmet, and no one has standing to authorize anything. A simulated signature on a pilot decision does
+not produce a weaker authorization; it produces a counterfeit one.
+
+What is authorized is continued synthetic development within the existing boundary. Nothing else.

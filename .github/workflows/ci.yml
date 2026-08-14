@@ -49,6 +49,9 @@ jobs:
       - name: Execute the operational game-day drills
         run: uv run python scripts/operations.py --check
 
+      - name: Assemble the audit package and execute the retirement exercise
+        run: uv run python scripts/lifecycle.py --check
+
       - name: Verify synthetic dataset integrity and safety
         run: uv run python scripts/synthetic_fhir.py verify
 

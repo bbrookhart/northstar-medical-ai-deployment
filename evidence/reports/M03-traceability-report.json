@@ -517,7 +517,8 @@
     {
       "control_type": "governance",
       "evidence_ids": [
-        "EVD-PLN-002"
+        "EVD-PLN-002",
+        "EVD-M11-001"
       ],
       "framework_reference_ids": [
         "FW-PRIVACY-ID-P",
@@ -529,7 +530,8 @@
       "implementation_refs": [
         "docs/risk/data-flow-inventory.md",
         "docs/risk/privacy-impact-assessment.md",
-        "docs/architecture/authoritative-relationship-and-consent-integration.md"
+        "docs/architecture/authoritative-relationship-and-consent-integration.md",
+        "src/polaris/lifecycle/retirement.py"
       ],
       "objective": "Define and test lifecycle handling for each data object, derivative, backup, and provider copy.",
       "owner": "Records Owner",
@@ -543,10 +545,11 @@
         "RSK-016",
         "RSK-023"
       ],
-      "status": "planned",
+      "status": "partial",
       "title": "Processing inventory, retention, deletion, and legal hold",
       "verification_ids": [
-        "VER-PLN-002"
+        "VER-PLN-002",
+        "VER-LCM-002"
       ]
     },
     {
@@ -672,7 +675,9 @@
         "EVD-M02-001",
         "EVD-M03-001",
         "EVD-TRC-001",
-        "EVD-M09-001"
+        "EVD-M09-001",
+        "EVD-M11-001",
+        "EVD-M11-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-GOV",
@@ -689,7 +694,10 @@
         "docs/assurance/templates/residual-risk-decision.md",
         "docs/assurance/templates/release-decision.md",
         "docs/risk/risk-register.md",
-        "PROJECT_STATUS.md"
+        "PROJECT_STATUS.md",
+        "src/polaris/lifecycle/change_impact.py",
+        "src/polaris/lifecycle/audit_package.py",
+        "docs/assurance/M11-governance-board-decision.md"
       ],
       "objective": "Gate material changes and exceptions through attributable, time-bound, evidence-backed review.",
       "owner": "AI Security Program Lead",
@@ -711,7 +719,9 @@
         "VER-GOV-001",
         "VER-REV-001",
         "VER-REV-004",
-        "VER-SDL-003"
+        "VER-SDL-003",
+        "VER-LCM-001",
+        "VER-LCM-003"
       ]
     },
     {
@@ -853,7 +863,8 @@
     {
       "control_type": "governance",
       "evidence_ids": [
-        "EVD-PLN-010"
+        "EVD-PLN-010",
+        "EVD-M11-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-GOV",
@@ -866,7 +877,10 @@
       "implementation_refs": [
         "training/README.md",
         "docs/risk/privacy-impact-assessment.md",
-        "docs/risk/clinical-safety-hazard-analysis.md"
+        "docs/risk/clinical-safety-hazard-analysis.md",
+        "src/polaris/lifecycle/retirement.py",
+        "docs/program/pilot-protocol.md",
+        "docs/assurance/M11-governance-board-decision.md"
       ],
       "objective": "Provide competent role-specific use and escalation, accessible support/correction/fallback, and verified secure retirement.",
       "owner": "Product Owner",
@@ -883,10 +897,11 @@
         "RSK-020",
         "RSK-021"
       ],
-      "status": "planned",
+      "status": "partial",
       "title": "Role training, support, rights, fallback, and retirement",
       "verification_ids": [
-        "VER-PLN-010"
+        "VER-PLN-010",
+        "VER-LCM-002"
       ]
     },
     {
@@ -2195,6 +2210,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M11-001",
         "EVD-PLN-002"
       ],
       "framework_reference_ids": [
@@ -2213,6 +2229,7 @@
       ],
       "statement": "Every data element, source, destination, purpose, classification, owner, retention, and deletion path MUST be inventoried before pilot.",
       "verification_ids": [
+        "VER-LCM-002",
         "VER-PLN-002"
       ]
     },
@@ -2354,6 +2371,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M11-001",
         "EVD-PLN-002"
       ],
       "framework_reference_ids": [
@@ -2372,6 +2390,7 @@
       ],
       "statement": "Retention, legal hold, deletion, backup expiry, and provider deletion MUST be defined and testable per data object.",
       "verification_ids": [
+        "VER-LCM-002",
         "VER-PLN-002"
       ]
     },
@@ -2484,6 +2503,8 @@
         "EVD-M02-001",
         "EVD-M03-001",
         "EVD-M09-001",
+        "EVD-M11-001",
+        "EVD-M11-002",
         "EVD-RSK-001",
         "EVD-TRC-001"
       ],
@@ -2505,6 +2526,8 @@
       "statement": "A material change to model, prompt, corpus, policy, tool, data, provider, population, jurisdiction, or autonomy MUST trigger impact review and versioned evaluation.",
       "verification_ids": [
         "VER-GOV-001",
+        "VER-LCM-001",
+        "VER-LCM-003",
         "VER-REV-001",
         "VER-REV-004",
         "VER-SDL-003"
@@ -2520,6 +2543,8 @@
         "EVD-M02-001",
         "EVD-M03-001",
         "EVD-M09-001",
+        "EVD-M11-001",
+        "EVD-M11-002",
         "EVD-RSK-001",
         "EVD-TRC-001"
       ],
@@ -2541,6 +2566,8 @@
       "statement": "Exceptions MUST identify scope, owner, rationale, compensating controls, residual risk, approver, and expiry.",
       "verification_ids": [
         "VER-GOV-001",
+        "VER-LCM-001",
+        "VER-LCM-003",
         "VER-REV-001",
         "VER-REV-004",
         "VER-SDL-003"
@@ -2931,6 +2958,7 @@
       ],
       "disposition": "planned",
       "evidence_ids": [
+        "EVD-M11-001",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -2952,6 +2980,7 @@
       ],
       "statement": "Users, approvers, operators, responders, developers, and auditors MUST receive role-specific limitations, safe-use, escalation, and incident training.",
       "verification_ids": [
+        "VER-LCM-002",
         "VER-PLN-010"
       ]
     },
@@ -2961,6 +2990,7 @@
       ],
       "disposition": "planned",
       "evidence_ids": [
+        "EVD-M11-001",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -2982,6 +3012,7 @@
       ],
       "statement": "Users MUST have support, feedback, correction, privacy complaint, safety report, and non-AI fallback paths.",
       "verification_ids": [
+        "VER-LCM-002",
         "VER-PLN-010"
       ]
     },
@@ -3024,6 +3055,7 @@
       ],
       "disposition": "planned",
       "evidence_ids": [
+        "EVD-M11-001",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -3045,6 +3077,7 @@
       ],
       "statement": "Retirement MUST revoke access/credentials, stop providers/tools, export required records, delete data/embeddings per schedule, dispose artifacts, update inventory, and verify downstream termination.",
       "verification_ids": [
+        "VER-LCM-002",
         "VER-PLN-010"
       ]
     },
@@ -3888,6 +3921,8 @@
         "EVD-M02-001",
         "EVD-M03-001",
         "EVD-M09-001",
+        "EVD-M11-001",
+        "EVD-M11-002",
         "EVD-RSK-001",
         "EVD-TRC-001"
       ],
@@ -3909,6 +3944,8 @@
       "statement": "A release MUST NOT proceed with an open critical/high gate blocker; accepted residual risk MUST be named, evidence-based, time-bound, monitored, and approved.",
       "verification_ids": [
         "VER-GOV-001",
+        "VER-LCM-001",
+        "VER-LCM-003",
         "VER-REV-001",
         "VER-REV-004",
         "VER-SDL-003"
@@ -3924,6 +3961,8 @@
         "EVD-M02-001",
         "EVD-M03-001",
         "EVD-M09-001",
+        "EVD-M11-001",
+        "EVD-M11-002",
         "EVD-RSK-001",
         "EVD-TRC-001"
       ],
@@ -3945,6 +3984,8 @@
       "statement": "Evidence MUST be reproducible, minimal, public-safe where published, and traceable to a revision, configuration, test corpus, owner, and decision.",
       "verification_ids": [
         "VER-GOV-001",
+        "VER-LCM-001",
+        "VER-LCM-003",
         "VER-REV-001",
         "VER-REV-004",
         "VER-SDL-003"
@@ -5386,18 +5427,18 @@
     "controls": {
       "by_status": {
         "implemented": 2,
-        "partial": 25,
-        "planned": 4
+        "partial": 27,
+        "planned": 2
       },
       "total": 31
     },
     "evidence": {
       "by_status": {
-        "existing": 19,
-        "generated": 5,
+        "existing": 20,
+        "generated": 6,
         "planned": 12
       },
-      "total": 36
+      "total": 38
     },
     "framework_sources": {
       "by_status": {
@@ -5436,9 +5477,9 @@
     "verifications": {
       "by_status": {
         "planned": 12,
-        "verified": 55
+        "verified": 58
       },
-      "total": 67
+      "total": 70
     }
   },
   "validation": {

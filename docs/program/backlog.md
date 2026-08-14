@@ -122,15 +122,31 @@ gate asks for an operator demonstration and there are no operators.
 | Deferred | Production recovery exercises | `NS-EXC-004`, `RE-F4` |
 | Open | Approved SLOs, RTO, RPO (`REQ-OPS-006`) | Needs a named owner |
 
-## Now — M11 pilot, change control, audit, and retirement
+## Open — M11 pilot, change control, audit, and retirement
 
-- Change-impact process deciding when a modification requires re-evaluation
-- Audit package assembling existing evidence into something an assessor could sample
-- Executable data-deletion and access-revocation exercise for the retirement path
-- Pilot protocol and monitoring thresholds
+**The M11 gate is not met, by decision** (`EVD-M11-001`). The mechanisms work; the authorization was
+refused.
 
-M11 gate: a simulated governance board authorizes pilot and later production or retirement
-decisions — an authorization this program has consistently refused to simulate.
+| State | Work item | Exit evidence |
+|---|---|---|
+| Complete | Change-impact analysis over the AIBOM | `VER-LCM-001` |
+| Complete | Audit package with digests, blockers, and unmet gates | `VER-LCM-003` |
+| Complete | Executed retirement exercise | `VER-LCM-002`, `EVD-M11-002` |
+| Complete | Pilot protocol and monitoring thresholds | `NS-PRG-003` (specified, unauthorized) |
+| **Refused** | Governance board pilot authorization | `NS-ASR-009`; 7/7 entry conditions unmet, no accountable person |
+| Open | Provider deletion, backup expiry, legal hold | `BLK-001`, `REQ-DAT-007` |
+| Open | Training, support, and correction journey | `REQ-LCM-001`, `REQ-LCM-002` |
+
+## Now — M12 recruiter case study and training conversion
+
+- Executive and technical case studies whose every claim traces to a repository artifact
+- Architecture and evidence tour following risk → requirement → control → implementation → test → gate
+- Demo script covering the refusals, not only the passes
+- Learner labs, solutions, assessments, and instructor notes with a lab safety contract
+- Licensing and attribution register (`DEC-001`)
+
+M12 gate: an independent learner can reproduce the labs, and portfolio claims trace to repository
+evidence. This is the only remaining gate the program can meet.
 
 ## Later — M07 through M12
 

@@ -81,7 +81,7 @@ The first executable slice provides:
 - signed approval receipts, expiry, reauthorization, and idempotent execution;
 - shared transactional workflow/audit state with in-memory and single-node SQLite adapters, atomic
   rollback, restart recovery, concurrency controls, tamper detection, and fail-closed readiness;
-- 451 passing default-suite tests plus one HAPI integration test, 87.45% coverage against the 85%
+- 465 passing default-suite tests plus one HAPI integration test, 87.88% coverage against the 85%
   floor, under strict lint and typing gates, green on a hosted CI runner;
 - an offline release gate that fails the build on an unpinned Action, an unpinned image, an
   unbounded dependency, a missing container hardening control, or a secret marker in a tracked file,
@@ -103,8 +103,13 @@ The first executable slice provides:
 - five executed game-day drills — independent kill switch, corpus rollback, safe degraded mode,
   restart recovery, and a backup/restore that corrupts the database and verifies the audit chain
   after restoring;
+- change-impact analysis over the AI bill of materials, so a change to the model, prompt, corpus,
+  tool surface, bounds, or evaluation thresholds cannot be reviewed as "just a config tweak";
+- an audit package indexing every evidence artifact by digest alongside the open blockers and unmet
+  gates, and an executed retirement that revokes capabilities, deletes operational data, and keeps
+  the audit chain that proves the deletion happened;
 - a typed, CI-enforced control system covering 70 requirements, 25 risks, and 78 scenarios;
-- 31 canonical controls with 67 verification definitions, 36 evidence definitions, framework
+- 31 canonical controls with 70 verification definitions, 38 evidence definitions, framework
   mappings, and honest implemented/partial/planned status; and
 - an AI system card plus simulated M02 multidisciplinary, M03 control-owner, and M04 owner reviews,
   with M04 closed as a conditional pass on four time-bound exception records.
@@ -118,8 +123,9 @@ policy rather than a language model, so M06 proves containment and not capabilit
 presentation contract is verified but no human-factors session has been run, so the milestone's gate
 is explicitly **not met**; the adversarial campaign contains every attack yet the M09 gate is also
 **not met**, because four high-severity findings are open and no release may proceed; M10's drills
-are executed but its gate is **not met** without operators or a tabletop; and no local signal client
-has ever
+are executed but its gate is **not met** without operators or a tabletop; M11's mechanisms work and
+the simulated governance board **refused** to authorize a pilot; and no local signal client has
+ever
 contacted a live provider, so nothing here demonstrates an enterprise TLS/mTLS edge, provider
 lifecycle, production flood controls, a deployed HA scheduler, metrics/SIEM/page delivery, or
 SSF/CAEP/SMART conformance.
@@ -209,6 +215,9 @@ The lab is synthetic-only, loopback-only, and intentionally has no production au
 - [M10 operations evidence — gate not met](evidence/milestones/M10-operations.md)
 - [AI incident playbooks](docs/operations/ai-incident-playbooks.md)
 - [Incident tabletop protocol](docs/assurance/M10-incident-tabletop-protocol.md)
+- [M11 lifecycle evidence — pilot refused](evidence/milestones/M11-lifecycle.md)
+- [Governance board decision — pilot authorization refused](docs/assurance/M11-governance-board-decision.md)
+- [Pilot protocol and monitoring thresholds](docs/program/pilot-protocol.md)
 - [M04 owner review](docs/assurance/M04-owner-review.md)
 - [Deferral exception records](docs/assurance/exceptions/)
 - [Security threat model](docs/risk/threat-model.md)

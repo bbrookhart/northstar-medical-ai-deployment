@@ -941,6 +941,59 @@
       ]
     },
     {
+      "id": "VER-LCM-001",
+      "title": "Change-impact analysis over the AI bill of materials with required actions",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Program Lead",
+      "test_locations": [
+        "tests/test_lifecycle.py::test_an_unchanged_bill_of_materials_requires_no_review",
+        "tests/test_lifecycle.py::test_introducing_a_hosted_provider_is_material",
+        "tests/test_lifecycle.py::test_a_changed_system_contract_is_a_prompt_change",
+        "tests/test_lifecycle.py::test_a_changed_corpus_names_what_moved",
+        "tests/test_lifecycle.py::test_adding_a_write_tool_requires_safety_and_human_factors_review",
+        "tests/test_lifecycle.py::test_loosening_a_bound_is_an_autonomy_change",
+        "tests/test_lifecycle.py::test_removing_a_kill_switch_is_an_autonomy_change",
+        "tests/test_lifecycle.py::test_lowering_an_evaluation_threshold_is_material",
+        "tests/test_lifecycle.py::test_every_change_kind_can_be_detected"
+      ],
+      "artifact_refs": [
+        "src/polaris/lifecycle/change_impact.py",
+        "evidence/milestones/M11-lifecycle.md"
+      ]
+    },
+    {
+      "id": "VER-LCM-002",
+      "title": "Executed retirement revoking capability, deleting operational data, and retaining audit",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Records Owner",
+      "test_locations": [
+        "tests/test_lifecycle.py::test_retirement_deletes_operational_data_and_keeps_the_audit_record",
+        "tests/test_lifecycle.py::test_generated_lifecycle_reports_are_committed_and_current"
+      ],
+      "artifact_refs": [
+        "src/polaris/lifecycle/retirement.py",
+        "scripts/lifecycle.py",
+        "evidence/reports/M11-retirement.json"
+      ]
+    },
+    {
+      "id": "VER-LCM-003",
+      "title": "Audit package indexing every existing artifact with open blockers and unmet gates",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Program Lead",
+      "test_locations": [
+        "tests/test_lifecycle.py::test_the_audit_package_indexes_every_existing_artifact_and_states_what_is_open"
+      ],
+      "artifact_refs": [
+        "src/polaris/lifecycle/audit_package.py",
+        "evidence/reports/M11-audit-package.json",
+        "docs/assurance/M11-governance-board-decision.md"
+      ]
+    },
+    {
       "id": "VER-PLN-012",
       "title": "AI incident tabletop across all required incident classes",
       "kind": "planned_exercise",

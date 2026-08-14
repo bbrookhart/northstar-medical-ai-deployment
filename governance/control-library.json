@@ -116,13 +116,18 @@
         "docs/assurance/templates/residual-risk-decision.md",
         "docs/assurance/templates/release-decision.md",
         "docs/risk/risk-register.md",
-        "PROJECT_STATUS.md"
+        "PROJECT_STATUS.md",
+        "src/polaris/lifecycle/change_impact.py",
+        "src/polaris/lifecycle/audit_package.py",
+        "docs/assurance/M11-governance-board-decision.md"
       ],
       "verification_ids": [
         "VER-GOV-001",
         "VER-REV-001",
         "VER-REV-004",
-        "VER-SDL-003"
+        "VER-SDL-003",
+        "VER-LCM-001",
+        "VER-LCM-003"
       ],
       "evidence_ids": [
         "EVD-GOV-002",
@@ -130,7 +135,9 @@
         "EVD-M02-001",
         "EVD-M03-001",
         "EVD-TRC-001",
-        "EVD-M09-001"
+        "EVD-M09-001",
+        "EVD-M11-001",
+        "EVD-M11-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-GOV",
@@ -196,7 +203,7 @@
       "title": "Processing inventory, retention, deletion, and legal hold",
       "objective": "Define and test lifecycle handling for each data object, derivative, backup, and provider copy.",
       "owner": "Records Owner",
-      "status": "planned",
+      "status": "partial",
       "control_type": "governance",
       "frequency": "Before pilot and annually",
       "requirement_ids": [
@@ -212,13 +219,16 @@
       "implementation_refs": [
         "docs/risk/data-flow-inventory.md",
         "docs/risk/privacy-impact-assessment.md",
-        "docs/architecture/authoritative-relationship-and-consent-integration.md"
+        "docs/architecture/authoritative-relationship-and-consent-integration.md",
+        "src/polaris/lifecycle/retirement.py"
       ],
       "verification_ids": [
-        "VER-PLN-002"
+        "VER-PLN-002",
+        "VER-LCM-002"
       ],
       "evidence_ids": [
-        "EVD-PLN-002"
+        "EVD-PLN-002",
+        "EVD-M11-001"
       ],
       "framework_reference_ids": [
         "FW-PRIVACY-ID-P",
@@ -1399,7 +1409,7 @@
       "title": "Role training, support, rights, fallback, and retirement",
       "objective": "Provide competent role-specific use and escalation, accessible support/correction/fallback, and verified secure retirement.",
       "owner": "Product Owner",
-      "status": "planned",
+      "status": "partial",
       "control_type": "governance",
       "frequency": "Before access, annually, and at retirement",
       "requirement_ids": [
@@ -1418,13 +1428,18 @@
       "implementation_refs": [
         "training/README.md",
         "docs/risk/privacy-impact-assessment.md",
-        "docs/risk/clinical-safety-hazard-analysis.md"
+        "docs/risk/clinical-safety-hazard-analysis.md",
+        "src/polaris/lifecycle/retirement.py",
+        "docs/program/pilot-protocol.md",
+        "docs/assurance/M11-governance-board-decision.md"
       ],
       "verification_ids": [
-        "VER-PLN-010"
+        "VER-PLN-010",
+        "VER-LCM-002"
       ],
       "evidence_ids": [
-        "EVD-PLN-010"
+        "EVD-PLN-010",
+        "EVD-M11-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-GOV",
