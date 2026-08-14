@@ -250,3 +250,19 @@ which is itself part of the demonstration.
 It is not a production healthcare system, legal advice, a HIPAA compliance determination, an FDA
 clearance, or evidence that any real organization is compliant. No real patient data is used
 anywhere.
+
+---
+
+## License
+
+| What | License |
+|---|---|
+| Source code — `src/`, `tests/`, `scripts/`, `infrastructure/` | [Apache License 2.0](LICENSE) |
+| Documentation, portfolio, and training material | [CC BY-NC-ND 4.0](LICENSE-DOCS.md) |
+
+Fork the code, use it commercially, build on it. Read and share the writing with credit — but the
+training package is not licensed for commercial delivery or derivative courses. Other terms are
+available on request; see [LICENSE-DOCS.md](LICENSE-DOCS.md).
+
+Third-party components and their licenses — including Synthea, from which the synthetic dataset is
+derived — are recorded in [NOTICE](NOTICE).

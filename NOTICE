@@ -1,0 +1,58 @@
+Project Polaris
+Copyright 2026 Brian Brookhart
+
+This product includes software developed for Project Polaris, an educational simulation of secure
+agentic AI adoption at a fictional healthcare enterprise. It uses synthetic data only and is not a
+production healthcare system.
+
+Source code is licensed under the Apache License 2.0 (see LICENSE). Documentation, portfolio, and
+training material are licensed under CC BY-NC-ND 4.0 (see LICENSE-DOCS.md).
+
+--------------------------------------------------------------------------------
+THIRD-PARTY COMPONENTS
+--------------------------------------------------------------------------------
+
+Synthea (synthetic patient generator)
+  Copyright The MITRE Corporation
+  Licensed under the Apache License, Version 2.0
+  https://github.com/synthetichealth/synthea
+
+  The FHIR R4 dataset in data/synthetic/ is deterministically derived from Synthea v4.0.0 output.
+  Source identifiers, names, addresses, contact details, and birth dates are removed; Restricted and
+  SYNTHETIC security labels, explicit Consent, and Provenance resources are added. Generation
+  parameters and source checksums are recorded in data/synthetic/toolchain-lock.json.
+
+  No real patient data is present. Synthea generates statistically realistic but entirely fictional
+  patients.
+
+HAPI FHIR JPA Server Starter
+  Copyright Smile CDR, Inc. and contributors
+  Licensed under the Apache License, Version 2.0
+  https://github.com/hapifhir/hapi-fhir-jpaserver-starter
+
+  Used as a pinned, disposable, loopback-only interoperability lab. It is not deployed, exposed, or
+  connected to any production service.
+
+Eclipse Temurin (JRE)
+  Copyright Eclipse Foundation and contributors
+  Licensed under the Eclipse Public License 2.0 with the GNU Classpath Exception
+  https://adoptium.net/
+
+  Used as a pinned container runtime for reproducible Synthea generation only.
+
+Python runtime dependencies
+  FastAPI, Pydantic, Uvicorn, PyJWT, and their transitive dependencies. Each is licensed by its own
+  authors under its own terms. The complete set, with versions and artifact hashes, is recorded in
+  uv.lock and enumerated in evidence/reports/M08-sbom.cdx.json (CycloneDX 1.6).
+
+--------------------------------------------------------------------------------
+STANDARDS AND FRAMEWORKS REFERENCED
+--------------------------------------------------------------------------------
+
+This repository cites publicly available standards and frameworks including HL7 FHIR R4, OpenID
+Shared Signals Framework and CAEP, RFC 8693 and RFC 8935, NIST AI RMF, NIST SP 800-53, NIST SP
+800-218, OWASP Top 10 for LLM Applications, MITRE ATLAS, WCAG 2.2, SLSA, and CycloneDX.
+
+Citing a standard is not a claim of conformance with it. Framework mappings in governance/ record
+their review status explicitly, and no certification, compliance determination, or clearance is
+claimed by this repository.
