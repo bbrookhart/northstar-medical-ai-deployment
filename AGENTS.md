@@ -8,8 +8,8 @@ This repository must demonstrate the work of an AI security engineer across stra
 
 Before making changes, read:
 
-1. `CODEX_MASTER_PROMPT.md`
-2. `PROJECT_STATUS.md`
+1. `PROJECT_STATUS.md`
+2. `docs/program/master-roadmap.md` and `docs/program/backlog.md`
 3. The relevant files under `docs/`
 
 ## Non-negotiable safety boundaries
