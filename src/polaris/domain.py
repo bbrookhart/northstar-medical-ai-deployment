@@ -614,6 +614,119 @@ class IdentityGapRecoveredEvent(BaseModel):
         return self
 
 
+class AgentCapability(StrEnum):
+    """Independently killable capabilities. Disabling one must not require disabling the others."""
+
+    MODEL = "MODEL"
+    READ = "READ"
+    WRITE = "WRITE"
+
+
+class AgentCapabilityState(BaseModel):
+    """Durable kill-switch state for one capability.
+
+    A kill switch that forgets on restart is not a kill switch, so this is persisted and
+    append-sequenced rather than held in memory.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    capability: AgentCapability
+    enabled: bool
+    sequence: int = Field(ge=1, le=2_147_483_647)
+    changed_at: datetime
+    changed_by: Identifier
+    reason: SafeText
+
+    @model_validator(mode="after")
+    def validate_change(self) -> AgentCapabilityState:
+        if self.changed_at.tzinfo is None or self.changed_at.utcoffset() is None:
+            raise ValueError("Capability change time must be timezone-aware")
+        return self
+
+
+class AgentRunState(StrEnum):
+    """Explicit orchestration states. Every transition is checked; there is no implicit path."""
+
+    RECEIVED = "RECEIVED"
+    AUTHORIZED = "AUTHORIZED"
+    RETRIEVING = "RETRIEVING"
+    MODEL_TURN = "MODEL_TURN"
+    TOOL_CALL = "TOOL_CALL"
+    VALIDATING = "VALIDATING"
+    COMPLETED = "COMPLETED"
+    REFUSED = "REFUSED"
+    HALTED = "HALTED"
+    FAILED = "FAILED"
+
+
+class AgentIntentKind(StrEnum):
+    """What the model asked for. A request, never an instruction."""
+
+    ANSWER = "ANSWER"
+    CALL_TOOL = "CALL_TOOL"
+    ABSTAIN = "ABSTAIN"
+
+
+class AgentRefusalReason(StrEnum):
+    CAPABILITY_DISABLED = "CAPABILITY_DISABLED"
+    UNAUTHORIZED = "UNAUTHORIZED"
+    UNKNOWN_TOOL = "UNKNOWN_TOOL"
+    PROHIBITED_TOOL = "PROHIBITED_TOOL"
+    INVALID_TOOL_ARGUMENTS = "INVALID_TOOL_ARGUMENTS"
+    BUDGET_EXCEEDED = "BUDGET_EXCEEDED"
+    UNGROUNDED_ANSWER = "UNGROUNDED_ANSWER"
+    FABRICATED_CITATION = "FABRICATED_CITATION"
+    SENSITIVE_DISCLOSURE = "SENSITIVE_DISCLOSURE"
+    PROHIBITED_CLINICAL_CONTENT = "PROHIBITED_CLINICAL_CONTENT"
+    OVERSIZED_OUTPUT = "OVERSIZED_OUTPUT"
+    MODEL_UNAVAILABLE = "MODEL_UNAVAILABLE"
+
+
+class AgentStep(BaseModel):
+    """One recorded transition, kept for the run transcript without model reasoning."""
+
+    model_config = ConfigDict(frozen=True)
+
+    ordinal: int = Field(ge=0, le=100)
+    state: AgentRunState
+    detail: SafeText
+
+
+class AgentRunResult(BaseModel):
+    """The outcome of one bounded run. There is no cross-run state."""
+
+    model_config = ConfigDict(frozen=True)
+
+    run_id: Identifier
+    state: AgentRunState
+    answer: str = ""
+    citations: tuple[Citation, ...] = ()
+    proposal_id: Identifier | None = None
+    refusal_reason: AgentRefusalReason | None = None
+    steps: tuple[AgentStep, ...] = ()
+    tool_calls: int = Field(default=0, ge=0, le=100)
+
+    @model_validator(mode="after")
+    def validate_outcome(self) -> AgentRunResult:
+        terminal = {
+            AgentRunState.COMPLETED,
+            AgentRunState.REFUSED,
+            AgentRunState.HALTED,
+            AgentRunState.FAILED,
+        }
+        if self.state not in terminal:
+            raise ValueError("An agent run result must be terminal")
+        if self.state is AgentRunState.COMPLETED:
+            if self.refusal_reason is not None:
+                raise ValueError("A completed run has no refusal reason")
+        elif self.refusal_reason is None:
+            raise ValueError("A non-completed run must record why")
+        if self.state is not AgentRunState.COMPLETED and (self.answer or self.citations):
+            raise ValueError("A refused, halted, or failed run returns no drafted content")
+        return self
+
+
 class AuthorizationRequest(BaseModel):
     """Immutable, payload-free input contract for every deterministic policy decision."""
 

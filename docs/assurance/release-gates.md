@@ -134,3 +134,26 @@ result, and the evaluation thresholds are met and enforced by `make verify` and 
 
 This is a controls result, not a quality result. It authorizes M06 bounded agent and model work only,
 and it is not a pilot, production, real-PHI, hosted-model, or conformance authorization.
+
+## Current gate assessment — M06
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Least-agency tool registry | `VER-AGT-001`; three static tools, one write, prohibited-capability names refused at construction | Pass |
+| Compromised-model containment | `VER-AGT-002`; scripted hostile intents cannot widen retrieval, read an unassigned patient, draft clinical direction, emit secrets, or answer ungrounded | Pass for the deterministic baseline |
+| No execution authority | `VER-AGT-001`; no execute tool exists and proposals remain pending independent approval | Pass |
+| Bounded orchestration | `VER-AGT-003`; step, tool-call, write, output, and deadline bounds halt rather than degrade | Pass for local bounds; no concurrency, retry, or cost control exists |
+| Safe model failure | `VER-AGT-003`; failure is explicit with no fabricated success and an intact audit chain | Pass |
+| Credentials and memory | `VER-AGT-002`; model requests carry no credential, identity, or prior-run state | Pass by type, not convention |
+| Independent durable kill switches | `VER-AGT-004`; MODEL, READ, and WRITE are separable and survive restart | Pass for single-node local state |
+| Hosted provider boundary | `VER-AGT-004`; the adapter refuses every call | Pass as an inert seam; `REQ-AI-002` criteria and `BLK-004` due diligence remain unmet |
+| Language-model behavior and answer quality | — | Not assessed; the adapter is a deterministic policy, not an LLM |
+| Red-team campaign against a real provider | — | Not assessed; M09 scope |
+| Agent user surface and approval human factors | — | Not assessed; M07 scope, blocked by `BLK-003` |
+
+**Decision:** **Pass** for the M06 gate as scoped — a fully compromised model cannot broaden
+retrieval, obtain a credential, bypass policy or approval, execute a prohibited action, or exceed a
+resource bound.
+
+This is a containment result, not a capability result. It authorizes M07 user-experience work only,
+and it is not a pilot, production, real-PHI, hosted-model, or conformance authorization.

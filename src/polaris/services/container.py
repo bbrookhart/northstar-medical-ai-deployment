@@ -4,6 +4,9 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import datetime
 
+from polaris.agent.killswitch import AgentKillSwitch
+from polaris.agent.model import DeterministicModelAdapter
+from polaris.agent.orchestrator import AgentOrchestrator
 from polaris.config import Settings
 from polaris.security.auth import JwtAuthenticator, TokenAuthenticator
 from polaris.security.policy import PolicyEngine
@@ -34,6 +37,8 @@ class Services:
     corpus: CorpusRegistry
     retrieval: PolicyRetrievalService
     actions: ActionService
+    agent: AgentOrchestrator
+    kill_switch: AgentKillSwitch
     state: PolarisStateStore
     identity_signal_delivery: SharedSignalsPushService | None
 
@@ -70,6 +75,16 @@ def build_services(
         clock=clock,
         state=state,
     )
+    kill_switch = AgentKillSwitch(state=state, audit=audit, clock=clock)
+    agent = AgentOrchestrator(
+        model=DeterministicModelAdapter(),
+        corpus=corpus,
+        patients=patients,
+        actions=actions,
+        audit=audit,
+        kill_switch=kill_switch,
+        clock=clock,
+    )
     return Services(
         auth=authenticator or JwtAuthenticator(settings),
         policy=policy,
@@ -78,6 +93,8 @@ def build_services(
         corpus=corpus,
         retrieval=retrieval,
         actions=actions,
+        agent=agent,
+        kill_switch=kill_switch,
         state=state,
         identity_signal_delivery=identity_signal_delivery,
     )

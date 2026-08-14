@@ -659,6 +659,81 @@
       ]
     },
     {
+      "id": "VER-AGT-001",
+      "title": "Static least-agency tool registry with read/write separation and prohibited-capability refusal",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Lead",
+      "test_locations": [
+        "tests/test_agent_boundary.py::test_the_registry_contains_only_approved_read_and_write_tools",
+        "tests/test_agent_boundary.py::test_registry_construction_refuses_a_prohibited_capability",
+        "tests/test_agent_boundary.py::test_a_compromised_model_cannot_invent_or_reach_an_unapproved_tool",
+        "tests/test_agent_boundary.py::test_a_compromised_model_cannot_execute_only_propose"
+      ],
+      "artifact_refs": [
+        "src/polaris/agent/tools.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md",
+        "evidence/milestones/M06-bounded-agent.md"
+      ]
+    },
+    {
+      "id": "VER-AGT-002",
+      "title": "Compromised-model containment across retrieval, patient access, approval, and clinical scope",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Lead",
+      "test_locations": [
+        "tests/test_agent_boundary.py::test_a_compromised_model_cannot_widen_retrieval_beyond_the_caller",
+        "tests/test_agent_boundary.py::test_a_compromised_model_cannot_read_an_unassigned_patient",
+        "tests/test_agent_boundary.py::test_a_compromised_model_cannot_propose_clinical_direction",
+        "tests/test_agent_boundary.py::test_a_compromised_model_cannot_emit_secrets_or_clinical_direction",
+        "tests/test_agent_boundary.py::test_an_ungrounded_answer_is_refused",
+        "tests/test_agent_boundary.py::test_the_model_never_receives_credentials_identity_or_prior_runs"
+      ],
+      "artifact_refs": [
+        "src/polaris/agent/orchestrator.py",
+        "src/polaris/agent/validators.py",
+        "src/polaris/agent/model.py",
+        "evidence/milestones/M06-bounded-agent.md"
+      ]
+    },
+    {
+      "id": "VER-AGT-003",
+      "title": "Bounded orchestration budgets, safe model failure, and disabled cross-session memory",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Engineering Lead",
+      "test_locations": [
+        "tests/test_agent_boundary.py::test_a_looping_model_is_halted_by_the_step_budget",
+        "tests/test_agent_boundary.py::test_oversized_model_output_is_refused_rather_than_truncated",
+        "tests/test_agent_boundary.py::test_model_failure_degrades_without_fabricated_success",
+        "tests/test_agent_boundary.py::test_the_deterministic_adapter_answers_with_citations_from_context"
+      ],
+      "artifact_refs": [
+        "src/polaris/agent/budget.py",
+        "src/polaris/agent/orchestrator.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
+      ]
+    },
+    {
+      "id": "VER-AGT-004",
+      "title": "Independent durable capability kill switches and unapproved hosted-provider refusal",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "SRE Lead",
+      "test_locations": [
+        "tests/test_agent_boundary.py::test_kill_switches_are_independent_and_durable",
+        "tests/test_agent_boundary.py::test_disabling_the_model_leaves_deterministic_retrieval_available",
+        "tests/test_agent_boundary.py::test_a_hosted_provider_is_unusable_until_its_criteria_are_approved"
+      ],
+      "artifact_refs": [
+        "src/polaris/agent/killswitch.py",
+        "src/polaris/agent/model.py",
+        "src/polaris/services/state.py",
+        "evidence/milestones/M06-bounded-agent.md"
+      ]
+    },
+    {
       "id": "VER-PLN-001",
       "title": "Enterprise OIDC, delegation, revocation, and privileged-access matrix",
       "kind": "planned_test",

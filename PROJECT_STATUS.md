@@ -1,8 +1,8 @@
 # Project Polaris Status
 
 **Status date:** 2026-08-14  
-**Current milestone:** M06 — Bounded agent and model layer (M05 closed)  
-**Last gate:** M05 passes for the deterministic baseline (`EVD-M05-001`); M04 remains a conditional pass on four time-bound exceptions  
+**Current milestone:** M07 — User experience and approval safety (M06 closed)  
+**Last gate:** M06 passes for the deterministic baseline (`EVD-M06-001`); M04 remains a conditional pass on four time-bound exceptions  
 **Overall status:** On track for the authorized synthetic simulation scope
 
 ## Completed
@@ -119,6 +119,19 @@
 - A gated retrieval golden set — security cases 100% required and met, quality cases 90% required
   and 100% met — enforced by `make verify` and CI (`EVD-M05-002`)
 - Hosted CI now also runs the retrieval evaluation and synthetic dataset checks, closing `M04-F1`
+- A bounded agent loop with an explicit transition table, a three-tool least-agency registry that
+  refuses prohibited capability names at construction, per-call authorization re-derived from the
+  principal, and no execute tool (`ADR-011`)
+- Output validation for structure, size, grounding, citation authenticity, secret and
+  context-envelope disclosure, and clinical scope, with refusal rather than truncation
+- Step, tool-call, write, output, and deadline budgets that halt a looping or oversized run
+- Model requests that carry no credential, identity, or prior-run state, and an orchestrator with
+  nowhere to hold cross-session memory
+- Independent durable MODEL/READ/WRITE kill switches (schema 11) that survive restart
+- An inert hosted-provider seam that refuses every call while `REQ-AI-002` and `BLK-004` are open
+- A compromised-model suite in which scripted hostile intents cannot widen retrieval, read an
+  unassigned patient, execute, draft clinical direction, emit secrets, answer ungrounded, or exceed
+  a bound
 
 ## Not yet assessed or approved
 
@@ -143,9 +156,9 @@
 |---|---|
 | Formatting | Pass |
 | Ruff lint/security rules | Pass |
-| Strict mypy across `src` and `tests` | Pass; 64 source/test files |
-| Pytest | Pass; 355 default-suite tests plus 1 HAPI integration test |
-| Coverage | 85.98%; enforced floor 85% |
+| Strict mypy across `src` and `tests` | Pass; 72 source/test files |
+| Pytest | Pass; 379 default-suite tests plus 1 HAPI integration test |
+| Coverage | 86.14%; enforced floor 85% |
 | Retrieval evaluation | Pass; security 100% (floor 100%), quality 100% (floor 90%) |
 | Governance traceability | Pass; 70/70 requirements, 25/25 risks, 78/78 scenarios |
 | Generated-report drift check | Pass |
@@ -173,6 +186,7 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 | ADR-008 | Use Okta as the named M04 reference profile and its constrained System Log cursor feed as compensating gap evidence, never mislabeled as SSF replay | Accepted for local simulation; durable compare-and-swap page application and exit gate verified; live conformance, procurement, and production recovery unverified |
 | ADR-009 | Specify the production persistence topology, audit custody separation, and recovery objectives as testable targets rather than implemented capability | Accepted as a design target; every exercise result is not assessed |
 | ADR-010 | Admit corpus sources by recorded decision, authorize before scoring, treat retrieved text as data, and make corpus versions identifiable and rollback-capable | Accepted; local synthetic corpus verified |
+| ADR-011 | Treat the model as an untrusted requester behind a bounded loop, re-derive authorization per call, validate output before use, and keep the hosted-provider seam inert | Accepted; compromised-model containment verified with a deterministic adapter |
 
 ## Open risks and limitations
 
@@ -185,6 +199,8 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 | LIM-005 | Deterministic keyword retrieval is not representative of model/RAG quality; the M05 thresholds measure the controls, not answer quality | Preserve the baseline as the regression oracle; introduce evaluated model adapters in M06 |
 | LIM-011 | Corpus content lives in memory and is rebuilt at startup; only the activation record is durable, and there is no authoritative ingestion pipeline, malware scanning, or human review workflow | Persist chunks and labels under the same integrity and retention controls as other state, and design the ingestion workflow, before any pilot |
 | LIM-012 | Content scanning is pattern-based with known false negatives, and topic-conflict detection depends on honest topic tagging | Treat retrieved text as data as the primary control; expand the adversarial corpus in M09 red-team work |
+| LIM-013 | The model adapter is a deterministic policy, not a language model; the compromised-model suite scripts hostile intents rather than exercising a real provider | Keep the deterministic adapter as the regression oracle; no hosted connection until `REQ-AI-002` and `BLK-004` close, then run the M09 injection campaign against it |
+| LIM-014 | Agent capabilities default to enabled when no record exists, and the agent has no user-facing surface, approval workload monitoring, concurrency, retry, or cost control | Invert the default to explicit enablement before deployment; add the M07 trusted renderer, `CTL-ACT-004` monitoring, and provider-side bounds when a provider exists |
 | LIM-006 | Branch protection and change control are unproven; hosted CI itself now passes (`EVD-M04-002`) and does not run `synthetic-data-verify` | Enable protection at publication (gated on `DEC-001`) and close the CI/Makefile divergence in M08 |
 | LIM-007 | Retention/deletion/legal-hold periods are undecided | `BLK-001`; obtain Records/Privacy/Legal approval and exercise deletion before pilot |
 | LIM-008 | Human factors, fixed emergency behavior, and accessible trusted UI are incomplete | `BLK-003`; implement and run clinician/representative-user validation |
@@ -194,15 +210,15 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 
 ## Next safe increment
 
-Begin M06 bounded agent and model layer. `render_data_only_context` must be the only path by which
-retrieved text reaches a model, and the deterministic retriever stays as the regression oracle. Build
-the explicit state machine, typed tool registry, resource budgets, and kill switch before adding any
-hosted provider adapter, and treat the model as fully compromised in the tests: it must not be able
-to broaden retrieval, obtain a credential, bypass policy or approval, execute a prohibited action, or
-exceed a resource bound.
+Begin M07 user experience and approval safety. The agent has no user surface by design: exposing one
+needs an accessible trusted renderer that displays the exact canonical action before approval, safe
+rendering of untrusted retrieved text, transparent sources and uncertainty, and reauthentication at
+the approval step. `BLK-003` blocks the milestone until clinician and representative-user validation
+exists, so build the renderer and the human-factors protocol together rather than shipping a surface
+and studying it later.
 
-Do not connect a hosted provider until the deterministic workflow passes those tests and the vendor
-review simulation exists (`BLK-004`).
+Do not connect a hosted provider. `REQ-AI-002`'s criteria and `BLK-004`'s due diligence are both
+still open, and the adapter is deliberately inert until they close.
 
 Watch the four M04 exceptions rather than letting them lapse quietly: each expires 2027-02-13 or at
 the first pilot decision, and an expired exception fails closed. Add no real PHI, hosted model,

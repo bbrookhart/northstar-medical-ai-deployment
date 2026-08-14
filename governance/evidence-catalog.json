@@ -117,6 +117,14 @@
       "scope": "Deterministic golden-set result over a separately versioned evaluation corpus containing a deliberate conflict and canary material. Security cases (authorization, poison canary) require a 100% pass rate and quality cases (grounded, unanswerable, conflict) require 90%; make verify and CI fail on an unmet threshold or a stale report. Measures the retrieval controls, not model or RAG answer quality"
     },
     {
+      "id": "EVD-M06-001",
+      "title": "M06 bounded agent and untrusted-model boundary compromised-model verification",
+      "status": "existing",
+      "owner": "AI Security Lead",
+      "artifact_path": "evidence/milestones/M06-bounded-agent.md",
+      "scope": "Local synthetic simulation with a deterministic model adapter and no hosted provider. Scripted hostile model intents cannot reach an unapproved tool, broaden retrieval beyond the caller, read an unassigned patient, execute rather than propose, draft clinical direction, emit secrets or context-envelope markers, answer without grounding, exceed step/tool/output budgets, or fabricate success on model failure. Model requests carry no credential, identity, or prior-run state, and MODEL/READ/WRITE kill switches are independent and survive restart. No claim about language-model behavior or answer quality, no red-team campaign against a real provider, no provider due diligence or authorized hosted connection, no concurrency/retry/cost controls, and no user-facing surface"
+    },
+    {
       "id": "EVD-VER-001",
       "title": "M01 local verification record",
       "status": "existing",

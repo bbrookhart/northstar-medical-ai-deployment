@@ -12,6 +12,8 @@ from pydantic import BaseModel, ValidationError
 from polaris.domain import (
     ActionExecutionResult,
     ActionProposal,
+    AgentCapability,
+    AgentCapabilityState,
     ApprovalReceipt,
     AuditEvent,
     CorpusActivation,
@@ -35,7 +37,7 @@ from polaris.domain import (
 )
 from polaris.errors import DependencyUnavailableError
 
-_SCHEMA_VERSION = "10"
+_SCHEMA_VERSION = "11"
 
 # Schema 9 gives every subject invalidation an attributable source, so a signed SET and a
 # compensating provider-log record can never be mistaken for each other. Databases written before
@@ -218,6 +220,13 @@ class StateTransaction(Protocol):
 
     def save_corpus_activation(self, activation: CorpusActivation) -> None: ...
 
+    def get_agent_capability_state(
+        self,
+        capability: AgentCapability,
+    ) -> AgentCapabilityState | None: ...
+
+    def save_agent_capability_state(self, state: AgentCapabilityState) -> None: ...
+
 
 class PolarisStateStore(Protocol):
     def transaction(self) -> AbstractContextManager[StateTransaction]: ...
@@ -248,6 +257,7 @@ class _MemoryTransaction:
         identity_gap_recovery_states: dict[str, IdentityGapRecoveryState],
         identity_gap_recovered_events: dict[str, IdentityGapRecoveredEvent],
         corpus_activations: list[CorpusActivation],
+        agent_capability_states: dict[str, AgentCapabilityState],
     ) -> None:
         self.proposals = proposals
         self.approvals = approvals
@@ -268,6 +278,7 @@ class _MemoryTransaction:
         self.identity_gap_recovery_states = identity_gap_recovery_states
         self.identity_gap_recovered_events = identity_gap_recovered_events
         self.corpus_activations = corpus_activations
+        self.agent_capability_states = agent_capability_states
         self.rollback_only = False
 
     def get_proposal(self, proposal_id: str) -> ActionProposal | None:
@@ -631,6 +642,18 @@ class _MemoryTransaction:
         _validate_corpus_activation_transition(existing, activation)
         self.corpus_activations.append(activation.model_copy(deep=True))
 
+    def get_agent_capability_state(
+        self,
+        capability: AgentCapability,
+    ) -> AgentCapabilityState | None:
+        value = self.agent_capability_states.get(capability.value)
+        return value.model_copy(deep=True) if value is not None else None
+
+    def save_agent_capability_state(self, state: AgentCapabilityState) -> None:
+        existing = self.agent_capability_states.get(state.capability.value)
+        _validate_capability_transition(existing, state)
+        self.agent_capability_states[state.capability.value] = state.model_copy(deep=True)
+
     def _validate_observed_source(self, state: IdentityStreamObservedState) -> None:
         if state.signal_id is not None:
             signal = self.identity_signals.get(state.signal_id)
@@ -794,6 +817,10 @@ class _MemoryTransaction:
             except StateIntegrityError:
                 return False
             previous[activation.corpus_id] = activation
+        for capability, capability_state in self.agent_capability_states.items():
+            AgentCapabilityState.model_validate(capability_state.model_dump())
+            if capability_state.capability.value != capability:
+                return False
         return True
 
 
@@ -822,6 +849,7 @@ class InMemoryStateStore:
         self._identity_gap_recovery_states: dict[str, IdentityGapRecoveryState] = {}
         self._identity_gap_recovered_events: dict[str, IdentityGapRecoveredEvent] = {}
         self._corpus_activations: list[CorpusActivation] = []
+        self._agent_capability_states: dict[str, AgentCapabilityState] = {}
         self._lock = RLock()
         self._local = local()
 
@@ -865,6 +893,7 @@ class InMemoryStateStore:
                 corpus_activations=[
                     activation.model_copy(deep=True) for activation in self._corpus_activations
                 ],
+                agent_capability_states=_copy_models(self._agent_capability_states),
             )
             self._local.transaction = transaction
             try:
@@ -911,6 +940,7 @@ class InMemoryStateStore:
                     activation.model_copy(deep=True)
                     for activation in transaction.corpus_activations
                 ]
+                self._agent_capability_states = _copy_models(transaction.agent_capability_states)
             finally:
                 delattr(self._local, "transaction")
 
@@ -1402,6 +1432,43 @@ class _SqliteTransaction:
         except sqlite3.IntegrityError as exc:
             raise StateIntegrityError from exc
 
+    def get_agent_capability_state(
+        self,
+        capability: AgentCapability,
+    ) -> AgentCapabilityState | None:
+        row = self._connection.execute(
+            """
+            SELECT capability, enabled, sequence, document_json
+            FROM agent_capability_states WHERE capability = ?
+            """,
+            (capability.value,),
+        ).fetchone()
+        return _parse_agent_capability_row(row) if row is not None else None
+
+    def save_agent_capability_state(self, state: AgentCapabilityState) -> None:
+        existing = self.get_agent_capability_state(state.capability)
+        _validate_capability_transition(existing, state)
+        try:
+            self._connection.execute(
+                """
+                INSERT INTO agent_capability_states (
+                    capability, enabled, sequence, document_json
+                ) VALUES (?, ?, ?, ?)
+                ON CONFLICT(capability) DO UPDATE SET
+                    enabled = excluded.enabled,
+                    sequence = excluded.sequence,
+                    document_json = excluded.document_json
+                """,
+                (
+                    state.capability.value,
+                    1 if state.enabled else 0,
+                    state.sequence,
+                    state.model_dump_json(),
+                ),
+            )
+        except sqlite3.IntegrityError as exc:
+            raise StateIntegrityError from exc
+
     def _validate_observed_source(self, state: IdentityStreamObservedState) -> None:
         if state.signal_id is not None:
             signal = self.get_identity_signal(state.signal_id)
@@ -1872,6 +1939,13 @@ class _SqliteTransaction:
             activation = _parse_corpus_activation_row(row)
             _validate_corpus_activation_transition(previous.get(activation.corpus_id), activation)
             previous[activation.corpus_id] = activation
+        for row in self._connection.execute(
+            """
+            SELECT capability, enabled, sequence, document_json
+            FROM agent_capability_states
+            """
+        ).fetchall():
+            _parse_agent_capability_row(row)
         return True
 
 
@@ -2152,8 +2226,18 @@ class SqliteStateStore:
                     document_json TEXT NOT NULL,
                     PRIMARY KEY (corpus_id, sequence)
                 ) STRICT;
+                CREATE TABLE IF NOT EXISTS agent_capability_states (
+                    capability TEXT PRIMARY KEY CHECK (
+                        capability IN ('MODEL', 'READ', 'WRITE')
+                    ),
+                    enabled INTEGER NOT NULL CHECK (enabled IN (0, 1)),
+                    sequence INTEGER NOT NULL CHECK (
+                        sequence BETWEEN 1 AND 2147483647
+                    ),
+                    document_json TEXT NOT NULL
+                ) STRICT;
                 INSERT OR IGNORE INTO schema_metadata (key, value)
-                VALUES ('schema_version', '10');
+                VALUES ('schema_version', '11');
                 COMMIT;
                 """
             )
@@ -2203,11 +2287,11 @@ class SqliteStateStore:
                            NULL, document_json
                     FROM identity_stream_observed_states_v5;
                     DROP TABLE identity_stream_observed_states_v5;
-                    UPDATE schema_metadata SET value = '10' WHERE key = 'schema_version';
+                    UPDATE schema_metadata SET value = '11' WHERE key = 'schema_version';
                     COMMIT;
                     """
                 )
-            elif row is not None and row[0] in {"1", "2", "3", "4", "6", "7", "8", "9"}:
+            elif row is not None and row[0] in {"1", "2", "3", "4", "6", "7", "8", "9", "10"}:
                 if row[0] == "2":
                     for signal_row in connection.execute(
                         "SELECT event_id, payload_hash, document_json FROM identity_signals"
@@ -2443,6 +2527,31 @@ def _parse_identity_stream_observed_state_row(
     ):
         raise StateIntegrityError
     return state
+
+
+def _parse_agent_capability_row(row: tuple[object, ...]) -> AgentCapabilityState:
+    state = _parse_model(row[3], AgentCapabilityState)
+    if state.capability.value != row[0] or int(state.enabled) != row[1] or state.sequence != row[2]:
+        raise StateIntegrityError
+    return state
+
+
+def _validate_capability_transition(
+    existing: AgentCapabilityState | None,
+    state: AgentCapabilityState,
+) -> None:
+    """Capability changes are monotonically sequenced so a stale writer cannot re-enable."""
+
+    if existing is None:
+        if state.sequence != 1:
+            raise StateIntegrityError
+        return
+    if (
+        existing.capability is not state.capability
+        or state.sequence != existing.sequence + 1
+        or state.changed_at < existing.changed_at
+    ):
+        raise StateIntegrityError
 
 
 def _parse_corpus_activation_row(row: tuple[object, ...]) -> CorpusActivation:

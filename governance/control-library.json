@@ -537,7 +537,7 @@
       "title": "Provider-neutral model boundary and vendor decision",
       "objective": "Broker model use through a typed interface only after data-use, security, continuity, and exit criteria are approved.",
       "owner": "AI Platform Lead",
-      "status": "planned",
+      "status": "partial",
       "control_type": "preventive",
       "frequency": "Each provider/model onboarding and material change",
       "requirement_ids": [
@@ -552,13 +552,17 @@
       ],
       "implementation_refs": [
         "docs/architecture/system-context.md",
-        "docs/risk/data-flow-inventory.md"
+        "docs/risk/data-flow-inventory.md",
+        "src/polaris/agent/model.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
       ],
       "verification_ids": [
-        "VER-PLN-004"
+        "VER-PLN-004",
+        "VER-AGT-004"
       ],
       "evidence_ids": [
-        "EVD-PLN-004"
+        "EVD-PLN-004",
+        "EVD-M06-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MAP",
@@ -591,16 +595,23 @@
       "implementation_refs": [
         "src/polaris/services/actions.py",
         "src/polaris/main.py",
-        "src/polaris/config.py"
+        "src/polaris/config.py",
+        "src/polaris/agent/budget.py",
+        "src/polaris/agent/orchestrator.py",
+        "src/polaris/agent/killswitch.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
       ],
       "verification_ids": [
         "VER-AUT-001",
         "VER-AUT-008",
-        "VER-PLN-005"
+        "VER-PLN-005",
+        "VER-AGT-003",
+        "VER-AGT-004"
       ],
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-005"
+        "EVD-PLN-005",
+        "EVD-M06-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",
@@ -630,16 +641,21 @@
       ],
       "implementation_refs": [
         "src/polaris/domain.py",
-        "src/polaris/services/actions.py"
+        "src/polaris/services/actions.py",
+        "src/polaris/agent/tools.py",
+        "src/polaris/agent/orchestrator.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
       ],
       "verification_ids": [
         "VER-AUT-008",
         "VER-AUT-011",
-        "VER-PLN-005"
+        "VER-PLN-005",
+        "VER-AGT-001"
       ],
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-005"
+        "EVD-PLN-005",
+        "EVD-M06-001"
       ],
       "framework_reference_ids": [
         "FW-ASI02",
@@ -670,17 +686,23 @@
       "implementation_refs": [
         "src/polaris/domain.py",
         "src/polaris/services/retrieval.py",
-        "src/polaris/services/actions.py"
+        "src/polaris/services/actions.py",
+        "src/polaris/agent/validators.py",
+        "src/polaris/agent/orchestrator.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
       ],
       "verification_ids": [
         "VER-AUT-006",
         "VER-AUT-008",
         "VER-AUT-011",
-        "VER-PLN-005"
+        "VER-PLN-005",
+        "VER-AGT-002",
+        "VER-AGT-003"
       ],
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-005"
+        "EVD-PLN-005",
+        "EVD-M06-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MEASURE",
@@ -708,13 +730,18 @@
       ],
       "implementation_refs": [
         "src/polaris/domain.py",
-        "src/polaris/services/actions.py"
+        "src/polaris/services/actions.py",
+        "src/polaris/agent/tools.py",
+        "src/polaris/agent/orchestrator.py"
       ],
       "verification_ids": [
-        "VER-AUT-008"
+        "VER-AUT-008",
+        "VER-AGT-001",
+        "VER-AGT-002"
       ],
       "evidence_ids": [
-        "EVD-VER-001"
+        "EVD-VER-001",
+        "EVD-M06-001"
       ],
       "framework_reference_ids": [
         "FW-ASI02",

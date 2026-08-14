@@ -4,7 +4,8 @@
     {
       "control_type": "preventive",
       "evidence_ids": [
-        "EVD-VER-001"
+        "EVD-VER-001",
+        "EVD-M06-001"
       ],
       "framework_reference_ids": [
         "FW-ASI02",
@@ -15,7 +16,9 @@
       "id": "CTL-ACT-001",
       "implementation_refs": [
         "src/polaris/domain.py",
-        "src/polaris/services/actions.py"
+        "src/polaris/services/actions.py",
+        "src/polaris/agent/tools.py",
+        "src/polaris/agent/orchestrator.py"
       ],
       "objective": "Restrict model-originated actions to allowlisted reversible administrative schemas and reject clinical content.",
       "owner": "Engineering Lead",
@@ -30,7 +33,9 @@
       "status": "implemented",
       "title": "Typed non-clinical reversible proposal boundary",
       "verification_ids": [
-        "VER-AUT-008"
+        "VER-AUT-008",
+        "VER-AGT-001",
+        "VER-AGT-002"
       ]
     },
     {
@@ -148,7 +153,8 @@
     {
       "control_type": "preventive",
       "evidence_ids": [
-        "EVD-PLN-004"
+        "EVD-PLN-004",
+        "EVD-M06-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MAP",
@@ -160,7 +166,9 @@
       "id": "CTL-AI-001",
       "implementation_refs": [
         "docs/architecture/system-context.md",
-        "docs/risk/data-flow-inventory.md"
+        "docs/risk/data-flow-inventory.md",
+        "src/polaris/agent/model.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
       ],
       "objective": "Broker model use through a typed interface only after data-use, security, continuity, and exit criteria are approved.",
       "owner": "AI Platform Lead",
@@ -174,17 +182,19 @@
         "RSK-016",
         "RSK-017"
       ],
-      "status": "planned",
+      "status": "partial",
       "title": "Provider-neutral model boundary and vendor decision",
       "verification_ids": [
-        "VER-PLN-004"
+        "VER-PLN-004",
+        "VER-AGT-004"
       ]
     },
     {
       "control_type": "preventive",
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-005"
+        "EVD-PLN-005",
+        "EVD-M06-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",
@@ -198,7 +208,11 @@
       "implementation_refs": [
         "src/polaris/services/actions.py",
         "src/polaris/main.py",
-        "src/polaris/config.py"
+        "src/polaris/config.py",
+        "src/polaris/agent/budget.py",
+        "src/polaris/agent/orchestrator.py",
+        "src/polaris/agent/killswitch.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
       ],
       "objective": "Constrain state, steps, tools, time, retries, concurrency, cost, and memory; exclude generic high-risk capabilities.",
       "owner": "Engineering Lead",
@@ -220,14 +234,17 @@
       "verification_ids": [
         "VER-AUT-001",
         "VER-AUT-008",
-        "VER-PLN-005"
+        "VER-PLN-005",
+        "VER-AGT-003",
+        "VER-AGT-004"
       ]
     },
     {
       "control_type": "preventive",
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-005"
+        "EVD-PLN-005",
+        "EVD-M06-001"
       ],
       "framework_reference_ids": [
         "FW-ASI02",
@@ -239,7 +256,10 @@
       "id": "CTL-AI-003",
       "implementation_refs": [
         "src/polaris/domain.py",
-        "src/polaris/services/actions.py"
+        "src/polaris/services/actions.py",
+        "src/polaris/agent/tools.py",
+        "src/polaris/agent/orchestrator.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
       ],
       "objective": "Expose only approved versioned tools with narrow schemas, per-call authorization, and separated read/write authority.",
       "owner": "AI Security Lead",
@@ -258,14 +278,16 @@
       "verification_ids": [
         "VER-AUT-008",
         "VER-AUT-011",
-        "VER-PLN-005"
+        "VER-PLN-005",
+        "VER-AGT-001"
       ]
     },
     {
       "control_type": "preventive",
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-005"
+        "EVD-PLN-005",
+        "EVD-M06-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MEASURE",
@@ -279,7 +301,10 @@
       "implementation_refs": [
         "src/polaris/domain.py",
         "src/polaris/services/retrieval.py",
-        "src/polaris/services/actions.py"
+        "src/polaris/services/actions.py",
+        "src/polaris/agent/validators.py",
+        "src/polaris/agent/orchestrator.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
       ],
       "objective": "Validate structure, meaning, authorization, data loss, grounding, and clinical scope before use and fail without fabricated success.",
       "owner": "Engineering Lead",
@@ -300,7 +325,9 @@
         "VER-AUT-006",
         "VER-AUT-008",
         "VER-AUT-011",
-        "VER-PLN-005"
+        "VER-PLN-005",
+        "VER-AGT-002",
+        "VER-AGT-003"
       ]
     },
     {
@@ -1401,6 +1428,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-VER-001"
       ],
       "framework_reference_ids": [
@@ -1418,6 +1446,8 @@
       ],
       "statement": "The model MUST be limited to proposing only allowlisted, reversible, non-clinical administrative actions with strict arguments.",
       "verification_ids": [
+        "VER-AGT-001",
+        "VER-AGT-002",
         "VER-AUT-008"
       ]
     },
@@ -1577,6 +1607,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-004"
       ],
       "framework_reference_ids": [
@@ -1596,6 +1627,7 @@
       ],
       "statement": "Model access MUST be behind a typed provider-neutral adapter; credentials MUST remain in a trusted broker and never in model context.",
       "verification_ids": [
+        "VER-AGT-004",
         "VER-PLN-004"
       ]
     },
@@ -1605,6 +1637,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-004"
       ],
       "framework_reference_ids": [
@@ -1624,6 +1657,7 @@
       ],
       "statement": "Model/provider use MUST meet approved data-use, no-training, retention, region, subprocessor, security, change-notice, incident, audit, continuity, and exit criteria.",
       "verification_ids": [
+        "VER-AGT-004",
         "VER-PLN-004"
       ]
     },
@@ -1633,6 +1667,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1655,6 +1690,8 @@
       ],
       "statement": "Orchestration MUST be an explicit bounded state machine with caps for input/output tokens, steps, tools, fan-out, time, concurrency, retries, and cost.",
       "verification_ids": [
+        "VER-AGT-003",
+        "VER-AGT-004",
         "VER-AUT-001",
         "VER-AUT-008",
         "VER-PLN-005"
@@ -1666,6 +1703,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1688,6 +1726,8 @@
       ],
       "statement": "Persistent cross-session memory MUST remain disabled in v1; any future write MUST be privileged, scoped, reviewable, expiring, and reassessed.",
       "verification_ids": [
+        "VER-AGT-003",
+        "VER-AGT-004",
         "VER-AUT-001",
         "VER-AUT-008",
         "VER-PLN-005"
@@ -1699,6 +1739,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1720,6 +1761,7 @@
       ],
       "statement": "Tools MUST be statically approved, typed, narrowly scoped, versioned, authenticated, independently authorized per call, and separated into read and write capabilities.",
       "verification_ids": [
+        "VER-AGT-001",
         "VER-AUT-008",
         "VER-AUT-011",
         "VER-PLN-005"
@@ -1731,6 +1773,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1753,6 +1796,8 @@
       ],
       "statement": "Generic shell, code execution, browser, filesystem, database, email, and unrestricted network tools MUST NOT be present in v1.",
       "verification_ids": [
+        "VER-AGT-003",
+        "VER-AGT-004",
         "VER-AUT-001",
         "VER-AUT-008",
         "VER-PLN-005"
@@ -1764,6 +1809,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1786,6 +1832,8 @@
       ],
       "statement": "Model output MUST receive structural, semantic, authorization, data-loss, citation, and clinical-safety validation before use.",
       "verification_ids": [
+        "VER-AGT-002",
+        "VER-AGT-003",
         "VER-AUT-006",
         "VER-AUT-008",
         "VER-AUT-011",
@@ -1798,6 +1846,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1820,6 +1869,8 @@
       ],
       "statement": "Model, provider, prompt, and tool failures MUST degrade safely without fabricated success or bypassed control.",
       "verification_ids": [
+        "VER-AGT-002",
+        "VER-AGT-003",
         "VER-AUT-006",
         "VER-AUT-008",
         "VER-AUT-011",
@@ -1954,6 +2005,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1976,6 +2028,8 @@
       ],
       "statement": "Rate limits, quotas, timeouts, backpressure, duplicate suppression, and circuit breakers MUST protect users, dependencies, cost, and care operations.",
       "verification_ids": [
+        "VER-AGT-003",
+        "VER-AGT-004",
         "VER-AUT-001",
         "VER-AUT-008",
         "VER-PLN-005"
@@ -5187,18 +5241,18 @@
     "controls": {
       "by_status": {
         "implemented": 2,
-        "partial": 22,
-        "planned": 7
+        "partial": 23,
+        "planned": 6
       },
       "total": 31
     },
     "evidence": {
       "by_status": {
-        "existing": 14,
+        "existing": 15,
         "generated": 2,
         "planned": 10
       },
-      "total": 26
+      "total": 27
     },
     "framework_sources": {
       "by_status": {
@@ -5237,9 +5291,9 @@
     "verifications": {
       "by_status": {
         "planned": 10,
-        "verified": 40
+        "verified": 44
       },
-      "total": 50
+      "total": 54
     }
   },
   "validation": {

@@ -47,15 +47,27 @@ durable audited rollback are implemented and gated by a retrieval golden set tha
 pipeline with malware scanning and human review, and the known limits of pattern-based scanning and
 topic-tagged conflict detection.
 
-## Now — M06 bounded model and agent
+## Completed — M06 bounded model and agent
 
-- Typed model adapter and provider contract; the deterministic retriever remains the regression oracle
-- Explicit bounded state machine, tool registry/broker, budgets, DLP and clinical validators
-- Hosted provider/vendor review simulation and data-flow/retention update
-- Direct/indirect/stored/multilingual/encoded/tool-description prompt-injection campaign
+M06 passed its gate on 2026-08-14 (`EVD-M06-001`). The explicit state machine, least-agency tool
+registry, per-call authorization, output validators, resource budgets, independent durable kill
+switches, and the inert hosted-provider seam are implemented, and a compromised-model suite proves
+the containment properties the gate names.
 
-M06 gate: treat the model as fully compromised and demonstrate that it cannot broaden retrieval,
-obtain a credential, bypass policy/approval, execute a prohibited action, or exceed resource bounds.
+Deferred with reasons recorded: hosted provider/vendor review and data-flow update remain blocked on
+`BLK-004` and `REQ-AI-002`; the direct/indirect/stored/multilingual/encoded/tool-description
+injection campaign belongs to M09 against a real provider; `LIM-013` and `LIM-014` record that the
+adapter is deterministic and that the agent has no user surface, workload monitoring, or provider-side
+bounds.
+
+## Now — M07 user experience and approval safety
+
+- Accessible trusted renderer showing the exact canonical action before approval
+- Safe rendering of untrusted retrieved text and transparent sources and uncertainty
+- Reauthentication at the approval step and fixed emergency behavior
+- Clinician and representative-user human-factors validation (`BLK-003`)
+
+M07 gate: human-factors tests show informed approval and safe refusal or degraded behavior.
 
 ## Later — M07 through M12
 

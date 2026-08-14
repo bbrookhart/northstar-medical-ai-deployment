@@ -64,14 +64,22 @@ The first executable slice provides:
   direct-identifier removal, synthetic/restricted labels, and tamper detection;
 - a pinned disposable HAPI FHIR v8.10.0-3 loopback lab and shared in-memory/HTTP broker contract;
 - Part 2-sensitive, cross-patient, cross-facility, role, and purpose denials;
+- a bounded agent loop around an untrusted model: an explicit transition table, three static tools
+  with one write capability, prohibited capability names refused at registry construction,
+  authorization re-derived from the caller on every tool call, and no execute tool at all;
+- model output validated for grounding, citation authenticity, secret disclosure, and clinical scope
+  before use, refused rather than truncated, with step, tool, output, and deadline budgets that halt
+  a looping run;
+- independent durable MODEL/READ/WRITE kill switches, and a hosted-provider seam that refuses every
+  call until its vendor criteria are approved;
 - non-clinical action proposals with independent, digest-bound human approval;
 - signed approval receipts, expiry, reauthorization, and idempotent execution;
 - shared transactional workflow/audit state with in-memory and single-node SQLite adapters, atomic
   rollback, restart recovery, concurrency controls, tamper detection, and fail-closed readiness;
-- 355 passing default-suite tests plus one HAPI integration test, 85.98% coverage against the 85%
+- 379 passing default-suite tests plus one HAPI integration test, 86.14% coverage against the 85%
   floor, under strict lint and typing gates, green on a hosted CI runner;
 - a typed, CI-enforced control system covering 70 requirements, 25 risks, and 78 scenarios;
-- 31 canonical controls with 50 verification definitions, 26 evidence definitions, framework
+- 31 canonical controls with 54 verification definitions, 27 evidence definitions, framework
   mappings, and honest implemented/partial/planned status; and
 - an AI system card plus simulated M02 multidisciplinary, M03 control-owner, and M04 owner reviews,
   with M04 closed as a conditional pass on four time-bound exception records.
@@ -80,7 +88,9 @@ The local identity, delegation, data, retrieval, state, and audit adapters are d
 non-production baselines. SQLite is a single-node simulation; the token-exchange transport and HAPI
 lab are not connected; treatment relationship and Consent are fixtures rather than authoritative
 sources; retrieval is deterministic keyword matching over an in-memory corpus, so the M05 thresholds
-measure the controls and say nothing about answer quality; and no local signal client has ever
+measure the controls and say nothing about answer quality; the model adapter is a deterministic
+policy rather than a language model, so M06 proves containment and not capability; and no local
+signal client has ever
 contacted a live provider, so nothing here demonstrates an enterprise TLS/mTLS edge, provider
 lifecycle, production flood controls, a deployed HA scheduler, metrics/SIEM/page delivery, or
 SSF/CAEP/SMART conformance.
@@ -133,6 +143,7 @@ The lab is synthetic-only, loopback-only, and intentionally has no production au
 - [Authorization decision table](docs/architecture/authorization-decision-table.md)
 - [Transactional state, audit, and recovery ADR](docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md)
 - [Secure retrieval boundary ADR](docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md)
+- [Bounded agent and model boundary ADR](docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md)
 - [Durable continuous-access identity signals ADR](docs/architecture/decisions/ADR-007-durable-identity-signals.md)
 - [Okta continuous-access reference profile ADR](docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md)
 - [Okta gap-recovery runbook](docs/operations/okta-continuous-access-gap-recovery.md)
@@ -146,6 +157,7 @@ The lab is synthetic-only, loopback-only, and intentionally has no production au
 - [M03 traceability report](evidence/reports/M03-traceability-report.md)
 - [M04 gate decision](evidence/milestones/M04-gate-decision.md)
 - [M05 secure retrieval evidence](evidence/milestones/M05-secure-retrieval.md)
+- [M06 bounded agent evidence](evidence/milestones/M06-bounded-agent.md)
 - [M04 owner review](docs/assurance/M04-owner-review.md)
 - [Deferral exception records](docs/assurance/exceptions/)
 - [Security threat model](docs/risk/threat-model.md)
