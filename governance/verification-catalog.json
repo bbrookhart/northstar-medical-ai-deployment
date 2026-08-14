@@ -890,6 +890,65 @@
       ]
     },
     {
+      "id": "VER-OPS-001",
+      "title": "Telemetry carries required investigative context and no prohibited content",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Incident Response Lead",
+      "test_locations": [
+        "tests/test_operations.py::test_a_real_request_flow_emits_investigable_telemetry",
+        "tests/test_operations.py::test_prohibited_content_in_telemetry_is_detected",
+        "tests/test_operations.py::test_missing_required_context_is_detected"
+      ],
+      "artifact_refs": [
+        "src/polaris/operations/telemetry.py",
+        "evidence/milestones/M10-operations.md"
+      ]
+    },
+    {
+      "id": "VER-OPS-002",
+      "title": "Detection-as-code covering every required category with threshold and window behavior",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Incident Response Lead",
+      "test_locations": [
+        "tests/test_operations.py::test_detections_cover_every_required_category",
+        "tests/test_operations.py::test_each_detection_fires_on_its_own_signal",
+        "tests/test_operations.py::test_a_detection_below_its_threshold_does_not_fire",
+        "tests/test_operations.py::test_an_old_cluster_does_not_keep_a_rule_permanently_lit",
+        "tests/test_operations.py::test_critical_detections_are_declared_for_containment_relevant_signals"
+      ],
+      "artifact_refs": [
+        "src/polaris/operations/detections.py",
+        "docs/operations/ai-incident-playbooks.md"
+      ]
+    },
+    {
+      "id": "VER-OPS-003",
+      "title": "Executed game-day drills for kill switch, rollback, degraded mode, restart, and restore",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "SRE Lead",
+      "test_locations": [
+        "tests/test_operations.py::test_game_day_drills_meet_their_objectives",
+        "tests/test_operations.py::test_the_generated_game_day_report_is_committed_and_current"
+      ],
+      "artifact_refs": [
+        "src/polaris/operations/gameday.py",
+        "scripts/operations.py",
+        "evidence/reports/M10-game-day.json",
+        "evidence/milestones/M10-operations.md"
+      ]
+    },
+    {
+      "id": "VER-PLN-012",
+      "title": "AI incident tabletop across all required incident classes",
+      "kind": "planned_exercise",
+      "status": "planned",
+      "owner": "Incident Response Lead",
+      "acceptance": "Run NS-ASR-008 with six to eight participants across SOC, SRE, AI security, engineering, clinical safety, and privacy. Containment precedes investigation in every scenario with the correct capability disabled; TT-05 produces an unprompted clinical safety notification; TT-06 produces no proposal to relax a freshness bound; and the after-action record names at least one playbook defect."
+    },
+    {
       "id": "VER-PLN-011",
       "title": "Approval human-factors validation sessions with clinician participants",
       "kind": "planned_study",

@@ -229,3 +229,23 @@ still refuses a release: `RT-F1`, `RE-F1`, `RE-F4`, and `RE-F5` are open high-se
 Passing an attack suite is not the same as being releasable. No finding was reclassified to fit a
 decision, and no residual risk is accepted — a simulated signature on a release decision would be the
 most misleading artifact in this repository.
+
+## Current gate assessment — M10
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Telemetry content rules | `VER-OPS-001`; required context present and prohibited content absent, over a real request flow | Pass |
+| Detection coverage | `VER-OPS-002`; 10 rules across all 10 required categories, coverage asserted by test | Pass as code; never tuned against real traffic |
+| Kill switch, rollback, degraded mode, restart, restore | `VER-OPS-003`, `EVD-M10-002`; five drills executed, all objectives met | Pass for the local single-node scope |
+| Operators demonstrate detection and containment | — | **Not assessed**; there is no on-call rotation and no participant |
+| Incident tabletop and after-action record | `VER-PLN-012`; seven scenarios specified, none run | **Not assessed**; `REQ-OPS-004` unmet, `BLK-005` open |
+| Telemetry delivery, dashboards, alert routing, paging | `NS-EXC-003` | **Not assessed** |
+| Production recovery exercises | `NS-EXC-004`, `RE-F4` | **Not assessed** |
+| Approved SLOs, RTO, RPO | `REQ-OPS-006` | **Not assessed** |
+
+**Decision:** **Fail — the gate is not met.** The criterion is that operators demonstrate detection,
+containment, safe degradation, and recovery. Five drills were executed and met their objectives, but
+no operator demonstrated anything and no tabletop has been run.
+
+Recovery moves from **not assessed** to **partial**: the local drills are real, and the production
+exercises that `RE-F4` refers to remain unexecuted.

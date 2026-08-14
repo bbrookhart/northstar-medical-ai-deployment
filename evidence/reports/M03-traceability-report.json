@@ -894,7 +894,8 @@
       "evidence_ids": [
         "EVD-VER-001",
         "EVD-M04-001",
-        "EVD-PLN-006"
+        "EVD-PLN-006",
+        "EVD-M10-001"
       ],
       "framework_reference_ids": [
         "FW-CSF-DE",
@@ -918,7 +919,8 @@
         "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
         "docs/operations/continuous-access-recovery.md",
         "docs/operations/ssf-recovery-scheduling.md",
-        "docs/operations/ssf-verification-policy.md"
+        "docs/operations/ssf-verification-policy.md",
+        "src/polaris/operations/telemetry.py"
       ],
       "objective": "Record sufficient versioned decision context without prohibited content and protect evidence integrity and access.",
       "owner": "SRE Lead",
@@ -944,7 +946,8 @@
         "VER-AUT-026",
         "VER-AUT-027",
         "VER-AUT-028",
-        "VER-PLN-006"
+        "VER-PLN-006",
+        "VER-OPS-001"
       ]
     },
     {
@@ -953,7 +956,9 @@
         "EVD-M04-001",
         "EVD-PLN-006",
         "EVD-M04-003",
-        "EVD-M04-002"
+        "EVD-M04-002",
+        "EVD-M10-001",
+        "EVD-PLN-012"
       ],
       "framework_reference_ids": [
         "FW-CSF-DE",
@@ -973,7 +978,10 @@
         "docs/operations/okta-continuous-access-gap-recovery.md",
         "docs/risk/threat-model.md",
         "docs/assurance/release-gates.md",
-        "src/polaris/security/okta_gap_recovery.py"
+        "src/polaris/security/okta_gap_recovery.py",
+        "src/polaris/operations/detections.py",
+        "docs/operations/ai-incident-playbooks.md",
+        "docs/assurance/M10-incident-tabletop-protocol.md"
       ],
       "objective": "Detect identity, injection, poisoning, DLP, tool, action, resource, drift, and control-disablement events and execute tested playbooks.",
       "owner": "Incident Response Lead",
@@ -997,14 +1005,18 @@
         "VER-AUT-028",
         "VER-AUT-029",
         "VER-AUT-030",
-        "VER-PLN-006"
+        "VER-PLN-006",
+        "VER-OPS-002",
+        "VER-PLN-012"
       ]
     },
     {
       "control_type": "corrective",
       "evidence_ids": [
         "EVD-M04-001",
-        "EVD-PLN-007"
+        "EVD-PLN-007",
+        "EVD-M10-001",
+        "EVD-M10-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",
@@ -1025,7 +1037,10 @@
         "docs/risk/clinical-safety-hazard-analysis.md",
         "docs/assurance/release-gates.md",
         "docs/architecture/decisions/ADR-009-production-persistence-and-recovery-targets.md",
-        "docs/operations/persistence-recovery-exercises.md"
+        "docs/operations/persistence-recovery-exercises.md",
+        "src/polaris/operations/gameday.py",
+        "scripts/operations.py",
+        "docs/operations/ai-incident-playbooks.md"
       ],
       "objective": "Stop read/write/model capabilities independently and recover through tested rollback, fallback, backup, restore, and reconciliation.",
       "owner": "SRE Lead",
@@ -1045,7 +1060,8 @@
         "VER-AUT-019",
         "VER-AUT-026",
         "VER-AUT-028",
-        "VER-PLN-007"
+        "VER-PLN-007",
+        "VER-OPS-003"
       ]
     },
     {
@@ -3039,6 +3055,7 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M10-001",
         "EVD-PLN-006",
         "EVD-VER-001"
       ],
@@ -3068,6 +3085,7 @@
         "VER-AUT-026",
         "VER-AUT-027",
         "VER-AUT-028",
+        "VER-OPS-001",
         "VER-PLN-006"
       ]
     },
@@ -3078,6 +3096,7 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M10-001",
         "EVD-PLN-006",
         "EVD-VER-001"
       ],
@@ -3107,6 +3126,7 @@
         "VER-AUT-026",
         "VER-AUT-027",
         "VER-AUT-028",
+        "VER-OPS-001",
         "VER-PLN-006"
       ]
     },
@@ -3119,7 +3139,9 @@
         "EVD-M04-001",
         "EVD-M04-002",
         "EVD-M04-003",
-        "EVD-PLN-006"
+        "EVD-M10-001",
+        "EVD-PLN-006",
+        "EVD-PLN-012"
       ],
       "framework_reference_ids": [
         "FW-ASI01",
@@ -3146,7 +3168,9 @@
         "VER-AUT-028",
         "VER-AUT-029",
         "VER-AUT-030",
-        "VER-PLN-006"
+        "VER-OPS-002",
+        "VER-PLN-006",
+        "VER-PLN-012"
       ]
     },
     {
@@ -3158,7 +3182,9 @@
         "EVD-M04-001",
         "EVD-M04-002",
         "EVD-M04-003",
-        "EVD-PLN-006"
+        "EVD-M10-001",
+        "EVD-PLN-006",
+        "EVD-PLN-012"
       ],
       "framework_reference_ids": [
         "FW-ASI01",
@@ -3185,7 +3211,9 @@
         "VER-AUT-028",
         "VER-AUT-029",
         "VER-AUT-030",
-        "VER-PLN-006"
+        "VER-OPS-002",
+        "VER-PLN-006",
+        "VER-PLN-012"
       ]
     },
     {
@@ -3195,6 +3223,8 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M10-001",
+        "EVD-M10-002",
         "EVD-PLN-007"
       ],
       "framework_reference_ids": [
@@ -3218,6 +3248,7 @@
         "VER-AUT-019",
         "VER-AUT-026",
         "VER-AUT-028",
+        "VER-OPS-003",
         "VER-PLN-007"
       ]
     },
@@ -3228,6 +3259,8 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M10-001",
+        "EVD-M10-002",
         "EVD-PLN-007"
       ],
       "framework_reference_ids": [
@@ -3251,6 +3284,7 @@
         "VER-AUT-019",
         "VER-AUT-026",
         "VER-AUT-028",
+        "VER-OPS-003",
         "VER-PLN-007"
       ]
     },
@@ -5359,11 +5393,11 @@
     },
     "evidence": {
       "by_status": {
-        "existing": 18,
-        "generated": 4,
-        "planned": 11
+        "existing": 19,
+        "generated": 5,
+        "planned": 12
       },
-      "total": 33
+      "total": 36
     },
     "framework_sources": {
       "by_status": {
@@ -5401,10 +5435,10 @@
     },
     "verifications": {
       "by_status": {
-        "planned": 11,
-        "verified": 52
+        "planned": 12,
+        "verified": 55
       },
-      "total": 63
+      "total": 67
     }
   },
   "validation": {

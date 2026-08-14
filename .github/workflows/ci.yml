@@ -46,6 +46,9 @@ jobs:
       - name: Run the adversarial campaign and check the release evaluation
         run: uv run python scripts/red_team.py --check
 
+      - name: Execute the operational game-day drills
+        run: uv run python scripts/operations.py --check
+
       - name: Verify synthetic dataset integrity and safety
         run: uv run python scripts/synthetic_fhir.py verify
 

@@ -106,15 +106,31 @@ gate fails on open findings, not on missing work.
 | Open (high) | DPIA re-review and clinician-reviewed safety suite | `RE-F5` |
 | Open (medium) | Independent adversarial authorship | `RT-F3` |
 
-## Now — M10 operations and incident readiness
+## Open — M10 operations and incident readiness
 
-- Telemetry content rules carrying correlation, decision, and versions without prohibited content
-- Detection-as-code for the refusal and containment outcomes the campaign produces
-- Runbooks, dashboards, and an AI incident tabletop
-- Kill, rollback, degraded-mode, and restore exercises — the only high M09 finding closable without a
-  real provider, real clinicians, or a real deployment (`RE-F4`)
+**The M10 gate is not met** (`EVD-M10-001`). The drills are executed and the detections are code; the
+gate asks for an operator demonstration and there are no operators.
 
-M10 gate: operators demonstrate detection, containment, safe degradation, and recovery.
+| State | Work item | Exit evidence |
+|---|---|---|
+| Complete | Telemetry content rules over a real request flow | `VER-OPS-001` |
+| Complete | Ten detections across all ten required categories | `VER-OPS-002` |
+| Complete | Five executed drills including backup/restore with chain verification | `VER-OPS-003`, `EVD-M10-002` |
+| Complete | Seven incident playbooks | `NS-OPS-004` (written, unexercised) |
+| Blocked | Incident tabletop and after-action record | `VER-PLN-012`, `BLK-005` |
+| Deferred | SIEM, dashboards, alert routing, paging | `NS-EXC-003` |
+| Deferred | Production recovery exercises | `NS-EXC-004`, `RE-F4` |
+| Open | Approved SLOs, RTO, RPO (`REQ-OPS-006`) | Needs a named owner |
+
+## Now — M11 pilot, change control, audit, and retirement
+
+- Change-impact process deciding when a modification requires re-evaluation
+- Audit package assembling existing evidence into something an assessor could sample
+- Executable data-deletion and access-revocation exercise for the retirement path
+- Pilot protocol and monitoring thresholds
+
+M11 gate: a simulated governance board authorizes pilot and later production or retirement
+decisions — an authorization this program has consistently refused to simulate.
 
 ## Later — M07 through M12
 

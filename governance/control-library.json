@@ -1145,7 +1145,8 @@
         "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
         "docs/operations/continuous-access-recovery.md",
         "docs/operations/ssf-recovery-scheduling.md",
-        "docs/operations/ssf-verification-policy.md"
+        "docs/operations/ssf-verification-policy.md",
+        "src/polaris/operations/telemetry.py"
       ],
       "verification_ids": [
         "VER-AUT-012",
@@ -1157,12 +1158,14 @@
         "VER-AUT-026",
         "VER-AUT-027",
         "VER-AUT-028",
-        "VER-PLN-006"
+        "VER-PLN-006",
+        "VER-OPS-001"
       ],
       "evidence_ids": [
         "EVD-VER-001",
         "EVD-M04-001",
-        "EVD-PLN-006"
+        "EVD-PLN-006",
+        "EVD-M10-001"
       ],
       "framework_reference_ids": [
         "FW-CSF-DE",
@@ -1202,19 +1205,26 @@
         "docs/operations/okta-continuous-access-gap-recovery.md",
         "docs/risk/threat-model.md",
         "docs/assurance/release-gates.md",
-        "src/polaris/security/okta_gap_recovery.py"
+        "src/polaris/security/okta_gap_recovery.py",
+        "src/polaris/operations/detections.py",
+        "docs/operations/ai-incident-playbooks.md",
+        "docs/assurance/M10-incident-tabletop-protocol.md"
       ],
       "verification_ids": [
         "VER-AUT-028",
         "VER-AUT-029",
         "VER-AUT-030",
-        "VER-PLN-006"
+        "VER-PLN-006",
+        "VER-OPS-002",
+        "VER-PLN-012"
       ],
       "evidence_ids": [
         "EVD-M04-001",
         "EVD-PLN-006",
         "EVD-M04-003",
-        "EVD-M04-002"
+        "EVD-M04-002",
+        "EVD-M10-001",
+        "EVD-PLN-012"
       ],
       "framework_reference_ids": [
         "FW-CSF-DE",
@@ -1252,17 +1262,23 @@
         "docs/risk/clinical-safety-hazard-analysis.md",
         "docs/assurance/release-gates.md",
         "docs/architecture/decisions/ADR-009-production-persistence-and-recovery-targets.md",
-        "docs/operations/persistence-recovery-exercises.md"
+        "docs/operations/persistence-recovery-exercises.md",
+        "src/polaris/operations/gameday.py",
+        "scripts/operations.py",
+        "docs/operations/ai-incident-playbooks.md"
       ],
       "verification_ids": [
         "VER-AUT-019",
         "VER-AUT-026",
         "VER-AUT-028",
-        "VER-PLN-007"
+        "VER-PLN-007",
+        "VER-OPS-003"
       ],
       "evidence_ids": [
         "EVD-M04-001",
-        "EVD-PLN-007"
+        "EVD-PLN-007",
+        "EVD-M10-001",
+        "EVD-M10-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",

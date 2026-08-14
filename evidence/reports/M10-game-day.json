@@ -1,0 +1,52 @@
+{
+  "drill_version": "2026.08.14",
+  "drills": [
+    {
+      "drill_id": "GD-01",
+      "name": "Independent kill switch",
+      "objective": "Disabling writes removes the capability from the model and refuses it if requested anyway, without stopping reads, and is reversible",
+      "objective_met": true,
+      "observed": "tool_not_offered=True forced_request_refused=CAPABILITY_DISABLED read_available=True restored=True",
+      "scope": "Local single-node stack"
+    },
+    {
+      "drill_id": "GD-02",
+      "name": "Corpus rollback",
+      "objective": "A bad corpus version can be rolled back and the change is attributable",
+      "objective_met": true,
+      "observed": "promoted=v2 rolled_back=v1 audit=['CORPUS_ACTIVATED', 'CORPUS_ACTIVATED', 'CORPUS_ROLLED_BACK']",
+      "scope": "Local single-node stack"
+    },
+    {
+      "drill_id": "GD-03",
+      "name": "Safe degraded mode",
+      "objective": "Losing the model refuses explicitly, fabricates nothing, and leaves retrieval up",
+      "objective_met": true,
+      "observed": "refusal=CAPABILITY_DISABLED fabricated=False retrieval_chunks=2",
+      "scope": "Local single-node stack"
+    },
+    {
+      "drill_id": "GD-04",
+      "name": "Restart recovery",
+      "objective": "Approvals, corpus activation, and containment survive a process restart",
+      "objective_met": true,
+      "observed": "approval_present=True corpus=v1 write_still_disabled=True",
+      "scope": "Local single-node stack"
+    },
+    {
+      "drill_id": "GD-05",
+      "name": "Backup and restore",
+      "objective": "A corrupted database is detected and a backup restores state with an intact chain",
+      "objective_met": true,
+      "observed": "corruption_detected=True approval_restored=True integrity=True audit_chain=True",
+      "scope": "SQLite file backup only; not PostgreSQL PITR (NS-EXC-004)"
+    }
+  ],
+  "executed_at": "2026-08-14T00:00:00+00:00",
+  "summary": {
+    "drills": 5,
+    "objectives_met": 5,
+    "passed": true,
+    "scope": "Single-node local simulation. These drills exercise the kill switch, corpus rollback, degraded mode, restart recovery, and SQLite file backup and restore. They do not exercise the PostgreSQL failover, point-in-time recovery, audit custody separation, or outbox reconciliation specified in docs/operations/persistence-recovery-exercises.md, which remain unexecuted."
+  }
+}
