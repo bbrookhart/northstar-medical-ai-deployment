@@ -1,7 +1,8 @@
 # Okta Continuous-Access Gap-Recovery Runbook
 
 **Scope:** Synthetic M04 reference profile only  
-**Status:** Strict read/normalization boundary verified; durable recovery workflow not implemented  
+**Status:** Read/normalization boundary and durable page application verified locally; live tenant
+operation, scheduling, and telemetry not implemented  
 **Owners:** IAM on-call, SRE on-call, SOC, and AI Security Lead
 
 ## Purpose and safety rule
@@ -81,8 +82,28 @@ For each page, the recovery orchestrator must execute this transaction:
 5. Persist the exact validated next cursor with compare-and-swap sequencing.
 6. Commit once. On any failure, roll back events, audit, counts, and cursor together.
 
-The current repository stops after step 1 and returns the next cursor. Steps 2–6 are required before
-this can recover a real gap.
+`OktaGapRecoveryController` implements steps 2–6 against the shared transactional state boundary.
+`open_incident` binds a durable incident to the initial validated cursor; `apply_next_page` fetches
+one page outside the transaction and then applies it atomically or not at all.
+
+The cursor sequence is the compare-and-swap token: a page may only be committed against the sequence
+its worker read, and every commit advances it by exactly one. Two workers that fetch the same cursor
+therefore cannot both apply it — the loser receives `CURSOR_CONFLICT`, applies nothing, and is
+audited. A provider UUID already recorded is counted as a duplicate and never reapplied, so a
+replayed page cannot move a subject watermark forward.
+
+Two exclusions are enforced in code, not only in this runbook. Recovered events may only invalidate:
+`IdentityGapRecoveredEvent` rejects any signal type other than session revocation and credential
+change, so no role, entitlement, or claim can enter through the log feed. And applying a page never
+advances the SSF stream checkpoint — a compensating read cannot manufacture the delivery freshness
+that authentication depends on.
+
+A subject watermark records which kind of evidence invalidated it. `signal_id` names a verified
+security event token; `recovered_event_id` names a minimized System Log record. The two are never
+conflated, and exactly one is required.
+
+Only the durable application path is implemented. A live tenant, its credentials, its rate limits,
+and the scheduler that drives these calls remain out of scope; see `NS-EXC-002` and `NS-EXC-003`.
 
 ## Exit criteria
 
@@ -102,6 +123,17 @@ If any condition fails, remain unavailable and escalate. Never substitute shorte
 an unsolicited verification event, a status `GET`, an empty page, or an operator assertion for the
 complete criteria.
 
+`OktaGapRecoveryController.evaluate_exit` enforces the machine-checkable subset and closes the
+incident only when every one holds at once: at least one page applied, an empty page whose cursor was
+durably committed, a fresh `enabled` status observation, a correlated verification receipt that both
+postdates the incident and is fresh, and healthy state and audit integrity. A receipt that predates
+the incident proves nothing about the gap and is rejected. Any failure returns the specific unmet
+criteria and leaves the incident open.
+
+Retention-window judgement, alert delivery, named owner approval, and the post-recovery synthetic-user
+revocation test are operator steps outside the controller. The controller closing an incident is
+therefore necessary but not sufficient for restoring authorization health.
+
 ## Required telemetry without identity payloads
 
 - stream ID hash, provider profile version, incident ID, and recovery generation;
@@ -116,8 +148,11 @@ reason text, debug context, SETs, or token claims.
 
 ## Verification and remaining blockers
 
-Run `tests/test_okta_recovery.py` and the complete `make verify` gate. `VER-AUT-029` and
-`EVD-M04-001` evidence only the scripted local boundary. Live enablement still requires actual
-final-SSF payload/discovery capture, provider feature/lifecycle confirmation, confidential-client
-and TLS design, durable cursor/application state, scheduler leader election, SIEM/page delivery,
-privacy/retention and vendor review, service objectives, game day, and attributable approval.
+Run `tests/test_okta_recovery.py`, `tests/test_okta_gap_recovery.py`, and the complete `make verify`
+gate. `VER-AUT-029` evidences the read/normalization boundary and `VER-AUT-030` the durable
+application transaction and exit gate; both use a scripted transport and generated identities.
+
+Live enablement still requires actual final-SSF payload/discovery capture, provider feature and
+lifecycle confirmation, confidential-client and TLS design, scheduler leader election, SIEM and page
+delivery, privacy/retention and vendor review, service objectives, a game day, and attributable
+approval. Those are recorded as `NS-EXC-002` and `NS-EXC-003`, not as completed work.

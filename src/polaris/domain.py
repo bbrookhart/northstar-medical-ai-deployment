@@ -137,11 +137,25 @@ class IdentitySignalRecord(BaseModel):
 
 
 class IdentitySubjectState(BaseModel):
+    """Monotonic subject invalidation watermark attributed to exactly one source.
+
+    A signed SET and a compensating provider-log record are both allowed to invalidate, but they are
+    never conflated: `signal_id` names a verified security event token, `recovered_event_id` names a
+    minimized System Log record applied during gap recovery.
+    """
+
     model_config = ConfigDict(frozen=True)
 
     subject: Identifier
     invalid_before: datetime
-    signal_id: Identifier
+    signal_id: Identifier | None = None
+    recovered_event_id: Identifier | None = None
+
+    @model_validator(mode="after")
+    def validate_source(self) -> IdentitySubjectState:
+        if (self.signal_id is None) == (self.recovered_event_id is None):
+            raise ValueError("Subject invalidation requires exactly one attributable source")
+        return self
 
 
 class IdentityTokenRevocation(BaseModel):
@@ -481,6 +495,122 @@ class IdentityStreamObservedState(BaseModel):
             != 1
         ):
             raise ValueError("Stream status observation requires exactly one source")
+        return self
+
+
+class IdentityGapIncidentStatus(StrEnum):
+    OPEN = "OPEN"
+    RECOVERING = "RECOVERING"
+    RECOVERED = "RECOVERED"
+    ABANDONED = "ABANDONED"
+
+
+INVALIDATING_IDENTITY_SIGNAL_TYPES: frozenset[IdentitySignalType] = frozenset(
+    {IdentitySignalType.SESSION_REVOKED, IdentitySignalType.CREDENTIAL_CHANGE}
+)
+
+
+class IdentityGapRecoveryState(BaseModel):
+    """Durable per-incident cursor and application counters for compensating gap recovery.
+
+    ``cursor_sequence`` is the compare-and-swap token. A page may only be applied against the
+    sequence the worker read, and every commit advances it by exactly one, so a duplicate or stale
+    worker cannot apply the same page twice or rewind the cursor.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    incident_id: Identifier
+    stream_id: Identifier
+    status: IdentityGapIncidentStatus
+    cursor_sequence: int = Field(ge=0, le=2_147_483_647)
+    next_cursor_url: str = Field(min_length=1, max_length=4096)
+    opened_at: datetime
+    updated_at: datetime
+    pages_applied: int = Field(ge=0, le=1_000_000)
+    events_applied: int = Field(ge=0, le=10_000_000)
+    events_ignored: int = Field(ge=0, le=10_000_000)
+    events_duplicate: int = Field(ge=0, le=10_000_000)
+    last_page_at: datetime | None = None
+    caught_up_at: datetime | None = None
+    closed_at: datetime | None = None
+
+    @model_validator(mode="after")
+    def validate_lifecycle(self) -> IdentityGapRecoveryState:
+        timestamps = (
+            self.opened_at,
+            self.updated_at,
+            self.last_page_at,
+            self.caught_up_at,
+            self.closed_at,
+        )
+        if any(
+            value is not None and (value.tzinfo is None or value.utcoffset() is None)
+            for value in timestamps
+        ):
+            raise ValueError("Gap recovery timestamps must be timezone-aware")
+        if self.updated_at < self.opened_at:
+            raise ValueError("Gap recovery update precedes its incident")
+        for value in (self.last_page_at, self.caught_up_at, self.closed_at):
+            if value is not None and not self.opened_at <= value <= self.updated_at:
+                raise ValueError("Gap recovery lifecycle time is outside the incident")
+        if self.cursor_sequence == 0 and (
+            self.pages_applied != 0
+            or self.events_applied != 0
+            or self.events_ignored != 0
+            or self.events_duplicate != 0
+            or self.last_page_at is not None
+            or self.caught_up_at is not None
+        ):
+            raise ValueError("An unstarted gap recovery incident has applied nothing")
+        if self.cursor_sequence != self.pages_applied:
+            raise ValueError("Gap recovery cursor sequence must count applied pages")
+        if self.last_page_at is None and self.cursor_sequence != 0:
+            raise ValueError("Applied gap recovery pages require an application time")
+        if self.status is IdentityGapIncidentStatus.OPEN and self.cursor_sequence != 0:
+            raise ValueError("An open gap recovery incident has applied no page")
+        if self.status is IdentityGapIncidentStatus.RECOVERED and (
+            self.caught_up_at is None or self.closed_at is None
+        ):
+            raise ValueError("A recovered gap incident must have caught up and closed")
+        if self.status is IdentityGapIncidentStatus.ABANDONED and self.closed_at is None:
+            raise ValueError("An abandoned gap incident must be closed")
+        if (
+            self.status in {IdentityGapIncidentStatus.OPEN, IdentityGapIncidentStatus.RECOVERING}
+            and self.closed_at is not None
+        ):
+            raise ValueError("An unresolved gap incident is not closed")
+        return self
+
+
+class IdentityGapRecoveredEvent(BaseModel):
+    """One minimized provider record applied exactly once during compensating gap recovery.
+
+    Recovered events may only invalidate. The provider feed is not an authorization source, so no
+    role, entitlement, or claim value survives normalization into this record.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    provider_event_id: Identifier
+    incident_id: Identifier
+    stream_id: Identifier
+    provider_event_type: str = Field(min_length=1, max_length=128)
+    signal_type: IdentitySignalType
+    subject: Identifier
+    effective_at: datetime
+    applied_at: datetime
+    cursor_sequence: int = Field(ge=1, le=2_147_483_647)
+
+    @model_validator(mode="after")
+    def validate_invalidating_event(self) -> IdentityGapRecoveredEvent:
+        if any(
+            value.tzinfo is None or value.utcoffset() is None
+            for value in (self.effective_at, self.applied_at)
+        ):
+            raise ValueError("Recovered event timestamps must be timezone-aware")
+        if self.signal_type not in INVALIDATING_IDENTITY_SIGNAL_TYPES:
+            raise ValueError("Recovered provider events may only invalidate")
         return self
 
 
