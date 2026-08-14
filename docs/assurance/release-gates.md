@@ -180,3 +180,28 @@ This is not a defect in the increment. The presentation contract is implemented 
 recording the milestone as passed on that basis would substitute an implementation for an operating
 control — the exact failure this gate standard exists to prevent. M07 reopens when sessions can be
 run with real clinician participants.
+
+## Current gate assessment — M08
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| SHA-pinned Actions and digest-pinned images | `VER-SDL-001`; enforced as blockers and proven by tests that break each | Pass |
+| Locked dependencies with hashed artifacts and bounded declarations | `VER-SDL-001` | Pass |
+| Container and compose hardening | `VER-SDL-001`, `EVD-M08-001`; built image runs non-root on a read-only filesystem with no package manager, compiler, or fetch tool | Pass locally |
+| Tracked-secret scan | `VER-SDL-001`; only detector modules exempt, fixtures build markers from parts | Pass |
+| SBOM | `EVD-M08-002`; CycloneDX 1.6 from the lockfile, byte-stable, drift-checked | Pass |
+| AIBOM | `EVD-M08-002`; generated from the running model, corpus, tool, bound, kill-switch, and evaluation definitions | Pass |
+| Reproducible build | `EVD-M08-001`; pinned inputs resolve identically, image builds and serves | Pass in the pinning sense; bit-for-bit reproducibility not claimed |
+| Vulnerability scanning result | `NS-EXC-005` | **Not assessed** |
+| Artifact signature | `NS-EXC-005` | **Not assessed** |
+| Build provenance attestation | `NS-EXC-005` | **Not assessed** |
+| Protected-branch release gate | `LIM-006`; rejected for a private repository on this plan | **Not assessed** |
+
+**Decision:** **Conditional pass**, on `NS-EXC-005` remaining live and unmodified. The offline
+release policy is enforced by a gate that fails the build, the bills of materials are generated and
+drift-checked, and the container was built and exercised rather than only written.
+
+Signing, provenance, and scanning need a publishing pipeline that does not exist. Simulating them
+would produce artifacts nobody verifies, which is why they are deferred explicitly rather than
+approximated. This is not a SLSA level claim, a vulnerability posture claim, or authorization to
+publish anything.

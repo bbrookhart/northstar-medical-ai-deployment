@@ -1,0 +1,151 @@
+{
+  "aibomVersion": "1.0",
+  "application": {
+    "lock_sha256": "aff99d9fa52fa2b97763e501a378d2817eb39a6a6c668671b094e6650c477c0c",
+    "name": "northstar-polaris",
+    "revision_source": "uv.lock"
+  },
+  "bounds": {
+    "concurrency_control": null,
+    "cost_control": null,
+    "cross_session_memory": false,
+    "deadline_seconds": 10.0,
+    "max_answer_characters": 2000,
+    "max_context_characters": 8000,
+    "max_steps": 8,
+    "max_tool_calls": 4,
+    "max_write_proposals": 1
+  },
+  "corpora": [
+    {
+      "admitted_documents": [
+        "POL-AI-001",
+        "POL-CC-014",
+        "POL-PRIV-007",
+        "POL-AUD-002"
+      ],
+      "chunk_count": 4,
+      "confidential_partition": [
+        "POL-AUD-002"
+      ],
+      "corpus_id": "northstar-policy",
+      "manifest_sha256": "3b5c63c133e2d2b44d82d3371034835c912e9f6dfda061eb880dfc9ce2b5d8ac",
+      "rejected_count": 4,
+      "rejections": [
+        {
+          "document_id": "POL-CC-009",
+          "reasons": [
+            "SUPERSEDED"
+          ]
+        },
+        {
+          "document_id": "POL-TMP-003",
+          "reasons": [
+            "EXPIRED"
+          ]
+        },
+        {
+          "document_id": "POL-DRAFT-004",
+          "reasons": [
+            "NOT_APPROVED"
+          ]
+        },
+        {
+          "document_id": "POL-EXT-011",
+          "reasons": [
+            "EMBEDDED_INSTRUCTION"
+          ]
+        }
+      ],
+      "version": "2026.08.14"
+    },
+    {
+      "corpus_id": "northstar-policy-eval",
+      "purpose": "evaluation only; never serves user queries",
+      "version": "2026.08.14-eval"
+    }
+  ],
+  "evaluations": [
+    {
+      "case_count": 10,
+      "index_version": "2026.08.14",
+      "name": "retrieval golden set",
+      "quality_threshold": 0.9,
+      "report": "evidence/reports/M05-retrieval-evaluation.json",
+      "security_threshold": 1.0
+    }
+  ],
+  "kill_switches": [
+    "MODEL",
+    "READ",
+    "WRITE"
+  ],
+  "models": [
+    {
+      "component": "orchestration model adapter",
+      "hosted": false,
+      "kind": "deterministic",
+      "model_id": "polaris-deterministic-v1",
+      "notes": "No hosted provider is connected. The hosted adapter refuses every call until REQ-AI-002 criteria and BLK-004 due diligence close.",
+      "provider_approved": false,
+      "system_contract_sha256": "38e9e73087f40ab31bbd5af99af81003e078fc5fcda90358634ac7c7baec56bc",
+      "training_data": "none \u2014 this is a fixed policy over supplied context, not a model"
+    }
+  ],
+  "not_included": [
+    "hosted model provider, contract, or data-flow review (BLK-004, REQ-AI-002)",
+    "embedding model or vector store \u2014 retrieval is deterministic keyword matching",
+    "fine-tuning, training, or evaluation datasets containing real data",
+    "red-team campaign results against a real provider (M09)"
+  ],
+  "prohibited_tool_tokens": [
+    "bash",
+    "browser",
+    "code",
+    "database",
+    "db",
+    "email",
+    "eval",
+    "exec",
+    "fetch",
+    "file",
+    "filesystem",
+    "http",
+    "memory",
+    "network",
+    "python",
+    "query",
+    "read_file",
+    "remember",
+    "send",
+    "shell",
+    "smtp",
+    "socket",
+    "sql",
+    "url",
+    "write_file"
+  ],
+  "tools": [
+    {
+      "arguments_schema_sha256": "5340353bb093360f291afa1d739b81e2723e5b74aa039d7cfa85a70ce1f71e4c",
+      "kind": "WRITE",
+      "name": "action.propose",
+      "operation": "action.propose",
+      "version": "1"
+    },
+    {
+      "arguments_schema_sha256": "226fa0bc8e2fd5274b74c1b5cb5ab68e1bcca81102cbd36de3a95fc3d23f8529",
+      "kind": "READ",
+      "name": "patient.summary",
+      "operation": "patient.read",
+      "version": "1"
+    },
+    {
+      "arguments_schema_sha256": "cfc8969a203adcc9407eeea30353fb3818722440b55faeb3e73ed2d103516f6d",
+      "kind": "READ",
+      "name": "policy.search",
+      "operation": "policy.query",
+      "version": "1"
+    }
+  ]
+}

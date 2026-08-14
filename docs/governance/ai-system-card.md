@@ -66,8 +66,9 @@ block pilot/production.
 ## Current assurance results
 
 As of this card version, verification passes locally and on a hosted CI runner: formatting,
-lint/security rules, strict typing, 417 default-suite tests plus one HAPI integration test, and
-86.41% coverage against the 85% floor. The retrieval golden set meets its enforced thresholds —
+lint/security rules, strict typing, 429 default-suite tests plus one HAPI integration test, and
+86.65% coverage against the 85% floor. The release supply-chain policy passes with zero blockers,
+and the generated SBOM and AIBOM are current. The retrieval golden set meets its enforced thresholds —
 security cases 100% against a 100% floor, quality cases 100% against a 90% floor — which measures
 the retrieval controls and not answer quality.
 The validator reports 100% structural mapping of 70 requirements, 25 registered risks, and 78

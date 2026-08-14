@@ -970,15 +970,19 @@
       ],
       "implementation_refs": [
         "src/polaris/config.py",
-        ".env.example"
+        ".env.example",
+        "src/polaris/supplychain/policy.py",
+        "docs/architecture/decisions/ADR-013-supply-chain-and-release-policy.md"
       ],
       "verification_ids": [
         "VER-AUT-001",
-        "VER-PLN-009"
+        "VER-PLN-009",
+        "VER-SDL-001"
       ],
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-009"
+        "EVD-PLN-009",
+        "EVD-M08-001"
       ],
       "framework_reference_ids": [
         "FW-CSF-PR-AA",
@@ -1284,16 +1288,27 @@
       "implementation_refs": [
         ".github/workflows/ci.yml",
         "uv.lock",
-        ".github/dependabot.yml"
+        ".github/dependabot.yml",
+        "src/polaris/supplychain/policy.py",
+        "src/polaris/supplychain/sbom.py",
+        "src/polaris/supplychain/aibom.py",
+        "infrastructure/container/Dockerfile",
+        "infrastructure/local/compose.polaris.yml",
+        "docs/architecture/decisions/ADR-013-supply-chain-and-release-policy.md",
+        "docs/assurance/exceptions/NS-EXC-005-artifact-signing-provenance-and-scanning.md"
       ],
       "verification_ids": [
         "VER-AUT-013",
-        "VER-PLN-009"
+        "VER-PLN-009",
+        "VER-SDL-001",
+        "VER-SDL-002"
       ],
       "evidence_ids": [
         "EVD-M03-002",
         "EVD-TRC-001",
-        "EVD-PLN-009"
+        "EVD-PLN-009",
+        "EVD-M08-001",
+        "EVD-M08-002"
       ],
       "framework_reference_ids": [
         "FW-CSF-PR-PS",

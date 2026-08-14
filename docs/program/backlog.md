@@ -77,14 +77,27 @@ specifies eight tasks with pass criteria and an empty results table.
 | Blocked | Accessible UI built with the human-factors findings | Depends on the sessions above |
 | Planned | Approval workload and anti-fatigue monitoring (`CTL-ACT-004`) | Designed from the HF-08 result |
 
-## Now — M08 secure platform and supply chain
+## Completed — M08 secure platform and supply chain
 
-- Container and local compose hardening, and a reproducible build
-- CI security suite, dependency and container scanning, and branch protection (`LIM-006`)
-- SBOM and AIBOM generation, signed artifacts, and provenance attestation
-- Secrets management and IaC patterns
+M08 is a **conditional pass** (`EVD-M08-001`). The offline release gate, generated SBOM and AIBOM,
+and hardened container are implemented and tested.
 
-M08 gate: a reproducible build and deploy passes the vulnerability and configuration release policy.
+| State | Work item | Exit evidence |
+|---|---|---|
+| Complete | Offline release policy with pinning, locking, hardening, and secret checks | `VER-SDL-001` |
+| Complete | CycloneDX SBOM and generated AIBOM, drift-checked | `VER-SDL-002`, `EVD-M08-002` |
+| Complete | Hardened container, built and smoke-tested | `EVD-M08-001` |
+| Deferred | Vulnerability scanning, artifact signing, build provenance | `NS-EXC-005` |
+| Blocked | Protected-branch release gate | `LIM-006`; needs a plan that permits it |
+
+## Now — M09 full assurance and red team
+
+- Versioned evaluation manifest tying results to a revision, configuration, and dataset (`REQ-SDL-003`)
+- Direct, indirect, stored, obfuscated, multilingual, and encoded injection campaign (`REQ-SDL-004`)
+- Exfiltration, poisoning, tool and identity abuse, action mutation and replay, and consumption
+- Remediation ledger and independent review simulation
+
+M09 gate: no open critical or high release blockers, and residual risk receives named approval.
 
 ## Later — M07 through M12
 

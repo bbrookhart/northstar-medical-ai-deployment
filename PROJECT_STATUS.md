@@ -1,8 +1,8 @@
 # Project Polaris Status
 
 **Status date:** 2026-08-14  
-**Current milestone:** M08 — Secure platform and supply chain  
-**Last gate:** **M07 does not pass** — its presentation contract is verified (`EVD-M07-001`) but the human-factors evidence the gate requires does not exist (`BLK-003`); M06 passed for the deterministic baseline and M04 remains a conditional pass on four time-bound exceptions  
+**Current milestone:** M09 — Full assurance and red team  
+**Last gate:** M08 conditional pass (`EVD-M08-001`) with signing, provenance, and scanning deferred under `NS-EXC-005`; **M07 does not pass** for want of human-factors evidence (`BLK-003`); M04 remains a conditional pass on four time-bound exceptions  
 **Overall status:** On track for the authorized synthetic simulation scope
 
 ## Completed
@@ -140,6 +140,13 @@
   with state, and uncertainty a surface cannot drop to render an abstention as an answer
 - Fixed emergency-channel routing whose result type has nowhere to record an urgency assessment,
   checked before the model is consulted
+- An offline release supply-chain gate enforcing SHA-pinned Actions, digest-pinned images, bounded
+  and hashed dependencies, container and compose hardening, and a tracked-secret scan whose only
+  exemptions are the detector modules, each proven by a test that breaks it (`ADR-013`)
+- A CycloneDX 1.6 SBOM built from the lockfile and an AIBOM generated from the running model, corpus,
+  tool, bound, kill-switch, and evaluation definitions, both committed and drift-checked
+- A hardened application container, built and smoke-tested: non-root on a read-only filesystem, no
+  package manager, compiler, or fetch tool, serving both health endpoints
 
 ## Not yet assessed or approved
 
@@ -164,9 +171,10 @@
 |---|---|
 | Formatting | Pass |
 | Ruff lint/security rules | Pass |
-| Strict mypy across `src` and `tests` | Pass; 80 source/test files |
-| Pytest | Pass; 417 default-suite tests plus 1 HAPI integration test |
-| Coverage | 86.41%; enforced floor 85% |
+| Strict mypy across `src` and `tests` | Pass; 85 source/test files |
+| Pytest | Pass; 429 default-suite tests plus 1 HAPI integration test |
+| Coverage | 86.65%; enforced floor 85% |
+| Release supply-chain policy | Pass; 0 blockers across 4 pinned definitions |
 | Retrieval evaluation | Pass; security 100% (floor 100%), quality 100% (floor 90%) |
 | Governance traceability | Pass; 70/70 requirements, 25/25 risks, 78/78 scenarios |
 | Generated-report drift check | Pass |
@@ -196,6 +204,7 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 | ADR-010 | Admit corpus sources by recorded decision, authorize before scoring, treat retrieved text as data, and make corpus versions identifiable and rollback-capable | Accepted; local synthetic corpus verified |
 | ADR-011 | Treat the model as an untrusted requester behind a bounded loop, re-derive authorization per call, validate output before use, and keep the hosted-provider seam inert | Accepted; compromised-model containment verified with a deterministic adapter |
 | ADR-012 | Render untrusted text inert server-side, derive the approval preview and its digest from one canonical action, and make state, uncertainty, and emergency routing structural | Accepted; contract verified, human-factors evidence outstanding |
+| ADR-013 | Enforce an offline release supply-chain gate, generate the SBOM and AIBOM from authoritative sources, and harden the runtime image | Accepted; signing, provenance, and scanning deferred under `NS-EXC-005` |
 
 ## Open risks and limitations
 
@@ -210,7 +219,8 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 | LIM-012 | Content scanning is pattern-based with known false negatives, and topic-conflict detection depends on honest topic tagging | Treat retrieved text as data as the primary control; expand the adversarial corpus in M09 red-team work |
 | LIM-013 | The model adapter is a deterministic policy, not a language model; the compromised-model suite scripts hostile intents rather than exercising a real provider | Keep the deterministic adapter as the regression oracle; no hosted connection until `REQ-AI-002` and `BLK-004` close, then run the M09 injection campaign against it |
 | LIM-014 | Agent capabilities default to enabled when no record exists, and the agent has no user-facing surface, approval workload monitoring, concurrency, retry, or cost control | Invert the default to explicit enablement before deployment; add the M07 trusted renderer, `CTL-ACT-004` monitoring, and provider-side bounds when a provider exists |
-| LIM-006 | Branch protection and change control are unproven; hosted CI itself now passes (`EVD-M04-002`) and does not run `synthetic-data-verify` | Enable protection at publication (gated on `DEC-001`) and close the CI/Makefile divergence in M08 |
+| LIM-006 | Branch protection and change control are unproven, so reviewed source changes hold by convention rather than enforcement | Enable protection at publication (gated on `DEC-001`); the CI/Makefile divergence closed in M08 |
+| LIM-015 | No artifact signature, build provenance, or vulnerability scan result exists, and the build is reproducible in the pinning sense only | `NS-EXC-005`; add non-blocking scanning with a review cadence, then provenance attestation and signing with a verification step a consumer runs, before publishing anything |
 | LIM-007 | Retention/deletion/legal-hold periods are undecided | `BLK-001`; obtain Records/Privacy/Legal approval and exercise deletion before pilot |
 | LIM-008 | The presentation contract and fixed emergency behavior are implemented, but no human-factors session has been run, no UI exists, and WCAG conformance is unassessed | `BLK-003`; run `NS-ASR-005` with clinician and assistive-technology participants before any pilot, and design `CTL-ACT-004` from its HF-08 result |
 | LIM-009 | Provider due diligence and operating/resilience evidence do not exist | `BLK-004`/`BLK-005`; no hosted model or pilot until verified |
@@ -219,13 +229,16 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 
 ## Next safe increment
 
-Begin M08 secure platform and supply chain, which is fully buildable without human participants:
-container and local compose hardening, a CI security suite, SBOM and AIBOM generation, signed
-artifacts and provenance, and secrets and IaC patterns. `LIM-006` already records that branch
-protection is unassessed, so change control belongs in the same increment.
+Begin M09 full assurance and red team. The adversarial campaign `REQ-SDL-004` requires — direct,
+indirect, stored, obfuscated, multilingual, and encoded injection, exfiltration, poisoning, tool and
+identity abuse, action mutation and replay, and consumption — is the part M06 explicitly deferred,
+and it can be run against the deterministic stack today: the corpus admission path, the retrieval
+partition, the tool registry, and the approval binding are all in place to attack.
 
-M07 stays open rather than complete. Its presentation contract is verified, but the gate asks whether
-real people approve safely, and that reopens only when `NS-ASR-005` sessions can be run.
+Pair it with the versioned evaluation manifest `REQ-SDL-003` asks for, so results are traceable to a
+revision, configuration, and dataset rather than to a run.
+
+M07 stays open rather than complete, and `NS-EXC-005` stays live until there is something to sign.
 
 Do not connect a hosted provider. `REQ-AI-002`'s criteria and `BLK-004`'s due diligence are both
 still open, and the adapter is deliberately inert until they close.

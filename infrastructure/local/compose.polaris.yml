@@ -1,0 +1,46 @@
+# Local Polaris application stack.
+#
+# Loopback only, read-only root filesystem, all Linux capabilities dropped, bounded resources, and
+# no privilege escalation. This is a hardened local runtime, not a production deployment: it has no
+# TLS edge, no secret manager, no orchestrator, and no observability sink.
+
+name: northstar-polaris
+
+services:
+  polaris:
+    build:
+      context: ../..
+      dockerfile: infrastructure/container/Dockerfile
+    image: northstar-polaris:local
+    init: true
+    read_only: true
+    user: "65532:65532"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    mem_limit: 512m
+    pids_limit: 128
+    cpus: 1.0
+    ports:
+      # Loopback only. Nothing about this stack is safe to expose on a network interface.
+      - "127.0.0.1:8000:8000"
+    environment:
+      POLARIS_ENVIRONMENT: development
+      POLARIS_JWT_ISSUER: https://identity.northstar.example.test
+      POLARIS_JWT_AUDIENCE: polaris-api
+      POLARIS_ACTION_TTL_SECONDS: "300"
+    env_file:
+      # Provide the three separate development keys locally; never bake them into the image.
+      - path: ../../.env
+        required: true
+    tmpfs:
+      # The read-only root filesystem still needs a scratch area for the runtime.
+      - /tmp:size=16m,mode=1777,noexec,nosuid,nodev
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health/live', timeout=2).status == 200 else 1)"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    restart: "no"

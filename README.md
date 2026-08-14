@@ -81,10 +81,17 @@ The first executable slice provides:
 - signed approval receipts, expiry, reauthorization, and idempotent execution;
 - shared transactional workflow/audit state with in-memory and single-node SQLite adapters, atomic
   rollback, restart recovery, concurrency controls, tamper detection, and fail-closed readiness;
-- 417 passing default-suite tests plus one HAPI integration test, 86.41% coverage against the 85%
+- 429 passing default-suite tests plus one HAPI integration test, 86.65% coverage against the 85%
   floor, under strict lint and typing gates, green on a hosted CI runner;
+- an offline release gate that fails the build on an unpinned Action, an unpinned image, an
+  unbounded dependency, a missing container hardening control, or a secret marker in a tracked file,
+  each proven by a test that breaks it;
+- a CycloneDX SBOM built from the lockfile and an AIBOM generated from the running model, corpus,
+  tool, bound, kill-switch, and evaluation definitions, both committed and drift-checked;
+- a hardened container that runs non-root on a read-only filesystem with no package manager,
+  compiler, or fetch tool;
 - a typed, CI-enforced control system covering 70 requirements, 25 risks, and 78 scenarios;
-- 31 canonical controls with 59 verification definitions, 29 evidence definitions, framework
+- 31 canonical controls with 61 verification definitions, 31 evidence definitions, framework
   mappings, and honest implemented/partial/planned status; and
 - an AI system card plus simulated M02 multidisciplinary, M03 control-owner, and M04 owner reviews,
   with M04 closed as a conditional pass on four time-bound exception records.
@@ -125,6 +132,17 @@ cp .env.example .env
 make run
 ```
 
+To run the same application in its hardened container instead:
+
+```bash
+make container-build
+docker compose -f infrastructure/local/compose.polaris.yml up
+```
+
+The container runs non-root on a read-only filesystem, publishes only on loopback, and contains no
+package manager. It is a hardened local runtime, not a deployment artifact: nothing is signed,
+attested, or scanned (`NS-EXC-005`).
+
 The OpenAPI UI is available at `http://127.0.0.1:8000/docs` outside production mode. Authentication
 test fixtures in `tests/conftest.py` show the required claims and purpose-of-use header. The test
 suite is the current supported end-to-end demonstration path.
@@ -151,6 +169,7 @@ The lab is synthetic-only, loopback-only, and intentionally has no production au
 - [Secure retrieval boundary ADR](docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md)
 - [Bounded agent and model boundary ADR](docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md)
 - [Trusted presentation boundary ADR](docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md)
+- [Supply chain and release policy ADR](docs/architecture/decisions/ADR-013-supply-chain-and-release-policy.md)
 - [Durable continuous-access identity signals ADR](docs/architecture/decisions/ADR-007-durable-identity-signals.md)
 - [Okta continuous-access reference profile ADR](docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md)
 - [Okta gap-recovery runbook](docs/operations/okta-continuous-access-gap-recovery.md)
@@ -167,6 +186,7 @@ The lab is synthetic-only, loopback-only, and intentionally has no production au
 - [M06 bounded agent evidence](evidence/milestones/M06-bounded-agent.md)
 - [M07 trusted presentation evidence — gate not met](evidence/milestones/M07-trusted-presentation.md)
 - [Human-factors validation protocol](docs/assurance/human-factors-validation-protocol.md)
+- [M08 supply chain evidence](evidence/milestones/M08-supply-chain.md)
 - [M04 owner review](docs/assurance/M04-owner-review.md)
 - [Deferral exception records](docs/assurance/exceptions/)
 - [Security threat model](docs/risk/threat-model.md)
