@@ -1,0 +1,617 @@
+{
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:Organization-FAC-NORTH",
+      "resource": {
+        "active": true,
+        "id": "FAC-NORTH",
+        "meta": {
+          "lastUpdated": "2026-08-11T00:00:00Z",
+          "security": [
+            {
+              "code": "R",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"
+            },
+            {
+              "code": "SYNTHETIC",
+              "system": "https://northstar.example.test/fhir/CodeSystem/data-origin"
+            }
+          ],
+          "source": "urn:northstar:synthetic:synthea-v4.0.0",
+          "versionId": "synthea-v4.0.0-northstar-v1"
+        },
+        "name": "Northstar Synthetic North Facility",
+        "resourceType": "Organization"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:Organization-FAC-SOUTH",
+      "resource": {
+        "active": true,
+        "id": "FAC-SOUTH",
+        "meta": {
+          "lastUpdated": "2026-08-11T00:00:00Z",
+          "security": [
+            {
+              "code": "R",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"
+            },
+            {
+              "code": "SYNTHETIC",
+              "system": "https://northstar.example.test/fhir/CodeSystem/data-origin"
+            }
+          ],
+          "source": "urn:northstar:synthetic:synthea-v4.0.0",
+          "versionId": "synthea-v4.0.0-northstar-v1"
+        },
+        "name": "Northstar Synthetic South Facility",
+        "resourceType": "Organization"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:Organization-NORTHSTAR-SYNTHETIC-PIPELINE",
+      "resource": {
+        "active": true,
+        "id": "NORTHSTAR-SYNTHETIC-PIPELINE",
+        "meta": {
+          "lastUpdated": "2026-08-11T00:00:00Z",
+          "security": [
+            {
+              "code": "R",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"
+            },
+            {
+              "code": "SYNTHETIC",
+              "system": "https://northstar.example.test/fhir/CodeSystem/data-origin"
+            }
+          ],
+          "source": "urn:northstar:synthetic:synthea-v4.0.0",
+          "versionId": "synthea-v4.0.0-northstar-v1"
+        },
+        "name": "Northstar Synthetic Data Pipeline",
+        "resourceType": "Organization"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:Patient-SYN-P1001",
+      "resource": {
+        "active": true,
+        "communication": [
+          {
+            "language": {
+              "coding": [
+                {
+                  "code": "es",
+                  "system": "urn:ietf:bcp:47"
+                }
+              ]
+            },
+            "preferred": true
+          }
+        ],
+        "extension": [
+          {
+            "url": "https://northstar.example.test/fhir/StructureDefinition/recent-encounter-date",
+            "valueDate": "2026-08-01"
+          },
+          {
+            "url": "https://northstar.example.test/fhir/StructureDefinition/care-coordination-flag",
+            "valueString": "routine-follow-up-due"
+          }
+        ],
+        "id": "SYN-P1001",
+        "managingOrganization": {
+          "reference": "Organization/FAC-NORTH"
+        },
+        "meta": {
+          "lastUpdated": "2026-08-11T00:00:00Z",
+          "security": [
+            {
+              "code": "R",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"
+            },
+            {
+              "code": "SYNTHETIC",
+              "system": "https://northstar.example.test/fhir/CodeSystem/data-origin"
+            }
+          ],
+          "source": "urn:northstar:synthetic:synthea-v4.0.0",
+          "versionId": "synthea-v4.0.0-northstar-v1"
+        },
+        "name": [
+          {
+            "text": "Synthea Synthetic 001",
+            "use": "official"
+          }
+        ],
+        "resourceType": "Patient"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:Consent-CNS-SYN-P1001",
+      "resource": {
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "59284-0",
+                "system": "http://loinc.org"
+              }
+            ]
+          }
+        ],
+        "dateTime": "2026-08-11T00:00:00Z",
+        "id": "CNS-SYN-P1001",
+        "meta": {
+          "lastUpdated": "2026-08-11T00:00:00Z",
+          "security": [
+            {
+              "code": "R",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"
+            },
+            {
+              "code": "SYNTHETIC",
+              "system": "https://northstar.example.test/fhir/CodeSystem/data-origin"
+            }
+          ],
+          "source": "urn:northstar:synthetic:synthea-v4.0.0",
+          "versionId": "synthea-v4.0.0-northstar-v1"
+        },
+        "patient": {
+          "reference": "Patient/SYN-P1001"
+        },
+        "performer": [
+          {
+            "reference": "Organization/FAC-NORTH"
+          }
+        ],
+        "provision": {
+          "type": "permit"
+        },
+        "resourceType": "Consent",
+        "scope": {
+          "coding": [
+            {
+              "code": "patient-privacy",
+              "system": "http://terminology.hl7.org/CodeSystem/consentscope"
+            }
+          ]
+        },
+        "status": "active"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:Provenance-PRV-SYN-P1001",
+      "resource": {
+        "activity": {
+          "coding": [
+            {
+              "code": "CREATE",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-DataOperation"
+            }
+          ]
+        },
+        "agent": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "code": "assembler",
+                  "system": "http://terminology.hl7.org/CodeSystem/provenance-participant-type"
+                }
+              ]
+            },
+            "who": {
+              "reference": "Organization/NORTHSTAR-SYNTHETIC-PIPELINE"
+            }
+          }
+        ],
+        "entity": [
+          {
+            "role": "source",
+            "what": {
+              "identifier": {
+                "system": "urn:northstar:synthea:source-sha256",
+                "value": "fce5003abf44cea772e4f710b232b4f5bb4d64da5e6764634b89a5f5b98eaaf9"
+              }
+            }
+          }
+        ],
+        "id": "PRV-SYN-P1001",
+        "meta": {
+          "lastUpdated": "2026-08-11T00:00:00Z",
+          "security": [
+            {
+              "code": "R",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"
+            },
+            {
+              "code": "SYNTHETIC",
+              "system": "https://northstar.example.test/fhir/CodeSystem/data-origin"
+            }
+          ],
+          "source": "urn:northstar:synthetic:synthea-v4.0.0",
+          "versionId": "synthea-v4.0.0-northstar-v1"
+        },
+        "recorded": "2026-08-11T00:00:00Z",
+        "resourceType": "Provenance",
+        "target": [
+          {
+            "reference": "Patient/SYN-P1001"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:Patient-SYN-P2002",
+      "resource": {
+        "active": true,
+        "communication": [
+          {
+            "language": {
+              "coding": [
+                {
+                  "code": "es",
+                  "system": "urn:ietf:bcp:47"
+                }
+              ]
+            },
+            "preferred": true
+          }
+        ],
+        "extension": [
+          {
+            "url": "https://northstar.example.test/fhir/StructureDefinition/recent-encounter-date",
+            "valueDate": "2026-08-03"
+          },
+          {
+            "url": "https://northstar.example.test/fhir/StructureDefinition/care-coordination-flag",
+            "valueString": "interpreter-preferred"
+          }
+        ],
+        "id": "SYN-P2002",
+        "managingOrganization": {
+          "reference": "Organization/FAC-SOUTH"
+        },
+        "meta": {
+          "lastUpdated": "2026-08-11T00:00:00Z",
+          "security": [
+            {
+              "code": "R",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"
+            },
+            {
+              "code": "SYNTHETIC",
+              "system": "https://northstar.example.test/fhir/CodeSystem/data-origin"
+            }
+          ],
+          "source": "urn:northstar:synthetic:synthea-v4.0.0",
+          "versionId": "synthea-v4.0.0-northstar-v1"
+        },
+        "name": [
+          {
+            "text": "Synthea Synthetic 002",
+            "use": "official"
+          }
+        ],
+        "resourceType": "Patient"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:Consent-CNS-SYN-P2002",
+      "resource": {
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "59284-0",
+                "system": "http://loinc.org"
+              }
+            ]
+          }
+        ],
+        "dateTime": "2026-08-11T00:00:00Z",
+        "id": "CNS-SYN-P2002",
+        "meta": {
+          "lastUpdated": "2026-08-11T00:00:00Z",
+          "security": [
+            {
+              "code": "R",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"
+            },
+            {
+              "code": "SYNTHETIC",
+              "system": "https://northstar.example.test/fhir/CodeSystem/data-origin"
+            }
+          ],
+          "source": "urn:northstar:synthetic:synthea-v4.0.0",
+          "versionId": "synthea-v4.0.0-northstar-v1"
+        },
+        "patient": {
+          "reference": "Patient/SYN-P2002"
+        },
+        "performer": [
+          {
+            "reference": "Organization/FAC-SOUTH"
+          }
+        ],
+        "provision": {
+          "type": "permit"
+        },
+        "resourceType": "Consent",
+        "scope": {
+          "coding": [
+            {
+              "code": "patient-privacy",
+              "system": "http://terminology.hl7.org/CodeSystem/consentscope"
+            }
+          ]
+        },
+        "status": "active"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:Provenance-PRV-SYN-P2002",
+      "resource": {
+        "activity": {
+          "coding": [
+            {
+              "code": "CREATE",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-DataOperation"
+            }
+          ]
+        },
+        "agent": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "code": "assembler",
+                  "system": "http://terminology.hl7.org/CodeSystem/provenance-participant-type"
+                }
+              ]
+            },
+            "who": {
+              "reference": "Organization/NORTHSTAR-SYNTHETIC-PIPELINE"
+            }
+          }
+        ],
+        "entity": [
+          {
+            "role": "source",
+            "what": {
+              "identifier": {
+                "system": "urn:northstar:synthea:source-sha256",
+                "value": "93d137e40e9610a1891b391cd0aecf377deed9c3a23f505761948de3210ae991"
+              }
+            }
+          }
+        ],
+        "id": "PRV-SYN-P2002",
+        "meta": {
+          "lastUpdated": "2026-08-11T00:00:00Z",
+          "security": [
+            {
+              "code": "R",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"
+            },
+            {
+              "code": "SYNTHETIC",
+              "system": "https://northstar.example.test/fhir/CodeSystem/data-origin"
+            }
+          ],
+          "source": "urn:northstar:synthetic:synthea-v4.0.0",
+          "versionId": "synthea-v4.0.0-northstar-v1"
+        },
+        "recorded": "2026-08-11T00:00:00Z",
+        "resourceType": "Provenance",
+        "target": [
+          {
+            "reference": "Patient/SYN-P2002"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:Patient-SYN-P3003",
+      "resource": {
+        "active": true,
+        "communication": [
+          {
+            "language": {
+              "coding": [
+                {
+                  "code": "en",
+                  "system": "urn:ietf:bcp:47"
+                }
+              ]
+            },
+            "preferred": true
+          }
+        ],
+        "extension": [
+          {
+            "url": "https://northstar.example.test/fhir/StructureDefinition/recent-encounter-date",
+            "valueDate": "2026-07-30"
+          },
+          {
+            "url": "https://northstar.example.test/fhir/StructureDefinition/care-coordination-flag",
+            "valueString": "restricted-follow-up"
+          }
+        ],
+        "id": "SYN-P3003",
+        "managingOrganization": {
+          "reference": "Organization/FAC-NORTH"
+        },
+        "meta": {
+          "lastUpdated": "2026-08-11T00:00:00Z",
+          "security": [
+            {
+              "code": "R",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"
+            },
+            {
+              "code": "SYNTHETIC",
+              "system": "https://northstar.example.test/fhir/CodeSystem/data-origin"
+            },
+            {
+              "code": "SUD-PART2-SIM",
+              "system": "https://northstar.example.test/fhir/CodeSystem/security-label"
+            }
+          ],
+          "source": "urn:northstar:synthetic:synthea-v4.0.0",
+          "versionId": "synthea-v4.0.0-northstar-v1"
+        },
+        "name": [
+          {
+            "text": "Synthea Synthetic 003",
+            "use": "official"
+          }
+        ],
+        "resourceType": "Patient"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:Consent-CNS-SYN-P3003",
+      "resource": {
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "59284-0",
+                "system": "http://loinc.org"
+              }
+            ]
+          }
+        ],
+        "dateTime": "2026-08-11T00:00:00Z",
+        "id": "CNS-SYN-P3003",
+        "meta": {
+          "lastUpdated": "2026-08-11T00:00:00Z",
+          "security": [
+            {
+              "code": "R",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"
+            },
+            {
+              "code": "SYNTHETIC",
+              "system": "https://northstar.example.test/fhir/CodeSystem/data-origin"
+            },
+            {
+              "code": "SUD-PART2-SIM",
+              "system": "https://northstar.example.test/fhir/CodeSystem/security-label"
+            }
+          ],
+          "source": "urn:northstar:synthetic:synthea-v4.0.0",
+          "versionId": "synthea-v4.0.0-northstar-v1"
+        },
+        "patient": {
+          "reference": "Patient/SYN-P3003"
+        },
+        "performer": [
+          {
+            "reference": "Organization/FAC-NORTH"
+          }
+        ],
+        "provision": {
+          "type": "permit"
+        },
+        "resourceType": "Consent",
+        "scope": {
+          "coding": [
+            {
+              "code": "patient-privacy",
+              "system": "http://terminology.hl7.org/CodeSystem/consentscope"
+            }
+          ]
+        },
+        "status": "active"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:Provenance-PRV-SYN-P3003",
+      "resource": {
+        "activity": {
+          "coding": [
+            {
+              "code": "CREATE",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-DataOperation"
+            }
+          ]
+        },
+        "agent": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "code": "assembler",
+                  "system": "http://terminology.hl7.org/CodeSystem/provenance-participant-type"
+                }
+              ]
+            },
+            "who": {
+              "reference": "Organization/NORTHSTAR-SYNTHETIC-PIPELINE"
+            }
+          }
+        ],
+        "entity": [
+          {
+            "role": "source",
+            "what": {
+              "identifier": {
+                "system": "urn:northstar:synthea:source-sha256",
+                "value": "617739f58102becbd7b84708916b21a2f0e5d8308e7fae3209aced8f3f6179af"
+              }
+            }
+          }
+        ],
+        "id": "PRV-SYN-P3003",
+        "meta": {
+          "lastUpdated": "2026-08-11T00:00:00Z",
+          "security": [
+            {
+              "code": "R",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"
+            },
+            {
+              "code": "SYNTHETIC",
+              "system": "https://northstar.example.test/fhir/CodeSystem/data-origin"
+            },
+            {
+              "code": "SUD-PART2-SIM",
+              "system": "https://northstar.example.test/fhir/CodeSystem/security-label"
+            }
+          ],
+          "source": "urn:northstar:synthetic:synthea-v4.0.0",
+          "versionId": "synthea-v4.0.0-northstar-v1"
+        },
+        "recorded": "2026-08-11T00:00:00Z",
+        "resourceType": "Provenance",
+        "target": [
+          {
+            "reference": "Patient/SYN-P3003"
+          }
+        ]
+      }
+    }
+  ],
+  "id": "northstar-synthea-fhir-r4-v1",
+  "meta": {
+    "lastUpdated": "2026-08-11T00:00:00Z",
+    "security": [
+      {
+        "code": "R",
+        "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"
+      },
+      {
+        "code": "SYNTHETIC",
+        "system": "https://northstar.example.test/fhir/CodeSystem/data-origin"
+      }
+    ],
+    "source": "urn:northstar:synthetic:synthea-v4.0.0",
+    "versionId": "synthea-v4.0.0-northstar-v1"
+  },
+  "resourceType": "Bundle",
+  "timestamp": "2026-08-11T00:00:00Z",
+  "type": "collection"
+}

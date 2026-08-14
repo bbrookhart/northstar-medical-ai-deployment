@@ -1,0 +1,96 @@
+{
+  "artifacts": [
+    {
+      "path": "data/synthetic/fhir-r4/bundle.json",
+      "resource_counts": {
+        "Consent": 3,
+        "Organization": 3,
+        "Patient": 3,
+        "Provenance": 3
+      },
+      "sha256": "e4137d421ac2f745a3e9a395def563b140ad5b4773a2fe107f42df698dca7845",
+      "size_bytes": 17582
+    }
+  ],
+  "dataset": {
+    "classification": "Northstar Restricted Health Data",
+    "fhir_version": "4.0.1",
+    "id": "NS-SYN-FHIR-R4-001",
+    "notice": "Generated synthetic data for an educational simulation. Never combine with or replace using real patient data.",
+    "synthetic_only": true,
+    "version": "1.0.0"
+  },
+  "generator": {
+    "artifact_sha256": "ed43c20ad40ba5c3bc724503a5af032715fe3c491620b766148e7c2361e6ecc1",
+    "clinician_seed": 11082026,
+    "config_path": "data/synthetic/config/synthea.properties",
+    "config_sha256": "f2b5531442398e03580631edfc3c73074103d9dcd7fb23d1e7edccf5142d12a7",
+    "end_date": "2026-08-11",
+    "location": "Massachusetts",
+    "name": "Synthea",
+    "network": "disabled",
+    "population": 3,
+    "population_seed": 20260811,
+    "reference_date": "2026-08-11",
+    "release_commit": "0185c09",
+    "runtime_digest": "sha256:89e68b9bb83713510b63e2059a415792a7fc77e14b739a7d7ede97f6d9ca2c38",
+    "runtime_image": "docker.io/library/eclipse-temurin:17-jre-jammy",
+    "tag": "v4.0.0",
+    "version": "4.0.0"
+  },
+  "lineage": [
+    {
+      "derived_patient_id": "SYN-P1001",
+      "source_file": "300cfd41-f03c-1bde-a321-a235be30f52c.json",
+      "source_patient_id": "300cfd41-f03c-1bde-a321-a235be30f52c",
+      "source_sha256": "fce5003abf44cea772e4f710b232b4f5bb4d64da5e6764634b89a5f5b98eaaf9"
+    },
+    {
+      "derived_patient_id": "SYN-P2002",
+      "source_file": "44886cb9-c1f9-3c4e-7071-2c126ae69df6.json",
+      "source_patient_id": "44886cb9-c1f9-3c4e-7071-2c126ae69df6",
+      "source_sha256": "93d137e40e9610a1891b391cd0aecf377deed9c3a23f505761948de3210ae991"
+    },
+    {
+      "derived_patient_id": "SYN-P3003",
+      "source_file": "833b7003-3d81-929f-54cc-2cad75e885ca.json",
+      "source_patient_id": "833b7003-3d81-929f-54cc-2cad75e885ca",
+      "source_sha256": "617739f58102becbd7b84708916b21a2f0e5d8308e7fae3209aced8f3f6179af"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_and_license": {
+    "license": "Apache-2.0",
+    "source_url": "https://github.com/synthetichealth/synthea",
+    "toolchain_lock": "data/synthetic/toolchain-lock.json"
+  },
+  "transformation": {
+    "module_path": "src/polaris/data/synthetic.py",
+    "module_sha256": "0886d10ba6320e0845c51a5e31c0d777234ddf0df5665bf4e5aae7ed27b4b2c3",
+    "name": "northstar-minimum-patient-v1",
+    "recorded_at": "2026-08-11T00:00:00Z",
+    "steps": [
+      "Extract exactly one Patient from each deterministic Synthea transaction Bundle",
+      "Replace source identifiers and direct-contact fields with Northstar synthetic IDs",
+      "Project only approved patient-summary source fields",
+      "Attach Northstar restricted/synthetic security labels and source provenance",
+      "Create explicit synthetic Consent and Provenance resources"
+    ]
+  },
+  "validation": {
+    "checks": [
+      "fixed seed/reference/end dates",
+      "source FHIR files byte-identical across two generation runs",
+      "exact source population and unique IDs",
+      "derived FHIR R4 minimum-field contract",
+      "security label and synthetic source continuity",
+      "active permit Consent per patient",
+      "Provenance source hash per patient",
+      "no source name/address/telecom/birth date/identifier in derived Patient",
+      "no recognized credential marker"
+    ],
+    "hapi_interoperability": "recorded separately in milestone evidence",
+    "reviewer_role": "Data Steward (simulated)",
+    "status": "passed"
+  }
+}

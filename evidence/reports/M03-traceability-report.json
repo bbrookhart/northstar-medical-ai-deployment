@@ -1,0 +1,5168 @@
+{
+  "as_of_date": "2026-08-11",
+  "controls": [
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI02",
+        "FW-ASI09",
+        "FW-AIRMF-MANAGE"
+      ],
+      "frequency": "Every action proposal",
+      "id": "CTL-ACT-001",
+      "implementation_refs": [
+        "src/polaris/domain.py",
+        "src/polaris/services/actions.py"
+      ],
+      "objective": "Restrict model-originated actions to allowlisted reversible administrative schemas and reject clinical content.",
+      "owner": "Engineering Lead",
+      "requirement_ids": [
+        "REQ-ACT-001"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-006",
+        "RSK-009"
+      ],
+      "status": "implemented",
+      "title": "Typed non-clinical reversible proposal boundary",
+      "verification_ids": [
+        "VER-AUT-008"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-008"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI02",
+        "FW-ASI09",
+        "FW-CSF-PR-AA"
+      ],
+      "frequency": "Every write approval",
+      "id": "CTL-ACT-002",
+      "implementation_refs": [
+        "src/polaris/services/actions.py",
+        "src/polaris/config.py"
+      ],
+      "objective": "Require an independent authorized approver and bind the decision to canonical action context with purpose-separated keys.",
+      "owner": "Engineering Lead",
+      "requirement_ids": [
+        "REQ-ACT-002",
+        "REQ-ACT-003"
+      ],
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007",
+        "RSK-009"
+      ],
+      "status": "partial",
+      "title": "Independent approval and cryptographic binding",
+      "verification_ids": [
+        "VER-AUT-009",
+        "VER-AUT-010",
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-M04-001",
+        "EVD-PLN-007"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI02",
+        "FW-ASI03",
+        "FW-ASI08",
+        "FW-HIPAA-TECH"
+      ],
+      "frequency": "Every write execution and reconciliation",
+      "id": "CTL-ACT-003",
+      "implementation_refs": [
+        "src/polaris/services/actions.py",
+        "src/polaris/services/container.py",
+        "src/polaris/services/state.py",
+        "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md"
+      ],
+      "objective": "Verify receipt, digest, expiry, single-use state, destination, current authorization, policy, idempotency, and outcome before execution.",
+      "owner": "Engineering Lead",
+      "requirement_ids": [
+        "REQ-ACT-004",
+        "REQ-ACT-005"
+      ],
+      "risk_ids": [
+        "RSK-005",
+        "RSK-006",
+        "RSK-016",
+        "RSK-021"
+      ],
+      "status": "partial",
+      "title": "Execution-time reauthorization and recoverable state",
+      "verification_ids": [
+        "VER-AUT-010",
+        "VER-AUT-011",
+        "VER-AUT-019",
+        "VER-PLN-007"
+      ]
+    },
+    {
+      "control_type": "detective",
+      "evidence_ids": [
+        "EVD-PLN-008"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MEASURE",
+        "FW-AIRMF-MANAGE",
+        "FW-ASI09"
+      ],
+      "frequency": "Continuous with periodic human-factors review",
+      "id": "CTL-ACT-004",
+      "implementation_refs": [
+        "docs/risk/clinical-safety-hazard-analysis.md",
+        "docs/risk/abuse-and-misuse-cases.md"
+      ],
+      "objective": "Detect and constrain proposal floods, bulk approval, approval fatigue, and rubber-stamping.",
+      "owner": "Product Owner",
+      "requirement_ids": [
+        "REQ-ACT-006"
+      ],
+      "risk_ids": [
+        "RSK-007",
+        "RSK-015",
+        "RSK-019"
+      ],
+      "status": "planned",
+      "title": "Approval workload and anti-fatigue monitoring",
+      "verification_ids": [
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-PLN-004"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MAP",
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-GV",
+        "FW-ASI04"
+      ],
+      "frequency": "Each provider/model onboarding and material change",
+      "id": "CTL-AI-001",
+      "implementation_refs": [
+        "docs/architecture/system-context.md",
+        "docs/risk/data-flow-inventory.md"
+      ],
+      "objective": "Broker model use through a typed interface only after data-use, security, continuity, and exit criteria are approved.",
+      "owner": "AI Platform Lead",
+      "requirement_ids": [
+        "REQ-AI-001",
+        "REQ-AI-002"
+      ],
+      "risk_ids": [
+        "RSK-013",
+        "RSK-014",
+        "RSK-016",
+        "RSK-017"
+      ],
+      "status": "planned",
+      "title": "Provider-neutral model boundary and vendor decision",
+      "verification_ids": [
+        "VER-PLN-004"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-005"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-PR-PS",
+        "FW-ASI02",
+        "FW-ASI05",
+        "FW-ASI08"
+      ],
+      "frequency": "Every workflow execution",
+      "id": "CTL-AI-002",
+      "implementation_refs": [
+        "src/polaris/services/actions.py",
+        "src/polaris/main.py",
+        "src/polaris/config.py"
+      ],
+      "objective": "Constrain state, steps, tools, time, retries, concurrency, cost, and memory; exclude generic high-risk capabilities.",
+      "owner": "Engineering Lead",
+      "requirement_ids": [
+        "REQ-AI-003",
+        "REQ-AI-004",
+        "REQ-AI-006",
+        "REQ-APP-005"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-015",
+        "RSK-016",
+        "RSK-024"
+      ],
+      "status": "partial",
+      "title": "Bounded orchestration, disabled memory, and resource limits",
+      "verification_ids": [
+        "VER-AUT-001",
+        "VER-AUT-008",
+        "VER-PLN-005"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-005"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI02",
+        "FW-ASI03",
+        "FW-ASI04",
+        "FW-SSDF-PW"
+      ],
+      "frequency": "Each tool registration and call",
+      "id": "CTL-AI-003",
+      "implementation_refs": [
+        "src/polaris/domain.py",
+        "src/polaris/services/actions.py"
+      ],
+      "objective": "Expose only approved versioned tools with narrow schemas, per-call authorization, and separated read/write authority.",
+      "owner": "AI Security Lead",
+      "requirement_ids": [
+        "REQ-AI-005"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-005",
+        "RSK-006",
+        "RSK-012"
+      ],
+      "status": "partial",
+      "title": "Static typed least-agency tool registry",
+      "verification_ids": [
+        "VER-AUT-008",
+        "VER-AUT-011",
+        "VER-PLN-005"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-005"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MEASURE",
+        "FW-AIRMF-MANAGE",
+        "FW-ASI01",
+        "FW-ASI08",
+        "FW-ASI10"
+      ],
+      "frequency": "Every model or workflow result",
+      "id": "CTL-AI-004",
+      "implementation_refs": [
+        "src/polaris/domain.py",
+        "src/polaris/services/retrieval.py",
+        "src/polaris/services/actions.py"
+      ],
+      "objective": "Validate structure, meaning, authorization, data loss, grounding, and clinical scope before use and fail without fabricated success.",
+      "owner": "Engineering Lead",
+      "requirement_ids": [
+        "REQ-AI-007",
+        "REQ-AI-008"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-006",
+        "RSK-008",
+        "RSK-009",
+        "RSK-016"
+      ],
+      "status": "partial",
+      "title": "Untrusted-output validation and safe failure",
+      "verification_ids": [
+        "VER-AUT-006",
+        "VER-AUT-008",
+        "VER-AUT-011",
+        "VER-PLN-005"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-005"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-PS",
+        "FW-SSDF-PW",
+        "FW-HIPAA-TECH"
+      ],
+      "frequency": "Every API request",
+      "id": "CTL-APP-001",
+      "implementation_refs": [
+        "src/polaris/domain.py",
+        "src/polaris/main.py",
+        "src/polaris/security/policy.py"
+      ],
+      "objective": "Fail closed on malformed, ambiguous, oversized, unauthorized, replayed, or over-posted external input and resources.",
+      "owner": "AppSec Lead",
+      "requirement_ids": [
+        "REQ-APP-001",
+        "REQ-APP-003"
+      ],
+      "risk_ids": [
+        "RSK-003",
+        "RSK-006",
+        "RSK-015"
+      ],
+      "status": "partial",
+      "title": "Strict input and API object security",
+      "verification_ids": [
+        "VER-AUT-001",
+        "VER-AUT-002",
+        "VER-AUT-004",
+        "VER-AUT-011",
+        "VER-PLN-005"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-PLN-008"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-DS",
+        "FW-CSF-PR-PS",
+        "FW-SSDF-PW",
+        "FW-ASI09"
+      ],
+      "frequency": "Every rendered response and proposal",
+      "id": "CTL-APP-002",
+      "implementation_refs": [
+        "docs/risk/threat-model.md",
+        "docs/risk/clinical-safety-hazard-analysis.md"
+      ],
+      "objective": "Render untrusted output with contextual encoding, restrictive CSP, safe links, no remote active content, and an accessible trusted preview.",
+      "owner": "Frontend Lead",
+      "requirement_ids": [
+        "REQ-APP-002"
+      ],
+      "risk_ids": [
+        "RSK-002",
+        "RSK-006",
+        "RSK-007",
+        "RSK-014",
+        "RSK-020"
+      ],
+      "status": "planned",
+      "title": "Inert accessible output rendering",
+      "verification_ids": [
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-009"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-AA",
+        "FW-CSF-PR-PS",
+        "FW-SSDF-PS",
+        "FW-HIPAA-TECH"
+      ],
+      "frequency": "Startup, deployment, and rotation schedule",
+      "id": "CTL-APP-003",
+      "implementation_refs": [
+        "src/polaris/config.py",
+        ".env.example"
+      ],
+      "objective": "Keep secrets outside code/model context, separate cryptographic purposes, rotate keys, and prevent silent production bypass.",
+      "owner": "AppSec Lead",
+      "requirement_ids": [
+        "REQ-APP-004",
+        "REQ-APP-006"
+      ],
+      "risk_ids": [
+        "RSK-005",
+        "RSK-006",
+        "RSK-012",
+        "RSK-014",
+        "RSK-017"
+      ],
+      "status": "partial",
+      "title": "Purpose-separated secrets and production configuration",
+      "verification_ids": [
+        "VER-AUT-001",
+        "VER-PLN-009"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-DES-003",
+        "EVD-M04-001",
+        "EVD-PLN-002"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MAP",
+        "FW-PRIVACY-CT-P",
+        "FW-CSF-PR-DS",
+        "FW-FHIR-LABEL"
+      ],
+      "frequency": "Each dataset, ingest, request, and export",
+      "id": "CTL-DAT-001",
+      "implementation_refs": [
+        "src/polaris/data/synthetic.py",
+        "src/polaris/services/patients.py",
+        "src/polaris/services/fhir_http.py",
+        "data/synthetic/fhir-r4/manifest.json",
+        "data/synthetic/toolchain-lock.json",
+        "infrastructure/local/compose.fhir.yml",
+        "docs/risk/data-flow-inventory.md",
+        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md"
+      ],
+      "objective": "Keep repository data demonstrably synthetic and minimize labeled data throughout authorized workflows.",
+      "owner": "Data Steward",
+      "requirement_ids": [
+        "REQ-DAT-001",
+        "REQ-DAT-003",
+        "REQ-DAT-004",
+        "REQ-DAT-008"
+      ],
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-010",
+        "RSK-023"
+      ],
+      "status": "partial",
+      "title": "Synthetic provenance, minimization, and label continuity",
+      "verification_ids": [
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-015",
+        "VER-AUT-017",
+        "VER-REV-003",
+        "VER-REV-005"
+      ]
+    },
+    {
+      "control_type": "governance",
+      "evidence_ids": [
+        "EVD-PLN-002"
+      ],
+      "framework_reference_ids": [
+        "FW-PRIVACY-ID-P",
+        "FW-PRIVACY-CT-P",
+        "FW-HIPAA-ADMIN"
+      ],
+      "frequency": "Before pilot and annually",
+      "id": "CTL-DAT-002",
+      "implementation_refs": [
+        "docs/risk/data-flow-inventory.md",
+        "docs/risk/privacy-impact-assessment.md"
+      ],
+      "objective": "Define and test lifecycle handling for each data object, derivative, backup, and provider copy.",
+      "owner": "Records Owner",
+      "requirement_ids": [
+        "REQ-DAT-002",
+        "REQ-DAT-007"
+      ],
+      "risk_ids": [
+        "RSK-013",
+        "RSK-014",
+        "RSK-016",
+        "RSK-023"
+      ],
+      "status": "planned",
+      "title": "Processing inventory, retention, deletion, and legal hold",
+      "verification_ids": [
+        "VER-PLN-002"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-006"
+      ],
+      "framework_reference_ids": [
+        "FW-PRIVACY-PT-P",
+        "FW-CSF-PR-DS",
+        "FW-HIPAA-TECH"
+      ],
+      "frequency": "Continuous",
+      "id": "CTL-DAT-003",
+      "implementation_refs": [
+        "src/polaris/services/audit.py",
+        "src/polaris/domain.py"
+      ],
+      "objective": "Keep raw restricted content, secrets, tokens, and hidden reasoning out of routine telemetry.",
+      "owner": "SRE Lead",
+      "requirement_ids": [
+        "REQ-DAT-005"
+      ],
+      "risk_ids": [
+        "RSK-014",
+        "RSK-021"
+      ],
+      "status": "partial",
+      "title": "Privacy-safe telemetry",
+      "verification_ids": [
+        "VER-AUT-012",
+        "VER-PLN-006"
+      ]
+    },
+    {
+      "control_type": "governance",
+      "evidence_ids": [
+        "EVD-GOV-001",
+        "EVD-M03-001",
+        "EVD-PLN-007"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-CSF-GV",
+        "FW-HIPAA-ADMIN"
+      ],
+      "frequency": "Each gate and material change",
+      "id": "CTL-GOV-001",
+      "implementation_refs": [
+        "docs/executive/stakeholder-raci.md",
+        "docs/assurance/release-gates.md"
+      ],
+      "objective": "Assign accountable lifecycle roles, escalation paths, and authority to suspend, roll back, or retire capabilities.",
+      "owner": "AI System Owner",
+      "requirement_ids": [
+        "REQ-GOV-001",
+        "REQ-GOV-006"
+      ],
+      "risk_ids": [
+        "RSK-017",
+        "RSK-021",
+        "RSK-024"
+      ],
+      "status": "partial",
+      "title": "Accountable ownership and independent stop authority",
+      "verification_ids": [
+        "VER-REV-001",
+        "VER-REV-004",
+        "VER-PLN-007"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-DES-002",
+        "EVD-GOV-003",
+        "EVD-M02-001",
+        "EVD-PLN-010"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-AIRMF-MAP",
+        "FW-CSF-GV",
+        "FW-PRIVACY-GV-P"
+      ],
+      "frequency": "Continuous and before publication",
+      "id": "CTL-GOV-002",
+      "implementation_refs": [
+        "docs/governance/approved-prohibited-use.md",
+        "docs/governance/ai-system-card.md",
+        "README.md",
+        "training/README.md"
+      ],
+      "objective": "Enforce approved uses and data boundaries and prevent unsupported compliance, clinical, or production-readiness claims.",
+      "owner": "Compliance Lead",
+      "requirement_ids": [
+        "REQ-GOV-002",
+        "REQ-GOV-005",
+        "REQ-DAT-006",
+        "REQ-LCM-003"
+      ],
+      "risk_ids": [
+        "RSK-009",
+        "RSK-022",
+        "RSK-023",
+        "RSK-024"
+      ],
+      "status": "partial",
+      "title": "Scope, use, and claims boundary",
+      "verification_ids": [
+        "VER-AUT-008",
+        "VER-REV-002",
+        "VER-PLN-010"
+      ]
+    },
+    {
+      "control_type": "governance",
+      "evidence_ids": [
+        "EVD-GOV-002",
+        "EVD-RSK-001",
+        "EVD-M02-001",
+        "EVD-M03-001",
+        "EVD-TRC-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-GV",
+        "FW-SSDF-PO"
+      ],
+      "frequency": "Each change, exception, and release",
+      "id": "CTL-GOV-003",
+      "implementation_refs": [
+        "docs/governance/control-standard.md",
+        "docs/assurance/release-gates.md",
+        "docs/assurance/templates/exception-record.md",
+        "docs/assurance/templates/residual-risk-decision.md",
+        "docs/assurance/templates/release-decision.md",
+        "docs/risk/risk-register.md",
+        "PROJECT_STATUS.md"
+      ],
+      "objective": "Gate material changes and exceptions through attributable, time-bound, evidence-backed review.",
+      "owner": "AI Security Program Lead",
+      "requirement_ids": [
+        "REQ-GOV-003",
+        "REQ-GOV-004",
+        "REQ-SDL-005",
+        "REQ-SDL-006"
+      ],
+      "risk_ids": [
+        "RSK-017",
+        "RSK-022",
+        "RSK-024",
+        "RSK-025"
+      ],
+      "status": "partial",
+      "title": "Change, exception, residual-risk, and evidence governance",
+      "verification_ids": [
+        "VER-GOV-001",
+        "VER-REV-001",
+        "VER-REV-004"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-M04-001",
+        "EVD-PLN-001"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-AA",
+        "FW-HIPAA-TECH",
+        "FW-FHIR-AUTHN",
+        "FW-ASI03"
+      ],
+      "frequency": "Every request and downstream call",
+      "id": "CTL-IAM-001",
+      "implementation_refs": [
+        "src/polaris/security/auth.py",
+        "src/polaris/security/identity_signals.py",
+        "src/polaris/security/signal_delivery.py",
+        "src/polaris/security/ssf_operations.py",
+        "src/polaris/security/ssf_stream_state.py",
+        "src/polaris/security/ssf_verification.py",
+        "src/polaris/security/ssf_recovery.py",
+        "src/polaris/security/okta_recovery.py",
+        "src/polaris/security/oidc_remote.py",
+        "src/polaris/security/delegation.py",
+        "src/polaris/services/state.py",
+        "src/polaris/main.py",
+        "src/polaris/domain.py",
+        "docs/architecture/decisions/ADR-003-oidc-and-delegation.md",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md",
+        "docs/operations/continuous-access-recovery.md",
+        "docs/operations/okta-continuous-access-gap-recovery.md",
+        "docs/operations/ssf-recovery-scheduling.md",
+        "docs/operations/ssf-verification-policy.md"
+      ],
+      "objective": "Validate enterprise identity and carry bound end-user context into every downstream decision without token passthrough.",
+      "owner": "IAM Lead",
+      "requirement_ids": [
+        "REQ-IAM-001",
+        "REQ-IAM-002",
+        "REQ-IAM-005"
+      ],
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-005",
+        "RSK-018"
+      ],
+      "status": "partial",
+      "title": "Enterprise identity and delegated security context",
+      "verification_ids": [
+        "VER-AUT-002",
+        "VER-AUT-003",
+        "VER-AUT-014",
+        "VER-AUT-018",
+        "VER-AUT-020",
+        "VER-AUT-021",
+        "VER-AUT-022",
+        "VER-AUT-023",
+        "VER-AUT-024",
+        "VER-AUT-025",
+        "VER-AUT-026",
+        "VER-AUT-027",
+        "VER-AUT-028",
+        "VER-AUT-029",
+        "VER-REV-005",
+        "VER-PLN-001"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-M04-001",
+        "EVD-PLN-001"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-AA",
+        "FW-HIPAA-TECH",
+        "FW-FHIR-AUTHZ",
+        "FW-ASI03"
+      ],
+      "frequency": "Every sensitive read, approval, write, and privileged operation",
+      "id": "CTL-IAM-002",
+      "implementation_refs": [
+        "src/polaris/security/policy.py",
+        "src/polaris/security/identity_signals.py",
+        "src/polaris/security/delegation.py",
+        "src/polaris/services/patients.py",
+        "src/polaris/services/fhir_http.py",
+        "src/polaris/services/actions.py",
+        "src/polaris/services/state.py",
+        "docs/architecture/decisions/ADR-004-central-authorization-contract.md",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "docs/architecture/authorization-decision-table.md"
+      ],
+      "objective": "Authorize independently of model content using role, facility, patient relationship, purpose, sensitivity, resource, action, and current state.",
+      "owner": "IAM Lead",
+      "requirement_ids": [
+        "REQ-IAM-003",
+        "REQ-IAM-004",
+        "REQ-IAM-006",
+        "REQ-IAM-007"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-003",
+        "RSK-004",
+        "RSK-005",
+        "RSK-018"
+      ],
+      "status": "partial",
+      "title": "Contextual deny-by-default authorization",
+      "verification_ids": [
+        "VER-AUT-003",
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-009",
+        "VER-AUT-014",
+        "VER-AUT-015",
+        "VER-AUT-016",
+        "VER-AUT-017",
+        "VER-AUT-018",
+        "VER-AUT-020",
+        "VER-REV-005",
+        "VER-PLN-001"
+      ]
+    },
+    {
+      "control_type": "governance",
+      "evidence_ids": [
+        "EVD-PLN-010"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-PRIVACY-CM-P",
+        "FW-CSF-RC",
+        "FW-HIPAA-ADMIN"
+      ],
+      "frequency": "Before access, annually, and at retirement",
+      "id": "CTL-LCM-001",
+      "implementation_refs": [
+        "training/README.md",
+        "docs/risk/privacy-impact-assessment.md",
+        "docs/risk/clinical-safety-hazard-analysis.md"
+      ],
+      "objective": "Provide competent role-specific use and escalation, accessible support/correction/fallback, and verified secure retirement.",
+      "owner": "Product Owner",
+      "requirement_ids": [
+        "REQ-LCM-001",
+        "REQ-LCM-002",
+        "REQ-LCM-004"
+      ],
+      "risk_ids": [
+        "RSK-009",
+        "RSK-016",
+        "RSK-018",
+        "RSK-019",
+        "RSK-020",
+        "RSK-021"
+      ],
+      "status": "planned",
+      "title": "Role training, support, rights, fallback, and retirement",
+      "verification_ids": [
+        "VER-PLN-010"
+      ]
+    },
+    {
+      "control_type": "detective",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-M04-001",
+        "EVD-PLN-006"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-DE",
+        "FW-HIPAA-TECH",
+        "FW-FHIR-AUDIT",
+        "FW-ASI10"
+      ],
+      "frequency": "Every security-relevant event",
+      "id": "CTL-OPS-001",
+      "implementation_refs": [
+        "src/polaris/services/audit.py",
+        "src/polaris/services/state.py",
+        "src/polaris/security/identity_signals.py",
+        "src/polaris/security/signal_delivery.py",
+        "src/polaris/security/ssf_stream_state.py",
+        "src/polaris/security/ssf_verification.py",
+        "src/polaris/security/ssf_recovery.py",
+        "src/polaris/main.py",
+        "src/polaris/domain.py",
+        "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "docs/operations/continuous-access-recovery.md",
+        "docs/operations/ssf-recovery-scheduling.md",
+        "docs/operations/ssf-verification-policy.md"
+      ],
+      "objective": "Record sufficient versioned decision context without prohibited content and protect evidence integrity and access.",
+      "owner": "SRE Lead",
+      "requirement_ids": [
+        "REQ-OPS-001",
+        "REQ-OPS-002"
+      ],
+      "risk_ids": [
+        "RSK-014",
+        "RSK-018",
+        "RSK-021",
+        "RSK-025"
+      ],
+      "status": "partial",
+      "title": "Minimum tamper-evident attributable audit",
+      "verification_ids": [
+        "VER-AUT-012",
+        "VER-AUT-019",
+        "VER-AUT-020",
+        "VER-AUT-021",
+        "VER-AUT-023",
+        "VER-AUT-025",
+        "VER-AUT-026",
+        "VER-AUT-027",
+        "VER-AUT-028",
+        "VER-PLN-006"
+      ]
+    },
+    {
+      "control_type": "detective",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-006"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-DE",
+        "FW-CSF-RS",
+        "FW-ASI01",
+        "FW-ASI04",
+        "FW-ASI10"
+      ],
+      "frequency": "Continuous detection and scheduled exercises",
+      "id": "CTL-OPS-002",
+      "implementation_refs": [
+        "src/polaris/security/ssf_recovery.py",
+        "src/polaris/security/okta_recovery.py",
+        "src/polaris/services/state.py",
+        "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md",
+        "docs/operations/ssf-recovery-scheduling.md",
+        "docs/operations/okta-continuous-access-gap-recovery.md",
+        "docs/risk/threat-model.md",
+        "docs/assurance/release-gates.md"
+      ],
+      "objective": "Detect identity, injection, poisoning, DLP, tool, action, resource, drift, and control-disablement events and execute tested playbooks.",
+      "owner": "Incident Response Lead",
+      "requirement_ids": [
+        "REQ-OPS-003",
+        "REQ-OPS-004"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-011",
+        "RSK-014",
+        "RSK-015",
+        "RSK-017",
+        "RSK-018",
+        "RSK-021"
+      ],
+      "status": "partial",
+      "title": "AI detection and incident response",
+      "verification_ids": [
+        "VER-AUT-028",
+        "VER-AUT-029",
+        "VER-PLN-006"
+      ]
+    },
+    {
+      "control_type": "corrective",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-007"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-RS",
+        "FW-CSF-RC",
+        "FW-ASI08",
+        "FW-ASI10"
+      ],
+      "frequency": "Each release and scheduled resilience exercise",
+      "id": "CTL-OPS-003",
+      "implementation_refs": [
+        "src/polaris/services/state.py",
+        "src/polaris/security/ssf_stream_state.py",
+        "src/polaris/security/ssf_recovery.py",
+        "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md",
+        "docs/operations/continuous-access-recovery.md",
+        "docs/operations/ssf-recovery-scheduling.md",
+        "docs/risk/clinical-safety-hazard-analysis.md",
+        "docs/assurance/release-gates.md"
+      ],
+      "objective": "Stop read/write/model capabilities independently and recover through tested rollback, fallback, backup, restore, and reconciliation.",
+      "owner": "SRE Lead",
+      "requirement_ids": [
+        "REQ-OPS-005",
+        "REQ-OPS-006"
+      ],
+      "risk_ids": [
+        "RSK-015",
+        "RSK-016",
+        "RSK-017",
+        "RSK-021"
+      ],
+      "status": "partial",
+      "title": "Independent kill, rollback, degraded mode, and recovery",
+      "verification_ids": [
+        "VER-AUT-019",
+        "VER-AUT-026",
+        "VER-AUT-028",
+        "VER-PLN-007"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-003"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-PR-DS",
+        "FW-ASI01",
+        "FW-ASI06"
+      ],
+      "frequency": "Each corpus promotion and retrieval",
+      "id": "CTL-RAG-001",
+      "implementation_refs": [
+        "src/polaris/services/retrieval.py",
+        "src/polaris/services/container.py"
+      ],
+      "objective": "Admit only reviewed versioned sources and treat retrieved content as untrusted data with safe conflict and rollback behavior.",
+      "owner": "Data Steward",
+      "requirement_ids": [
+        "REQ-RAG-001",
+        "REQ-RAG-003",
+        "REQ-RAG-005",
+        "REQ-RAG-007"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-008",
+        "RSK-011",
+        "RSK-017"
+      ],
+      "status": "partial",
+      "title": "Approved, immutable, and untrusted corpus lifecycle",
+      "verification_ids": [
+        "VER-AUT-006",
+        "VER-AUT-007",
+        "VER-PLN-003"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-M04-001",
+        "EVD-PLN-003"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-AA",
+        "FW-CSF-PR-DS",
+        "FW-FHIR-AUTHZ",
+        "FW-ASI03"
+      ],
+      "frequency": "Every retrieval and store operation",
+      "id": "CTL-RAG-002",
+      "implementation_refs": [
+        "src/polaris/services/retrieval.py",
+        "src/polaris/services/patients.py",
+        "src/polaris/services/fhir_http.py",
+        "src/polaris/security/policy.py",
+        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md"
+      ],
+      "objective": "Prevent unauthorized chunks, metadata, embeddings, caches, or exports from entering model context.",
+      "owner": "Data Steward",
+      "requirement_ids": [
+        "REQ-RAG-002",
+        "REQ-RAG-006"
+      ],
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-010"
+      ],
+      "status": "partial",
+      "title": "Pre-context retrieval authorization and isolation",
+      "verification_ids": [
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-007",
+        "VER-AUT-015",
+        "VER-AUT-017",
+        "VER-PLN-003"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MEASURE",
+        "FW-AIRMF-MANAGE",
+        "FW-ASI09"
+      ],
+      "frequency": "Every policy response",
+      "id": "CTL-RAG-003",
+      "implementation_refs": [
+        "src/polaris/services/retrieval.py",
+        "src/polaris/domain.py"
+      ],
+      "objective": "Return approved source identifiers and versions for grounded answers or abstain explicitly.",
+      "owner": "Business Owner",
+      "requirement_ids": [
+        "REQ-RAG-004"
+      ],
+      "risk_ids": [
+        "RSK-008",
+        "RSK-019"
+      ],
+      "status": "implemented",
+      "title": "Server-verifiable citations and abstention",
+      "verification_ids": [
+        "VER-AUT-006"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-008"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI09",
+        "FW-ASI10"
+      ],
+      "frequency": "Every input, output, proposal, and write",
+      "id": "CTL-SAF-001",
+      "implementation_refs": [
+        "src/polaris/services/actions.py",
+        "docs/governance/approved-prohibited-use.md"
+      ],
+      "objective": "Block clinical decisions, writes, patient communication, and urgency assessment while returning approved fixed emergency guidance.",
+      "owner": "Clinical Safety Officer",
+      "requirement_ids": [
+        "REQ-SAF-001",
+        "REQ-SAF-002"
+      ],
+      "risk_ids": [
+        "RSK-009",
+        "RSK-019"
+      ],
+      "status": "partial",
+      "title": "Clinical-scope and fixed emergency boundary",
+      "verification_ids": [
+        "VER-AUT-008",
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-PLN-008"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MEASURE",
+        "FW-AIRMF-MANAGE",
+        "FW-PRIVACY-CM-P",
+        "FW-ASI09"
+      ],
+      "frequency": "Each design/release and representative user study",
+      "id": "CTL-SAF-002",
+      "implementation_refs": [
+        "docs/risk/ai-impact-assessment.md",
+        "docs/risk/clinical-safety-hazard-analysis.md"
+      ],
+      "objective": "Make identity, source, uncertainty, action, destination, state, and material changes understandable and accessible with a non-AI path.",
+      "owner": "Product Owner",
+      "requirement_ids": [
+        "REQ-SAF-003",
+        "REQ-SAF-004",
+        "REQ-SAF-005"
+      ],
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007",
+        "RSK-019",
+        "RSK-020"
+      ],
+      "status": "planned",
+      "title": "Trusted state, comprehension, and accessibility",
+      "verification_ids": [
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_type": "detective",
+      "evidence_ids": [
+        "EVD-PLN-006",
+        "EVD-PLN-008"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MEASURE",
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-DE"
+      ],
+      "frequency": "Continuous with each gate review",
+      "id": "CTL-SAF-003",
+      "implementation_refs": [
+        "docs/risk/clinical-safety-hazard-analysis.md"
+      ],
+      "objective": "Monitor safety signals and subgroup outcomes against clinically approved stop and escalation thresholds.",
+      "owner": "Clinical Safety Officer",
+      "requirement_ids": [
+        "REQ-SAF-006"
+      ],
+      "risk_ids": [
+        "RSK-007",
+        "RSK-008",
+        "RSK-009",
+        "RSK-019",
+        "RSK-020",
+        "RSK-021"
+      ],
+      "status": "planned",
+      "title": "Safety event monitoring and stop thresholds",
+      "verification_ids": [
+        "VER-PLN-006",
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-M03-002",
+        "EVD-TRC-001",
+        "EVD-PLN-009"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-PS",
+        "FW-SSDF-PS",
+        "FW-SSDF-PW",
+        "FW-ASI04"
+      ],
+      "frequency": "Every change and release",
+      "id": "CTL-SDL-001",
+      "implementation_refs": [
+        ".github/workflows/ci.yml",
+        "uv.lock",
+        ".github/dependabot.yml"
+      ],
+      "objective": "Review changes; pin dependencies/actions; scan source and artifacts; and produce SBOM/AIBOM, provenance, vulnerability, and signature evidence.",
+      "owner": "AppSec Lead",
+      "requirement_ids": [
+        "REQ-SDL-001",
+        "REQ-SDL-002"
+      ],
+      "risk_ids": [
+        "RSK-012",
+        "RSK-017",
+        "RSK-025"
+      ],
+      "status": "partial",
+      "title": "Reviewed, locked, and attestable software supply chain",
+      "verification_ids": [
+        "VER-AUT-013",
+        "VER-PLN-009"
+      ]
+    },
+    {
+      "control_type": "preventive",
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-M02-001",
+        "EVD-M03-002",
+        "EVD-PLN-009"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MEASURE",
+        "FW-AIRMF-MANAGE",
+        "FW-SSDF-PW",
+        "FW-SSDF-RV",
+        "FW-ASI01"
+      ],
+      "frequency": "Every release and material change",
+      "id": "CTL-SDL-002",
+      "implementation_refs": [
+        "tests",
+        "docs/risk/abuse-and-misuse-cases.md",
+        "docs/assurance/release-gates.md"
+      ],
+      "objective": "Require versioned functional, authorization, privacy, security, safety, grounding, robustness, accessibility, performance, cost, and recovery evaluation.",
+      "owner": "AI Security Lead",
+      "requirement_ids": [
+        "REQ-SDL-003",
+        "REQ-SDL-004"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-006",
+        "RSK-008",
+        "RSK-009",
+        "RSK-015",
+        "RSK-017",
+        "RSK-019",
+        "RSK-020"
+      ],
+      "status": "partial",
+      "title": "Multidimensional evaluation and adversarial release gate",
+      "verification_ids": [
+        "VER-AUT-013",
+        "VER-PLN-005",
+        "VER-PLN-008",
+        "VER-PLN-009"
+      ]
+    }
+  ],
+  "open_gate_blockers": [
+    {
+      "blocks": [
+        "pilot",
+        "production"
+      ],
+      "finding_id": "FND-M02-003",
+      "id": "BLK-001",
+      "owner": "Records Owner",
+      "title": "Retention and deletion schedule approval"
+    },
+    {
+      "blocks": [
+        "pilot",
+        "production"
+      ],
+      "finding_id": "FND-M02-004",
+      "id": "BLK-002",
+      "owner": "Engineering Lead",
+      "title": "Enterprise identity and healthcare service adapters"
+    },
+    {
+      "blocks": [
+        "human validation",
+        "pilot",
+        "production"
+      ],
+      "finding_id": "FND-M02-005",
+      "id": "BLK-003",
+      "owner": "Clinical Safety Officer",
+      "title": "Clinical safety and human-factors validation"
+    },
+    {
+      "blocks": [
+        "hosted model",
+        "pilot",
+        "production"
+      ],
+      "finding_id": "FND-M02-006",
+      "id": "BLK-004",
+      "owner": "Vendor Risk Lead",
+      "title": "Provider and model due diligence"
+    },
+    {
+      "blocks": [
+        "pilot",
+        "production"
+      ],
+      "finding_id": "FND-M02-007",
+      "id": "BLK-005",
+      "owner": "SRE Lead",
+      "title": "Detection, incident response, kill, rollback, and resilience exercises"
+    },
+    {
+      "blocks": [
+        "claim of exact OWASP LLM 2026 category coverage"
+      ],
+      "finding_id": "FND-M02-008",
+      "id": "BLK-006",
+      "owner": "AI Security Lead",
+      "title": "Exact OWASP LLM Top 10 2026 category verification"
+    }
+  ],
+  "report_id": "NS-RPT-M03-001",
+  "requirements": [
+    {
+      "control_ids": [
+        "CTL-ACT-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI02",
+        "FW-ASI09"
+      ],
+      "lifecycle_phase": "Proposal through reconciliation",
+      "owner": "Engineering Lead",
+      "requirement_id": "REQ-ACT-001",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-006",
+        "RSK-009"
+      ],
+      "statement": "The model MUST be limited to proposing only allowlisted, reversible, non-clinical administrative actions with strict arguments.",
+      "verification_ids": [
+        "VER-AUT-008"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-ACT-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-008",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI02",
+        "FW-ASI09",
+        "FW-CSF-PR-AA"
+      ],
+      "lifecycle_phase": "Proposal through reconciliation",
+      "owner": "Engineering Lead",
+      "requirement_id": "REQ-ACT-002",
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007",
+        "RSK-009"
+      ],
+      "statement": "Every write MUST have an independent authorized human approval displaying the complete canonical action through a trusted accessible renderer.",
+      "verification_ids": [
+        "VER-AUT-009",
+        "VER-AUT-010",
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-ACT-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-008",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI02",
+        "FW-ASI09",
+        "FW-CSF-PR-AA"
+      ],
+      "lifecycle_phase": "Proposal through reconciliation",
+      "owner": "Engineering Lead",
+      "requirement_id": "REQ-ACT-003",
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007",
+        "RSK-009"
+      ],
+      "statement": "Approval MUST be cryptographically bound to canonical arguments, requester, approver, decision, policy/version, and expiry using purpose-separated key material.",
+      "verification_ids": [
+        "VER-AUT-009",
+        "VER-AUT-010",
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-ACT-003"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-007",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI02",
+        "FW-ASI03",
+        "FW-ASI08",
+        "FW-HIPAA-TECH"
+      ],
+      "lifecycle_phase": "Proposal through reconciliation",
+      "owner": "Engineering Lead",
+      "requirement_id": "REQ-ACT-004",
+      "risk_ids": [
+        "RSK-005",
+        "RSK-006",
+        "RSK-016",
+        "RSK-021"
+      ],
+      "statement": "Execution MUST validate receipt integrity, exact digest, expiry, single use/idempotency, executor, current requester authorization, current policy, and destination.",
+      "verification_ids": [
+        "VER-AUT-010",
+        "VER-AUT-011",
+        "VER-AUT-019",
+        "VER-PLN-007"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-ACT-003"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-007",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI02",
+        "FW-ASI03",
+        "FW-ASI08",
+        "FW-HIPAA-TECH"
+      ],
+      "lifecycle_phase": "Proposal through reconciliation",
+      "owner": "Engineering Lead",
+      "requirement_id": "REQ-ACT-005",
+      "risk_ids": [
+        "RSK-005",
+        "RSK-006",
+        "RSK-016",
+        "RSK-021"
+      ],
+      "statement": "Rejection, cancellation, timeout, downstream failure, and unknown outcome MUST be explicit, auditable, and safely recoverable.",
+      "verification_ids": [
+        "VER-AUT-010",
+        "VER-AUT-011",
+        "VER-AUT-019",
+        "VER-PLN-007"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-ACT-004"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-008"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-AIRMF-MEASURE",
+        "FW-ASI09"
+      ],
+      "lifecycle_phase": "Proposal through reconciliation",
+      "owner": "Engineering Lead",
+      "requirement_id": "REQ-ACT-006",
+      "risk_ids": [
+        "RSK-007",
+        "RSK-015",
+        "RSK-019"
+      ],
+      "statement": "Approval workload and rate MUST be monitored to prevent fatigue, bulk rubber-stamping, or denial of service.",
+      "verification_ids": [
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-004"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-AIRMF-MAP",
+        "FW-ASI04",
+        "FW-CSF-GV"
+      ],
+      "lifecycle_phase": "Model and orchestration lifecycle",
+      "owner": "AI Platform Lead",
+      "requirement_id": "REQ-AI-001",
+      "risk_ids": [
+        "RSK-013",
+        "RSK-014",
+        "RSK-016",
+        "RSK-017"
+      ],
+      "statement": "Model access MUST be behind a typed provider-neutral adapter; credentials MUST remain in a trusted broker and never in model context.",
+      "verification_ids": [
+        "VER-PLN-004"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-004"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-AIRMF-MAP",
+        "FW-ASI04",
+        "FW-CSF-GV"
+      ],
+      "lifecycle_phase": "Model and orchestration lifecycle",
+      "owner": "AI Platform Lead",
+      "requirement_id": "REQ-AI-002",
+      "risk_ids": [
+        "RSK-013",
+        "RSK-014",
+        "RSK-016",
+        "RSK-017"
+      ],
+      "statement": "Model/provider use MUST meet approved data-use, no-training, retention, region, subprocessor, security, change-notice, incident, audit, continuity, and exit criteria.",
+      "verification_ids": [
+        "VER-PLN-004"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-005",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI02",
+        "FW-ASI05",
+        "FW-ASI08",
+        "FW-CSF-PR-PS"
+      ],
+      "lifecycle_phase": "Model and orchestration lifecycle",
+      "owner": "AI Platform Lead",
+      "requirement_id": "REQ-AI-003",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-015",
+        "RSK-016",
+        "RSK-024"
+      ],
+      "statement": "Orchestration MUST be an explicit bounded state machine with caps for input/output tokens, steps, tools, fan-out, time, concurrency, retries, and cost.",
+      "verification_ids": [
+        "VER-AUT-001",
+        "VER-AUT-008",
+        "VER-PLN-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-005",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI02",
+        "FW-ASI05",
+        "FW-ASI08",
+        "FW-CSF-PR-PS"
+      ],
+      "lifecycle_phase": "Model and orchestration lifecycle",
+      "owner": "AI Platform Lead",
+      "requirement_id": "REQ-AI-004",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-015",
+        "RSK-016",
+        "RSK-024"
+      ],
+      "statement": "Persistent cross-session memory MUST remain disabled in v1; any future write MUST be privileged, scoped, reviewable, expiring, and reassessed.",
+      "verification_ids": [
+        "VER-AUT-001",
+        "VER-AUT-008",
+        "VER-PLN-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-003"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-005",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI02",
+        "FW-ASI03",
+        "FW-ASI04",
+        "FW-SSDF-PW"
+      ],
+      "lifecycle_phase": "Model and orchestration lifecycle",
+      "owner": "AI Platform Lead",
+      "requirement_id": "REQ-AI-005",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-005",
+        "RSK-006",
+        "RSK-012"
+      ],
+      "statement": "Tools MUST be statically approved, typed, narrowly scoped, versioned, authenticated, independently authorized per call, and separated into read and write capabilities.",
+      "verification_ids": [
+        "VER-AUT-008",
+        "VER-AUT-011",
+        "VER-PLN-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-005",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI02",
+        "FW-ASI05",
+        "FW-ASI08",
+        "FW-CSF-PR-PS"
+      ],
+      "lifecycle_phase": "Model and orchestration lifecycle",
+      "owner": "AI Platform Lead",
+      "requirement_id": "REQ-AI-006",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-015",
+        "RSK-016",
+        "RSK-024"
+      ],
+      "statement": "Generic shell, code execution, browser, filesystem, database, email, and unrestricted network tools MUST NOT be present in v1.",
+      "verification_ids": [
+        "VER-AUT-001",
+        "VER-AUT-008",
+        "VER-PLN-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-004"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-005",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-AIRMF-MEASURE",
+        "FW-ASI01",
+        "FW-ASI08",
+        "FW-ASI10"
+      ],
+      "lifecycle_phase": "Model and orchestration lifecycle",
+      "owner": "AI Platform Lead",
+      "requirement_id": "REQ-AI-007",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-006",
+        "RSK-008",
+        "RSK-009",
+        "RSK-016"
+      ],
+      "statement": "Model output MUST receive structural, semantic, authorization, data-loss, citation, and clinical-safety validation before use.",
+      "verification_ids": [
+        "VER-AUT-006",
+        "VER-AUT-008",
+        "VER-AUT-011",
+        "VER-PLN-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-004"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-005",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-AIRMF-MEASURE",
+        "FW-ASI01",
+        "FW-ASI08",
+        "FW-ASI10"
+      ],
+      "lifecycle_phase": "Model and orchestration lifecycle",
+      "owner": "AI Platform Lead",
+      "requirement_id": "REQ-AI-008",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-006",
+        "RSK-008",
+        "RSK-009",
+        "RSK-016"
+      ],
+      "statement": "Model, provider, prompt, and tool failures MUST degrade safely without fabricated success or bypassed control.",
+      "verification_ids": [
+        "VER-AUT-006",
+        "VER-AUT-008",
+        "VER-AUT-011",
+        "VER-PLN-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-APP-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-005",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-PS",
+        "FW-HIPAA-TECH",
+        "FW-SSDF-PW"
+      ],
+      "lifecycle_phase": "Development and runtime",
+      "owner": "AppSec Lead",
+      "requirement_id": "REQ-APP-001",
+      "risk_ids": [
+        "RSK-003",
+        "RSK-006",
+        "RSK-015"
+      ],
+      "statement": "All external input MUST use strict type/schema/size/canonicalization validation; ambiguous or missing security context MUST fail closed.",
+      "verification_ids": [
+        "VER-AUT-001",
+        "VER-AUT-002",
+        "VER-AUT-004",
+        "VER-AUT-011",
+        "VER-PLN-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-APP-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-008"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI09",
+        "FW-CSF-PR-DS",
+        "FW-CSF-PR-PS",
+        "FW-SSDF-PW"
+      ],
+      "lifecycle_phase": "Development and runtime",
+      "owner": "AppSec Lead",
+      "requirement_id": "REQ-APP-002",
+      "risk_ids": [
+        "RSK-002",
+        "RSK-006",
+        "RSK-007",
+        "RSK-014",
+        "RSK-020"
+      ],
+      "statement": "Model/retrieved output MUST render as inert data with contextual encoding, restrictive CSP, no remote active content, and safe link handling.",
+      "verification_ids": [
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-APP-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-005",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-PS",
+        "FW-HIPAA-TECH",
+        "FW-SSDF-PW"
+      ],
+      "lifecycle_phase": "Development and runtime",
+      "owner": "AppSec Lead",
+      "requirement_id": "REQ-APP-003",
+      "risk_ids": [
+        "RSK-003",
+        "RSK-006",
+        "RSK-015"
+      ],
+      "statement": "API resources MUST prevent BOLA/IDOR, mass assignment, injection, replay, request smuggling, and unsafe error disclosure.",
+      "verification_ids": [
+        "VER-AUT-001",
+        "VER-AUT-002",
+        "VER-AUT-004",
+        "VER-AUT-011",
+        "VER-PLN-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-APP-003"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-009",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-AA",
+        "FW-CSF-PR-PS",
+        "FW-HIPAA-TECH",
+        "FW-SSDF-PS"
+      ],
+      "lifecycle_phase": "Development and runtime",
+      "owner": "AppSec Lead",
+      "requirement_id": "REQ-APP-004",
+      "risk_ids": [
+        "RSK-005",
+        "RSK-006",
+        "RSK-012",
+        "RSK-014",
+        "RSK-017"
+      ],
+      "statement": "Security keys/secrets MUST be purpose-separated, managed outside source/prompts/logs, rotated, and inaccessible to the model.",
+      "verification_ids": [
+        "VER-AUT-001",
+        "VER-PLN-009"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-005",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI02",
+        "FW-ASI05",
+        "FW-ASI08",
+        "FW-CSF-PR-PS"
+      ],
+      "lifecycle_phase": "Development and runtime",
+      "owner": "AppSec Lead",
+      "requirement_id": "REQ-APP-005",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-015",
+        "RSK-016",
+        "RSK-024"
+      ],
+      "statement": "Rate limits, quotas, timeouts, backpressure, duplicate suppression, and circuit breakers MUST protect users, dependencies, cost, and care operations.",
+      "verification_ids": [
+        "VER-AUT-001",
+        "VER-AUT-008",
+        "VER-PLN-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-APP-003"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-009",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-AA",
+        "FW-CSF-PR-PS",
+        "FW-HIPAA-TECH",
+        "FW-SSDF-PS"
+      ],
+      "lifecycle_phase": "Development and runtime",
+      "owner": "AppSec Lead",
+      "requirement_id": "REQ-APP-006",
+      "risk_ids": [
+        "RSK-005",
+        "RSK-006",
+        "RSK-012",
+        "RSK-014",
+        "RSK-017"
+      ],
+      "statement": "Development bypass/debug behavior MUST be impossible to enable silently in production.",
+      "verification_ids": [
+        "VER-AUT-001",
+        "VER-PLN-009"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-DAT-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-DES-003",
+        "EVD-M04-001",
+        "EVD-PLN-002",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MAP",
+        "FW-CSF-PR-DS",
+        "FW-FHIR-LABEL",
+        "FW-PRIVACY-CT-P"
+      ],
+      "lifecycle_phase": "Data acquisition through deletion",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-DAT-001",
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-010",
+        "RSK-023"
+      ],
+      "statement": "This repository MUST contain only generated synthetic patient data with provenance and clear labeling.",
+      "verification_ids": [
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-015",
+        "VER-AUT-017",
+        "VER-REV-003",
+        "VER-REV-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-DAT-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-002"
+      ],
+      "framework_reference_ids": [
+        "FW-HIPAA-ADMIN",
+        "FW-PRIVACY-CT-P",
+        "FW-PRIVACY-ID-P"
+      ],
+      "lifecycle_phase": "Data acquisition through deletion",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-DAT-002",
+      "risk_ids": [
+        "RSK-013",
+        "RSK-014",
+        "RSK-016",
+        "RSK-023"
+      ],
+      "statement": "Every data element, source, destination, purpose, classification, owner, retention, and deletion path MUST be inventoried before pilot.",
+      "verification_ids": [
+        "VER-PLN-002"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-DAT-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-DES-003",
+        "EVD-M04-001",
+        "EVD-PLN-002",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MAP",
+        "FW-CSF-PR-DS",
+        "FW-FHIR-LABEL",
+        "FW-PRIVACY-CT-P"
+      ],
+      "lifecycle_phase": "Data acquisition through deletion",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-DAT-003",
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-010",
+        "RSK-023"
+      ],
+      "statement": "Sensitive retrieval MUST be minimized to fields necessary for the authorized task; full chart retrieval is prohibited by default.",
+      "verification_ids": [
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-015",
+        "VER-AUT-017",
+        "VER-REV-003",
+        "VER-REV-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-DAT-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-DES-003",
+        "EVD-M04-001",
+        "EVD-PLN-002",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MAP",
+        "FW-CSF-PR-DS",
+        "FW-FHIR-LABEL",
+        "FW-PRIVACY-CT-P"
+      ],
+      "lifecycle_phase": "Data acquisition through deletion",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-DAT-004",
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-010",
+        "RSK-023"
+      ],
+      "statement": "Sensitivity, consent, tenant/facility, patient, purpose, and provenance labels MUST survive ingestion, retrieval, caching, model context, output, action, audit, and deletion flows.",
+      "verification_ids": [
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-015",
+        "VER-AUT-017",
+        "VER-REV-003",
+        "VER-REV-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-DAT-003"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-006",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-DS",
+        "FW-HIPAA-TECH",
+        "FW-PRIVACY-PT-P"
+      ],
+      "lifecycle_phase": "Data acquisition through deletion",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-DAT-005",
+      "risk_ids": [
+        "RSK-014",
+        "RSK-021"
+      ],
+      "statement": "Raw restricted prompts/responses, FHIR resources, secrets, tokens, and hidden model reasoning MUST NOT enter routine logs or traces.",
+      "verification_ids": [
+        "VER-AUT-012",
+        "VER-PLN-006"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-GOV-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-DES-002",
+        "EVD-GOV-003",
+        "EVD-M02-001",
+        "EVD-PLN-010"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-AIRMF-MAP",
+        "FW-CSF-GV",
+        "FW-PRIVACY-GV-P"
+      ],
+      "lifecycle_phase": "Data acquisition through deletion",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-DAT-006",
+      "risk_ids": [
+        "RSK-009",
+        "RSK-022",
+        "RSK-023",
+        "RSK-024"
+      ],
+      "statement": "Secondary use for training, marketing, workforce scoring, or unrelated analytics MUST be denied absent a new approved assessment.",
+      "verification_ids": [
+        "VER-AUT-008",
+        "VER-PLN-010",
+        "VER-REV-002"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-DAT-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-002"
+      ],
+      "framework_reference_ids": [
+        "FW-HIPAA-ADMIN",
+        "FW-PRIVACY-CT-P",
+        "FW-PRIVACY-ID-P"
+      ],
+      "lifecycle_phase": "Data acquisition through deletion",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-DAT-007",
+      "risk_ids": [
+        "RSK-013",
+        "RSK-014",
+        "RSK-016",
+        "RSK-023"
+      ],
+      "statement": "Retention, legal hold, deletion, backup expiry, and provider deletion MUST be defined and testable per data object.",
+      "verification_ids": [
+        "VER-PLN-002"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-DAT-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-DES-003",
+        "EVD-M04-001",
+        "EVD-PLN-002",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MAP",
+        "FW-CSF-PR-DS",
+        "FW-FHIR-LABEL",
+        "FW-PRIVACY-CT-P"
+      ],
+      "lifecycle_phase": "Data acquisition through deletion",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-DAT-008",
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-010",
+        "RSK-023"
+      ],
+      "statement": "Export, feedback, evaluation, and support datasets MUST be minimized, access controlled, and separately approved.",
+      "verification_ids": [
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-015",
+        "VER-AUT-017",
+        "VER-REV-003",
+        "VER-REV-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-GOV-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-GOV-001",
+        "EVD-M03-001",
+        "EVD-PLN-007"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-CSF-GV",
+        "FW-HIPAA-ADMIN"
+      ],
+      "lifecycle_phase": "Governance and all gates",
+      "owner": "AI System Owner",
+      "requirement_id": "REQ-GOV-001",
+      "risk_ids": [
+        "RSK-017",
+        "RSK-021",
+        "RSK-024"
+      ],
+      "statement": "Polaris MUST have named business, system, data, security, privacy, clinical-safety, and operations owners.",
+      "verification_ids": [
+        "VER-PLN-007",
+        "VER-REV-001",
+        "VER-REV-004"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-GOV-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-DES-002",
+        "EVD-GOV-003",
+        "EVD-M02-001",
+        "EVD-PLN-010"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-AIRMF-MAP",
+        "FW-CSF-GV",
+        "FW-PRIVACY-GV-P"
+      ],
+      "lifecycle_phase": "Governance and all gates",
+      "owner": "AI System Owner",
+      "requirement_id": "REQ-GOV-002",
+      "risk_ids": [
+        "RSK-009",
+        "RSK-022",
+        "RSK-023",
+        "RSK-024"
+      ],
+      "statement": "Approved/prohibited uses, populations, data, tools, autonomy, and deployment boundaries MUST be technically and procedurally enforced.",
+      "verification_ids": [
+        "VER-AUT-008",
+        "VER-PLN-010",
+        "VER-REV-002"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-GOV-003"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-GOV-002",
+        "EVD-M02-001",
+        "EVD-M03-001",
+        "EVD-RSK-001",
+        "EVD-TRC-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-GV",
+        "FW-SSDF-PO"
+      ],
+      "lifecycle_phase": "Governance and all gates",
+      "owner": "AI System Owner",
+      "requirement_id": "REQ-GOV-003",
+      "risk_ids": [
+        "RSK-017",
+        "RSK-022",
+        "RSK-024",
+        "RSK-025"
+      ],
+      "statement": "A material change to model, prompt, corpus, policy, tool, data, provider, population, jurisdiction, or autonomy MUST trigger impact review and versioned evaluation.",
+      "verification_ids": [
+        "VER-GOV-001",
+        "VER-REV-001",
+        "VER-REV-004"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-GOV-003"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-GOV-002",
+        "EVD-M02-001",
+        "EVD-M03-001",
+        "EVD-RSK-001",
+        "EVD-TRC-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-GV",
+        "FW-SSDF-PO"
+      ],
+      "lifecycle_phase": "Governance and all gates",
+      "owner": "AI System Owner",
+      "requirement_id": "REQ-GOV-004",
+      "risk_ids": [
+        "RSK-017",
+        "RSK-022",
+        "RSK-024",
+        "RSK-025"
+      ],
+      "statement": "Exceptions MUST identify scope, owner, rationale, compensating controls, residual risk, approver, and expiry.",
+      "verification_ids": [
+        "VER-GOV-001",
+        "VER-REV-001",
+        "VER-REV-004"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-GOV-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-DES-002",
+        "EVD-GOV-003",
+        "EVD-M02-001",
+        "EVD-PLN-010"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-AIRMF-MAP",
+        "FW-CSF-GV",
+        "FW-PRIVACY-GV-P"
+      ],
+      "lifecycle_phase": "Governance and all gates",
+      "owner": "AI System Owner",
+      "requirement_id": "REQ-GOV-005",
+      "risk_ids": [
+        "RSK-009",
+        "RSK-022",
+        "RSK-023",
+        "RSK-024"
+      ],
+      "statement": "Public/internal claims MUST trace to evidence and MUST NOT assert compliance, certification, clinical validity, or production readiness without authority.",
+      "verification_ids": [
+        "VER-AUT-008",
+        "VER-PLN-010",
+        "VER-REV-002"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-GOV-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-GOV-001",
+        "EVD-M03-001",
+        "EVD-PLN-007"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-CSF-GV",
+        "FW-HIPAA-ADMIN"
+      ],
+      "lifecycle_phase": "Governance and all gates",
+      "owner": "AI System Owner",
+      "requirement_id": "REQ-GOV-006",
+      "risk_ids": [
+        "RSK-017",
+        "RSK-021",
+        "RSK-024"
+      ],
+      "statement": "Kill, rollback, suspension, and retirement authority MUST be assigned independently of the model/provider.",
+      "verification_ids": [
+        "VER-PLN-007",
+        "VER-REV-001",
+        "VER-REV-004"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-IAM-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-001",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI03",
+        "FW-CSF-PR-AA",
+        "FW-FHIR-AUTHN",
+        "FW-HIPAA-TECH"
+      ],
+      "lifecycle_phase": "Design, build, and operation",
+      "owner": "IAM Lead",
+      "requirement_id": "REQ-IAM-001",
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-005",
+        "RSK-018"
+      ],
+      "statement": "Production identity MUST use enterprise OIDC with validated signature, issuer, audience, expiry, token ID, and required claims; algorithms MUST be allowlisted.",
+      "verification_ids": [
+        "VER-AUT-002",
+        "VER-AUT-003",
+        "VER-AUT-014",
+        "VER-AUT-018",
+        "VER-AUT-020",
+        "VER-AUT-021",
+        "VER-AUT-022",
+        "VER-AUT-023",
+        "VER-AUT-024",
+        "VER-AUT-025",
+        "VER-AUT-026",
+        "VER-AUT-027",
+        "VER-AUT-028",
+        "VER-AUT-029",
+        "VER-PLN-001",
+        "VER-REV-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-IAM-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-001",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI03",
+        "FW-CSF-PR-AA",
+        "FW-FHIR-AUTHN",
+        "FW-HIPAA-TECH"
+      ],
+      "lifecycle_phase": "Design, build, and operation",
+      "owner": "IAM Lead",
+      "requirement_id": "REQ-IAM-002",
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-005",
+        "RSK-018"
+      ],
+      "statement": "Sensitive operations MUST carry authenticated end-user identity and declared/validated purpose through every downstream decision.",
+      "verification_ids": [
+        "VER-AUT-002",
+        "VER-AUT-003",
+        "VER-AUT-014",
+        "VER-AUT-018",
+        "VER-AUT-020",
+        "VER-AUT-021",
+        "VER-AUT-022",
+        "VER-AUT-023",
+        "VER-AUT-024",
+        "VER-AUT-025",
+        "VER-AUT-026",
+        "VER-AUT-027",
+        "VER-AUT-028",
+        "VER-AUT-029",
+        "VER-PLN-001",
+        "VER-REV-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-IAM-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-001",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI03",
+        "FW-CSF-PR-AA",
+        "FW-FHIR-AUTHZ",
+        "FW-HIPAA-TECH"
+      ],
+      "lifecycle_phase": "Design, build, and operation",
+      "owner": "IAM Lead",
+      "requirement_id": "REQ-IAM-003",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-003",
+        "RSK-004",
+        "RSK-005",
+        "RSK-018"
+      ],
+      "statement": "Authorization MUST deny by default using role, facility/organization, patient relationship, purpose, sensitivity/consent, resource, operation, tool, and environment.",
+      "verification_ids": [
+        "VER-AUT-003",
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-009",
+        "VER-AUT-014",
+        "VER-AUT-015",
+        "VER-AUT-016",
+        "VER-AUT-017",
+        "VER-AUT-018",
+        "VER-AUT-020",
+        "VER-PLN-001",
+        "VER-REV-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-IAM-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-001",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI03",
+        "FW-CSF-PR-AA",
+        "FW-FHIR-AUTHZ",
+        "FW-HIPAA-TECH"
+      ],
+      "lifecycle_phase": "Design, build, and operation",
+      "owner": "IAM Lead",
+      "requirement_id": "REQ-IAM-004",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-003",
+        "RSK-004",
+        "RSK-005",
+        "RSK-018"
+      ],
+      "statement": "The model, prompt, retrieved content, or client MUST NOT grant, alter, or waive authorization.",
+      "verification_ids": [
+        "VER-AUT-003",
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-009",
+        "VER-AUT-014",
+        "VER-AUT-015",
+        "VER-AUT-016",
+        "VER-AUT-017",
+        "VER-AUT-018",
+        "VER-AUT-020",
+        "VER-PLN-001",
+        "VER-REV-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-IAM-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-001",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI03",
+        "FW-CSF-PR-AA",
+        "FW-FHIR-AUTHN",
+        "FW-HIPAA-TECH"
+      ],
+      "lifecycle_phase": "Design, build, and operation",
+      "owner": "IAM Lead",
+      "requirement_id": "REQ-IAM-005",
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-005",
+        "RSK-018"
+      ],
+      "statement": "Shared/broad service identity and token passthrough MUST NOT substitute for user delegation; downstream tokens MUST be audience/resource bound and short lived.",
+      "verification_ids": [
+        "VER-AUT-002",
+        "VER-AUT-003",
+        "VER-AUT-014",
+        "VER-AUT-018",
+        "VER-AUT-020",
+        "VER-AUT-021",
+        "VER-AUT-022",
+        "VER-AUT-023",
+        "VER-AUT-024",
+        "VER-AUT-025",
+        "VER-AUT-026",
+        "VER-AUT-027",
+        "VER-AUT-028",
+        "VER-AUT-029",
+        "VER-PLN-001",
+        "VER-REV-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-IAM-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-001",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI03",
+        "FW-CSF-PR-AA",
+        "FW-FHIR-AUTHZ",
+        "FW-HIPAA-TECH"
+      ],
+      "lifecycle_phase": "Design, build, and operation",
+      "owner": "IAM Lead",
+      "requirement_id": "REQ-IAM-006",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-003",
+        "RSK-004",
+        "RSK-005",
+        "RSK-018"
+      ],
+      "statement": "Privileged administration and approval MUST use separate roles, step-up where risk warrants, least privilege, and attributable audit.",
+      "verification_ids": [
+        "VER-AUT-003",
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-009",
+        "VER-AUT-014",
+        "VER-AUT-015",
+        "VER-AUT-016",
+        "VER-AUT-017",
+        "VER-AUT-018",
+        "VER-AUT-020",
+        "VER-PLN-001",
+        "VER-REV-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-IAM-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-001",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI03",
+        "FW-CSF-PR-AA",
+        "FW-FHIR-AUTHZ",
+        "FW-HIPAA-TECH"
+      ],
+      "lifecycle_phase": "Design, build, and operation",
+      "owner": "IAM Lead",
+      "requirement_id": "REQ-IAM-007",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-003",
+        "RSK-004",
+        "RSK-005",
+        "RSK-018"
+      ],
+      "statement": "Revocation, role/assignment/consent change, and terminated sessions MUST take effect within approved bounds and be rechecked for writes.",
+      "verification_ids": [
+        "VER-AUT-003",
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-009",
+        "VER-AUT-014",
+        "VER-AUT-015",
+        "VER-AUT-016",
+        "VER-AUT-017",
+        "VER-AUT-018",
+        "VER-AUT-020",
+        "VER-PLN-001",
+        "VER-REV-005"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-LCM-001"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-PLN-010"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-CSF-RC",
+        "FW-HIPAA-ADMIN",
+        "FW-PRIVACY-CM-P"
+      ],
+      "lifecycle_phase": "Enablement, support, and retirement",
+      "owner": "Product Owner",
+      "requirement_id": "REQ-LCM-001",
+      "risk_ids": [
+        "RSK-009",
+        "RSK-016",
+        "RSK-018",
+        "RSK-019",
+        "RSK-020",
+        "RSK-021"
+      ],
+      "statement": "Users, approvers, operators, responders, developers, and auditors MUST receive role-specific limitations, safe-use, escalation, and incident training.",
+      "verification_ids": [
+        "VER-PLN-010"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-LCM-001"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-PLN-010"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-CSF-RC",
+        "FW-HIPAA-ADMIN",
+        "FW-PRIVACY-CM-P"
+      ],
+      "lifecycle_phase": "Enablement, support, and retirement",
+      "owner": "Product Owner",
+      "requirement_id": "REQ-LCM-002",
+      "risk_ids": [
+        "RSK-009",
+        "RSK-016",
+        "RSK-018",
+        "RSK-019",
+        "RSK-020",
+        "RSK-021"
+      ],
+      "statement": "Users MUST have support, feedback, correction, privacy complaint, safety report, and non-AI fallback paths.",
+      "verification_ids": [
+        "VER-PLN-010"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-GOV-002"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-DES-002",
+        "EVD-GOV-003",
+        "EVD-M02-001",
+        "EVD-PLN-010"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-AIRMF-MAP",
+        "FW-CSF-GV",
+        "FW-PRIVACY-GV-P"
+      ],
+      "lifecycle_phase": "Enablement, support, and retirement",
+      "owner": "Product Owner",
+      "requirement_id": "REQ-LCM-003",
+      "risk_ids": [
+        "RSK-009",
+        "RSK-022",
+        "RSK-023",
+        "RSK-024"
+      ],
+      "statement": "Training labs MUST use isolated synthetic targets, explicit authorization/rules of engagement, resets, and no real credentials/data.",
+      "verification_ids": [
+        "VER-AUT-008",
+        "VER-PLN-010",
+        "VER-REV-002"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-LCM-001"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-PLN-010"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-CSF-RC",
+        "FW-HIPAA-ADMIN",
+        "FW-PRIVACY-CM-P"
+      ],
+      "lifecycle_phase": "Enablement, support, and retirement",
+      "owner": "Product Owner",
+      "requirement_id": "REQ-LCM-004",
+      "risk_ids": [
+        "RSK-009",
+        "RSK-016",
+        "RSK-018",
+        "RSK-019",
+        "RSK-020",
+        "RSK-021"
+      ],
+      "statement": "Retirement MUST revoke access/credentials, stop providers/tools, export required records, delete data/embeddings per schedule, dispose artifacts, update inventory, and verify downstream termination.",
+      "verification_ids": [
+        "VER-PLN-010"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-OPS-001"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-006",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI10",
+        "FW-CSF-DE",
+        "FW-FHIR-AUDIT",
+        "FW-HIPAA-TECH"
+      ],
+      "lifecycle_phase": "Operation, incident response, and recovery",
+      "owner": "SRE Lead",
+      "requirement_id": "REQ-OPS-001",
+      "risk_ids": [
+        "RSK-014",
+        "RSK-018",
+        "RSK-021",
+        "RSK-025"
+      ],
+      "statement": "Security/audit events MUST capture correlation, actor, purpose, resource/action reference, policy/model/prompt/corpus/tool versions, decision, approval, and result without prohibited content.",
+      "verification_ids": [
+        "VER-AUT-012",
+        "VER-AUT-019",
+        "VER-AUT-020",
+        "VER-AUT-021",
+        "VER-AUT-023",
+        "VER-AUT-025",
+        "VER-AUT-026",
+        "VER-AUT-027",
+        "VER-AUT-028",
+        "VER-PLN-006"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-OPS-001"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-006",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI10",
+        "FW-CSF-DE",
+        "FW-FHIR-AUDIT",
+        "FW-HIPAA-TECH"
+      ],
+      "lifecycle_phase": "Operation, incident response, and recovery",
+      "owner": "SRE Lead",
+      "requirement_id": "REQ-OPS-002",
+      "risk_ids": [
+        "RSK-014",
+        "RSK-018",
+        "RSK-021",
+        "RSK-025"
+      ],
+      "statement": "Audit evidence MUST be tamper evident, time synchronized, access controlled, retained, searchable, and exportable for investigation.",
+      "verification_ids": [
+        "VER-AUT-012",
+        "VER-AUT-019",
+        "VER-AUT-020",
+        "VER-AUT-021",
+        "VER-AUT-023",
+        "VER-AUT-025",
+        "VER-AUT-026",
+        "VER-AUT-027",
+        "VER-AUT-028",
+        "VER-PLN-006"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-OPS-002"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-006"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI01",
+        "FW-ASI04",
+        "FW-ASI10",
+        "FW-CSF-DE",
+        "FW-CSF-RS"
+      ],
+      "lifecycle_phase": "Operation, incident response, and recovery",
+      "owner": "SRE Lead",
+      "requirement_id": "REQ-OPS-003",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-011",
+        "RSK-014",
+        "RSK-015",
+        "RSK-017",
+        "RSK-018",
+        "RSK-021"
+      ],
+      "statement": "Detection MUST cover identity abuse, enumeration, cross-scope attempts, injection/poison canaries, DLP, abnormal tool/action volume, resource exhaustion, drift, and control disablement.",
+      "verification_ids": [
+        "VER-AUT-028",
+        "VER-AUT-029",
+        "VER-PLN-006"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-OPS-002"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-006"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI01",
+        "FW-ASI04",
+        "FW-ASI10",
+        "FW-CSF-DE",
+        "FW-CSF-RS"
+      ],
+      "lifecycle_phase": "Operation, incident response, and recovery",
+      "owner": "SRE Lead",
+      "requirement_id": "REQ-OPS-004",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-011",
+        "RSK-014",
+        "RSK-015",
+        "RSK-017",
+        "RSK-018",
+        "RSK-021"
+      ],
+      "statement": "Incident playbooks MUST address data disclosure, injection/agent compromise, poisoning, provider/model compromise, unsafe output/action, outage, and supply-chain compromise.",
+      "verification_ids": [
+        "VER-AUT-028",
+        "VER-AUT-029",
+        "VER-PLN-006"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-OPS-003"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-007"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI08",
+        "FW-ASI10",
+        "FW-CSF-RC",
+        "FW-CSF-RS"
+      ],
+      "lifecycle_phase": "Operation, incident response, and recovery",
+      "owner": "SRE Lead",
+      "requirement_id": "REQ-OPS-005",
+      "risk_ids": [
+        "RSK-015",
+        "RSK-016",
+        "RSK-017",
+        "RSK-021"
+      ],
+      "statement": "Model/read/write capabilities MUST have independent kill switches; provider, prompt, policy, corpus, tool, and release rollback MUST be tested.",
+      "verification_ids": [
+        "VER-AUT-019",
+        "VER-AUT-026",
+        "VER-AUT-028",
+        "VER-PLN-007"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-OPS-003"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-007"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI08",
+        "FW-ASI10",
+        "FW-CSF-RC",
+        "FW-CSF-RS"
+      ],
+      "lifecycle_phase": "Operation, incident response, and recovery",
+      "owner": "SRE Lead",
+      "requirement_id": "REQ-OPS-006",
+      "risk_ids": [
+        "RSK-015",
+        "RSK-016",
+        "RSK-017",
+        "RSK-021"
+      ],
+      "statement": "SLOs, RTO/RPO, safe degraded mode, manual fallback, backup/restore, reconciliation, and dependency failure behavior MUST be approved for care operations.",
+      "verification_ids": [
+        "VER-AUT-019",
+        "VER-AUT-026",
+        "VER-AUT-028",
+        "VER-PLN-007"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-RAG-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-003",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI01",
+        "FW-ASI06",
+        "FW-CSF-PR-DS"
+      ],
+      "lifecycle_phase": "Ingestion, retrieval, and rollback",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-RAG-001",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-008",
+        "RSK-011",
+        "RSK-017"
+      ],
+      "statement": "The index MUST contain only owner-approved, malware/content-reviewed, classified, versioned, checksummed, and attributable sources.",
+      "verification_ids": [
+        "VER-AUT-006",
+        "VER-AUT-007",
+        "VER-PLN-003"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-RAG-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-003",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI03",
+        "FW-CSF-PR-AA",
+        "FW-CSF-PR-DS",
+        "FW-FHIR-AUTHZ"
+      ],
+      "lifecycle_phase": "Ingestion, retrieval, and rollback",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-RAG-002",
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-010"
+      ],
+      "statement": "Access control MUST execute before any sensitive chunk enters model context and MUST be rechecked after retrieval where feasible.",
+      "verification_ids": [
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-007",
+        "VER-AUT-015",
+        "VER-AUT-017",
+        "VER-PLN-003"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-RAG-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-003",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI01",
+        "FW-ASI06",
+        "FW-CSF-PR-DS"
+      ],
+      "lifecycle_phase": "Ingestion, retrieval, and rollback",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-RAG-003",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-008",
+        "RSK-011",
+        "RSK-017"
+      ],
+      "statement": "Retrieved/user/FHIR/tool text MUST be labeled and treated as untrusted data, never executable instruction.",
+      "verification_ids": [
+        "VER-AUT-006",
+        "VER-AUT-007",
+        "VER-PLN-003"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-RAG-003"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-AIRMF-MEASURE",
+        "FW-ASI09"
+      ],
+      "lifecycle_phase": "Ingestion, retrieval, and rollback",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-RAG-004",
+      "risk_ids": [
+        "RSK-008",
+        "RSK-019"
+      ],
+      "statement": "Policy answers MUST use server-verifiable approved citations and source versions or explicitly abstain.",
+      "verification_ids": [
+        "VER-AUT-006"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-RAG-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-003",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI01",
+        "FW-ASI06",
+        "FW-CSF-PR-DS"
+      ],
+      "lifecycle_phase": "Ingestion, retrieval, and rollback",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-RAG-005",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-008",
+        "RSK-011",
+        "RSK-017"
+      ],
+      "statement": "Conflicting, expired, revoked, or low-provenance sources MUST be excluded or surfaced through a defined safe conflict process.",
+      "verification_ids": [
+        "VER-AUT-006",
+        "VER-AUT-007",
+        "VER-PLN-003"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-RAG-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-003",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI03",
+        "FW-CSF-PR-AA",
+        "FW-CSF-PR-DS",
+        "FW-FHIR-AUTHZ"
+      ],
+      "lifecycle_phase": "Ingestion, retrieval, and rollback",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-RAG-006",
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-010"
+      ],
+      "statement": "Vector/index partitions, metadata, cache, backup, and export MUST enforce the same classification and authorization boundaries as source data.",
+      "verification_ids": [
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-007",
+        "VER-AUT-015",
+        "VER-AUT-017",
+        "VER-PLN-003"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-RAG-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-PLN-003",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI01",
+        "FW-ASI06",
+        "FW-CSF-PR-DS"
+      ],
+      "lifecycle_phase": "Ingestion, retrieval, and rollback",
+      "owner": "Data Steward",
+      "requirement_id": "REQ-RAG-007",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-008",
+        "RSK-011",
+        "RSK-017"
+      ],
+      "statement": "Corpus/index versions MUST be immutable for evaluation and independently rollback-capable.",
+      "verification_ids": [
+        "VER-AUT-006",
+        "VER-AUT-007",
+        "VER-PLN-003"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-SAF-001"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-PLN-008",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI09",
+        "FW-ASI10"
+      ],
+      "lifecycle_phase": "Design, validation, pilot, and operation",
+      "owner": "Clinical Safety Officer",
+      "requirement_id": "REQ-SAF-001",
+      "risk_ids": [
+        "RSK-009",
+        "RSK-019"
+      ],
+      "statement": "Diagnosis, prescribing, treatment recommendation, emergency triage, autonomous clinical decision/write, and patient communication MUST be blocked in v1.",
+      "verification_ids": [
+        "VER-AUT-008",
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-SAF-001"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-PLN-008",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI09",
+        "FW-ASI10"
+      ],
+      "lifecycle_phase": "Design, validation, pilot, and operation",
+      "owner": "Clinical Safety Officer",
+      "requirement_id": "REQ-SAF-002",
+      "risk_ids": [
+        "RSK-009",
+        "RSK-019"
+      ],
+      "statement": "Urgent/emergency language MUST trigger fixed established-channel guidance and no autonomous action; the system MUST NOT assess urgency.",
+      "verification_ids": [
+        "VER-AUT-008",
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-SAF-002"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-PLN-008"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-AIRMF-MEASURE",
+        "FW-ASI09",
+        "FW-PRIVACY-CM-P"
+      ],
+      "lifecycle_phase": "Design, validation, pilot, and operation",
+      "owner": "Clinical Safety Officer",
+      "requirement_id": "REQ-SAF-003",
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007",
+        "RSK-019",
+        "RSK-020"
+      ],
+      "statement": "The UI MUST distinguish draft/proposal/approved/executed/failed states and MUST NOT imply completion before trusted confirmation.",
+      "verification_ids": [
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-SAF-002"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-PLN-008"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-AIRMF-MEASURE",
+        "FW-ASI09",
+        "FW-PRIVACY-CM-P"
+      ],
+      "lifecycle_phase": "Design, validation, pilot, and operation",
+      "owner": "Clinical Safety Officer",
+      "requirement_id": "REQ-SAF-004",
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007",
+        "RSK-019",
+        "RSK-020"
+      ],
+      "statement": "Patient identity, source/version, uncertainty, destination, exact action, and material changes MUST be understandable at decision points.",
+      "verification_ids": [
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-SAF-002"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-PLN-008"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-AIRMF-MEASURE",
+        "FW-ASI09",
+        "FW-PRIVACY-CM-P"
+      ],
+      "lifecycle_phase": "Design, validation, pilot, and operation",
+      "owner": "Clinical Safety Officer",
+      "requirement_id": "REQ-SAF-005",
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007",
+        "RSK-019",
+        "RSK-020"
+      ],
+      "statement": "The supported workflow and approval MUST meet current Northstar accessibility target (at least WCAG 2.2 AA design target) with a non-AI alternative.",
+      "verification_ids": [
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-SAF-003"
+      ],
+      "disposition": "planned",
+      "evidence_ids": [
+        "EVD-PLN-006",
+        "EVD-PLN-008"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-AIRMF-MEASURE",
+        "FW-CSF-DE"
+      ],
+      "lifecycle_phase": "Design, validation, pilot, and operation",
+      "owner": "Clinical Safety Officer",
+      "requirement_id": "REQ-SAF-006",
+      "risk_ids": [
+        "RSK-007",
+        "RSK-008",
+        "RSK-009",
+        "RSK-019",
+        "RSK-020",
+        "RSK-021"
+      ],
+      "statement": "Safety events, near misses, complaints, overrides/edits, abstention, source defects, and subgroup performance MUST be monitored with approved stop thresholds.",
+      "verification_ids": [
+        "VER-PLN-006",
+        "VER-PLN-008"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-SDL-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M03-002",
+        "EVD-PLN-009",
+        "EVD-TRC-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI04",
+        "FW-CSF-PR-PS",
+        "FW-SSDF-PS",
+        "FW-SSDF-PW"
+      ],
+      "lifecycle_phase": "Development, release, and vulnerability response",
+      "owner": "AppSec Lead",
+      "requirement_id": "REQ-SDL-001",
+      "risk_ids": [
+        "RSK-012",
+        "RSK-017",
+        "RSK-025"
+      ],
+      "statement": "Source changes MUST receive review, required tests, secret/SAST/SCA scanning, and protected-branch release gates.",
+      "verification_ids": [
+        "VER-AUT-013",
+        "VER-PLN-009"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-SDL-001"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M03-002",
+        "EVD-PLN-009",
+        "EVD-TRC-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI04",
+        "FW-CSF-PR-PS",
+        "FW-SSDF-PS",
+        "FW-SSDF-PW"
+      ],
+      "lifecycle_phase": "Development, release, and vulnerability response",
+      "owner": "AppSec Lead",
+      "requirement_id": "REQ-SDL-002",
+      "risk_ids": [
+        "RSK-012",
+        "RSK-017",
+        "RSK-025"
+      ],
+      "statement": "Dependencies and CI actions MUST be locked or immutable-SHA pinned; build artifacts MUST have SBOM/AIBOM, provenance, vulnerability results, and signatures before promotion.",
+      "verification_ids": [
+        "VER-AUT-013",
+        "VER-PLN-009"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-SDL-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M02-001",
+        "EVD-M03-002",
+        "EVD-PLN-009",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-AIRMF-MEASURE",
+        "FW-ASI01",
+        "FW-SSDF-PW",
+        "FW-SSDF-RV"
+      ],
+      "lifecycle_phase": "Development, release, and vulnerability response",
+      "owner": "AppSec Lead",
+      "requirement_id": "REQ-SDL-003",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-006",
+        "RSK-008",
+        "RSK-009",
+        "RSK-015",
+        "RSK-017",
+        "RSK-019",
+        "RSK-020"
+      ],
+      "statement": "Release evaluation MUST cover function, authorization, privacy, security, safety, grounding, robustness, accessibility, performance, cost, and recovery with versioned datasets/thresholds.",
+      "verification_ids": [
+        "VER-AUT-013",
+        "VER-PLN-005",
+        "VER-PLN-008",
+        "VER-PLN-009"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-SDL-002"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-M02-001",
+        "EVD-M03-002",
+        "EVD-PLN-009",
+        "EVD-VER-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-AIRMF-MEASURE",
+        "FW-ASI01",
+        "FW-SSDF-PW",
+        "FW-SSDF-RV"
+      ],
+      "lifecycle_phase": "Development, release, and vulnerability response",
+      "owner": "AppSec Lead",
+      "requirement_id": "REQ-SDL-004",
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-006",
+        "RSK-008",
+        "RSK-009",
+        "RSK-015",
+        "RSK-017",
+        "RSK-019",
+        "RSK-020"
+      ],
+      "statement": "Adversarial testing MUST cover direct/indirect/stored/obfuscated injection, exfiltration, poisoning, tool/identity abuse, action mutation/replay, output injection, and consumption.",
+      "verification_ids": [
+        "VER-AUT-013",
+        "VER-PLN-005",
+        "VER-PLN-008",
+        "VER-PLN-009"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-GOV-003"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-GOV-002",
+        "EVD-M02-001",
+        "EVD-M03-001",
+        "EVD-RSK-001",
+        "EVD-TRC-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-GV",
+        "FW-SSDF-PO"
+      ],
+      "lifecycle_phase": "Development, release, and vulnerability response",
+      "owner": "AppSec Lead",
+      "requirement_id": "REQ-SDL-005",
+      "risk_ids": [
+        "RSK-017",
+        "RSK-022",
+        "RSK-024",
+        "RSK-025"
+      ],
+      "statement": "A release MUST NOT proceed with an open critical/high gate blocker; accepted residual risk MUST be named, evidence-based, time-bound, monitored, and approved.",
+      "verification_ids": [
+        "VER-GOV-001",
+        "VER-REV-001",
+        "VER-REV-004"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-GOV-003"
+      ],
+      "disposition": "partial",
+      "evidence_ids": [
+        "EVD-GOV-002",
+        "EVD-M02-001",
+        "EVD-M03-001",
+        "EVD-RSK-001",
+        "EVD-TRC-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-GV",
+        "FW-SSDF-PO"
+      ],
+      "lifecycle_phase": "Development, release, and vulnerability response",
+      "owner": "AppSec Lead",
+      "requirement_id": "REQ-SDL-006",
+      "risk_ids": [
+        "RSK-017",
+        "RSK-022",
+        "RSK-024",
+        "RSK-025"
+      ],
+      "statement": "Evidence MUST be reproducible, minimal, public-safe where published, and traceable to a revision, configuration, test corpus, owner, and decision.",
+      "verification_ids": [
+        "VER-GOV-001",
+        "VER-REV-001",
+        "VER-REV-004"
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "control_ids": [
+        "CTL-ACT-001",
+        "CTL-AI-002",
+        "CTL-AI-003",
+        "CTL-AI-004",
+        "CTL-IAM-002",
+        "CTL-OPS-002",
+        "CTL-RAG-001",
+        "CTL-SDL-002"
+      ],
+      "inherent_rating": "Critical",
+      "requirement_ids": [
+        "REQ-ACT-001",
+        "REQ-AI-003",
+        "REQ-AI-004",
+        "REQ-AI-005",
+        "REQ-AI-006",
+        "REQ-AI-007",
+        "REQ-AI-008",
+        "REQ-APP-005",
+        "REQ-IAM-003",
+        "REQ-IAM-004",
+        "REQ-IAM-006",
+        "REQ-IAM-007",
+        "REQ-OPS-003",
+        "REQ-OPS-004",
+        "REQ-RAG-001",
+        "REQ-RAG-003",
+        "REQ-RAG-005",
+        "REQ-RAG-007",
+        "REQ-SDL-003",
+        "REQ-SDL-004"
+      ],
+      "risk_id": "RSK-001",
+      "scenario_ids": [
+        "MIS-03",
+        "MIS-05",
+        "THR-005",
+        "THR-015"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-002",
+        "CTL-AI-003",
+        "CTL-APP-002",
+        "CTL-IAM-002",
+        "CTL-OPS-002",
+        "CTL-RAG-001",
+        "CTL-SDL-002"
+      ],
+      "inherent_rating": "Critical",
+      "requirement_ids": [
+        "REQ-AI-003",
+        "REQ-AI-004",
+        "REQ-AI-005",
+        "REQ-AI-006",
+        "REQ-APP-002",
+        "REQ-APP-005",
+        "REQ-IAM-003",
+        "REQ-IAM-004",
+        "REQ-IAM-006",
+        "REQ-IAM-007",
+        "REQ-OPS-003",
+        "REQ-OPS-004",
+        "REQ-RAG-001",
+        "REQ-RAG-003",
+        "REQ-RAG-005",
+        "REQ-RAG-007",
+        "REQ-SDL-003",
+        "REQ-SDL-004"
+      ],
+      "risk_id": "RSK-002",
+      "scenario_ids": [
+        "MIS-04",
+        "MIS-05",
+        "THR-006",
+        "THR-014"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-APP-001",
+        "CTL-DAT-001",
+        "CTL-IAM-001",
+        "CTL-IAM-002",
+        "CTL-RAG-002"
+      ],
+      "inherent_rating": "Critical",
+      "requirement_ids": [
+        "REQ-APP-001",
+        "REQ-APP-003",
+        "REQ-DAT-001",
+        "REQ-DAT-003",
+        "REQ-DAT-004",
+        "REQ-DAT-008",
+        "REQ-IAM-001",
+        "REQ-IAM-002",
+        "REQ-IAM-003",
+        "REQ-IAM-004",
+        "REQ-IAM-005",
+        "REQ-IAM-006",
+        "REQ-IAM-007",
+        "REQ-RAG-002",
+        "REQ-RAG-006"
+      ],
+      "risk_id": "RSK-003",
+      "scenario_ids": [
+        "HAZ-01",
+        "MIS-01",
+        "MIS-03",
+        "THR-001",
+        "THR-002",
+        "THR-003",
+        "THR-004",
+        "THR-007",
+        "THR-010"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-DAT-001",
+        "CTL-IAM-001",
+        "CTL-IAM-002",
+        "CTL-RAG-002"
+      ],
+      "inherent_rating": "High",
+      "requirement_ids": [
+        "REQ-DAT-001",
+        "REQ-DAT-003",
+        "REQ-DAT-004",
+        "REQ-DAT-008",
+        "REQ-IAM-001",
+        "REQ-IAM-002",
+        "REQ-IAM-003",
+        "REQ-IAM-004",
+        "REQ-IAM-005",
+        "REQ-IAM-006",
+        "REQ-IAM-007",
+        "REQ-RAG-002",
+        "REQ-RAG-006"
+      ],
+      "risk_id": "RSK-004",
+      "scenario_ids": [
+        "HAZ-09",
+        "PRI-08",
+        "THR-007",
+        "THR-010",
+        "THR-011"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-ACT-003",
+        "CTL-AI-003",
+        "CTL-APP-003",
+        "CTL-IAM-001",
+        "CTL-IAM-002"
+      ],
+      "inherent_rating": "Critical",
+      "requirement_ids": [
+        "REQ-ACT-004",
+        "REQ-ACT-005",
+        "REQ-AI-005",
+        "REQ-APP-004",
+        "REQ-APP-006",
+        "REQ-IAM-001",
+        "REQ-IAM-002",
+        "REQ-IAM-003",
+        "REQ-IAM-004",
+        "REQ-IAM-005",
+        "REQ-IAM-006",
+        "REQ-IAM-007"
+      ],
+      "risk_id": "RSK-005",
+      "scenario_ids": [
+        "HAZ-12",
+        "MIS-11",
+        "MIS-17",
+        "PRI-02",
+        "THR-001",
+        "THR-002",
+        "THR-010",
+        "THR-015",
+        "THR-016",
+        "THR-025"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-ACT-001",
+        "CTL-ACT-002",
+        "CTL-ACT-003",
+        "CTL-AI-003",
+        "CTL-AI-004",
+        "CTL-APP-001",
+        "CTL-APP-002",
+        "CTL-APP-003",
+        "CTL-SAF-002",
+        "CTL-SDL-002"
+      ],
+      "inherent_rating": "Critical",
+      "requirement_ids": [
+        "REQ-ACT-001",
+        "REQ-ACT-002",
+        "REQ-ACT-003",
+        "REQ-ACT-004",
+        "REQ-ACT-005",
+        "REQ-AI-005",
+        "REQ-AI-007",
+        "REQ-AI-008",
+        "REQ-APP-001",
+        "REQ-APP-002",
+        "REQ-APP-003",
+        "REQ-APP-004",
+        "REQ-APP-006",
+        "REQ-SAF-003",
+        "REQ-SAF-004",
+        "REQ-SAF-005",
+        "REQ-SDL-003",
+        "REQ-SDL-004"
+      ],
+      "risk_id": "RSK-006",
+      "scenario_ids": [
+        "HAZ-01",
+        "HAZ-05",
+        "HAZ-06",
+        "HAZ-12",
+        "MIS-07",
+        "MIS-12",
+        "MIS-13",
+        "MIS-14",
+        "THR-004",
+        "THR-015",
+        "THR-017",
+        "THR-018",
+        "THR-019",
+        "THR-020",
+        "THR-025"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-ACT-002",
+        "CTL-ACT-004",
+        "CTL-APP-002",
+        "CTL-SAF-002",
+        "CTL-SAF-003"
+      ],
+      "inherent_rating": "High",
+      "requirement_ids": [
+        "REQ-ACT-002",
+        "REQ-ACT-003",
+        "REQ-ACT-006",
+        "REQ-APP-002",
+        "REQ-SAF-003",
+        "REQ-SAF-004",
+        "REQ-SAF-005",
+        "REQ-SAF-006"
+      ],
+      "risk_id": "RSK-007",
+      "scenario_ids": [
+        "HAZ-05",
+        "HAZ-06",
+        "MIS-12",
+        "MIS-13",
+        "MIS-15",
+        "PRI-09",
+        "THR-017",
+        "THR-018",
+        "THR-021"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-004",
+        "CTL-RAG-001",
+        "CTL-RAG-003",
+        "CTL-SAF-003",
+        "CTL-SDL-002"
+      ],
+      "inherent_rating": "Critical",
+      "requirement_ids": [
+        "REQ-AI-007",
+        "REQ-AI-008",
+        "REQ-RAG-001",
+        "REQ-RAG-003",
+        "REQ-RAG-004",
+        "REQ-RAG-005",
+        "REQ-RAG-007",
+        "REQ-SAF-006",
+        "REQ-SDL-003",
+        "REQ-SDL-004"
+      ],
+      "risk_id": "RSK-008",
+      "scenario_ids": [
+        "HAZ-03",
+        "HAZ-07",
+        "MIS-08",
+        "MIS-09",
+        "PRI-04",
+        "THR-009",
+        "THR-013"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-ACT-001",
+        "CTL-ACT-002",
+        "CTL-AI-004",
+        "CTL-GOV-002",
+        "CTL-LCM-001",
+        "CTL-SAF-001",
+        "CTL-SAF-003",
+        "CTL-SDL-002"
+      ],
+      "inherent_rating": "Critical",
+      "requirement_ids": [
+        "REQ-ACT-001",
+        "REQ-ACT-002",
+        "REQ-ACT-003",
+        "REQ-AI-007",
+        "REQ-AI-008",
+        "REQ-DAT-006",
+        "REQ-GOV-002",
+        "REQ-GOV-005",
+        "REQ-LCM-001",
+        "REQ-LCM-002",
+        "REQ-LCM-003",
+        "REQ-LCM-004",
+        "REQ-SAF-001",
+        "REQ-SAF-002",
+        "REQ-SAF-006",
+        "REQ-SDL-003",
+        "REQ-SDL-004"
+      ],
+      "risk_id": "RSK-009",
+      "scenario_ids": [
+        "HAZ-02",
+        "HAZ-13",
+        "MIS-06",
+        "MIS-07",
+        "THR-005",
+        "THR-006",
+        "THR-013"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-DAT-001",
+        "CTL-RAG-002"
+      ],
+      "inherent_rating": "Critical",
+      "requirement_ids": [
+        "REQ-DAT-001",
+        "REQ-DAT-003",
+        "REQ-DAT-004",
+        "REQ-DAT-008",
+        "REQ-RAG-002",
+        "REQ-RAG-006"
+      ],
+      "risk_id": "RSK-010",
+      "scenario_ids": [
+        "HAZ-09",
+        "MIS-01",
+        "MIS-10",
+        "PRI-06",
+        "PRI-08",
+        "THR-007",
+        "THR-008",
+        "THR-011"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-OPS-002",
+        "CTL-RAG-001"
+      ],
+      "inherent_rating": "High",
+      "requirement_ids": [
+        "REQ-OPS-003",
+        "REQ-OPS-004",
+        "REQ-RAG-001",
+        "REQ-RAG-003",
+        "REQ-RAG-005",
+        "REQ-RAG-007"
+      ],
+      "risk_id": "RSK-011",
+      "scenario_ids": [
+        "MIS-04",
+        "MIS-09",
+        "THR-009"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-003",
+        "CTL-APP-003",
+        "CTL-SDL-001"
+      ],
+      "inherent_rating": "Critical",
+      "requirement_ids": [
+        "REQ-AI-005",
+        "REQ-APP-004",
+        "REQ-APP-006",
+        "REQ-SDL-001",
+        "REQ-SDL-002"
+      ],
+      "risk_id": "RSK-012",
+      "scenario_ids": [
+        "MIS-19",
+        "THR-014",
+        "THR-024",
+        "THR-025"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-001",
+        "CTL-DAT-002"
+      ],
+      "inherent_rating": "High",
+      "requirement_ids": [
+        "REQ-AI-001",
+        "REQ-AI-002",
+        "REQ-DAT-002",
+        "REQ-DAT-007"
+      ],
+      "risk_id": "RSK-013",
+      "scenario_ids": [
+        "HAZ-11",
+        "PRI-06",
+        "PRI-07",
+        "THR-012",
+        "THR-026"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-001",
+        "CTL-APP-002",
+        "CTL-APP-003",
+        "CTL-DAT-002",
+        "CTL-DAT-003",
+        "CTL-OPS-001",
+        "CTL-OPS-002"
+      ],
+      "inherent_rating": "Critical",
+      "requirement_ids": [
+        "REQ-AI-001",
+        "REQ-AI-002",
+        "REQ-APP-002",
+        "REQ-APP-004",
+        "REQ-APP-006",
+        "REQ-DAT-002",
+        "REQ-DAT-005",
+        "REQ-DAT-007",
+        "REQ-OPS-001",
+        "REQ-OPS-002",
+        "REQ-OPS-003",
+        "REQ-OPS-004"
+      ],
+      "risk_id": "RSK-014",
+      "scenario_ids": [
+        "HAZ-09",
+        "MIS-16",
+        "MIS-17",
+        "MIS-21",
+        "PRI-01",
+        "PRI-03",
+        "PRI-06",
+        "PRI-07",
+        "THR-011",
+        "THR-012",
+        "THR-013",
+        "THR-016",
+        "THR-021",
+        "THR-022"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-ACT-004",
+        "CTL-AI-002",
+        "CTL-APP-001",
+        "CTL-OPS-002",
+        "CTL-OPS-003",
+        "CTL-SDL-002"
+      ],
+      "inherent_rating": "High",
+      "requirement_ids": [
+        "REQ-ACT-006",
+        "REQ-AI-003",
+        "REQ-AI-004",
+        "REQ-AI-006",
+        "REQ-APP-001",
+        "REQ-APP-003",
+        "REQ-APP-005",
+        "REQ-OPS-003",
+        "REQ-OPS-004",
+        "REQ-OPS-005",
+        "REQ-OPS-006",
+        "REQ-SDL-003",
+        "REQ-SDL-004"
+      ],
+      "risk_id": "RSK-015",
+      "scenario_ids": [
+        "HAZ-05",
+        "MIS-15",
+        "MIS-18",
+        "THR-004",
+        "THR-020",
+        "THR-023"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-ACT-003",
+        "CTL-AI-001",
+        "CTL-AI-002",
+        "CTL-AI-004",
+        "CTL-DAT-002",
+        "CTL-LCM-001",
+        "CTL-OPS-003"
+      ],
+      "inherent_rating": "High",
+      "requirement_ids": [
+        "REQ-ACT-004",
+        "REQ-ACT-005",
+        "REQ-AI-001",
+        "REQ-AI-002",
+        "REQ-AI-003",
+        "REQ-AI-004",
+        "REQ-AI-006",
+        "REQ-AI-007",
+        "REQ-AI-008",
+        "REQ-APP-005",
+        "REQ-DAT-002",
+        "REQ-DAT-007",
+        "REQ-LCM-001",
+        "REQ-LCM-002",
+        "REQ-LCM-004",
+        "REQ-OPS-005",
+        "REQ-OPS-006"
+      ],
+      "risk_id": "RSK-016",
+      "scenario_ids": [
+        "HAZ-04",
+        "HAZ-08",
+        "HAZ-14",
+        "MIS-18",
+        "THR-020",
+        "THR-023",
+        "THR-028",
+        "THR-029"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-001",
+        "CTL-APP-003",
+        "CTL-GOV-001",
+        "CTL-GOV-003",
+        "CTL-OPS-002",
+        "CTL-OPS-003",
+        "CTL-RAG-001",
+        "CTL-SDL-001",
+        "CTL-SDL-002"
+      ],
+      "inherent_rating": "Critical",
+      "requirement_ids": [
+        "REQ-AI-001",
+        "REQ-AI-002",
+        "REQ-APP-004",
+        "REQ-APP-006",
+        "REQ-GOV-001",
+        "REQ-GOV-003",
+        "REQ-GOV-004",
+        "REQ-GOV-006",
+        "REQ-OPS-003",
+        "REQ-OPS-004",
+        "REQ-OPS-005",
+        "REQ-OPS-006",
+        "REQ-RAG-001",
+        "REQ-RAG-003",
+        "REQ-RAG-005",
+        "REQ-RAG-007",
+        "REQ-SDL-001",
+        "REQ-SDL-002",
+        "REQ-SDL-003",
+        "REQ-SDL-004",
+        "REQ-SDL-005",
+        "REQ-SDL-006"
+      ],
+      "risk_id": "RSK-017",
+      "scenario_ids": [
+        "HAZ-11",
+        "HAZ-12",
+        "MIS-09",
+        "MIS-14",
+        "MIS-19",
+        "THR-002",
+        "THR-009",
+        "THR-019",
+        "THR-025",
+        "THR-026",
+        "THR-029"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-IAM-001",
+        "CTL-IAM-002",
+        "CTL-LCM-001",
+        "CTL-OPS-001",
+        "CTL-OPS-002"
+      ],
+      "inherent_rating": "High",
+      "requirement_ids": [
+        "REQ-IAM-001",
+        "REQ-IAM-002",
+        "REQ-IAM-003",
+        "REQ-IAM-004",
+        "REQ-IAM-005",
+        "REQ-IAM-006",
+        "REQ-IAM-007",
+        "REQ-LCM-001",
+        "REQ-LCM-002",
+        "REQ-LCM-004",
+        "REQ-OPS-001",
+        "REQ-OPS-002",
+        "REQ-OPS-003",
+        "REQ-OPS-004"
+      ],
+      "risk_id": "RSK-018",
+      "scenario_ids": [
+        "MIS-02",
+        "MIS-12",
+        "MIS-20",
+        "MIS-22",
+        "PRI-01",
+        "PRI-02",
+        "PRI-03",
+        "THR-001",
+        "THR-003",
+        "THR-018",
+        "THR-027"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-ACT-004",
+        "CTL-LCM-001",
+        "CTL-RAG-003",
+        "CTL-SAF-001",
+        "CTL-SAF-002",
+        "CTL-SAF-003",
+        "CTL-SDL-002"
+      ],
+      "inherent_rating": "High",
+      "requirement_ids": [
+        "REQ-ACT-006",
+        "REQ-LCM-001",
+        "REQ-LCM-002",
+        "REQ-LCM-004",
+        "REQ-RAG-004",
+        "REQ-SAF-001",
+        "REQ-SAF-002",
+        "REQ-SAF-003",
+        "REQ-SAF-004",
+        "REQ-SAF-005",
+        "REQ-SAF-006",
+        "REQ-SDL-003",
+        "REQ-SDL-004"
+      ],
+      "risk_id": "RSK-019",
+      "scenario_ids": [
+        "HAZ-03",
+        "HAZ-04",
+        "HAZ-07",
+        "HAZ-13",
+        "MIS-06",
+        "MIS-08",
+        "PRI-04",
+        "PRI-05",
+        "THR-028"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-APP-002",
+        "CTL-LCM-001",
+        "CTL-SAF-002",
+        "CTL-SAF-003",
+        "CTL-SDL-002"
+      ],
+      "inherent_rating": "High",
+      "requirement_ids": [
+        "REQ-APP-002",
+        "REQ-LCM-001",
+        "REQ-LCM-002",
+        "REQ-LCM-004",
+        "REQ-SAF-003",
+        "REQ-SAF-004",
+        "REQ-SAF-005",
+        "REQ-SAF-006",
+        "REQ-SDL-003",
+        "REQ-SDL-004"
+      ],
+      "risk_id": "RSK-020",
+      "scenario_ids": [
+        "HAZ-10",
+        "HAZ-14",
+        "MIS-16",
+        "MIS-22",
+        "PRI-05",
+        "PRI-09",
+        "THR-021"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-ACT-003",
+        "CTL-DAT-003",
+        "CTL-GOV-001",
+        "CTL-LCM-001",
+        "CTL-OPS-001",
+        "CTL-OPS-002",
+        "CTL-OPS-003",
+        "CTL-SAF-003"
+      ],
+      "inherent_rating": "High",
+      "requirement_ids": [
+        "REQ-ACT-004",
+        "REQ-ACT-005",
+        "REQ-DAT-005",
+        "REQ-GOV-001",
+        "REQ-GOV-006",
+        "REQ-LCM-001",
+        "REQ-LCM-002",
+        "REQ-LCM-004",
+        "REQ-OPS-001",
+        "REQ-OPS-002",
+        "REQ-OPS-003",
+        "REQ-OPS-004",
+        "REQ-OPS-005",
+        "REQ-OPS-006",
+        "REQ-SAF-006"
+      ],
+      "risk_id": "RSK-021",
+      "scenario_ids": [
+        "HAZ-08",
+        "MIS-20",
+        "THR-022",
+        "THR-027",
+        "THR-029"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-GOV-002",
+        "CTL-GOV-003"
+      ],
+      "inherent_rating": "High",
+      "requirement_ids": [
+        "REQ-DAT-006",
+        "REQ-GOV-002",
+        "REQ-GOV-003",
+        "REQ-GOV-004",
+        "REQ-GOV-005",
+        "REQ-LCM-003",
+        "REQ-SDL-005",
+        "REQ-SDL-006"
+      ],
+      "risk_id": "RSK-022",
+      "scenario_ids": [
+        "MIS-22",
+        "MIS-23",
+        "MIS-24",
+        "PRI-05",
+        "THR-030"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-DAT-001",
+        "CTL-DAT-002",
+        "CTL-GOV-002"
+      ],
+      "inherent_rating": "Moderate",
+      "requirement_ids": [
+        "REQ-DAT-001",
+        "REQ-DAT-002",
+        "REQ-DAT-003",
+        "REQ-DAT-004",
+        "REQ-DAT-006",
+        "REQ-DAT-007",
+        "REQ-DAT-008",
+        "REQ-GOV-002",
+        "REQ-GOV-005",
+        "REQ-LCM-003"
+      ],
+      "risk_id": "RSK-023",
+      "scenario_ids": [
+        "MIS-21",
+        "PRI-07",
+        "PRI-10"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-AI-002",
+        "CTL-GOV-001",
+        "CTL-GOV-002",
+        "CTL-GOV-003"
+      ],
+      "inherent_rating": "Critical",
+      "requirement_ids": [
+        "REQ-AI-003",
+        "REQ-AI-004",
+        "REQ-AI-006",
+        "REQ-APP-005",
+        "REQ-DAT-006",
+        "REQ-GOV-001",
+        "REQ-GOV-002",
+        "REQ-GOV-003",
+        "REQ-GOV-004",
+        "REQ-GOV-005",
+        "REQ-GOV-006",
+        "REQ-LCM-003",
+        "REQ-SDL-005",
+        "REQ-SDL-006"
+      ],
+      "risk_id": "RSK-024",
+      "scenario_ids": [
+        "MIS-24"
+      ]
+    },
+    {
+      "control_ids": [
+        "CTL-GOV-003",
+        "CTL-OPS-001",
+        "CTL-SDL-001"
+      ],
+      "inherent_rating": "High",
+      "requirement_ids": [
+        "REQ-GOV-003",
+        "REQ-GOV-004",
+        "REQ-OPS-001",
+        "REQ-OPS-002",
+        "REQ-SDL-001",
+        "REQ-SDL-002",
+        "REQ-SDL-005",
+        "REQ-SDL-006"
+      ],
+      "risk_id": "RSK-025",
+      "scenario_ids": [
+        "MIS-20",
+        "THR-027",
+        "THR-030"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "risk_ids": [
+        "RSK-003",
+        "RSK-006"
+      ],
+      "scenario_id": "HAZ-01"
+    },
+    {
+      "risk_ids": [
+        "RSK-009"
+      ],
+      "scenario_id": "HAZ-02"
+    },
+    {
+      "risk_ids": [
+        "RSK-008",
+        "RSK-019"
+      ],
+      "scenario_id": "HAZ-03"
+    },
+    {
+      "risk_ids": [
+        "RSK-016",
+        "RSK-019"
+      ],
+      "scenario_id": "HAZ-04"
+    },
+    {
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007",
+        "RSK-015"
+      ],
+      "scenario_id": "HAZ-05"
+    },
+    {
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007"
+      ],
+      "scenario_id": "HAZ-06"
+    },
+    {
+      "risk_ids": [
+        "RSK-008",
+        "RSK-019"
+      ],
+      "scenario_id": "HAZ-07"
+    },
+    {
+      "risk_ids": [
+        "RSK-016",
+        "RSK-021"
+      ],
+      "scenario_id": "HAZ-08"
+    },
+    {
+      "risk_ids": [
+        "RSK-004",
+        "RSK-010",
+        "RSK-014"
+      ],
+      "scenario_id": "HAZ-09"
+    },
+    {
+      "risk_ids": [
+        "RSK-020"
+      ],
+      "scenario_id": "HAZ-10"
+    },
+    {
+      "risk_ids": [
+        "RSK-013",
+        "RSK-017"
+      ],
+      "scenario_id": "HAZ-11"
+    },
+    {
+      "risk_ids": [
+        "RSK-005",
+        "RSK-006",
+        "RSK-017"
+      ],
+      "scenario_id": "HAZ-12"
+    },
+    {
+      "risk_ids": [
+        "RSK-009",
+        "RSK-019"
+      ],
+      "scenario_id": "HAZ-13"
+    },
+    {
+      "risk_ids": [
+        "RSK-016",
+        "RSK-020"
+      ],
+      "scenario_id": "HAZ-14"
+    },
+    {
+      "risk_ids": [
+        "RSK-003",
+        "RSK-010"
+      ],
+      "scenario_id": "MIS-01"
+    },
+    {
+      "risk_ids": [
+        "RSK-018"
+      ],
+      "scenario_id": "MIS-02"
+    },
+    {
+      "risk_ids": [
+        "RSK-001",
+        "RSK-003"
+      ],
+      "scenario_id": "MIS-03"
+    },
+    {
+      "risk_ids": [
+        "RSK-002",
+        "RSK-011"
+      ],
+      "scenario_id": "MIS-04"
+    },
+    {
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002"
+      ],
+      "scenario_id": "MIS-05"
+    },
+    {
+      "risk_ids": [
+        "RSK-009",
+        "RSK-019"
+      ],
+      "scenario_id": "MIS-06"
+    },
+    {
+      "risk_ids": [
+        "RSK-006",
+        "RSK-009"
+      ],
+      "scenario_id": "MIS-07"
+    },
+    {
+      "risk_ids": [
+        "RSK-008",
+        "RSK-019"
+      ],
+      "scenario_id": "MIS-08"
+    },
+    {
+      "risk_ids": [
+        "RSK-008",
+        "RSK-011",
+        "RSK-017"
+      ],
+      "scenario_id": "MIS-09"
+    },
+    {
+      "risk_ids": [
+        "RSK-010"
+      ],
+      "scenario_id": "MIS-10"
+    },
+    {
+      "risk_ids": [
+        "RSK-005"
+      ],
+      "scenario_id": "MIS-11"
+    },
+    {
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007",
+        "RSK-018"
+      ],
+      "scenario_id": "MIS-12"
+    },
+    {
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007"
+      ],
+      "scenario_id": "MIS-13"
+    },
+    {
+      "risk_ids": [
+        "RSK-006",
+        "RSK-017"
+      ],
+      "scenario_id": "MIS-14"
+    },
+    {
+      "risk_ids": [
+        "RSK-007",
+        "RSK-015"
+      ],
+      "scenario_id": "MIS-15"
+    },
+    {
+      "risk_ids": [
+        "RSK-014",
+        "RSK-020"
+      ],
+      "scenario_id": "MIS-16"
+    },
+    {
+      "risk_ids": [
+        "RSK-005",
+        "RSK-014"
+      ],
+      "scenario_id": "MIS-17"
+    },
+    {
+      "risk_ids": [
+        "RSK-015",
+        "RSK-016"
+      ],
+      "scenario_id": "MIS-18"
+    },
+    {
+      "risk_ids": [
+        "RSK-012",
+        "RSK-017"
+      ],
+      "scenario_id": "MIS-19"
+    },
+    {
+      "risk_ids": [
+        "RSK-018",
+        "RSK-021",
+        "RSK-025"
+      ],
+      "scenario_id": "MIS-20"
+    },
+    {
+      "risk_ids": [
+        "RSK-014",
+        "RSK-023"
+      ],
+      "scenario_id": "MIS-21"
+    },
+    {
+      "risk_ids": [
+        "RSK-018",
+        "RSK-020",
+        "RSK-022"
+      ],
+      "scenario_id": "MIS-22"
+    },
+    {
+      "risk_ids": [
+        "RSK-022"
+      ],
+      "scenario_id": "MIS-23"
+    },
+    {
+      "risk_ids": [
+        "RSK-022",
+        "RSK-024"
+      ],
+      "scenario_id": "MIS-24"
+    },
+    {
+      "risk_ids": [
+        "RSK-014",
+        "RSK-018"
+      ],
+      "scenario_id": "PRI-01"
+    },
+    {
+      "risk_ids": [
+        "RSK-005",
+        "RSK-018"
+      ],
+      "scenario_id": "PRI-02"
+    },
+    {
+      "risk_ids": [
+        "RSK-014",
+        "RSK-018"
+      ],
+      "scenario_id": "PRI-03"
+    },
+    {
+      "risk_ids": [
+        "RSK-008",
+        "RSK-019"
+      ],
+      "scenario_id": "PRI-04"
+    },
+    {
+      "risk_ids": [
+        "RSK-019",
+        "RSK-020",
+        "RSK-022"
+      ],
+      "scenario_id": "PRI-05"
+    },
+    {
+      "risk_ids": [
+        "RSK-010",
+        "RSK-013",
+        "RSK-014"
+      ],
+      "scenario_id": "PRI-06"
+    },
+    {
+      "risk_ids": [
+        "RSK-013",
+        "RSK-014",
+        "RSK-023"
+      ],
+      "scenario_id": "PRI-07"
+    },
+    {
+      "risk_ids": [
+        "RSK-004",
+        "RSK-010"
+      ],
+      "scenario_id": "PRI-08"
+    },
+    {
+      "risk_ids": [
+        "RSK-007",
+        "RSK-020"
+      ],
+      "scenario_id": "PRI-09"
+    },
+    {
+      "risk_ids": [
+        "RSK-023"
+      ],
+      "scenario_id": "PRI-10"
+    },
+    {
+      "risk_ids": [
+        "RSK-003",
+        "RSK-005",
+        "RSK-018"
+      ],
+      "scenario_id": "THR-001"
+    },
+    {
+      "risk_ids": [
+        "RSK-003",
+        "RSK-005",
+        "RSK-017"
+      ],
+      "scenario_id": "THR-002"
+    },
+    {
+      "risk_ids": [
+        "RSK-003",
+        "RSK-018"
+      ],
+      "scenario_id": "THR-003"
+    },
+    {
+      "risk_ids": [
+        "RSK-003",
+        "RSK-006",
+        "RSK-015"
+      ],
+      "scenario_id": "THR-004"
+    },
+    {
+      "risk_ids": [
+        "RSK-001",
+        "RSK-009"
+      ],
+      "scenario_id": "THR-005"
+    },
+    {
+      "risk_ids": [
+        "RSK-002",
+        "RSK-009"
+      ],
+      "scenario_id": "THR-006"
+    },
+    {
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-010"
+      ],
+      "scenario_id": "THR-007"
+    },
+    {
+      "risk_ids": [
+        "RSK-010"
+      ],
+      "scenario_id": "THR-008"
+    },
+    {
+      "risk_ids": [
+        "RSK-008",
+        "RSK-011",
+        "RSK-017"
+      ],
+      "scenario_id": "THR-009"
+    },
+    {
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-005"
+      ],
+      "scenario_id": "THR-010"
+    },
+    {
+      "risk_ids": [
+        "RSK-004",
+        "RSK-010",
+        "RSK-014"
+      ],
+      "scenario_id": "THR-011"
+    },
+    {
+      "risk_ids": [
+        "RSK-013",
+        "RSK-014"
+      ],
+      "scenario_id": "THR-012"
+    },
+    {
+      "risk_ids": [
+        "RSK-008",
+        "RSK-009",
+        "RSK-014"
+      ],
+      "scenario_id": "THR-013"
+    },
+    {
+      "risk_ids": [
+        "RSK-002",
+        "RSK-012"
+      ],
+      "scenario_id": "THR-014"
+    },
+    {
+      "risk_ids": [
+        "RSK-001",
+        "RSK-005",
+        "RSK-006"
+      ],
+      "scenario_id": "THR-015"
+    },
+    {
+      "risk_ids": [
+        "RSK-005",
+        "RSK-014"
+      ],
+      "scenario_id": "THR-016"
+    },
+    {
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007"
+      ],
+      "scenario_id": "THR-017"
+    },
+    {
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007",
+        "RSK-018"
+      ],
+      "scenario_id": "THR-018"
+    },
+    {
+      "risk_ids": [
+        "RSK-006",
+        "RSK-017"
+      ],
+      "scenario_id": "THR-019"
+    },
+    {
+      "risk_ids": [
+        "RSK-006",
+        "RSK-015",
+        "RSK-016"
+      ],
+      "scenario_id": "THR-020"
+    },
+    {
+      "risk_ids": [
+        "RSK-007",
+        "RSK-014",
+        "RSK-020"
+      ],
+      "scenario_id": "THR-021"
+    },
+    {
+      "risk_ids": [
+        "RSK-014",
+        "RSK-021"
+      ],
+      "scenario_id": "THR-022"
+    },
+    {
+      "risk_ids": [
+        "RSK-015",
+        "RSK-016"
+      ],
+      "scenario_id": "THR-023"
+    },
+    {
+      "risk_ids": [
+        "RSK-012"
+      ],
+      "scenario_id": "THR-024"
+    },
+    {
+      "risk_ids": [
+        "RSK-005",
+        "RSK-006",
+        "RSK-012",
+        "RSK-017"
+      ],
+      "scenario_id": "THR-025"
+    },
+    {
+      "risk_ids": [
+        "RSK-013",
+        "RSK-017"
+      ],
+      "scenario_id": "THR-026"
+    },
+    {
+      "risk_ids": [
+        "RSK-018",
+        "RSK-021",
+        "RSK-025"
+      ],
+      "scenario_id": "THR-027"
+    },
+    {
+      "risk_ids": [
+        "RSK-016",
+        "RSK-019"
+      ],
+      "scenario_id": "THR-028"
+    },
+    {
+      "risk_ids": [
+        "RSK-016",
+        "RSK-017",
+        "RSK-021"
+      ],
+      "scenario_id": "THR-029"
+    },
+    {
+      "risk_ids": [
+        "RSK-022",
+        "RSK-025"
+      ],
+      "scenario_id": "THR-030"
+    }
+  ],
+  "scope": "Local synthetic-data simulation; not pilot, production, compliance certification, or clinical validation.",
+  "summary": {
+    "controls": {
+      "by_status": {
+        "implemented": 2,
+        "partial": 22,
+        "planned": 7
+      },
+      "total": 31
+    },
+    "evidence": {
+      "by_status": {
+        "existing": 11,
+        "generated": 1,
+        "planned": 10
+      },
+      "total": 22
+    },
+    "framework_sources": {
+      "by_status": {
+        "provisional": 1,
+        "reviewed": 7
+      },
+      "total": 8
+    },
+    "open_gate_blockers": 6,
+    "requirements": {
+      "coverage_percent": 100.0,
+      "covered": 70,
+      "total": 70
+    },
+    "risks": {
+      "by_rating": {
+        "Critical": 12,
+        "High": 12,
+        "Moderate": 1
+      },
+      "controlled": 25,
+      "coverage_percent": 100.0,
+      "total": 25
+    },
+    "scenarios": {
+      "by_prefix": {
+        "HAZ": 14,
+        "MIS": 24,
+        "PRI": 10,
+        "THR": 30
+      },
+      "coverage_percent": 100.0,
+      "mapped": 78,
+      "total": 78
+    },
+    "verifications": {
+      "by_status": {
+        "planned": 10,
+        "verified": 35
+      },
+      "total": 45
+    }
+  },
+  "validation": {
+    "issue_count": 0,
+    "status": "PASS"
+  }
+}

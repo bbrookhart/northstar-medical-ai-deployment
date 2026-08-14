@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "evidence_id": "EVD-M04-001",
+  "observed_on": "2026-08-11",
+  "scope": "Disposable loopback-only synthetic FHIR R4 interoperability lab",
+  "claims": {
+    "fhir_conformance": false,
+    "production_readiness": false,
+    "real_phi_used": false,
+    "smart_conformance": false
+  },
+  "toolchain": {
+    "hapi_image": "docker.io/hapiproject/hapi:v8.10.0-3",
+    "hapi_image_digest": "sha256:55213612779ab3eeec919226b7bad378f0061ade823393a61d7dd46dd5087a3d",
+    "hapi_capability_software_version": "8.10.0",
+    "fhir_version": "4.0.1",
+    "synthea_version": "4.0.0",
+    "synthea_artifact_sha256": "ed43c20ad40ba5c3bc724503a5af032715fe3c491620b766148e7c2361e6ecc1"
+  },
+  "artifacts": {
+    "bundle_sha256": "e4137d421ac2f745a3e9a395def563b140ad5b4773a2fe107f42df698dca7845",
+    "manifest_sha256": "e6bda432935ce0e57d3728a7bdff110d8408dea05ad50c41e51f4ba57258f463",
+    "compose_sha256": "bf7617311abc73435b9ff96a15024510c4c7f5c33d7d1c585b1a8443dda40398",
+    "hapi_override_sha256": "735948567220a71372ac9cfcc60ab9f437315a2680f2d56736913927dc368ad0"
+  },
+  "resource_counts": {
+    "Consent": 3,
+    "Organization": 3,
+    "Patient": 3,
+    "Provenance": 3
+  },
+  "runtime_observations": {
+    "health": "healthy",
+    "run_as": "65532:65532",
+    "loopback_binding": "127.0.0.1:18080->8080/tcp",
+    "read_only_root_filesystem": true,
+    "capabilities_dropped": [
+      "ALL"
+    ],
+    "no_new_privileges": true,
+    "pids_limit": 512,
+    "memory_limit_bytes": 3221225472,
+    "cpu_limit": 2.0,
+    "persistent_data_volume": false,
+    "cors_allowed_origins": [
+      "http://127.0.0.1:18080"
+    ],
+    "disabled_endpoint_status": {
+      "/fhir/api-docs": 404,
+      "/fhir/swagger-ui/index.html": 404,
+      "/mcp/messages": 404,
+      "/swagger-ui.html": 404,
+      "/v3/api-docs": 404
+    }
+  },
+  "verification": [
+    {
+      "command": ".venv/bin/python scripts/hapi_fhir_lab.py seed",
+      "result": "pass: 12 resources seeded and read back with identity, source, and synthetic labels"
+    },
+    {
+      "command": "POLARIS_HAPI_BASE_URL=http://127.0.0.1:18080/fhir .venv/bin/pytest -q -m integration",
+      "result": "pass: shared Patient/Consent gateway contract"
+    },
+    {
+      "command": ".venv/bin/python scripts/hapi_fhir_lab.py verify",
+      "result": "pass: capability identity, 12 resources, and five disabled endpoints"
+    }
+  ],
+  "limitations": [
+    "The upstream HAPI starter supplies no enterprise authentication or enterprise logging.",
+    "The disposable H2 database and service are not durable, backed up, highly available, or an EHR.",
+    "Docker Desktop bridge networking does not provide default-deny egress; production requires enforceable network policy.",
+    "The run demonstrates bounded local interoperability only, not FHIR profile validation or SMART conformance."
+  ]
+}
