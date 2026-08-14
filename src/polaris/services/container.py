@@ -10,14 +10,19 @@ from polaris.security.policy import PolicyEngine
 from polaris.security.signal_delivery import SharedSignalsPushService
 from polaris.services.actions import ActionService
 from polaris.services.audit import AuditLedger, utc_now
+from polaris.services.corpus import CorpusIngestionService, seed_corpus_sources
 from polaris.services.patients import (
     InMemoryFhirPatientGateway,
     PatientService,
     seed_consent_decisions,
     seed_fhir_patients,
 )
-from polaris.services.retrieval import PolicyRetrievalService, seed_policy_documents
+from polaris.services.retrieval import PolicyRetrievalService
+from polaris.services.secure_retrieval import CorpusRegistry
 from polaris.services.state import InMemoryStateStore, PolarisStateStore
+
+CORPUS_ID = "northstar-policy"
+CORPUS_VERSION = "2026.08.14"
 
 
 @dataclass(frozen=True, slots=True)
@@ -26,6 +31,7 @@ class Services:
     policy: PolicyEngine
     audit: AuditLedger
     patients: PatientService
+    corpus: CorpusRegistry
     retrieval: PolicyRetrievalService
     actions: ActionService
     state: PolarisStateStore
@@ -53,7 +59,8 @@ def build_services(
         policy,
         audit,
     )
-    retrieval = PolicyRetrievalService(seed_policy_documents(), policy, audit)
+    corpus = _build_corpus(state, audit, clock=clock)
+    retrieval = PolicyRetrievalService(corpus, policy, audit)
     actions = ActionService(
         policy=policy,
         patients=patients,
@@ -68,8 +75,40 @@ def build_services(
         policy=policy,
         audit=audit,
         patients=patients,
+        corpus=corpus,
         retrieval=retrieval,
         actions=actions,
         state=state,
         identity_signal_delivery=identity_signal_delivery,
     )
+
+
+def _build_corpus(
+    state: PolarisStateStore,
+    audit: AuditLedger,
+    *,
+    clock: Callable[[], datetime],
+) -> CorpusRegistry:
+    """Promote the seed candidates and serve the resulting version.
+
+    Ingestion runs at startup rather than being baked into a fixture so that the refused candidates
+    are refused by the real control every time the application starts.
+    """
+
+    ingestion = CorpusIngestionService(clock=clock)
+    manifest, chunks, _ = ingestion.build(
+        seed_corpus_sources(),
+        corpus_id=CORPUS_ID,
+        version=CORPUS_VERSION,
+    )
+    registry = CorpusRegistry(corpus_id=CORPUS_ID, state=state, audit=audit, clock=clock)
+    registry.register(manifest, chunks)
+    with state.transaction() as transaction:
+        active = transaction.latest_corpus_activation(CORPUS_ID)
+    if active is None or active.version != CORPUS_VERSION:
+        registry.activate(
+            CORPUS_VERSION,
+            activated_by="polaris-bootstrap",
+            correlation_id="corpus-bootstrap",
+        )
+    return registry

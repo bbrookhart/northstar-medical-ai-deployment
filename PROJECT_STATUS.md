@@ -1,8 +1,8 @@
 # Project Polaris Status
 
-**Status date:** 2026-08-13  
-**Current milestone:** M05 — Secure RAG (M04 closed)  
-**Last gate:** M04 conditional pass on four time-bound exceptions (`EVD-M04-003`); the repository is under version control with a green hosted CI run  
+**Status date:** 2026-08-14  
+**Current milestone:** M06 — Bounded agent and model layer (M05 closed)  
+**Last gate:** M05 passes for the deterministic baseline (`EVD-M05-001`); M04 remains a conditional pass on four time-bound exceptions  
 **Overall status:** On track for the authorized synthetic simulation scope
 
 ## Completed
@@ -109,6 +109,16 @@
 - `NS-ARC-002` authoritative treatment-relationship and Consent integration design
 - Four owner-approved, time-bound exception records (`NS-EXC-001` to `NS-EXC-004`) and the simulated
   M04 owner review with five findings
+- Deny-by-default corpus admission with promotion records for admitted and refused candidates,
+  second-person approval, checksum and provenance binding, supersession, freshness, and content
+  scanning for instruction-shaped text, credential material, and unsafe characters (`ADR-010`)
+- Retrieval authorization computed before any scoring, post-selection integrity and freshness
+  recheck, topic-conflict abstention, and data-only context rendering that a chunk cannot escape
+- Corpus manifest identity binding labels as well as text, plus durable schema-10 corpus activation
+  with audited rollback that survives restart
+- A gated retrieval golden set — security cases 100% required and met, quality cases 90% required
+  and 100% met — enforced by `make verify` and CI (`EVD-M05-002`)
+- Hosted CI now also runs the retrieval evaluation and synthetic dataset checks, closing `M04-F1`
 
 ## Not yet assessed or approved
 
@@ -133,9 +143,10 @@
 |---|---|
 | Formatting | Pass |
 | Ruff lint/security rules | Pass |
-| Strict mypy across `src` and `tests` | Pass; 58 source/test files |
-| Pytest | Pass; 323 default-suite tests plus 1 HAPI integration test |
-| Coverage | 85.50%; enforced floor 85% |
+| Strict mypy across `src` and `tests` | Pass; 64 source/test files |
+| Pytest | Pass; 355 default-suite tests plus 1 HAPI integration test |
+| Coverage | 85.98%; enforced floor 85% |
+| Retrieval evaluation | Pass; security 100% (floor 100%), quality 100% (floor 90%) |
 | Governance traceability | Pass; 70/70 requirements, 25/25 risks, 78/78 scenarios |
 | Generated-report drift check | Pass |
 | Hosted GitHub Actions | Pass; `quality` job green at a named revision (`EVD-M04-002`) |
@@ -161,6 +172,7 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 | ADR-007 | Persist strict signed continuous-access events, authenticate bounded push delivery, strictly manage and correlate verification of streams, and fail authentication/health on stale state | Accepted; strict scripted/local SSF/CAEP and RFC 8935-shaped subsets verified |
 | ADR-008 | Use Okta as the named M04 reference profile and its constrained System Log cursor feed as compensating gap evidence, never mislabeled as SSF replay | Accepted for local simulation; durable compare-and-swap page application and exit gate verified; live conformance, procurement, and production recovery unverified |
 | ADR-009 | Specify the production persistence topology, audit custody separation, and recovery objectives as testable targets rather than implemented capability | Accepted as a design target; every exercise result is not assessed |
+| ADR-010 | Admit corpus sources by recorded decision, authorize before scoring, treat retrieved text as data, and make corpus versions identifiable and rollback-capable | Accepted; local synthetic corpus verified |
 
 ## Open risks and limitations
 
@@ -170,7 +182,9 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 | LIM-002 | Documentation may drift from behavior | Trace requirements/controls/tests/evidence in M03 |
 | LIM-003 | Discovery/rotation, delegation, final-SSF management/recovery/verification, and the Okta System Log gap feed use generated identities and injected/scripted transports; treatment relationship and Consent are fixtures; default fixtures still use HS256 | `NS-EXC-001` to `NS-EXC-003` with stop conditions and expiries; integration designs in `ADR-003` and `NS-ARC-002`; never enable HS256 or local bearer adapters in production or attach the unauthenticated HAPI lab |
 | LIM-004 | Local SQLite state/audit is single-node and shares one trust domain; disposable HAPI H2 is non-durable; neither provides production HA, backup/PITR, retention/WORM, or external-task recovery | `NS-EXC-004`; `ADR-009` specifies the topology, custody separation, and objectives, and `docs/operations/persistence-recovery-exercises.md` specifies six exercises — none executed — that must pass before pilot |
-| LIM-005 | Deterministic keyword retrieval is not representative of model/RAG quality | Preserve baseline; introduce evaluated adapters in M05–M06 |
+| LIM-005 | Deterministic keyword retrieval is not representative of model/RAG quality; the M05 thresholds measure the controls, not answer quality | Preserve the baseline as the regression oracle; introduce evaluated model adapters in M06 |
+| LIM-011 | Corpus content lives in memory and is rebuilt at startup; only the activation record is durable, and there is no authoritative ingestion pipeline, malware scanning, or human review workflow | Persist chunks and labels under the same integrity and retention controls as other state, and design the ingestion workflow, before any pilot |
+| LIM-012 | Content scanning is pattern-based with known false negatives, and topic-conflict detection depends on honest topic tagging | Treat retrieved text as data as the primary control; expand the adversarial corpus in M09 red-team work |
 | LIM-006 | Branch protection and change control are unproven; hosted CI itself now passes (`EVD-M04-002`) and does not run `synthetic-data-verify` | Enable protection at publication (gated on `DEC-001`) and close the CI/Makefile divergence in M08 |
 | LIM-007 | Retention/deletion/legal-hold periods are undecided | `BLK-001`; obtain Records/Privacy/Legal approval and exercise deletion before pilot |
 | LIM-008 | Human factors, fixed emergency behavior, and accessible trusted UI are incomplete | `BLK-003`; implement and run clinician/representative-user validation |
@@ -180,14 +194,15 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 
 ## Next safe increment
 
-Begin M05 secure RAG: authorized corpus ingestion with provenance and classification, an ACL-aware
-index that filters before retrieval rather than after, citation verification, and corpus/version
-rollback. The retrieval evaluation set — golden answers, unanswerable questions, conflicting
-sources, freshness, and poisoning cases — is part of the increment, not a follow-up, because the M05
-gate is "no unauthorized chunk reaches model context."
+Begin M06 bounded agent and model layer. `render_data_only_context` must be the only path by which
+retrieved text reaches a model, and the deterministic retriever stays as the regression oracle. Build
+the explicit state machine, typed tool registry, resource budgets, and kill switch before adding any
+hosted provider adapter, and treat the model as fully compromised in the tests: it must not be able
+to broaden retrieval, obtain a credential, bypass policy or approval, execute a prohibited action, or
+exceed a resource bound.
 
-Do not start the hosted-model adapter (M06) before that gate. Preserve the deterministic identity,
-delegation, signal, local HAPI, and transactional-state adapters as security oracles.
+Do not connect a hosted provider until the deterministic workflow passes those tests and the vendor
+review simulation exists (`BLK-004`).
 
 Watch the four M04 exceptions rather than letting them lapse quietly: each expires 2027-02-13 or at
 the first pilot decision, and an expired exception fails closed. Add no real PHI, hosted model,

@@ -48,7 +48,16 @@ The first executable slice provides:
   credentials, and redacts the result;
 - a central immutable authorization request/decision contract with operation scopes, versioned
   codes, and enforceable obligations;
-- approved/versioned policy retrieval with citations and safe abstention;
+- deny-by-default corpus admission with a promotion record for every candidate, second-person
+  approval, checksum and provenance binding, supersession and freshness, and content scanning that
+  refuses instruction-shaped text, credential material, and unsafe characters;
+- retrieval that computes the authorized partition *before* scoring anything, rechecks integrity and
+  freshness after selection, abstains when two current sources conflict, and renders retrieved text
+  as data that cannot close its own envelope;
+- corpus versions whose identity binds labels as well as text, with durable activation and audited
+  rollback that survives restart;
+- a gated retrieval golden set — security cases at 100% and quality cases at 100% against a 90%
+  floor — enforced by `make verify` and CI;
 - pre-authorized FHIR R4-shaped synthetic patient access with security labels, provenance checks,
   explicit Consent, denial-before-full-read, post-read context recheck, and minimum-summary projection;
 - a deterministic Synthea v4.0.0-derived 12-resource FHIR R4 dataset with checksummed lineage,
@@ -59,10 +68,10 @@ The first executable slice provides:
 - signed approval receipts, expiry, reauthorization, and idempotent execution;
 - shared transactional workflow/audit state with in-memory and single-node SQLite adapters, atomic
   rollback, restart recovery, concurrency controls, tamper detection, and fail-closed readiness;
-- 323 passing default-suite tests plus one HAPI integration test, 85.50% coverage against the 85%
+- 355 passing default-suite tests plus one HAPI integration test, 85.98% coverage against the 85%
   floor, under strict lint and typing gates, green on a hosted CI runner;
 - a typed, CI-enforced control system covering 70 requirements, 25 risks, and 78 scenarios;
-- 31 canonical controls with 46 verification definitions, 24 evidence definitions, framework
+- 31 canonical controls with 50 verification definitions, 26 evidence definitions, framework
   mappings, and honest implemented/partial/planned status; and
 - an AI system card plus simulated M02 multidisciplinary, M03 control-owner, and M04 owner reviews,
   with M04 closed as a conditional pass on four time-bound exception records.
@@ -70,9 +79,11 @@ The first executable slice provides:
 The local identity, delegation, data, retrieval, state, and audit adapters are deliberately
 non-production baselines. SQLite is a single-node simulation; the token-exchange transport and HAPI
 lab are not connected; treatment relationship and Consent are fixtures rather than authoritative
-sources; and no local signal client has ever contacted a live provider, so nothing here demonstrates
-an enterprise TLS/mTLS edge, provider lifecycle, production flood controls, a deployed HA scheduler,
-metrics/SIEM/page delivery, or SSF/CAEP/SMART conformance.
+sources; retrieval is deterministic keyword matching over an in-memory corpus, so the M05 thresholds
+measure the controls and say nothing about answer quality; and no local signal client has ever
+contacted a live provider, so nothing here demonstrates an enterprise TLS/mTLS edge, provider
+lifecycle, production flood controls, a deployed HA scheduler, metrics/SIEM/page delivery, or
+SSF/CAEP/SMART conformance.
 
 Those gaps are not hand-waved. Each is recorded as a time-bound exception — `NS-EXC-001` through
 `NS-EXC-004` in [docs/assurance/exceptions/](docs/assurance/exceptions/) — with compensating
@@ -115,13 +126,13 @@ The lab is synthetic-only, loopback-only, and intentionally has no production au
 
 ## Start here
 
-- [Master Codex prompt](CODEX_MASTER_PROMPT.md)
 - [Durable Codex instructions](AGENTS.md)
 - [Current status and next increment](PROJECT_STATUS.md)
 - [Master roadmap](docs/program/master-roadmap.md)
 - [System context and trust boundaries](docs/architecture/system-context.md)
 - [Authorization decision table](docs/architecture/authorization-decision-table.md)
 - [Transactional state, audit, and recovery ADR](docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md)
+- [Secure retrieval boundary ADR](docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md)
 - [Durable continuous-access identity signals ADR](docs/architecture/decisions/ADR-007-durable-identity-signals.md)
 - [Okta continuous-access reference profile ADR](docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md)
 - [Okta gap-recovery runbook](docs/operations/okta-continuous-access-gap-recovery.md)
@@ -134,6 +145,7 @@ The lab is synthetic-only, loopback-only, and intentionally has no production au
 - [M03 control-owner review](docs/assurance/M03-control-owner-review.md)
 - [M03 traceability report](evidence/reports/M03-traceability-report.md)
 - [M04 gate decision](evidence/milestones/M04-gate-decision.md)
+- [M05 secure retrieval evidence](evidence/milestones/M05-secure-retrieval.md)
 - [M04 owner review](docs/assurance/M04-owner-review.md)
 - [Deferral exception records](docs/assurance/exceptions/)
 - [Security threat model](docs/risk/threat-model.md)

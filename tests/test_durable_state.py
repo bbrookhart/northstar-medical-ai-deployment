@@ -266,7 +266,7 @@ def test_sqlite_schema_version_and_path_validation_fail_closed(tmp_path: Path) -
         version = connection.execute(
             "SELECT value FROM schema_metadata WHERE key = 'schema_version'"
         ).fetchone()
-    assert version == ("9",)
+    assert version == ("10",)
 
     with closing(sqlite3.connect(database_path)) as connection, connection:
         connection.execute("UPDATE schema_metadata SET value = '2' WHERE key = 'schema_version'")
@@ -276,7 +276,7 @@ def test_sqlite_schema_version_and_path_validation_fail_closed(tmp_path: Path) -
         version = connection.execute(
             "SELECT value FROM schema_metadata WHERE key = 'schema_version'"
         ).fetchone()
-    assert version == ("9",)
+    assert version == ("10",)
 
     with closing(sqlite3.connect(database_path)) as connection, connection:
         connection.execute("UPDATE schema_metadata SET value = '3' WHERE key = 'schema_version'")
@@ -286,7 +286,7 @@ def test_sqlite_schema_version_and_path_validation_fail_closed(tmp_path: Path) -
         version = connection.execute(
             "SELECT value FROM schema_metadata WHERE key = 'schema_version'"
         ).fetchone()
-    assert version == ("9",)
+    assert version == ("10",)
 
     with closing(sqlite3.connect(database_path)) as connection, connection:
         connection.execute("UPDATE schema_metadata SET value = '4' WHERE key = 'schema_version'")
@@ -296,7 +296,7 @@ def test_sqlite_schema_version_and_path_validation_fail_closed(tmp_path: Path) -
         version = connection.execute(
             "SELECT value FROM schema_metadata WHERE key = 'schema_version'"
         ).fetchone()
-    assert version == ("9",)
+    assert version == ("10",)
 
     with closing(sqlite3.connect(database_path)) as connection, connection:
         connection.execute("UPDATE schema_metadata SET value = '5' WHERE key = 'schema_version'")
@@ -306,7 +306,7 @@ def test_sqlite_schema_version_and_path_validation_fail_closed(tmp_path: Path) -
         version = connection.execute(
             "SELECT value FROM schema_metadata WHERE key = 'schema_version'"
         ).fetchone()
-    assert version == ("9",)
+    assert version == ("10",)
 
     with closing(sqlite3.connect(database_path)) as connection, connection:
         connection.execute("UPDATE schema_metadata SET value = '6' WHERE key = 'schema_version'")
@@ -316,7 +316,7 @@ def test_sqlite_schema_version_and_path_validation_fail_closed(tmp_path: Path) -
         version = connection.execute(
             "SELECT value FROM schema_metadata WHERE key = 'schema_version'"
         ).fetchone()
-    assert version == ("9",)
+    assert version == ("10",)
 
     with closing(sqlite3.connect(database_path)) as connection, connection:
         connection.execute("DROP TABLE identity_stream_recovery_schedules")
@@ -327,7 +327,7 @@ def test_sqlite_schema_version_and_path_validation_fail_closed(tmp_path: Path) -
         version = connection.execute(
             "SELECT value FROM schema_metadata WHERE key = 'schema_version'"
         ).fetchone()
-    assert version == ("9",)
+    assert version == ("10",)
 
     with closing(sqlite3.connect(database_path)) as connection, connection:
         connection.execute("DROP TABLE identity_gap_recovered_events")
@@ -342,8 +342,19 @@ def test_sqlite_schema_version_and_path_validation_fail_closed(tmp_path: Path) -
         subject_columns = {
             column[1] for column in connection.execute("PRAGMA table_info(identity_subject_states)")
         }
-    assert version == ("9",)
+    assert version == ("10",)
     assert "recovered_event_id" in subject_columns
+
+    with closing(sqlite3.connect(database_path)) as connection, connection:
+        connection.execute("DROP TABLE corpus_activations")
+        connection.execute("UPDATE schema_metadata SET value = '9' WHERE key = 'schema_version'")
+    migrated_v9 = SqliteStateStore(database_path)
+    assert migrated_v9.verify_integrity()
+    with closing(sqlite3.connect(database_path)) as connection:
+        version = connection.execute(
+            "SELECT value FROM schema_metadata WHERE key = 'schema_version'"
+        ).fetchone()
+    assert version == ("10",)
 
     legacy_path = tmp_path / "legacy-v2-state.db"
     SqliteStateStore(legacy_path)

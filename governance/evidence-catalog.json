@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "catalog_id": "NS-EVD-001",
-  "as_of_date": "2026-08-13",
+  "as_of_date": "2026-08-14",
   "claim_rule": "Existing and generated evidence supports only the stated local synthetic simulation scope. Planned evidence supports no implementation claim.",
   "evidence": [
     {
@@ -99,6 +99,22 @@
       "owner": "AI Security Program Lead",
       "artifact_path": "evidence/milestones/M04-gate-decision.md",
       "scope": "Conditional-pass M04 gate record covering durable Okta gap-recovery page application with compare-and-swap cursor sequencing and a multi-signal exit gate, the ADR-009 persistence and recovery target design, the authoritative relationship/Consent integration design, and four owner-approved time-bound exception records for enterprise identity, live provider conformance, deployed scheduling/telemetry, and production persistence. Simulated role review only; no real accountable approval, pilot, production, real-PHI, or conformance authorization"
+    },
+    {
+      "id": "EVD-M05-001",
+      "title": "M05 secure retrieval corpus admission, authorization, and evaluation verification",
+      "status": "existing",
+      "owner": "Data Steward",
+      "artifact_path": "evidence/milestones/M05-secure-retrieval.md",
+      "scope": "Local synthetic policy corpus only. Deny-by-default corpus admission with promotion records, second-person approval, provenance and checksum binding, content scanning for instruction-shaped text and credential material, label continuity onto chunks, authorization computed before any scoring, post-selection integrity and freshness recheck, topic conflict abstention, data-only context rendering, manifest identity binding labels as well as text, and durable schema-10 corpus activation with audited rollback surviving restart. No model, embedding, vector store, or answer-quality claim; no authoritative ingestion pipeline, malware scanning, human review workflow, or durable corpus content storage"
+    },
+    {
+      "id": "EVD-M05-002",
+      "title": "M05 retrieval evaluation report with security and quality thresholds",
+      "status": "generated",
+      "owner": "AI Security Lead",
+      "artifact_path": "evidence/reports/M05-retrieval-evaluation.json",
+      "scope": "Deterministic golden-set result over a separately versioned evaluation corpus containing a deliberate conflict and canary material. Security cases (authorization, poison canary) require a 100% pass rate and quality cases (grounded, unanswerable, conflict) require 90%; make verify and CI fail on an unmet threshold or a stale report. Measures the retrieval controls, not model or RAG answer quality"
     },
     {
       "id": "EVD-VER-001",

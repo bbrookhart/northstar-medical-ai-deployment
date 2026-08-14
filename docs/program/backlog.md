@@ -1,7 +1,7 @@
 # NS-PRG-002 — Delivery Backlog
 
 **Status:** Active  
-**Updated:** 2026-08-13  
+**Updated:** 2026-08-14  
 **Rule:** Capability work cannot jump ahead of its risk, control, and test dependencies
 
 ## Completed locally — M02 and M03
@@ -36,16 +36,25 @@ M04 gate: no patient field is returned without validated user delegation and the
 authorization attributes; identity/policy/FHIR failure degrades safely and is auditable. Met as a
 conditional pass; see `docs/assurance/release-gates.md`.
 
-## Now — M05/M06 secure RAG and bounded model/agent
+## Completed — M05 secure RAG
 
-- Authorized corpus ingestion, provenance, content scanning, ACL-aware index, version/corpus rollback
-- Retrieval golden set, citation/abstention/conflict/freshness and poisoning evaluations
-- Typed model adapter and provider contract; deterministic adapter remains regression oracle
+M05 passed its gate on 2026-08-14 (`EVD-M05-001`, `docs/assurance/release-gates.md`). Authorized
+corpus ingestion with promotion records, content scanning, an ACL-aware index that authorizes before
+scoring, conflict and freshness handling, data-only context rendering, corpus version identity, and
+durable audited rollback are implemented and gated by a retrieval golden set that CI enforces.
+
+`LIM-011` and `LIM-012` record what remains: durable corpus storage, an authoritative ingestion
+pipeline with malware scanning and human review, and the known limits of pattern-based scanning and
+topic-tagged conflict detection.
+
+## Now — M06 bounded model and agent
+
+- Typed model adapter and provider contract; the deterministic retriever remains the regression oracle
 - Explicit bounded state machine, tool registry/broker, budgets, DLP and clinical validators
 - Hosted provider/vendor review simulation and data-flow/retention update
 - Direct/indirect/stored/multilingual/encoded/tool-description prompt-injection campaign
 
-M05/M06 gate: treat the model as fully compromised and demonstrate that it cannot broaden retrieval,
+M06 gate: treat the model as fully compromised and demonstrate that it cannot broaden retrieval,
 obtain a credential, bypass policy/approval, execute a prohibited action, or exceed resource bounds.
 
 ## Later — M07 through M12

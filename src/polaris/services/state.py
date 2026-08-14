@@ -14,6 +14,7 @@ from polaris.domain import (
     ActionProposal,
     ApprovalReceipt,
     AuditEvent,
+    CorpusActivation,
     IdentityGapIncidentStatus,
     IdentityGapRecoveredEvent,
     IdentityGapRecoveryState,
@@ -34,7 +35,7 @@ from polaris.domain import (
 )
 from polaris.errors import DependencyUnavailableError
 
-_SCHEMA_VERSION = "9"
+_SCHEMA_VERSION = "10"
 
 # Schema 9 gives every subject invalidation an attributable source, so a signed SET and a
 # compensating provider-log record can never be mistaken for each other. Databases written before
@@ -213,6 +214,10 @@ class StateTransaction(Protocol):
         event: IdentityGapRecoveredEvent,
     ) -> None: ...
 
+    def latest_corpus_activation(self, corpus_id: str) -> CorpusActivation | None: ...
+
+    def save_corpus_activation(self, activation: CorpusActivation) -> None: ...
+
 
 class PolarisStateStore(Protocol):
     def transaction(self) -> AbstractContextManager[StateTransaction]: ...
@@ -242,6 +247,7 @@ class _MemoryTransaction:
         identity_stream_observed_states: dict[str, IdentityStreamObservedState],
         identity_gap_recovery_states: dict[str, IdentityGapRecoveryState],
         identity_gap_recovered_events: dict[str, IdentityGapRecoveredEvent],
+        corpus_activations: list[CorpusActivation],
     ) -> None:
         self.proposals = proposals
         self.approvals = approvals
@@ -261,6 +267,7 @@ class _MemoryTransaction:
         self.identity_stream_observed_states = identity_stream_observed_states
         self.identity_gap_recovery_states = identity_gap_recovery_states
         self.identity_gap_recovered_events = identity_gap_recovered_events
+        self.corpus_activations = corpus_activations
         self.rollback_only = False
 
     def get_proposal(self, proposal_id: str) -> ActionProposal | None:
@@ -611,6 +618,19 @@ class _MemoryTransaction:
         if incident is None or incident.stream_id != event.stream_id:
             raise StateIntegrityError
 
+    def latest_corpus_activation(self, corpus_id: str) -> CorpusActivation | None:
+        matches = [
+            activation
+            for activation in self.corpus_activations
+            if activation.corpus_id == corpus_id
+        ]
+        return matches[-1].model_copy(deep=True) if matches else None
+
+    def save_corpus_activation(self, activation: CorpusActivation) -> None:
+        existing = self.latest_corpus_activation(activation.corpus_id)
+        _validate_corpus_activation_transition(existing, activation)
+        self.corpus_activations.append(activation.model_copy(deep=True))
+
     def _validate_observed_source(self, state: IdentityStreamObservedState) -> None:
         if state.signal_id is not None:
             signal = self.identity_signals.get(state.signal_id)
@@ -764,6 +784,16 @@ class _MemoryTransaction:
         for incident_id, incident in self.identity_gap_recovery_states.items():
             if applied_by_incident.get(incident_id, 0) != incident.events_applied:
                 return False
+        previous: dict[str, CorpusActivation] = {}
+        for activation in self.corpus_activations:
+            CorpusActivation.model_validate(activation.model_dump())
+            try:
+                _validate_corpus_activation_transition(
+                    previous.get(activation.corpus_id), activation
+                )
+            except StateIntegrityError:
+                return False
+            previous[activation.corpus_id] = activation
         return True
 
 
@@ -791,6 +821,7 @@ class InMemoryStateStore:
         self._identity_stream_observed_states: dict[str, IdentityStreamObservedState] = {}
         self._identity_gap_recovery_states: dict[str, IdentityGapRecoveryState] = {}
         self._identity_gap_recovered_events: dict[str, IdentityGapRecoveredEvent] = {}
+        self._corpus_activations: list[CorpusActivation] = []
         self._lock = RLock()
         self._local = local()
 
@@ -831,6 +862,9 @@ class InMemoryStateStore:
                 identity_stream_observed_states=_copy_models(self._identity_stream_observed_states),
                 identity_gap_recovery_states=_copy_models(self._identity_gap_recovery_states),
                 identity_gap_recovered_events=_copy_models(self._identity_gap_recovered_events),
+                corpus_activations=[
+                    activation.model_copy(deep=True) for activation in self._corpus_activations
+                ],
             )
             self._local.transaction = transaction
             try:
@@ -873,6 +907,10 @@ class InMemoryStateStore:
                 self._identity_gap_recovered_events = _copy_models(
                     transaction.identity_gap_recovered_events
                 )
+                self._corpus_activations = [
+                    activation.model_copy(deep=True)
+                    for activation in transaction.corpus_activations
+                ]
             finally:
                 delattr(self._local, "transaction")
 
@@ -1327,6 +1365,38 @@ class _SqliteTransaction:
                     event.subject,
                     event.cursor_sequence,
                     event.model_dump_json(),
+                ),
+            )
+        except sqlite3.IntegrityError as exc:
+            raise StateIntegrityError from exc
+
+    def latest_corpus_activation(self, corpus_id: str) -> CorpusActivation | None:
+        row = self._connection.execute(
+            """
+            SELECT corpus_id, sequence, version, manifest_checksum, document_json
+            FROM corpus_activations WHERE corpus_id = ?
+            ORDER BY sequence DESC LIMIT 1
+            """,
+            (corpus_id,),
+        ).fetchone()
+        return _parse_corpus_activation_row(row) if row is not None else None
+
+    def save_corpus_activation(self, activation: CorpusActivation) -> None:
+        existing = self.latest_corpus_activation(activation.corpus_id)
+        _validate_corpus_activation_transition(existing, activation)
+        try:
+            self._connection.execute(
+                """
+                INSERT INTO corpus_activations (
+                    corpus_id, sequence, version, manifest_checksum, document_json
+                ) VALUES (?, ?, ?, ?, ?)
+                """,
+                (
+                    activation.corpus_id,
+                    activation.sequence,
+                    activation.version,
+                    activation.manifest_checksum,
+                    activation.model_dump_json(),
                 ),
             )
         except sqlite3.IntegrityError as exc:
@@ -1792,6 +1862,16 @@ class _SqliteTransaction:
             state = _parse_gap_recovery_state_row(row)
             if applied_by_incident.get(state.incident_id, 0) != state.events_applied:
                 raise StateIntegrityError
+        previous: dict[str, CorpusActivation] = {}
+        for row in self._connection.execute(
+            """
+            SELECT corpus_id, sequence, version, manifest_checksum, document_json
+            FROM corpus_activations ORDER BY corpus_id, sequence
+            """
+        ).fetchall():
+            activation = _parse_corpus_activation_row(row)
+            _validate_corpus_activation_transition(previous.get(activation.corpus_id), activation)
+            previous[activation.corpus_id] = activation
         return True
 
 
@@ -2062,8 +2142,18 @@ class SqliteStateStore:
                     ),
                     document_json TEXT NOT NULL
                 ) STRICT;
+                CREATE TABLE IF NOT EXISTS corpus_activations (
+                    corpus_id TEXT NOT NULL,
+                    sequence INTEGER NOT NULL CHECK (
+                        sequence BETWEEN 1 AND 2147483647
+                    ),
+                    version TEXT NOT NULL,
+                    manifest_checksum TEXT NOT NULL CHECK (length(manifest_checksum) = 64),
+                    document_json TEXT NOT NULL,
+                    PRIMARY KEY (corpus_id, sequence)
+                ) STRICT;
                 INSERT OR IGNORE INTO schema_metadata (key, value)
-                VALUES ('schema_version', '9');
+                VALUES ('schema_version', '10');
                 COMMIT;
                 """
             )
@@ -2113,11 +2203,11 @@ class SqliteStateStore:
                            NULL, document_json
                     FROM identity_stream_observed_states_v5;
                     DROP TABLE identity_stream_observed_states_v5;
-                    UPDATE schema_metadata SET value = '9' WHERE key = 'schema_version';
+                    UPDATE schema_metadata SET value = '10' WHERE key = 'schema_version';
                     COMMIT;
                     """
                 )
-            elif row is not None and row[0] in {"1", "2", "3", "4", "6", "7", "8"}:
+            elif row is not None and row[0] in {"1", "2", "3", "4", "6", "7", "8", "9"}:
                 if row[0] == "2":
                     for signal_row in connection.execute(
                         "SELECT event_id, payload_hash, document_json FROM identity_signals"
@@ -2353,6 +2443,41 @@ def _parse_identity_stream_observed_state_row(
     ):
         raise StateIntegrityError
     return state
+
+
+def _parse_corpus_activation_row(row: tuple[object, ...]) -> CorpusActivation:
+    activation = _parse_model(row[4], CorpusActivation)
+    if (
+        activation.corpus_id != row[0]
+        or activation.sequence != row[1]
+        or activation.version != row[2]
+        or activation.manifest_checksum != row[3]
+    ):
+        raise StateIntegrityError
+    return activation
+
+
+def _validate_corpus_activation_transition(
+    existing: CorpusActivation | None,
+    activation: CorpusActivation,
+) -> None:
+    """Corpus activations are append-only and each one names the version it replaced.
+
+    Rollback is an ordinary activation of an earlier version, so the history stays a complete record
+    of which corpus answered queries at any point rather than a mutable pointer.
+    """
+
+    if existing is None:
+        if activation.sequence != 1 or activation.previous_version is not None:
+            raise StateIntegrityError
+        return
+    if (
+        existing.corpus_id != activation.corpus_id
+        or activation.sequence != existing.sequence + 1
+        or activation.previous_version != existing.version
+        or activation.activated_at < existing.activated_at
+    ):
+        raise StateIntegrityError
 
 
 def _parse_gap_recovery_state_row(row: tuple[object, ...]) -> IdentityGapRecoveryState:

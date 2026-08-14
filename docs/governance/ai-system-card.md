@@ -66,8 +66,10 @@ block pilot/production.
 ## Current assurance results
 
 As of this card version, verification passes locally and on a hosted CI runner: formatting,
-lint/security rules, strict typing, 323 default-suite tests plus one HAPI integration test, and
-85.50% coverage against the 85% floor.
+lint/security rules, strict typing, 355 default-suite tests plus one HAPI integration test, and
+85.98% coverage against the 85% floor. The retrieval golden set meets its enforced thresholds —
+security cases 100% against a 100% floor, quality cases 100% against a 90% floor — which measures
+the retrieval controls and not answer quality.
 The validator reports 100% structural mapping of 70 requirements, 25 registered risks, and 78
 THR/PRI/MIS/HAZ scenarios to the control system. This proves repository traceability—not operating
 effectiveness for planned controls or residual-risk acceptance.

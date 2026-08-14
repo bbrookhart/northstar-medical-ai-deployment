@@ -14,6 +14,30 @@ autonomous EHR/patient communication; permits model-controlled authorization or 
 allows unapproved or mutated write actions; lacks a kill/rollback path for the deployed increment;
 has an open critical/high release blocker; or makes an unsupported compliance/certification claim.
 
+## Release invariants
+
+No release is ready unless evidence shows all of the following. These are program-level invariants,
+retained here from the retired master prompt; the disqualifiers above are the subset that fails a
+release outright.
+
+- Zero successful unauthorized cross-patient, cross-role, cross-facility, or cross-purpose access in
+  the critical suite.
+- Zero successful state changes without valid policy and bound approval.
+- Zero unresolved critical or high security findings.
+- Critical diagnosis, prescription, and treatment boundary tests produce no prohibited content or
+  action.
+- Every substantive policy answer cites an approved source or abstains.
+- Unanswerable and conflicting-source cases meet the defined abstention behavior.
+- Model, prompt, policy, corpus, tool, configuration, and dependency versions are recorded.
+- Logs and traces contain no prohibited secrets and no unnecessary health-data content.
+- Agent steps, tools, cost, latency, and concurrency are bounded.
+- Kill switch, rollback, safe degradation, backup, and recovery are demonstrated.
+- Residual risks have owners, rationale, monitoring, expiration, and approval.
+- An independent person could reproduce the build and tests from the documentation.
+
+Never summarize these into a single "safety score." Report results by risk category, severity,
+attack class, role, data class, version, and confidence.
+
 ## Evidence minimum
 
 Each gate record identifies scope, artifact versions, reviewer role, verification commands,
@@ -24,7 +48,7 @@ minimal, free of secrets/PHI, and traceable to the implementation or operating e
 
 | Criterion | Evidence | Result |
 |---|---|---|
-| Durable Codex context | `AGENTS.md`, `CODEX_MASTER_PROMPT.md`, `PROJECT_STATUS.md` | Pass |
+| Durable Codex context | `AGENTS.md`, `PROJECT_STATUS.md`, `docs/program/master-roadmap.md` | Pass |
 | Program intake baseline | `docs/executive/`, `docs/governance/`, applicability matrix | Pass for simulation |
 | Architecture and safety boundary | System context, trust boundaries, explicit prohibited use | Pass |
 | Synthetic-only data | Seed fixtures and repository policy | Pass |
@@ -89,3 +113,24 @@ persistence and audit custody. Any expiry, revocation, or scope change reopens t
 
 This is not pilot, production, real-PHI, SSF/CAEP/SMART/FHIR conformance, or enterprise identity
 authorization, and it does not accept residual risk for a real deployment.
+
+## Current gate assessment — M05
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Corpus admission and provenance | `ADR-010`, `VER-RAG-001`; deny-by-default promotion records, second-person approval, checksum binding, supersession, freshness | Pass for the local synthetic corpus |
+| Content scanning | `VER-RAG-001`; instruction-shaped text, credential material, control characters, and normalization-evasion cases | Pass as an admission control; not injection detection |
+| Authorization before model context | `VER-RAG-002`; authorized partition computed before scoring, asserted against an independently computed partition | Pass |
+| Post-retrieval recheck | `VER-RAG-002`; fresh-clock and per-chunk checksum recheck before return | Pass |
+| Conflict and freshness | `VER-RAG-002`; topic-conflict abstention with both sources cited, expiry exclusion | Pass for topic-tagged conflicts only |
+| Untrusted context rendering | `VER-RAG-002`; labelled data envelope that a chunk cannot close | Pass as a seam; no model consumes it yet |
+| Corpus identity and rollback | `VER-RAG-003`; manifest checksum binds labels as well as text, durable activation, audited rollback surviving restart | Pass for single-node local state |
+| Retrieval evaluation thresholds | `EVD-M05-002`; security 100% required and met, quality 90% required and 100% met | Pass |
+| Answer quality and model behavior | — | Not assessed; retrieval is deterministic keyword matching (`LIM-005`) |
+| Production ingestion pipeline | — | Not assessed; no document management system, malware scanning, or human review workflow |
+
+**Decision:** **Pass** for the M05 gate as scoped — no unauthorized chunk reaches the retrieval
+result, and the evaluation thresholds are met and enforced by `make verify` and CI.
+
+This is a controls result, not a quality result. It authorizes M06 bounded agent and model work only,
+and it is not a pilot, production, real-PHI, hosted-model, or conformance authorization.

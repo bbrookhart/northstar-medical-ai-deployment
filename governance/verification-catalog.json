@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "catalog_id": "NS-VER-001",
-  "as_of_date": "2026-08-13",
+  "as_of_date": "2026-08-14",
   "verifications": [
     {
       "id": "VER-GOV-001",
@@ -574,6 +574,88 @@
         "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md",
         "docs/operations/okta-continuous-access-gap-recovery.md",
         "evidence/milestones/M04-gate-decision.md"
+      ]
+    },
+    {
+      "id": "VER-RAG-001",
+      "title": "Corpus admission, provenance, separation of duties, and content scanning",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Data Steward",
+      "test_locations": [
+        "tests/test_corpus_ingestion.py::test_seed_corpus_admits_only_approved_current_sources",
+        "tests/test_corpus_ingestion.py::test_a_policy_that_forbids_clinical_action_is_still_admissible",
+        "tests/test_corpus_ingestion.py::test_content_scanning_refuses_poisoned_sources",
+        "tests/test_corpus_ingestion.py::test_invisible_characters_cannot_hide_an_injected_instruction",
+        "tests/test_corpus_ingestion.py::test_unapproved_self_approved_and_tampered_sources_are_refused",
+        "tests/test_corpus_ingestion.py::test_manifest_checksum_binds_labels_not_just_text",
+        "tests/test_corpus_ingestion.py::test_duplicate_candidate_identifiers_are_rejected",
+        "tests/test_corpus_ingestion.py::test_source_metadata_rejects_incoherent_lifecycles"
+      ],
+      "artifact_refs": [
+        "src/polaris/services/corpus.py",
+        "src/polaris/domain.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md",
+        "evidence/milestones/M05-secure-retrieval.md"
+      ]
+    },
+    {
+      "id": "VER-RAG-002",
+      "title": "Pre-scoring retrieval authorization, integrity recheck, conflict abstention, and untrusted context",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Data Steward",
+      "test_locations": [
+        "tests/test_secure_retrieval.py::test_unauthorized_chunks_are_never_scored",
+        "tests/test_secure_retrieval.py::test_role_partitions_do_not_leak_across_workforce_roles",
+        "tests/test_secure_retrieval.py::test_expired_and_future_chunks_are_excluded_by_the_serving_clock",
+        "tests/test_secure_retrieval.py::test_conflicting_current_sources_abstain_instead_of_ranking",
+        "tests/test_secure_retrieval.py::test_tampered_chunk_text_fails_closed",
+        "tests/test_secure_retrieval.py::test_index_construction_rejects_a_manifest_that_does_not_match_its_chunks",
+        "tests/test_secure_retrieval.py::test_retrieved_text_is_rendered_as_data_that_cannot_close_its_envelope"
+      ],
+      "artifact_refs": [
+        "src/polaris/services/secure_retrieval.py",
+        "src/polaris/services/retrieval.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md",
+        "evidence/milestones/M05-secure-retrieval.md"
+      ]
+    },
+    {
+      "id": "VER-RAG-003",
+      "title": "Durable corpus version activation, rollback, and registry integrity",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Data Steward",
+      "test_locations": [
+        "tests/test_secure_retrieval.py::test_corpus_rollback_is_durable_and_auditable",
+        "tests/test_secure_retrieval.py::test_registry_refuses_unknown_versions_and_checksum_drift",
+        "tests/test_secure_retrieval.py::test_registry_requires_a_shared_state_boundary"
+      ],
+      "artifact_refs": [
+        "src/polaris/services/secure_retrieval.py",
+        "src/polaris/services/state.py",
+        "src/polaris/services/container.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md"
+      ]
+    },
+    {
+      "id": "VER-RAG-004",
+      "title": "Retrieval golden set with citation, abstention, conflict, authorization, and poison canaries",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Lead",
+      "test_locations": [
+        "tests/test_retrieval_evaluation.py::test_golden_set_meets_security_and_quality_thresholds",
+        "tests/test_retrieval_evaluation.py::test_every_kind_is_represented_and_security_cases_admit_no_partial_credit",
+        "tests/test_retrieval_evaluation.py::test_a_leaked_forbidden_document_fails_regardless_of_case_kind",
+        "tests/test_retrieval_evaluation.py::test_generated_evaluation_report_is_committed_and_current"
+      ],
+      "artifact_refs": [
+        "src/polaris/services/retrieval_eval.py",
+        "scripts/evaluate_retrieval.py",
+        "evidence/reports/M05-retrieval-evaluation.json",
+        "evidence/milestones/M05-secure-retrieval.md"
       ]
     },
     {

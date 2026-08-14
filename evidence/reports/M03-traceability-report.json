@@ -1003,7 +1003,9 @@
       "control_type": "preventive",
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-003"
+        "EVD-PLN-003",
+        "EVD-M05-001",
+        "EVD-M05-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",
@@ -1015,7 +1017,11 @@
       "id": "CTL-RAG-001",
       "implementation_refs": [
         "src/polaris/services/retrieval.py",
-        "src/polaris/services/container.py"
+        "src/polaris/services/container.py",
+        "src/polaris/services/corpus.py",
+        "src/polaris/services/secure_retrieval.py",
+        "src/polaris/domain.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md"
       ],
       "objective": "Admit only reviewed versioned sources and treat retrieved content as untrusted data with safe conflict and rollback behavior.",
       "owner": "Data Steward",
@@ -1037,7 +1043,9 @@
       "verification_ids": [
         "VER-AUT-006",
         "VER-AUT-007",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-001",
+        "VER-RAG-003"
       ]
     },
     {
@@ -1045,7 +1053,9 @@
       "evidence_ids": [
         "EVD-VER-001",
         "EVD-M04-001",
-        "EVD-PLN-003"
+        "EVD-PLN-003",
+        "EVD-M05-001",
+        "EVD-M05-002"
       ],
       "framework_reference_ids": [
         "FW-CSF-PR-AA",
@@ -1060,7 +1070,10 @@
         "src/polaris/services/patients.py",
         "src/polaris/services/fhir_http.py",
         "src/polaris/security/policy.py",
-        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md"
+        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md",
+        "src/polaris/services/corpus.py",
+        "src/polaris/services/secure_retrieval.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md"
       ],
       "objective": "Prevent unauthorized chunks, metadata, embeddings, caches, or exports from entering model context.",
       "owner": "Data Steward",
@@ -1081,13 +1094,17 @@
         "VER-AUT-007",
         "VER-AUT-015",
         "VER-AUT-017",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-002",
+        "VER-RAG-004"
       ]
     },
     {
       "control_type": "preventive",
       "evidence_ids": [
-        "EVD-VER-001"
+        "EVD-VER-001",
+        "EVD-M05-001",
+        "EVD-M05-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MEASURE",
@@ -1098,7 +1115,10 @@
       "id": "CTL-RAG-003",
       "implementation_refs": [
         "src/polaris/services/retrieval.py",
-        "src/polaris/domain.py"
+        "src/polaris/domain.py",
+        "src/polaris/services/secure_retrieval.py",
+        "src/polaris/services/retrieval_eval.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md"
       ],
       "objective": "Return approved source identifiers and versions for grounded answers or abstain explicitly.",
       "owner": "Business Owner",
@@ -1112,7 +1132,9 @@
       "status": "implemented",
       "title": "Server-verifiable citations and abstention",
       "verification_ids": [
-        "VER-AUT-006"
+        "VER-AUT-006",
+        "VER-RAG-002",
+        "VER-RAG-004"
       ]
     },
     {
@@ -3109,6 +3131,8 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M05-001",
+        "EVD-M05-002",
         "EVD-PLN-003",
         "EVD-VER-001"
       ],
@@ -3132,7 +3156,9 @@
       "verification_ids": [
         "VER-AUT-006",
         "VER-AUT-007",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-001",
+        "VER-RAG-003"
       ]
     },
     {
@@ -3142,6 +3168,8 @@
       "disposition": "partial",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M05-001",
+        "EVD-M05-002",
         "EVD-PLN-003",
         "EVD-VER-001"
       ],
@@ -3166,7 +3194,9 @@
         "VER-AUT-007",
         "VER-AUT-015",
         "VER-AUT-017",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-002",
+        "VER-RAG-004"
       ]
     },
     {
@@ -3175,6 +3205,8 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M05-001",
+        "EVD-M05-002",
         "EVD-PLN-003",
         "EVD-VER-001"
       ],
@@ -3198,7 +3230,9 @@
       "verification_ids": [
         "VER-AUT-006",
         "VER-AUT-007",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-001",
+        "VER-RAG-003"
       ]
     },
     {
@@ -3207,6 +3241,8 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M05-001",
+        "EVD-M05-002",
         "EVD-VER-001"
       ],
       "framework_reference_ids": [
@@ -3223,7 +3259,9 @@
       ],
       "statement": "Policy answers MUST use server-verifiable approved citations and source versions or explicitly abstain.",
       "verification_ids": [
-        "VER-AUT-006"
+        "VER-AUT-006",
+        "VER-RAG-002",
+        "VER-RAG-004"
       ]
     },
     {
@@ -3232,6 +3270,8 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M05-001",
+        "EVD-M05-002",
         "EVD-PLN-003",
         "EVD-VER-001"
       ],
@@ -3255,7 +3295,9 @@
       "verification_ids": [
         "VER-AUT-006",
         "VER-AUT-007",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-001",
+        "VER-RAG-003"
       ]
     },
     {
@@ -3265,6 +3307,8 @@
       "disposition": "partial",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M05-001",
+        "EVD-M05-002",
         "EVD-PLN-003",
         "EVD-VER-001"
       ],
@@ -3289,7 +3333,9 @@
         "VER-AUT-007",
         "VER-AUT-015",
         "VER-AUT-017",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-002",
+        "VER-RAG-004"
       ]
     },
     {
@@ -3298,6 +3344,8 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M05-001",
+        "EVD-M05-002",
         "EVD-PLN-003",
         "EVD-VER-001"
       ],
@@ -3321,7 +3369,9 @@
       "verification_ids": [
         "VER-AUT-006",
         "VER-AUT-007",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-001",
+        "VER-RAG-003"
       ]
     },
     {
@@ -5144,11 +5194,11 @@
     },
     "evidence": {
       "by_status": {
-        "existing": 13,
-        "generated": 1,
+        "existing": 14,
+        "generated": 2,
         "planned": 10
       },
-      "total": 24
+      "total": 26
     },
     "framework_sources": {
       "by_status": {
@@ -5187,9 +5237,9 @@
     "verifications": {
       "by_status": {
         "planned": 10,
-        "verified": 36
+        "verified": 40
       },
-      "total": 46
+      "total": 50
     }
   },
   "validation": {

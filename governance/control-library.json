@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "catalog_id": "NS-CTL-001",
-  "as_of_date": "2026-08-13",
+  "as_of_date": "2026-08-14",
   "status_definitions": {
     "implemented": "Designed, implemented, and linked to verified evidence for the current local simulation scope.",
     "partial": "Some current-scope mechanisms are implemented, but the full requirement or enterprise control is incomplete.",
@@ -417,16 +417,24 @@
       ],
       "implementation_refs": [
         "src/polaris/services/retrieval.py",
-        "src/polaris/services/container.py"
+        "src/polaris/services/container.py",
+        "src/polaris/services/corpus.py",
+        "src/polaris/services/secure_retrieval.py",
+        "src/polaris/domain.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md"
       ],
       "verification_ids": [
         "VER-AUT-006",
         "VER-AUT-007",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-001",
+        "VER-RAG-003"
       ],
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-003"
+        "EVD-PLN-003",
+        "EVD-M05-001",
+        "EVD-M05-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",
@@ -457,7 +465,10 @@
         "src/polaris/services/patients.py",
         "src/polaris/services/fhir_http.py",
         "src/polaris/security/policy.py",
-        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md"
+        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md",
+        "src/polaris/services/corpus.py",
+        "src/polaris/services/secure_retrieval.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md"
       ],
       "verification_ids": [
         "VER-AUT-004",
@@ -465,12 +476,16 @@
         "VER-AUT-007",
         "VER-AUT-015",
         "VER-AUT-017",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-002",
+        "VER-RAG-004"
       ],
       "evidence_ids": [
         "EVD-VER-001",
         "EVD-M04-001",
-        "EVD-PLN-003"
+        "EVD-PLN-003",
+        "EVD-M05-001",
+        "EVD-M05-002"
       ],
       "framework_reference_ids": [
         "FW-CSF-PR-AA",
@@ -496,13 +511,20 @@
       ],
       "implementation_refs": [
         "src/polaris/services/retrieval.py",
-        "src/polaris/domain.py"
+        "src/polaris/domain.py",
+        "src/polaris/services/secure_retrieval.py",
+        "src/polaris/services/retrieval_eval.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md"
       ],
       "verification_ids": [
-        "VER-AUT-006"
+        "VER-AUT-006",
+        "VER-RAG-002",
+        "VER-RAG-004"
       ],
       "evidence_ids": [
-        "EVD-VER-001"
+        "EVD-VER-001",
+        "EVD-M05-001",
+        "EVD-M05-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MEASURE",

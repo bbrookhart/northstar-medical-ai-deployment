@@ -3,10 +3,11 @@
 **Owner:** AI Security Program Lead  
 **Baseline date:** 2026-08-11 (updated 2026-08-13)  
 **Delivery model:** Evidence-gated increments; one production-shaped vertical slice  
-**Current position:** M00–M04 complete as local simulations, with M04 a conditional pass on four
-time-bound exceptions; the repository is under version control with a green hosted CI run;
-enterprise integration, live provider operation, authoritative relationship/Consent sources, and
-production persistence/recovery are specified, deferred, and unbuilt; M05 secure RAG is next
+**Current position:** M00–M05 complete as local simulations, with M04 a conditional pass on four
+time-bound exceptions and M05 passing its gate for the deterministic baseline; the repository is
+under version control with a green hosted CI run; enterprise integration, live provider operation,
+authoritative relationship/Consent sources, and production persistence/recovery are specified,
+deferred, and unbuilt; M06 bounded agent and model layer is next
 
 ## Delivery doctrine
 
@@ -40,7 +41,7 @@ test or operating record is not release evidence.
 | M02 | Requirements and risk design | AI impact assessment, DPIA, STRIDE, LINDDUN, ATLAS/OWASP mapping, misuse cases, clinical hazards, abuse trees, security/privacy/safety requirements | Every material risk has an owner, treatment, control, test, and residual target | Complete — simulated review |
 | M03 | Canonical control system | Northstar control library, framework crosswalks, evidence schema, exception/risk-acceptance workflow, AI system card | Control owners approve testable control statements and evidence expectations | Complete — simulated review and CI validation |
 | M04 | Identity, policy, and FHIR integration | Local OIDC, end-user identity propagation, continuous-access signals, SMART-style scopes, centralized policy adapter, Synthea FHIR/HAPI sandbox, consent/security labels, transactional application/audit state | Authorization matrix passes across role/facility/patient/purpose/sensitivity/consent dimensions | Conditional pass — trusted discovery/rotation, isolated delegation, durable local SSF/CAEP invalidation, bounded authenticated push, strictly bound final-SSF management, desired/observed reconciliation, safe status reads, lease-protected recovery cadence, correlated/unsolicited verification policy, durable compare-and-swap gap-page application with a multi-signal exit gate, Synthea/HAPI/Consent, SQLite, hosted CI, and simulated owner review complete; enterprise identity/TLS, live provider conformance, deployed scheduler/telemetry, SMART enforcement, authoritative relationship/Consent sources, and production persistence deferred under `NS-EXC-001` to `NS-EXC-004` |
-| M05 | Secure RAG | Authorized ingestion, provenance, classification, poisoning defenses, retrieval filters, citation verification, corpus rollback | No unauthorized chunk reaches model context; retrieval evaluation thresholds pass | Planned |
+| M05 | Secure RAG | Authorized ingestion, provenance, classification, poisoning defenses, retrieval filters, citation verification, corpus rollback | No unauthorized chunk reaches model context; retrieval evaluation thresholds pass | Complete locally — deny-by-default admission with promotion records, authorization computed before scoring, integrity and freshness recheck, topic-conflict abstention, data-only context rendering, manifest identity binding labels, durable audited corpus rollback, and a gated golden set at 100% security and 100% quality; production ingestion, malware scanning, human review, durable corpus storage, and answer quality remain |
 | M06 | Bounded agent and model layer | Explicit state machine, deterministic adapter, hosted-provider adapter contract, typed tools, resource budgets, kill switch | Compromised-model tests cannot bypass authorization, approval, or execution controls | Planned |
 | M07 | User experience and approval safety | React UI, transparent sources, uncertainty, safe rendering, exact action preview, reauthentication, accessibility | Human-factors tests show informed approval and safe refusal/degraded behavior | Planned |
 | M08 | Secure platform and supply chain | Containers, local compose, CI security suite, SBOM/AIBOM, signed artifacts, provenance, secrets and IaC patterns | Reproducible build and deploy passes vulnerability and configuration release policy | Planned |
