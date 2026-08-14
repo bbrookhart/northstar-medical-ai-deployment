@@ -1,7 +1,9 @@
-# Evidence Tour — Risk to Gate Decision
+# Evidence Tour
 
-A reviewer should be able to pick any risk and follow it to a decision. This tour walks three, and
-every identifier resolves to a catalog entry or a file.
+**Pick any risk. Follow it to the line of code that treats it, and the test that proves it.**
+
+That traceability is the point of the control system, and it works in both directions. This tour
+walks three chains end to end; every identifier resolves to a catalog entry or a file, checked in CI.
 
 ## How the chain is enforced
 
@@ -21,7 +23,6 @@ below is not a narrative — it is what the validator checks.
 | Verification | `VER-AGT-002` compromised-model containment |
 | Attack | `RT-IDN-001` in the adversarial campaign |
 | Evidence | `EVD-M06-001`, `EVD-M09-001` |
-| Gate | M06 pass; M09 not met on other grounds |
 
 The interesting step is the agent boundary. The model *asks* for a patient; `PatientService` decides.
 The campaign case proves the decision is not influenced by who asked.
@@ -38,7 +39,6 @@ The campaign case proves the decision is not influenced by who asked.
 | Verification | `VER-RAG-001` admission and scanning |
 | Attacks | `RT-IND-001`, `RT-STO-001`, `RT-POI-001`, `RT-POI-002` |
 | Evidence | `EVD-M05-001`, `EVD-M05-002`, `EVD-M09-001` |
-| Gate | M05 pass |
 
 Four of eight seeded candidates are refused on every application start — superseded, expired,
 unapproved, and instruction-carrying — so the control is exercised in normal operation, not only in
@@ -56,15 +56,18 @@ tests.
 | Verification | `VER-PRS-002` approval preview bound to its recomputed digest |
 | Attacks | `RT-ACM-001`, `RT-ACM-002`, `RT-ACR-001` |
 | Evidence | `EVD-M07-001`, `EVD-M09-001` |
-| Gate | M07 **not met** — the contract is verified, the human-factors evidence is not |
 
-This tour ends at a failed gate on purpose. The binding is machine-verified and tested; whether a
-person under time pressure actually reads the preview is unknown, and `NS-ASR-005` specifies the
-study that would answer it.
+The binding is machine-verified: `verify_display_binding` returns false if the patient, facility,
+date, or summary differs from what was displayed, tested for each field. What code cannot establish
+is whether a person under time pressure actually reads the preview — so `NS-ASR-005` specifies the
+human-factors study that would, and the repository says plainly that it has not been run.
 
-## Where the chain stops
+## Where the chain stops, and why that is recorded
 
-Six blockers are open — `BLK-001` through `BLK-006` — and five exceptions are live, `NS-EXC-001`
-through `NS-EXC-005`. The audit package at `evidence/reports/M11-audit-package.json` indexes every
-evidence artifact by digest and carries those blockers and the unmet gates alongside them, read from
-the gate record so the two cannot disagree.
+A control system is only as honest as its edges. Six blockers are open — `BLK-001` through
+`BLK-006` — and five time-bound exceptions are live, `NS-EXC-001` through `NS-EXC-005`, each naming
+its compensating controls, an objective stop condition, and a remediation owner.
+
+The audit package at `evidence/reports/M11-audit-package.json` indexes every evidence artifact by
+digest and carries those open items alongside them. An index that listed only what passed would be
+marketing; this one tells an assessor where to look first.

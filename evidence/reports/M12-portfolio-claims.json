@@ -18,6 +18,6 @@
     "findings": 0,
     "note": "Every identifier cited in the portfolio and training material resolves to a catalog entry, every linked file exists, every documented command is a real make target, and no prohibited claim language appears. This checks that claims are traceable and bounded; it does not evaluate whether the material teaches well.",
     "passed": true,
-    "resolved_references": 78
+    "resolved_references": 82
   }
 }

@@ -1,181 +1,184 @@
 # Project Polaris
 
-Project Polaris is an end-to-end simulation of safe and secure adoption of an internal, constrained
-agentic AI capability at the fictional healthcare enterprise Northstar Medical.
+**An end-to-end simulation of safe and secure adoption of an internal, constrained agentic AI
+capability at the fictional healthcare enterprise Northstar Medical.**
 
-It is built as evidence, not a slideware architecture: business intake, governance, healthcare
-scope, threat and privacy engineering, secure implementation, approval-bound agency, assurance,
-operations, audit, retirement, a recruiter case study, and reusable training labs.
+![Tests](https://img.shields.io/badge/tests-482%20passing-2ea44f?style=flat-square)
+![Coverage](https://img.shields.io/badge/coverage-88.02%25-2ea44f?style=flat-square)
+![Typing](https://img.shields.io/badge/mypy-strict-1f6feb?style=flat-square)
+![Python](https://img.shields.io/badge/python-3.13-1f6feb?style=flat-square)
+![Data](https://img.shields.io/badge/data-synthetic%20only-8957e5?style=flat-square)
 
-All twelve milestones are delivered. **Six gates are unmet or conditional** — M07 for want of
-human-factors evidence, M09 on four open high findings, M10 with no operator or tabletop, M11 by a
-refused pilot authorization, and M04 and M08 conditionally on five live exceptions. That is the
-result, not a shortfall: a program of this shape reporting twelve green gates would be the warning
-sign. Start with [the case study](portfolio/case-study.md).
+Most AI portfolios show that a model can answer a question. This one shows the harder half: what the
+system **cannot** do, who decided that, how it is enforced in code, and how you would prove it to an
+auditor a year later.
 
-## What works today
+Twelve milestones take one narrow capability — answer approved policy questions and draft
+administrative follow-up tasks — from business intake through governance, threat modelling, secure
+implementation, assurance, red teaming, operations, audit, and retirement.
 
-The first executable slice provides:
+> **New here?** Start with the **[case study](portfolio/case-study.md)** (5 min), then the
+> **[evidence tour](portfolio/evidence-tour.md)** (10 min).
 
-- authenticated, purpose-bound access using local test JWTs plus an injectable strict RS256
-  OIDC access-token verifier, trusted discovery/JWKS rotation cache, and local revocation oracle;
-- a strict signed-SET subset for CAEP session revocation, credential change, and entitlement-change
-  invalidation with
-  durable token/subject state, replay/order protection, audit, restart recovery, and stale-stream
-  denial;
-- a disabled-by-default, authenticated, stream-bound RFC 8935-shaped push endpoint with exact media
-  types, incremental body limits, empty `202` acknowledgement, registered error classes, and no
-  acknowledgement on collision or state failure;
-- strict injected final-SSF transmitter discovery with exact multi-issuer path/version/issuer/origin
-  binding, authenticated non-cacheable stream-status reads, and asynchronous verification requests
-  that cannot be mistaken for proof of event receipt;
-- strictly bound final-SSF stream creation/read/update/replace/delete, status mutation, and subject
-  management with one receiver audience, fixed HTTPS push destination, exact required events,
-  `default_subjects=NONE`, and non-enumerating acknowledgements;
-- durable final-SSF verification receipt/correlation with persistence-before-dispatch, digest-only
-  single-use state, exact stream binding, synchronous-callback and restart safety, timeout, and
-  fail-closed stream health;
-- explicit final-SSF unsolicited-verification handling with default rejection, opt-in delivery-only
-  persistence, a durable bounded quota, replay safety, and no correlated-health inflation;
-- durable final-SSF desired/observed status reconciliation with intent-before-dispatch,
-  outcome-unknown handling, digest-only reasons, signed `stream-updated` processing, monotonic
-  observations, bounded rate-limit-aware safe status-read recovery, superseded-race protection,
-  no automatic write replay, and paused/disabled/drifted/stale access denial;
-- a restart-safe SSF recovery controller seam with durable next-due cadence, lease-protected
-  single-flight execution, expired-lease reclaim, stale-worker suppression, and warning/critical
-  alert-state escalation and clear;
-- an Okta Identity Engine reference profile with a separately authorized, same-origin/path/filter
-  constrained System Log cursor adapter that minimizes the documented SSF source events, and durable
-  gap-recovery application behind a compare-and-swap cursor with exactly-once page application,
-  invalidate-only recovered events, and a multi-signal exit gate that refuses to close on an empty
-  page — none of which is a live-provider conformance claim;
-- an isolated RFC 8693 downstream broker that reauthenticates the subject, fixes the FHIR
-  resource/audience and exact SMART Patient/Consent scopes, rejects token passthrough or broadened
-  credentials, and redacts the result;
-- a central immutable authorization request/decision contract with operation scopes, versioned
-  codes, and enforceable obligations;
-- deny-by-default corpus admission with a promotion record for every candidate, second-person
-  approval, checksum and provenance binding, supersession and freshness, and content scanning that
-  refuses instruction-shaped text, credential material, and unsafe characters;
-- retrieval that computes the authorized partition *before* scoring anything, rechecks integrity and
-  freshness after selection, abstains when two current sources conflict, and renders retrieved text
-  as data that cannot close its own envelope;
-- corpus versions whose identity binds labels as well as text, with durable activation and audited
-  rollback that survives restart;
-- a gated retrieval golden set — security cases at 100% and quality cases at 100% against a 90%
-  floor — enforced by `make verify` and CI;
-- pre-authorized FHIR R4-shaped synthetic patient access with security labels, provenance checks,
-  explicit Consent, denial-before-full-read, post-read context recheck, and minimum-summary projection;
-- a deterministic Synthea v4.0.0-derived 12-resource FHIR R4 dataset with checksummed lineage,
-  direct-identifier removal, synthetic/restricted labels, and tamper detection;
-- a pinned disposable HAPI FHIR v8.10.0-3 loopback lab and shared in-memory/HTTP broker contract;
-- Part 2-sensitive, cross-patient, cross-facility, role, and purpose denials;
-- a bounded agent loop around an untrusted model: an explicit transition table, three static tools
-  with one write capability, prohibited capability names refused at registry construction,
-  authorization re-derived from the caller on every tool call, and no execute tool at all;
-- model output validated for grounding, citation authenticity, secret disclosure, and clinical scope
-  before use, refused rather than truncated, with step, tool, output, and deadline budgets that halt
-  a looping run;
-- independent durable MODEL/READ/WRITE kill switches, and a hosted-provider seam that refuses every
-  call until its vendor criteria are approved;
-- untrusted text rendered inert server-side, and an approval preview whose displayed fields and
-  digest both come from the same canonical action, so a surface cannot show one action while the
-  approver signs another;
-- workflow states where only execution implies completion, uncertainty a surface cannot drop, and
-  fixed emergency-channel routing that has nowhere to record an urgency assessment;
-- non-clinical action proposals with independent, digest-bound human approval;
-- signed approval receipts, expiry, reauthorization, and idempotent execution;
-- shared transactional workflow/audit state with in-memory and single-node SQLite adapters, atomic
-  rollback, restart recovery, concurrency controls, tamper detection, and fail-closed readiness;
-- 482 passing default-suite tests plus one HAPI integration test, 88.02% coverage against the 85%
-  floor, under strict lint and typing gates, green on a hosted CI runner;
-- an offline release gate that fails the build on an unpinned Action, an unpinned image, an
-  unbounded dependency, a missing container hardening control, or a secret marker in a tracked file,
-  each proven by a test that breaks it;
-- a CycloneDX SBOM built from the lockfile and an AIBOM generated from the running model, corpus,
-  tool, bound, kill-switch, and evaluation definitions, both committed and drift-checked;
-- a hardened container that runs non-root on a read-only filesystem with no package manager,
-  compiler, or fetch tool;
-- an adversarial campaign of 21 attacks across all 14 classes the requirements baseline names —
-  direct, indirect, stored, obfuscated, multilingual, and encoded injection, exfiltration, poisoning,
-  tool and identity abuse, action mutation and replay, output injection, and consumption — each
-  naming the control expected to stop it, all contained, enforced by CI;
-- a release evaluation that declares all 11 required dimensions, marks four of them honestly not
-  assessed, and refuses a release rather than collapsing partial evidence into a readiness claim;
-- telemetry checked in both directions — every audit event carries the context an investigator
-  needs and none carries a credential, context envelope, markup, address, or a passage-length value;
-- ten detection rules covering all ten required categories, each proven to fire on its own signal,
-  stay quiet below its threshold, and not stay lit on an old cluster;
-- five executed game-day drills — independent kill switch, corpus rollback, safe degraded mode,
-  restart recovery, and a backup/restore that corrupts the database and verifies the audit chain
-  after restoring;
-- change-impact analysis over the AI bill of materials, so a change to the model, prompt, corpus,
-  tool surface, bounds, or evaluation thresholds cannot be reviewed as "just a config tweak";
-- an audit package indexing every evidence artifact by digest alongside the open blockers and unmet
-  gates, and an executed retirement that revokes capabilities, deletes operational data, and keeps
-  the audit chain that proves the deletion happened;
-- a typed, CI-enforced control system covering 70 requirements, 25 risks, and 78 scenarios;
-- 31 canonical controls with 71 verification definitions, 40 evidence definitions, framework
-  mappings, and honest implemented/partial/planned status; and
-- an AI system card plus simulated M02 multidisciplinary, M03 control-owner, and M04 owner reviews,
-  with M04 closed as a conditional pass on four time-bound exception records.
+---
 
-The local identity, delegation, data, retrieval, state, and audit adapters are deliberately
-non-production baselines. SQLite is a single-node simulation; the token-exchange transport and HAPI
-lab are not connected; treatment relationship and Consent are fixtures rather than authoritative
-sources; retrieval is deterministic keyword matching over an in-memory corpus, so the M05 thresholds
-measure the controls and say nothing about answer quality; the model adapter is a deterministic
-policy rather than a language model, so M06 proves containment and not capability; the M07
-presentation contract is verified but no human-factors session has been run, so the milestone's gate
-is explicitly **not met**; the adversarial campaign contains every attack yet the M09 gate is also
-**not met**, because four high-severity findings are open and no release may proceed; M10's drills
-are executed but its gate is **not met** without operators or a tabletop; M11's mechanisms work and
-the simulated governance board **refused** to authorize a pilot; and no local signal client has
-ever
-contacted a live provider, so nothing here demonstrates an enterprise TLS/mTLS edge, provider
-lifecycle, production flood controls, a deployed HA scheduler, metrics/SIEM/page delivery, or
-SSF/CAEP/SMART conformance.
+## What this demonstrates
 
-Those gaps are not hand-waved. Each is recorded as a time-bound exception — `NS-EXC-001` through
-`NS-EXC-004` in [docs/assurance/exceptions/](docs/assurance/exceptions/) — with compensating
-controls, objective stop conditions, and a remediation owner, and the limitations are listed in
-[PROJECT_STATUS.md](PROJECT_STATUS.md).
+| Discipline | Worked artifact in this repository |
+|---|---|
+| **AI security architecture** | The model is an untrusted requester behind a bounded loop — enforced by types, not policy documents ([ADR-011](docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md)) |
+| **Identity & access** | Strict RS256 OIDC, trusted JWKS rotation, RFC 8693 delegation, durable CAEP/SSF continuous access ([ADR-003](docs/architecture/decisions/ADR-003-oidc-and-delegation.md), [ADR-007](docs/architecture/decisions/ADR-007-durable-identity-signals.md)) |
+| **Secure RAG** | Deny-by-default corpus admission, authorization computed *before* scoring, conflict abstention, audited corpus rollback ([ADR-010](docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md)) |
+| **Healthcare data** | FHIR R4 broker with security labels, explicit Consent, denial-before-read, minimum-necessary projection ([ADR-005](docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md)) |
+| **Application security** | Inert output rendering, approval previews cryptographically bound to the canonical action ([ADR-012](docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md)) |
+| **Privacy engineering** | DPIA, LINDDUN threat model, data-flow inventory, minimization enforced in the audit trail |
+| **Clinical safety** | Hazard analysis, prohibited-scope enforcement, fixed emergency routing that cannot assess urgency |
+| **Supply chain** | Offline release gate, CycloneDX SBOM, a generated **AIBOM**, hardened container ([ADR-013](docs/architecture/decisions/ADR-013-supply-chain-and-release-policy.md)) |
+| **Assurance & red team** | 21 attacks across 14 classes, each naming the control expected to stop it |
+| **Operations & IR** | Detection-as-code, seven incident playbooks, five executed game-day drills |
+| **Governance** | 70 requirements → 25 risks → 31 controls → 71 verifications → 40 evidence records, machine-validated |
+| **Lifecycle** | Change-impact analysis, audit package assembly, an executed retirement exercise |
 
-## Safety boundary
+---
 
-Polaris v1 may retrieve approved policies, access minimal authorized synthetic patient context,
-draft administrative content, and propose approval-gated non-clinical tasks. It may not diagnose,
-prescribe, recommend treatment, triage, autonomously write to an EHR, communicate with patients, or
-use real PHI.
+## Architecture
 
-## Quick start
+Every arrow crossing into a new boundary is an authorization decision made in deterministic code —
+never by the model.
 
-Requirements: uv and Python 3.12 or newer (uv can provision Python). CI pins Python 3.13.11.
+```mermaid
+flowchart TB
+    User(["Care coordinator"])
+
+    subgraph Edge["Request boundary"]
+        API["FastAPI · typed, purpose-bound"]
+        AuthZ["Policy engine · deny by default"]
+    end
+
+    subgraph Agent["Bounded agent loop"]
+        Orch["Orchestrator · explicit state machine"]
+        Model["Model adapter · UNTRUSTED"]
+        Tools["Tool registry · 2 read · 1 write · 0 execute"]
+        Budget["Budgets and kill switches"]
+    end
+
+    subgraph Data["Data boundary"]
+        Corpus[("Secure corpus · admission and partitions")]
+        FHIR[("Synthetic FHIR R4 · Consent and labels")]
+    end
+
+    subgraph Trust["Approval boundary"]
+        Preview["Trusted preview · digest-bound"]
+        Human(["Independent human approver"])
+        Exec["Idempotent execution"]
+    end
+
+    Audit[("Tamper-evident audit chain")]
+
+    User --> API
+    API --> AuthZ
+    AuthZ --> Orch
+    Orch <--> Model
+    Orch --> Tools
+    Budget -.governs.-> Orch
+    Tools --> Corpus
+    Tools --> FHIR
+    Tools --> Preview
+    Preview --> Human
+    Human --> Exec
+    AuthZ -.every decision.-> Audit
+    Exec -.-> Audit
+
+    style Model fill:#3d1c1c,stroke:#f85149,color:#ffffff
+    style AuthZ fill:#1c2e1c,stroke:#3fb950,color:#ffffff
+    style Human fill:#1c2333,stroke:#58a6ff,color:#ffffff
+    style Audit fill:#2d2a1c,stroke:#d29922,color:#ffffff
+```
+
+**The model never decides whether a request is allowed.** It proposes; the policy engine, the
+retrieval index, and a human approver decide. A fully compromised model can waste a run — it cannot
+widen retrieval, obtain a credential, bypass approval, or execute anything.
+
+---
+
+## One request, end to end
+
+<details>
+<summary><b>Follow a single "draft a follow-up task" request through every control</b></summary>
+
+<br/>
+
+1. **Authenticate** — strict RS256, exact issuer, audience, and type, operation scopes, revocation
+   checked against durable continuous-access state.
+2. **Authorize** — deny-by-default across role, facility, patient assignment, purpose of use, and
+   data sensitivity. Missing context denies.
+3. **Retrieve** — the caller's authorized corpus partition is computed *before* any text is scored,
+   so an unauthorized chunk is never a candidate. Conflicting sources abstain rather than rank.
+4. **Render as data** — retrieved text enters an envelope it cannot close. It is never read as
+   instruction.
+5. **Model turn** — the adapter receives a question, that envelope, and the tool names available.
+   There is no field for a credential, principal, token, or session.
+6. **Tool call** — authorization is re-derived from the *caller*, not from what the model asked for.
+   Arguments are schema-validated; extras are refused.
+7. **Validate output** — structure, size, grounding, citation authenticity, secret disclosure,
+   clinical scope. Refused, never truncated.
+8. **Propose** — a pending proposal. There is no execute tool.
+9. **Preview** — displayed fields and the signed digest both derive from one canonical action, so a
+   surface cannot show one action while the approver signs another.
+10. **Approve** — an independent human, cryptographically bound, with expiry.
+11. **Execute** — idempotent, reauthorized at execution time.
+12. **Audit** — every step in a tamper-evident chain, carrying versions and decisions, carrying no
+    credentials and no retrieved passages.
+
+</details>
+
+---
+
+## Run it
+
+Requires [uv](https://docs.astral.sh/uv/) and Python 3.12 or newer.
 
 ```bash
 uv sync --locked --all-groups
 make verify
+```
+
+`make verify` runs the complete gate: governance traceability, retrieval evaluation, release
+supply-chain policy, the adversarial campaign, operational drills, audit package and retirement,
+portfolio claim verification, dataset integrity, lint, strict typing, and the test suite.
+
+<details>
+<summary><b>Run individual proofs</b></summary>
+
+<br/>
+
+```bash
+make red-team          # 21 attacks across 14 classes
+make game-day          # kill switch, rollback, degraded mode, restart, backup/restore
+make retrieval-eval    # grounding, abstention, conflict, poisoning canaries
+make supply-chain      # SBOM + AIBOM + release policy
+make lifecycle         # audit package + retirement exercise
+make governance        # requirement to control to evidence traceability
+```
+
+Start the API locally:
+
+```bash
 cp .env.example .env
-# Replace every development key in .env with a unique local value.
 make run
 ```
 
-To run the same application in its hardened container instead:
+Replace every development key in `.env` with a unique local value first. The OpenAPI UI is then at
+`http://127.0.0.1:8000/docs`.
+
+Run it in the hardened container instead — non-root, read-only root filesystem, no package manager:
 
 ```bash
 make container-build
 docker compose -f infrastructure/local/compose.polaris.yml up
 ```
 
-The container runs non-root on a read-only filesystem, publishes only on loopback, and contains no
-package manager. It is a hardened local runtime, not a deployment artifact: nothing is signed,
-attested, or scanned (`NS-EXC-005`).
-
-The OpenAPI UI is available at `http://127.0.0.1:8000/docs` outside production mode. Authentication
-test fixtures in `tests/conftest.py` show the required claims and purpose-of-use header. The test
-suite is the current supported end-to-end demonstration path.
-
-For the optional disposable FHIR interoperability lab, install Docker Desktop and run:
+Optional disposable FHIR interoperability lab, loopback only:
 
 ```bash
 make fhir-up
@@ -184,68 +187,66 @@ make fhir-integration
 make fhir-down
 ```
 
-The lab is synthetic-only, loopback-only, and intentionally has no production authentication.
+</details>
 
-## Start here
+---
 
-- [Durable instructions](AGENTS.md)
-- [Current status and next increment](PROJECT_STATUS.md)
-- [Master roadmap](docs/program/master-roadmap.md)
-- [System context and trust boundaries](docs/architecture/system-context.md)
-- [Authorization decision table](docs/architecture/authorization-decision-table.md)
-- [Transactional state, audit, and recovery ADR](docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md)
-- [Secure retrieval boundary ADR](docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md)
-- [Bounded agent and model boundary ADR](docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md)
-- [Trusted presentation boundary ADR](docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md)
-- [Supply chain and release policy ADR](docs/architecture/decisions/ADR-013-supply-chain-and-release-policy.md)
-- [Durable continuous-access identity signals ADR](docs/architecture/decisions/ADR-007-durable-identity-signals.md)
-- [Okta continuous-access reference profile ADR](docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md)
-- [Okta gap-recovery runbook](docs/operations/okta-continuous-access-gap-recovery.md)
-- [Regulatory/framework applicability](docs/compliance/applicability-matrix.md)
-- [Initial risk register](docs/risk/risk-register.md)
-- [M02 requirements baseline](docs/risk/requirements-baseline.md)
-- [M02 multidisciplinary review](docs/assurance/M02-multidisciplinary-review.md)
-- [Control statement and evidence standard](docs/governance/control-standard.md)
-- [AI system card](docs/governance/ai-system-card.md)
-- [M03 control-owner review](docs/assurance/M03-control-owner-review.md)
-- [M03 traceability report](evidence/reports/M03-traceability-report.md)
-- [M04 gate decision](evidence/milestones/M04-gate-decision.md)
-- [M05 secure retrieval evidence](evidence/milestones/M05-secure-retrieval.md)
-- [M06 bounded agent evidence](evidence/milestones/M06-bounded-agent.md)
-- [M07 trusted presentation evidence — gate not met](evidence/milestones/M07-trusted-presentation.md)
-- [Human-factors validation protocol](docs/assurance/human-factors-validation-protocol.md)
-- [M08 supply chain evidence](evidence/milestones/M08-supply-chain.md)
-- [M09 assurance and red team evidence — gate not met](evidence/milestones/M09-assurance-and-red-team.md)
-- [M09 remediation ledger](docs/assurance/M09-remediation-ledger.md)
-- [M09 independent review](docs/assurance/M09-independent-review.md)
-- [M10 operations evidence — gate not met](evidence/milestones/M10-operations.md)
-- [AI incident playbooks](docs/operations/ai-incident-playbooks.md)
-- [Incident tabletop protocol](docs/assurance/M10-incident-tabletop-protocol.md)
-- [M11 lifecycle evidence — pilot refused](evidence/milestones/M11-lifecycle.md)
-- [Governance board decision — pilot authorization refused](docs/assurance/M11-governance-board-decision.md)
-- [Pilot protocol and monitoring thresholds](docs/program/pilot-protocol.md)
-- [Case study](portfolio/case-study.md)
-- [Evidence tour](portfolio/evidence-tour.md)
-- [Demo script](portfolio/demo-script.md)
-- [Training curriculum and labs](training/curriculum.md)
-- [M04 owner review](docs/assurance/M04-owner-review.md)
-- [Deferral exception records](docs/assurance/exceptions/)
-- [Security threat model](docs/risk/threat-model.md)
-- [Privacy impact assessment](docs/risk/privacy-impact-assessment.md)
-- [Clinical safety hazards](docs/risk/clinical-safety-hazard-analysis.md)
-- [Release gates](docs/assurance/release-gates.md)
-- [Local verification evidence](evidence/milestones/M01-local-verification.md)
-- [M04 identity/FHIR foundation evidence](evidence/milestones/M04-identity-fhir-foundation.md)
-- [Hosted CI evidence](evidence/milestones/M04-hosted-ci.md)
-- [Production persistence and recovery targets ADR](docs/architecture/decisions/ADR-009-production-persistence-and-recovery-targets.md)
-- [Persistence and recovery exercise specification](docs/operations/persistence-recovery-exercises.md)
-- [Authoritative relationship and Consent integration design](docs/architecture/authoritative-relationship-and-consent-integration.md)
-- [Active delivery backlog](docs/program/backlog.md)
-- [Recruiter package plan](portfolio/README.md)
-- [Training product plan](training/README.md)
+## Four bugs found by running, not reading
 
-## Important disclaimer
+The most instructive parts of this repository are the places where building something surfaced a
+defect that reviewing it would not have.
 
-This is an educational simulation using synthetic data. It is not a production healthcare system,
-legal advice, a HIPAA certification, an FDA clearance, or evidence that any real organization is
-compliant or production ready.
+| What broke | Why it matters |
+|---|---|
+| The content scanner rejected the policy that *prohibits* diagnosis, for containing the word | The clinical-boundary control was keeping the clinical-boundary policy out of the corpus. Scanning is now sentence-scoped |
+| A kill-switch drill asserted the wrong half of its control and failed on first run | With writes disabled the tool is never offered, so a well-behaved model never triggers the refusal being asserted |
+| A red-team case passed because its payload matched nothing | A test that cannot fail proves nothing. It now runs the full agent and asserts no write occurred |
+| The container built cleanly, then failed to start | A relocated virtualenv keeps absolute shebangs. Reading the Dockerfile would not have caught it |
+
+---
+
+## Navigate
+
+**Start here**
+
+| | |
+|---|---|
+| [Case study](portfolio/case-study.md) | The engineering story, in five minutes |
+| [Evidence tour](portfolio/evidence-tour.md) | Risk to requirement to control to code to test |
+| [Demo script](portfolio/demo-script.md) | Seven-minute walkthrough with real commands |
+
+**Depth**
+
+| | |
+|---|---|
+| [Architecture decisions](docs/architecture/decisions/) | Thirteen ADRs, each with rejected alternatives |
+| [System context and trust boundaries](docs/architecture/system-context.md) | Where the boundaries are, and why |
+| [Risk and threat models](docs/risk/) | STRIDE, LINDDUN, DPIA, clinical hazards, abuse cases |
+| [Control library](governance/control-library.json) | Thirty-one canonical controls, machine-validated |
+| [Evidence records](evidence/milestones/) | What was verified, and what was not |
+| [Incident playbooks](docs/operations/ai-incident-playbooks.md) | Seven AI-specific response procedures |
+| [Training package](training/curriculum.md) | Twelve-module curriculum with three worked labs |
+
+**Engineering**
+
+| | |
+|---|---|
+| [`src/polaris/agent/`](src/polaris/agent/) | Bounded orchestration, tools, budgets, kill switches |
+| [`src/polaris/services/corpus.py`](src/polaris/services/corpus.py) | Corpus admission and content scanning |
+| [`src/polaris/security/`](src/polaris/security/) | Identity, delegation, continuous access, policy |
+| [`src/polaris/assurance/`](src/polaris/assurance/) | Adversarial campaign and release evaluation |
+| [`src/polaris/operations/`](src/polaris/operations/) | Telemetry rules, detections, game-day drills |
+
+---
+
+## Scope
+
+Project Polaris is an **educational simulation built entirely on synthetic data**. That constraint is
+deliberate and stated throughout: the identity, delegation, retrieval, model, and persistence
+adapters are non-production baselines, no hosted model is connected, and no live provider has ever
+been contacted. Each limitation is recorded against the control it affects rather than omitted —
+which is itself part of the demonstration.
+
+It is not a production healthcare system, legal advice, a HIPAA compliance determination, an FDA
+clearance, or evidence that any real organization is compliant. No real patient data is used
+anywhere.

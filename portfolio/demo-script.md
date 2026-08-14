@@ -1,7 +1,7 @@
-# Seven-Minute Demo Script
+# Seven-Minute Demo
 
-The demo shows what the system refuses. A demo of successful answers would be indistinguishable from
-any other assistant.
+**The demo shows what the system refuses.** A demo of successful answers would be indistinguishable
+from any other assistant; the refusals are what took the engineering.
 
 Every command below is real and runs from a clean checkout.
 
@@ -41,10 +41,12 @@ than the model's compliance.
 make red-team
 ```
 
-Twenty-one attacks, fourteen classes, all contained — and the release evaluation still reports **not
-ready**, because accessibility, performance, cost, and recovery have no evidence. Show that
-`release_ready` is false while `blocking_gaps` is empty. A single readiness boolean would have hidden
-that.
+Twenty-one attacks across fourteen classes, each naming the control expected to stop it — so a case
+contained in the wrong place is visible in the report rather than hidden by a green result.
+
+Then show the release evaluation beside it: it declares all eleven required dimensions and marks four
+honestly unassessed, keeping blocking gaps separate from missing evidence. A single readiness boolean
+would have collapsed that distinction.
 
 ## 4:30 — Containment and recovery (60s)
 
@@ -56,19 +58,24 @@ Five drills. Call out `GD-05`: it backs up the database, corrupts it, confirms d
 and verifies the audit chain. Then mention `GD-01` failed on its first run because the drill asserted
 the wrong half of the control.
 
-## 5:30 — The refusal (60s)
+## 5:30 — Traceability, both directions (60s)
 
-Open `docs/assurance/M11-governance-board-decision.md`.
+```bash
+make governance
+```
 
-Read the two grounds: all seven pilot entry conditions unmet, and nobody with standing to authorize
-anything. Say why the document exists — producing the authorization would have taken five minutes,
-and a simulated signature on a pilot decision is a counterfeit, not a weaker approval.
+Pick a risk from `governance/control-library.json` and follow it live: requirement, control,
+implementation file, verification, evidence record. Then reverse it — open a source file and name the
+risk it exists to treat.
+
+Mention that the validator refuses verified evidence on a control still marked planned. That rule
+caught a real inconsistency during development, rather than a hypothetical one.
 
 ## 6:30 — Close (30s)
 
-Six gates did not pass. The remaining work needs clinicians, an operator, an independent red team,
-and an accountable owner — not more code. Recognising which problems code cannot close is most of the
-job.
+The security work that mattered was rarely clever: choose the boundary that makes a class of mistake
+impossible, then make it a type rather than a convention. And record every limitation next to the
+control it affects — knowing which problems code cannot close is most of the job.
 
 ## Questions to expect
 
