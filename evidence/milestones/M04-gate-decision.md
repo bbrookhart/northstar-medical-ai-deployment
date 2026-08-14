@@ -4,7 +4,7 @@
 **Date:** 2026-08-13  
 **Scope:** Local synthetic simulation, now under version control with hosted CI  
 **Decision:** **Conditional pass**, on four owner-approved time-bound exceptions  
-**Verified revision:** `codex/main` at the commit recorded in the verification section
+**Verified revision:** `codex/main` at `c08ae18db1b6`
 
 ## What changed since EVD-M04-001
 
@@ -95,7 +95,7 @@ make verify
 | Strict mypy across `src` and `tests` | Pass; 58 source/test files |
 | Pytest | Pass; 323 default-suite tests, 1 Docker-gated integration skipped |
 | Branch coverage | 85.50%; enforced floor 85% |
-| Hosted GitHub Actions | Pass; see `EVD-M04-002` |
+| Hosted GitHub Actions | Pass; `quality` job green on this revision and on `EVD-M04-002` |
 | Branch protection | Not assessed |
 
 Catalogs now hold 31 controls, 46 verification definitions, and 24 evidence definitions.
