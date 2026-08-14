@@ -68,18 +68,21 @@ these constraints:
 9. `published` is used as a conservative invalidation time when the compensating record does not
    expose the original CAEP event timestamp. Polling order is preserved; code does not claim that
    `published` order is commit order.
-10. A full recovery controller must durably apply the complete page and persist its next cursor in
-    the same transaction. The current increment implements and tests the strict read/normalization
-    boundary only. It does not advance the authorization-health checkpoint or clear a gap.
-11. Recovery exit will require all of the following: caught-up empty System Log page, all earlier
-    pages durably applied, SSF status `enabled`, a fresh receiver-correlated verification event,
-    healthy local state, and an attributable operator decision. An empty page alone proves none of
-    those conditions.
+10. The recovery controller durably applies the complete page and persists its next cursor in one
+    transaction, sequenced by compare-and-swap so a stale worker cannot reapply a page or rewind the
+    cursor. Applying a page never advances the authorization-health checkpoint: a compensating read
+    cannot manufacture SSF delivery freshness.
+11. Recovery exit requires all of the following: caught-up empty System Log page, all earlier pages
+    durably applied, SSF status `enabled`, a fresh receiver-correlated verification event that
+    postdates the incident, healthy local state, and an attributable operator decision. An empty page
+    alone proves none of those conditions. `evaluate_exit` enforces the machine-checkable subset; the
+    operator decision remains outside the code.
 12. Credentials, tenant access, live calls, measured latency, service level, provider contract,
     procurement, BAA/DPA, production recovery, or SSF/CAEP conformance are outside this local
     decision and remain blocked.
 
-The executable profile is in `src/polaris/security/okta_recovery.py`; the operator contract is in
+The executable profile is in `src/polaris/security/okta_recovery.py` and
+`src/polaris/security/okta_gap_recovery.py`; the operator contract is in
 `docs/operations/okta-continuous-access-gap-recovery.md`.
 
 ## Consequences
@@ -90,9 +93,13 @@ The executable profile is in `src/polaris/security/okta_recovery.py`; the operat
   final top-level subject binding.
 - A provider outage or malformed recovery page remains fail closed. No raw identity-log payload is
   admitted to application state or evidence.
+- A subject invalidation now records which kind of evidence caused it. A signed SET and a System Log
+  record are separate, required, mutually exclusive attributions in state, so the two can never be
+  conflated after the fact.
 - The remaining work is materially narrower but still significant: live tenant conformance,
-  confidential credential acquisition, durable page application/cursor commit, gap incident state,
-  HA scheduling, metrics/pages, recovery exercise, retention/privacy approval, and owner SLO.
+  confidential credential acquisition, HA scheduling, metrics/pages, a recovery exercise,
+  retention/privacy approval, and an owner-approved SLO — deferred under `NS-EXC-002` and
+  `NS-EXC-003`.
 - Okta is a reference implementation choice for this simulation, not an enterprise purchasing
   decision or an assertion that Northstar Medical uses Okta.
 

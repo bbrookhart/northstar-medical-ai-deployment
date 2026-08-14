@@ -1,0 +1,147 @@
+{
+  "campaign_version": "2026.08.14",
+  "corpus_version": "2026.08.14",
+  "decision": {
+    "blocking_gaps": [],
+    "release_ready": false,
+    "unassessed_dimensions": [
+      "accessibility",
+      "performance",
+      "cost",
+      "recovery"
+    ]
+  },
+  "dimensions": [
+    {
+      "evidence": [
+        "make verify",
+        "EVD-M04-003",
+        "EVD-M08-001"
+      ],
+      "name": "function",
+      "note": "Functional behavior of the deterministic stack only.",
+      "status": "ASSESSED",
+      "threshold": "All default-suite tests pass; coverage at or above the 85% floor"
+    },
+    {
+      "evidence": [
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AGT-002",
+        "VER-SDL-003"
+      ],
+      "name": "authorization",
+      "note": "Deterministic policy engine, retrieval partition, and agent boundary.",
+      "status": "ASSESSED",
+      "threshold": "Zero unauthorized cross-patient, cross-role, cross-facility, or cross-purpose access"
+    },
+    {
+      "evidence": [
+        "VER-AGT-002",
+        "VER-PRS-001",
+        "EVD-M04-001"
+      ],
+      "name": "privacy",
+      "note": "Minimization and disclosure controls are tested. No DPIA re-review against a real data flow, and authoritative Consent remains a fixture (NS-EXC-001).",
+      "status": "PARTIAL",
+      "threshold": "No prohibited content in logs, audit, or model context"
+    },
+    {
+      "evidence": [
+        "VER-SDL-003",
+        "EVD-M09-001"
+      ],
+      "name": "security",
+      "note": "Against the deterministic stack; no campaign against a hosted provider.",
+      "status": "ASSESSED",
+      "threshold": "Zero uncontained critical or high red-team cases across all required classes"
+    },
+    {
+      "evidence": [
+        "VER-SAF-001",
+        "VER-AGT-002",
+        "EVD-M07-001"
+      ],
+      "name": "safety",
+      "note": "Boundary and routing are enforced and tested. No clinician-reviewed adversarial suite and no clinical validation (BLK-003).",
+      "status": "PARTIAL",
+      "threshold": "No clinical direction produced or accepted; emergency language routes to a human channel"
+    },
+    {
+      "evidence": [
+        "VER-RAG-004",
+        "EVD-M05-002"
+      ],
+      "name": "grounding",
+      "note": "Deterministic keyword retrieval; says nothing about model answer quality.",
+      "status": "ASSESSED",
+      "threshold": "Security cases 100% and quality cases at or above 90% on the retrieval golden set"
+    },
+    {
+      "evidence": [
+        "VER-SDL-003",
+        "VER-RAG-001",
+        "VER-AUT-029"
+      ],
+      "name": "robustness",
+      "note": "Input-handling robustness is tested. No fuzzing campaign and no load-driven fault injection.",
+      "status": "PARTIAL",
+      "threshold": "Malformed, oversized, obfuscated, and hostile inputs fail closed"
+    },
+    {
+      "evidence": [
+        "VER-PLN-011"
+      ],
+      "name": "accessibility",
+      "note": "No interface exists and no session has been run (BLK-003).",
+      "status": "NOT_ASSESSED",
+      "threshold": "WCAG 2.2 AA with no serious or critical violations, verified with assistive technology"
+    },
+    {
+      "evidence": [],
+      "name": "performance",
+      "note": "No load testing, no objectives, and no deployment to measure.",
+      "status": "NOT_ASSESSED",
+      "threshold": "Approved latency and throughput objectives under representative load"
+    },
+    {
+      "evidence": [],
+      "name": "cost",
+      "note": "No metered provider is connected, so there is nothing to measure or bound.",
+      "status": "NOT_ASSESSED",
+      "threshold": "Bounded spend per run and per tenant with an approved ceiling"
+    },
+    {
+      "evidence": [
+        "NS-EXC-004",
+        "docs/operations/persistence-recovery-exercises.md"
+      ],
+      "name": "recovery",
+      "note": "Six exercises are specified with pass criteria; none has been executed.",
+      "status": "NOT_ASSESSED",
+      "threshold": "Measured RTO and RPO with executed failover, restore, and reconciliation exercises"
+    }
+  ],
+  "manifest_version": "2026.08.14",
+  "red_team": {
+    "blocking_failures": [],
+    "cases": 21,
+    "classes_covered": [
+      "ACTION_MUTATION",
+      "ACTION_REPLAY",
+      "CONSUMPTION",
+      "DIRECT_INJECTION",
+      "ENCODED_INJECTION",
+      "EXFILTRATION",
+      "IDENTITY_ABUSE",
+      "INDIRECT_INJECTION",
+      "MULTILINGUAL_INJECTION",
+      "OBFUSCATED_INJECTION",
+      "OUTPUT_INJECTION",
+      "POISONING",
+      "STORED_INJECTION",
+      "TOOL_ABUSE"
+    ],
+    "containment_rate": 1.0
+  }
+}

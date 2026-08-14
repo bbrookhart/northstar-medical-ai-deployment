@@ -1,35 +1,47 @@
-# Recruiter Portfolio Package
+# Portfolio
 
-This directory will package evidence already proven elsewhere; it will not invent stronger claims.
-The first complete evidence-tour backbone now exists: 70 requirements and 25 risks resolve through
-31 controls to implementation, 45 verification definitions, 22 evidence definitions, framework
-references, and six visible gate blockers. The generated M03 report is the canonical source for
-portfolio traceability claims; the M04 identity/continuous-access/FHIR/transactional-state record
-adds the current engineering increment.
+Recruiter-facing material for Project Polaris. Every claim here resolves to an artifact in this
+repository, and `make portfolio` fails the build if one does not.
 
-Planned outputs:
+## Read in this order
 
-- One-page executive case study: problem, constraints, decision, risk, outcome, limitations
-- Architecture story: trust boundaries and why the model is not a security boundary
-- Five-minute demo: strict token context, trusted JWKS rotation, least-privilege delegation denial,
-  final-SSF discovery substitution denial and pending-only verification semantics, authenticated
-  push delivery, audience/push/event-bound stream lifecycle and privacy-conscious subject calls,
-  plus durable desired/observed status reconciliation, signed stream-updated handling, correlated
-  verification receipt, default-reject/opt-in delivery-only unsolicited verification with a durable
-  quota and health isolation, bounded rate-limit-aware safe status recovery, durable cadence/lease/
-  alert-state handling with crash and stale-worker recovery, an Okta reference profile with strict
-  System Log cursor/origin/path/filter/page minimization and substitution denial, and signed
-  session/credential/entitlement invalidation with ambiguous-outcome, transport/media/size/state-reuse/race/
-  timeout/replay/order/restart/freshness failure,
-  Consent-aware denial before FHIR disclosure, pinned HAPI readback, grounded retrieval, exact
-  approval, atomic workflow/audit rollback, restart-safe replay, and tamper denial
-- Evidence tour: risk → requirement → control → implementation → adversarial test → gate decision
-  using `evidence/reports/M03-traceability-report.md`
-- Incident/rollback story and residual-risk decision
-- Role-impact matrix showing AI security engineering, architecture, application, governance,
-  privacy, safety, DevSecOps, assurance, operations, and program management work
-- Interview question bank with evidence-backed answers and honest tradeoffs
+| | Time | What it covers |
+|---|---|---|
+| **[Case study](case-study.md)** | 5 min | The problem, the decision that shaped the architecture, what was built, and four bugs found by running rather than reading |
+| **[Evidence tour](evidence-tour.md)** | 10 min | Three chains walked from risk to requirement to control to code to test |
+| **[Demo script](demo-script.md)** | 7 min live | A walkthrough with real commands, for an interview or a recorded demo |
 
-No artifact may claim real healthcare deployment, real PHI processing, HIPAA compliance, FDA status,
-clinical effectiveness, independent certification, or production readiness unless the evidence and
-an authorized reviewer actually support it.
+## The one-paragraph version
+
+Project Polaris takes a single narrow AI capability — answer approved policy questions, draft
+administrative follow-up tasks — through twelve milestones covering business intake, governance,
+threat and privacy modelling, secure implementation, retrieval security, agent containment, approval
+integrity, supply chain, assurance and red teaming, operations and incident response, audit, and
+retirement. The system is deliberately constrained: the model is untrusted and can never authorize
+anything, there is no tool that executes, and every write requires independent human approval bound
+to the exact action displayed.
+
+## Role-impact map
+
+What a hiring manager is usually trying to establish, and where to look.
+
+| Question | Where the answer lives |
+|---|---|
+| Can they design a secure AI architecture? | [ADR-011](../docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md), [`src/polaris/agent/`](../src/polaris/agent/) |
+| Do they understand identity beyond "add OAuth"? | [ADR-007](../docs/architecture/decisions/ADR-007-durable-identity-signals.md), [`src/polaris/security/`](../src/polaris/security/) |
+| Can they secure RAG, not just build it? | [ADR-010](../docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md), [`src/polaris/services/corpus.py`](../src/polaris/services/corpus.py) |
+| Can they threat model? | [`docs/risk/`](../docs/risk/) — STRIDE, LINDDUN, DPIA, abuse cases, clinical hazards |
+| Can they red team their own work? | [`src/polaris/assurance/redteam.py`](../src/polaris/assurance/redteam.py) |
+| Do they think about operations? | [Incident playbooks](../docs/operations/ai-incident-playbooks.md), [`src/polaris/operations/`](../src/polaris/operations/) |
+| Can they run a governance program? | [`governance/`](../governance/) — 31 controls, machine-validated traceability |
+| Do they know supply-chain security? | [ADR-013](../docs/architecture/decisions/ADR-013-supply-chain-and-release-policy.md), [`src/polaris/supplychain/`](../src/polaris/supplychain/) |
+| Will they overstate what they built? | Every document here, and the checker that enforces it |
+
+## Claims discipline
+
+No artifact in this directory claims real healthcare deployment, real PHI processing, HIPAA
+compliance, FDA status, clinical effectiveness, independent certification, or readiness for
+production use. `src/polaris/portfolio/claims.py` enforces that mechanically: it resolves every
+identifier against the catalogs, checks every link and documented command, and rejects overstated
+language — while permitting the honest denial of a claim, which is the sentence that actually
+belongs in this kind of material.

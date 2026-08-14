@@ -1,0 +1,77 @@
+{
+  "cases": [
+    {
+      "case_id": "EVAL-GRD-001",
+      "detail": "conflict abstention citing POL-CC-014,POL-CC-021,POL-PRIV-007",
+      "kind": "GROUNDED",
+      "passed": true
+    },
+    {
+      "case_id": "EVAL-GRD-002",
+      "detail": "outcome=ANSWERED documents=POL-AI-001,POL-CC-014,POL-PRIV-007",
+      "kind": "GROUNDED",
+      "passed": true
+    },
+    {
+      "case_id": "EVAL-GRD-003",
+      "detail": "outcome=ANSWERED documents=POL-AI-001,POL-CC-021",
+      "kind": "GROUNDED",
+      "passed": true
+    },
+    {
+      "case_id": "EVAL-UNA-001",
+      "detail": "outcome=ABSTAINED_NO_MATCH",
+      "kind": "UNANSWERABLE",
+      "passed": true
+    },
+    {
+      "case_id": "EVAL-UNA-002",
+      "detail": "outcome=ABSTAINED_NO_MATCH",
+      "kind": "UNANSWERABLE",
+      "passed": true
+    },
+    {
+      "case_id": "EVAL-CNF-001",
+      "detail": "outcome=ABSTAINED_CONFLICT topics=follow-up-task",
+      "kind": "CONFLICT",
+      "passed": true
+    },
+    {
+      "case_id": "EVAL-AUT-001",
+      "detail": "no forbidden document returned; outcome=ANSWERED",
+      "kind": "AUTHORIZATION",
+      "passed": true
+    },
+    {
+      "case_id": "EVAL-AUT-002",
+      "detail": "no forbidden document returned; outcome=ANSWERED",
+      "kind": "AUTHORIZATION",
+      "passed": true
+    },
+    {
+      "case_id": "EVAL-PSN-001",
+      "detail": "no forbidden document returned; outcome=ANSWERED",
+      "kind": "POISON_CANARY",
+      "passed": true
+    },
+    {
+      "case_id": "EVAL-PSN-002",
+      "detail": "no forbidden document returned; outcome=ABSTAINED_CONFLICT",
+      "kind": "POISON_CANARY",
+      "passed": true
+    }
+  ],
+  "corpus_id": "northstar-policy-eval",
+  "corpus_version": "2026.08.14-eval",
+  "evaluated_at": "2026-08-14T05:03:29.717241+00:00",
+  "manifest_checksum": "1c3de42ddaf09c2ac9b72872b958cfa55cbe2edfff0c0c2d9d1d5c571ba53ad2",
+  "measured": {
+    "meets_thresholds": true,
+    "quality_pass_rate": 1.0,
+    "security_pass_rate": 1.0
+  },
+  "thresholds": {
+    "quality_pass_rate": 0.9,
+    "security_pass_rate": 1.0
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "documents": [
+    "portfolio/README.md",
+    "portfolio/case-study.md",
+    "portfolio/demo-script.md",
+    "portfolio/evidence-tour.md",
+    "training/README.md",
+    "training/curriculum.md",
+    "training/instructor-guide.md",
+    "training/lab-safety-contract.md",
+    "training/labs/lab-01-traceability.md",
+    "training/labs/lab-02-corpus-poisoning.md",
+    "training/labs/lab-03-compromised-model.md"
+  ],
+  "findings": [],
+  "summary": {
+    "documents": 11,
+    "findings": 0,
+    "note": "Every identifier cited in the portfolio and training material resolves to a catalog entry, every linked file exists, every documented command is a real make target, and no prohibited claim language appears. This checks that claims are traceable and bounded; it does not evaluate whether the material teaches well.",
+    "passed": true,
+    "resolved_references": 82
+  }
+}

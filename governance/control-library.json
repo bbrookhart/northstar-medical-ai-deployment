@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "catalog_id": "NS-CTL-001",
-  "as_of_date": "2026-08-11",
+  "as_of_date": "2026-08-14",
   "status_definitions": {
     "implemented": "Designed, implemented, and linked to verified evidence for the current local simulation scope.",
     "partial": "Some current-scope mechanisms are implemented, but the full requirement or enterprise control is incomplete.",
@@ -16,12 +16,34 @@
       "status": "partial",
       "control_type": "governance",
       "frequency": "Each gate and material change",
-      "requirement_ids": ["REQ-GOV-001", "REQ-GOV-006"],
-      "risk_ids": ["RSK-017", "RSK-021", "RSK-024"],
-      "implementation_refs": ["docs/executive/stakeholder-raci.md", "docs/assurance/release-gates.md"],
-      "verification_ids": ["VER-REV-001", "VER-REV-004", "VER-PLN-007"],
-      "evidence_ids": ["EVD-GOV-001", "EVD-M03-001", "EVD-PLN-007"],
-      "framework_reference_ids": ["FW-AIRMF-GOV", "FW-CSF-GV", "FW-HIPAA-ADMIN"]
+      "requirement_ids": [
+        "REQ-GOV-001",
+        "REQ-GOV-006"
+      ],
+      "risk_ids": [
+        "RSK-017",
+        "RSK-021",
+        "RSK-024"
+      ],
+      "implementation_refs": [
+        "docs/executive/stakeholder-raci.md",
+        "docs/assurance/release-gates.md"
+      ],
+      "verification_ids": [
+        "VER-REV-001",
+        "VER-REV-004",
+        "VER-PLN-007"
+      ],
+      "evidence_ids": [
+        "EVD-GOV-001",
+        "EVD-M03-001",
+        "EVD-PLN-007"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-CSF-GV",
+        "FW-HIPAA-ADMIN"
+      ]
     },
     {
       "id": "CTL-GOV-002",
@@ -31,12 +53,46 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Continuous and before publication",
-      "requirement_ids": ["REQ-GOV-002", "REQ-GOV-005", "REQ-DAT-006", "REQ-LCM-003"],
-      "risk_ids": ["RSK-009", "RSK-022", "RSK-023", "RSK-024"],
-      "implementation_refs": ["docs/governance/approved-prohibited-use.md", "docs/governance/ai-system-card.md", "README.md", "training/README.md"],
-      "verification_ids": ["VER-AUT-008", "VER-REV-002", "VER-PLN-010"],
-      "evidence_ids": ["EVD-DES-002", "EVD-GOV-003", "EVD-M02-001", "EVD-PLN-010"],
-      "framework_reference_ids": ["FW-AIRMF-GOV", "FW-AIRMF-MAP", "FW-CSF-GV", "FW-PRIVACY-GV-P"]
+      "requirement_ids": [
+        "REQ-GOV-002",
+        "REQ-GOV-005",
+        "REQ-DAT-006",
+        "REQ-LCM-003"
+      ],
+      "risk_ids": [
+        "RSK-009",
+        "RSK-022",
+        "RSK-023",
+        "RSK-024"
+      ],
+      "implementation_refs": [
+        "docs/governance/approved-prohibited-use.md",
+        "docs/governance/ai-system-card.md",
+        "README.md",
+        "training/README.md",
+        "src/polaris/portfolio/claims.py",
+        "portfolio/case-study.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-008",
+        "VER-REV-002",
+        "VER-PLN-010",
+        "VER-LCM-004"
+      ],
+      "evidence_ids": [
+        "EVD-DES-002",
+        "EVD-GOV-003",
+        "EVD-M02-001",
+        "EVD-PLN-010",
+        "EVD-M12-001",
+        "EVD-M12-002"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-AIRMF-MAP",
+        "FW-CSF-GV",
+        "FW-PRIVACY-GV-P"
+      ]
     },
     {
       "id": "CTL-GOV-003",
@@ -46,12 +102,54 @@
       "status": "partial",
       "control_type": "governance",
       "frequency": "Each change, exception, and release",
-      "requirement_ids": ["REQ-GOV-003", "REQ-GOV-004", "REQ-SDL-005", "REQ-SDL-006"],
-      "risk_ids": ["RSK-017", "RSK-022", "RSK-024", "RSK-025"],
-      "implementation_refs": ["docs/governance/control-standard.md", "docs/assurance/release-gates.md", "docs/assurance/templates/exception-record.md", "docs/assurance/templates/residual-risk-decision.md", "docs/assurance/templates/release-decision.md", "docs/risk/risk-register.md", "PROJECT_STATUS.md"],
-      "verification_ids": ["VER-GOV-001", "VER-REV-001", "VER-REV-004"],
-      "evidence_ids": ["EVD-GOV-002", "EVD-RSK-001", "EVD-M02-001", "EVD-M03-001", "EVD-TRC-001"],
-      "framework_reference_ids": ["FW-AIRMF-GOV", "FW-AIRMF-MANAGE", "FW-CSF-GV", "FW-SSDF-PO"]
+      "requirement_ids": [
+        "REQ-GOV-003",
+        "REQ-GOV-004",
+        "REQ-SDL-005",
+        "REQ-SDL-006"
+      ],
+      "risk_ids": [
+        "RSK-017",
+        "RSK-022",
+        "RSK-024",
+        "RSK-025"
+      ],
+      "implementation_refs": [
+        "docs/governance/control-standard.md",
+        "docs/assurance/release-gates.md",
+        "docs/assurance/templates/exception-record.md",
+        "docs/assurance/templates/residual-risk-decision.md",
+        "docs/assurance/templates/release-decision.md",
+        "docs/risk/risk-register.md",
+        "PROJECT_STATUS.md",
+        "src/polaris/lifecycle/change_impact.py",
+        "src/polaris/lifecycle/audit_package.py",
+        "docs/assurance/M11-governance-board-decision.md"
+      ],
+      "verification_ids": [
+        "VER-GOV-001",
+        "VER-REV-001",
+        "VER-REV-004",
+        "VER-SDL-003",
+        "VER-LCM-001",
+        "VER-LCM-003"
+      ],
+      "evidence_ids": [
+        "EVD-GOV-002",
+        "EVD-RSK-001",
+        "EVD-M02-001",
+        "EVD-M03-001",
+        "EVD-TRC-001",
+        "EVD-M09-001",
+        "EVD-M11-001",
+        "EVD-M11-002"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-GV",
+        "FW-SSDF-PO"
+      ]
     },
     {
       "id": "CTL-DAT-001",
@@ -61,27 +159,87 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Each dataset, ingest, request, and export",
-      "requirement_ids": ["REQ-DAT-001", "REQ-DAT-003", "REQ-DAT-004", "REQ-DAT-008"],
-      "risk_ids": ["RSK-003", "RSK-004", "RSK-010", "RSK-023"],
-      "implementation_refs": ["src/polaris/data/synthetic.py", "src/polaris/services/patients.py", "src/polaris/services/fhir_http.py", "data/synthetic/fhir-r4/manifest.json", "data/synthetic/toolchain-lock.json", "infrastructure/local/compose.fhir.yml", "docs/risk/data-flow-inventory.md", "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md"],
-      "verification_ids": ["VER-AUT-004", "VER-AUT-005", "VER-AUT-015", "VER-AUT-017", "VER-REV-003", "VER-REV-005"],
-      "evidence_ids": ["EVD-VER-001", "EVD-DES-003", "EVD-M04-001", "EVD-PLN-002"],
-      "framework_reference_ids": ["FW-AIRMF-MAP", "FW-PRIVACY-CT-P", "FW-CSF-PR-DS", "FW-FHIR-LABEL"]
+      "requirement_ids": [
+        "REQ-DAT-001",
+        "REQ-DAT-003",
+        "REQ-DAT-004",
+        "REQ-DAT-008"
+      ],
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-010",
+        "RSK-023"
+      ],
+      "implementation_refs": [
+        "src/polaris/data/synthetic.py",
+        "src/polaris/services/patients.py",
+        "src/polaris/services/fhir_http.py",
+        "data/synthetic/fhir-r4/manifest.json",
+        "data/synthetic/toolchain-lock.json",
+        "infrastructure/local/compose.fhir.yml",
+        "docs/risk/data-flow-inventory.md",
+        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md",
+        "docs/architecture/authoritative-relationship-and-consent-integration.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-015",
+        "VER-AUT-017",
+        "VER-REV-003",
+        "VER-REV-005"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-DES-003",
+        "EVD-M04-001",
+        "EVD-PLN-002"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MAP",
+        "FW-PRIVACY-CT-P",
+        "FW-CSF-PR-DS",
+        "FW-FHIR-LABEL"
+      ]
     },
     {
       "id": "CTL-DAT-002",
       "title": "Processing inventory, retention, deletion, and legal hold",
       "objective": "Define and test lifecycle handling for each data object, derivative, backup, and provider copy.",
       "owner": "Records Owner",
-      "status": "planned",
+      "status": "partial",
       "control_type": "governance",
       "frequency": "Before pilot and annually",
-      "requirement_ids": ["REQ-DAT-002", "REQ-DAT-007"],
-      "risk_ids": ["RSK-013", "RSK-014", "RSK-016", "RSK-023"],
-      "implementation_refs": ["docs/risk/data-flow-inventory.md", "docs/risk/privacy-impact-assessment.md"],
-      "verification_ids": ["VER-PLN-002"],
-      "evidence_ids": ["EVD-PLN-002"],
-      "framework_reference_ids": ["FW-PRIVACY-ID-P", "FW-PRIVACY-CT-P", "FW-HIPAA-ADMIN"]
+      "requirement_ids": [
+        "REQ-DAT-002",
+        "REQ-DAT-007"
+      ],
+      "risk_ids": [
+        "RSK-013",
+        "RSK-014",
+        "RSK-016",
+        "RSK-023"
+      ],
+      "implementation_refs": [
+        "docs/risk/data-flow-inventory.md",
+        "docs/risk/privacy-impact-assessment.md",
+        "docs/architecture/authoritative-relationship-and-consent-integration.md",
+        "src/polaris/lifecycle/retirement.py"
+      ],
+      "verification_ids": [
+        "VER-PLN-002",
+        "VER-LCM-002"
+      ],
+      "evidence_ids": [
+        "EVD-PLN-002",
+        "EVD-M11-001"
+      ],
+      "framework_reference_ids": [
+        "FW-PRIVACY-ID-P",
+        "FW-PRIVACY-CT-P",
+        "FW-HIPAA-ADMIN"
+      ]
     },
     {
       "id": "CTL-DAT-003",
@@ -91,12 +249,31 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Continuous",
-      "requirement_ids": ["REQ-DAT-005"],
-      "risk_ids": ["RSK-014", "RSK-021"],
-      "implementation_refs": ["src/polaris/services/audit.py", "src/polaris/domain.py"],
-      "verification_ids": ["VER-AUT-012", "VER-PLN-006"],
-      "evidence_ids": ["EVD-VER-001", "EVD-PLN-006"],
-      "framework_reference_ids": ["FW-PRIVACY-PT-P", "FW-CSF-PR-DS", "FW-HIPAA-TECH"]
+      "requirement_ids": [
+        "REQ-DAT-005"
+      ],
+      "risk_ids": [
+        "RSK-014",
+        "RSK-021"
+      ],
+      "implementation_refs": [
+        "src/polaris/services/audit.py",
+        "src/polaris/domain.py",
+        "docs/architecture/authoritative-relationship-and-consent-integration.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-012",
+        "VER-PLN-006"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-006"
+      ],
+      "framework_reference_ids": [
+        "FW-PRIVACY-PT-P",
+        "FW-CSF-PR-DS",
+        "FW-HIPAA-TECH"
+      ]
     },
     {
       "id": "CTL-IAM-001",
@@ -106,12 +283,72 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Every request and downstream call",
-      "requirement_ids": ["REQ-IAM-001", "REQ-IAM-002", "REQ-IAM-005"],
-      "risk_ids": ["RSK-003", "RSK-004", "RSK-005", "RSK-018"],
-      "implementation_refs": ["src/polaris/security/auth.py", "src/polaris/security/identity_signals.py", "src/polaris/security/signal_delivery.py", "src/polaris/security/ssf_operations.py", "src/polaris/security/ssf_stream_state.py", "src/polaris/security/ssf_verification.py", "src/polaris/security/ssf_recovery.py", "src/polaris/security/okta_recovery.py", "src/polaris/security/oidc_remote.py", "src/polaris/security/delegation.py", "src/polaris/services/state.py", "src/polaris/main.py", "src/polaris/domain.py", "docs/architecture/decisions/ADR-003-oidc-and-delegation.md", "docs/architecture/decisions/ADR-007-durable-identity-signals.md", "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md", "docs/operations/continuous-access-recovery.md", "docs/operations/okta-continuous-access-gap-recovery.md", "docs/operations/ssf-recovery-scheduling.md", "docs/operations/ssf-verification-policy.md"],
-      "verification_ids": ["VER-AUT-002", "VER-AUT-003", "VER-AUT-014", "VER-AUT-018", "VER-AUT-020", "VER-AUT-021", "VER-AUT-022", "VER-AUT-023", "VER-AUT-024", "VER-AUT-025", "VER-AUT-026", "VER-AUT-027", "VER-AUT-028", "VER-AUT-029", "VER-REV-005", "VER-PLN-001"],
-      "evidence_ids": ["EVD-VER-001", "EVD-M04-001", "EVD-PLN-001"],
-      "framework_reference_ids": ["FW-CSF-PR-AA", "FW-HIPAA-TECH", "FW-FHIR-AUTHN", "FW-ASI03"]
+      "requirement_ids": [
+        "REQ-IAM-001",
+        "REQ-IAM-002",
+        "REQ-IAM-005"
+      ],
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-005",
+        "RSK-018"
+      ],
+      "implementation_refs": [
+        "src/polaris/security/auth.py",
+        "src/polaris/security/identity_signals.py",
+        "src/polaris/security/signal_delivery.py",
+        "src/polaris/security/ssf_operations.py",
+        "src/polaris/security/ssf_stream_state.py",
+        "src/polaris/security/ssf_verification.py",
+        "src/polaris/security/ssf_recovery.py",
+        "src/polaris/security/okta_recovery.py",
+        "src/polaris/security/oidc_remote.py",
+        "src/polaris/security/delegation.py",
+        "src/polaris/services/state.py",
+        "src/polaris/main.py",
+        "src/polaris/domain.py",
+        "docs/architecture/decisions/ADR-003-oidc-and-delegation.md",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md",
+        "docs/operations/continuous-access-recovery.md",
+        "docs/operations/okta-continuous-access-gap-recovery.md",
+        "docs/operations/ssf-recovery-scheduling.md",
+        "docs/operations/ssf-verification-policy.md",
+        "src/polaris/security/okta_gap_recovery.py"
+      ],
+      "verification_ids": [
+        "VER-AUT-002",
+        "VER-AUT-003",
+        "VER-AUT-014",
+        "VER-AUT-018",
+        "VER-AUT-020",
+        "VER-AUT-021",
+        "VER-AUT-022",
+        "VER-AUT-023",
+        "VER-AUT-024",
+        "VER-AUT-025",
+        "VER-AUT-026",
+        "VER-AUT-027",
+        "VER-AUT-028",
+        "VER-AUT-029",
+        "VER-AUT-030",
+        "VER-REV-005",
+        "VER-PLN-001"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-M04-001",
+        "EVD-PLN-001",
+        "EVD-M04-003",
+        "EVD-M04-002"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-AA",
+        "FW-HIPAA-TECH",
+        "FW-FHIR-AUTHN",
+        "FW-ASI03"
+      ]
     },
     {
       "id": "CTL-IAM-002",
@@ -121,12 +358,58 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Every sensitive read, approval, write, and privileged operation",
-      "requirement_ids": ["REQ-IAM-003", "REQ-IAM-004", "REQ-IAM-006", "REQ-IAM-007"],
-      "risk_ids": ["RSK-001", "RSK-002", "RSK-003", "RSK-004", "RSK-005", "RSK-018"],
-      "implementation_refs": ["src/polaris/security/policy.py", "src/polaris/security/identity_signals.py", "src/polaris/security/delegation.py", "src/polaris/services/patients.py", "src/polaris/services/fhir_http.py", "src/polaris/services/actions.py", "src/polaris/services/state.py", "docs/architecture/decisions/ADR-004-central-authorization-contract.md", "docs/architecture/decisions/ADR-007-durable-identity-signals.md", "docs/architecture/authorization-decision-table.md"],
-      "verification_ids": ["VER-AUT-003", "VER-AUT-004", "VER-AUT-005", "VER-AUT-009", "VER-AUT-014", "VER-AUT-015", "VER-AUT-016", "VER-AUT-017", "VER-AUT-018", "VER-AUT-020", "VER-REV-005", "VER-PLN-001"],
-      "evidence_ids": ["EVD-VER-001", "EVD-M04-001", "EVD-PLN-001"],
-      "framework_reference_ids": ["FW-CSF-PR-AA", "FW-HIPAA-TECH", "FW-FHIR-AUTHZ", "FW-ASI03"]
+      "requirement_ids": [
+        "REQ-IAM-003",
+        "REQ-IAM-004",
+        "REQ-IAM-006",
+        "REQ-IAM-007"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-003",
+        "RSK-004",
+        "RSK-005",
+        "RSK-018"
+      ],
+      "implementation_refs": [
+        "src/polaris/security/policy.py",
+        "src/polaris/security/identity_signals.py",
+        "src/polaris/security/delegation.py",
+        "src/polaris/services/patients.py",
+        "src/polaris/services/fhir_http.py",
+        "src/polaris/services/actions.py",
+        "src/polaris/services/state.py",
+        "docs/architecture/decisions/ADR-004-central-authorization-contract.md",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "docs/architecture/authorization-decision-table.md",
+        "docs/architecture/authoritative-relationship-and-consent-integration.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-003",
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-009",
+        "VER-AUT-014",
+        "VER-AUT-015",
+        "VER-AUT-016",
+        "VER-AUT-017",
+        "VER-AUT-018",
+        "VER-AUT-020",
+        "VER-REV-005",
+        "VER-PLN-001"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-M04-001",
+        "EVD-PLN-001"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-AA",
+        "FW-HIPAA-TECH",
+        "FW-FHIR-AUTHZ",
+        "FW-ASI03"
+      ]
     },
     {
       "id": "CTL-RAG-001",
@@ -136,12 +419,46 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Each corpus promotion and retrieval",
-      "requirement_ids": ["REQ-RAG-001", "REQ-RAG-003", "REQ-RAG-005", "REQ-RAG-007"],
-      "risk_ids": ["RSK-001", "RSK-002", "RSK-008", "RSK-011", "RSK-017"],
-      "implementation_refs": ["src/polaris/services/retrieval.py", "src/polaris/services/container.py"],
-      "verification_ids": ["VER-AUT-006", "VER-AUT-007", "VER-PLN-003"],
-      "evidence_ids": ["EVD-VER-001", "EVD-PLN-003"],
-      "framework_reference_ids": ["FW-AIRMF-MANAGE", "FW-CSF-PR-DS", "FW-ASI01", "FW-ASI06"]
+      "requirement_ids": [
+        "REQ-RAG-001",
+        "REQ-RAG-003",
+        "REQ-RAG-005",
+        "REQ-RAG-007"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-008",
+        "RSK-011",
+        "RSK-017"
+      ],
+      "implementation_refs": [
+        "src/polaris/services/retrieval.py",
+        "src/polaris/services/container.py",
+        "src/polaris/services/corpus.py",
+        "src/polaris/services/secure_retrieval.py",
+        "src/polaris/domain.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-006",
+        "VER-AUT-007",
+        "VER-PLN-003",
+        "VER-RAG-001",
+        "VER-RAG-003"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-003",
+        "EVD-M05-001",
+        "EVD-M05-002"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-PR-DS",
+        "FW-ASI01",
+        "FW-ASI06"
+      ]
     },
     {
       "id": "CTL-RAG-002",
@@ -151,12 +468,48 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Every retrieval and store operation",
-      "requirement_ids": ["REQ-RAG-002", "REQ-RAG-006"],
-      "risk_ids": ["RSK-003", "RSK-004", "RSK-010"],
-      "implementation_refs": ["src/polaris/services/retrieval.py", "src/polaris/services/patients.py", "src/polaris/services/fhir_http.py", "src/polaris/security/policy.py", "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md"],
-      "verification_ids": ["VER-AUT-004", "VER-AUT-005", "VER-AUT-007", "VER-AUT-015", "VER-AUT-017", "VER-PLN-003"],
-      "evidence_ids": ["EVD-VER-001", "EVD-M04-001", "EVD-PLN-003"],
-      "framework_reference_ids": ["FW-CSF-PR-AA", "FW-CSF-PR-DS", "FW-FHIR-AUTHZ", "FW-ASI03"]
+      "requirement_ids": [
+        "REQ-RAG-002",
+        "REQ-RAG-006"
+      ],
+      "risk_ids": [
+        "RSK-003",
+        "RSK-004",
+        "RSK-010"
+      ],
+      "implementation_refs": [
+        "src/polaris/services/retrieval.py",
+        "src/polaris/services/patients.py",
+        "src/polaris/services/fhir_http.py",
+        "src/polaris/security/policy.py",
+        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md",
+        "src/polaris/services/corpus.py",
+        "src/polaris/services/secure_retrieval.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-004",
+        "VER-AUT-005",
+        "VER-AUT-007",
+        "VER-AUT-015",
+        "VER-AUT-017",
+        "VER-PLN-003",
+        "VER-RAG-002",
+        "VER-RAG-004"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-M04-001",
+        "EVD-PLN-003",
+        "EVD-M05-001",
+        "EVD-M05-002"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-AA",
+        "FW-CSF-PR-DS",
+        "FW-FHIR-AUTHZ",
+        "FW-ASI03"
+      ]
     },
     {
       "id": "CTL-RAG-003",
@@ -166,27 +519,74 @@
       "status": "implemented",
       "control_type": "preventive",
       "frequency": "Every policy response",
-      "requirement_ids": ["REQ-RAG-004"],
-      "risk_ids": ["RSK-008", "RSK-019"],
-      "implementation_refs": ["src/polaris/services/retrieval.py", "src/polaris/domain.py"],
-      "verification_ids": ["VER-AUT-006"],
-      "evidence_ids": ["EVD-VER-001"],
-      "framework_reference_ids": ["FW-AIRMF-MEASURE", "FW-AIRMF-MANAGE", "FW-ASI09"]
+      "requirement_ids": [
+        "REQ-RAG-004"
+      ],
+      "risk_ids": [
+        "RSK-008",
+        "RSK-019"
+      ],
+      "implementation_refs": [
+        "src/polaris/services/retrieval.py",
+        "src/polaris/domain.py",
+        "src/polaris/services/secure_retrieval.py",
+        "src/polaris/services/retrieval_eval.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-006",
+        "VER-RAG-002",
+        "VER-RAG-004"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-M05-001",
+        "EVD-M05-002"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MEASURE",
+        "FW-AIRMF-MANAGE",
+        "FW-ASI09"
+      ]
     },
     {
       "id": "CTL-AI-001",
       "title": "Provider-neutral model boundary and vendor decision",
       "objective": "Broker model use through a typed interface only after data-use, security, continuity, and exit criteria are approved.",
       "owner": "AI Platform Lead",
-      "status": "planned",
+      "status": "partial",
       "control_type": "preventive",
       "frequency": "Each provider/model onboarding and material change",
-      "requirement_ids": ["REQ-AI-001", "REQ-AI-002"],
-      "risk_ids": ["RSK-013", "RSK-014", "RSK-016", "RSK-017"],
-      "implementation_refs": ["docs/architecture/system-context.md", "docs/risk/data-flow-inventory.md"],
-      "verification_ids": ["VER-PLN-004"],
-      "evidence_ids": ["EVD-PLN-004"],
-      "framework_reference_ids": ["FW-AIRMF-MAP", "FW-AIRMF-MANAGE", "FW-CSF-GV", "FW-ASI04"]
+      "requirement_ids": [
+        "REQ-AI-001",
+        "REQ-AI-002"
+      ],
+      "risk_ids": [
+        "RSK-013",
+        "RSK-014",
+        "RSK-016",
+        "RSK-017"
+      ],
+      "implementation_refs": [
+        "docs/architecture/system-context.md",
+        "docs/risk/data-flow-inventory.md",
+        "src/polaris/agent/model.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
+      ],
+      "verification_ids": [
+        "VER-PLN-004",
+        "VER-AGT-004"
+      ],
+      "evidence_ids": [
+        "EVD-PLN-004",
+        "EVD-M06-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MAP",
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-GV",
+        "FW-ASI04"
+      ]
     },
     {
       "id": "CTL-AI-002",
@@ -196,12 +596,47 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Every workflow execution",
-      "requirement_ids": ["REQ-AI-003", "REQ-AI-004", "REQ-AI-006", "REQ-APP-005"],
-      "risk_ids": ["RSK-001", "RSK-002", "RSK-015", "RSK-016", "RSK-024"],
-      "implementation_refs": ["src/polaris/services/actions.py", "src/polaris/main.py", "src/polaris/config.py"],
-      "verification_ids": ["VER-AUT-001", "VER-AUT-008", "VER-PLN-005"],
-      "evidence_ids": ["EVD-VER-001", "EVD-PLN-005"],
-      "framework_reference_ids": ["FW-AIRMF-MANAGE", "FW-CSF-PR-PS", "FW-ASI02", "FW-ASI05", "FW-ASI08"]
+      "requirement_ids": [
+        "REQ-AI-003",
+        "REQ-AI-004",
+        "REQ-AI-006",
+        "REQ-APP-005"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-015",
+        "RSK-016",
+        "RSK-024"
+      ],
+      "implementation_refs": [
+        "src/polaris/services/actions.py",
+        "src/polaris/main.py",
+        "src/polaris/config.py",
+        "src/polaris/agent/budget.py",
+        "src/polaris/agent/orchestrator.py",
+        "src/polaris/agent/killswitch.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-001",
+        "VER-AUT-008",
+        "VER-PLN-005",
+        "VER-AGT-003",
+        "VER-AGT-004"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-005",
+        "EVD-M06-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-PR-PS",
+        "FW-ASI02",
+        "FW-ASI05",
+        "FW-ASI08"
+      ]
     },
     {
       "id": "CTL-AI-003",
@@ -211,12 +646,40 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Each tool registration and call",
-      "requirement_ids": ["REQ-AI-005"],
-      "risk_ids": ["RSK-001", "RSK-002", "RSK-005", "RSK-006", "RSK-012"],
-      "implementation_refs": ["src/polaris/domain.py", "src/polaris/services/actions.py"],
-      "verification_ids": ["VER-AUT-008", "VER-AUT-011", "VER-PLN-005"],
-      "evidence_ids": ["EVD-VER-001", "EVD-PLN-005"],
-      "framework_reference_ids": ["FW-ASI02", "FW-ASI03", "FW-ASI04", "FW-SSDF-PW"]
+      "requirement_ids": [
+        "REQ-AI-005"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-005",
+        "RSK-006",
+        "RSK-012"
+      ],
+      "implementation_refs": [
+        "src/polaris/domain.py",
+        "src/polaris/services/actions.py",
+        "src/polaris/agent/tools.py",
+        "src/polaris/agent/orchestrator.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-008",
+        "VER-AUT-011",
+        "VER-PLN-005",
+        "VER-AGT-001"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-005",
+        "EVD-M06-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI02",
+        "FW-ASI03",
+        "FW-ASI04",
+        "FW-SSDF-PW"
+      ]
     },
     {
       "id": "CTL-AI-004",
@@ -226,12 +689,47 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Every model or workflow result",
-      "requirement_ids": ["REQ-AI-007", "REQ-AI-008"],
-      "risk_ids": ["RSK-001", "RSK-006", "RSK-008", "RSK-009", "RSK-016"],
-      "implementation_refs": ["src/polaris/domain.py", "src/polaris/services/retrieval.py", "src/polaris/services/actions.py"],
-      "verification_ids": ["VER-AUT-006", "VER-AUT-008", "VER-AUT-011", "VER-PLN-005"],
-      "evidence_ids": ["EVD-VER-001", "EVD-PLN-005"],
-      "framework_reference_ids": ["FW-AIRMF-MEASURE", "FW-AIRMF-MANAGE", "FW-ASI01", "FW-ASI08", "FW-ASI10"]
+      "requirement_ids": [
+        "REQ-AI-007",
+        "REQ-AI-008"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-006",
+        "RSK-008",
+        "RSK-009",
+        "RSK-016"
+      ],
+      "implementation_refs": [
+        "src/polaris/domain.py",
+        "src/polaris/services/retrieval.py",
+        "src/polaris/services/actions.py",
+        "src/polaris/agent/validators.py",
+        "src/polaris/agent/orchestrator.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-006",
+        "VER-AUT-008",
+        "VER-AUT-011",
+        "VER-PLN-005",
+        "VER-AGT-002",
+        "VER-AGT-003",
+        "VER-SDL-003"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-005",
+        "EVD-M06-001",
+        "EVD-M09-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MEASURE",
+        "FW-AIRMF-MANAGE",
+        "FW-ASI01",
+        "FW-ASI08",
+        "FW-ASI10"
+      ]
     },
     {
       "id": "CTL-ACT-001",
@@ -241,12 +739,34 @@
       "status": "implemented",
       "control_type": "preventive",
       "frequency": "Every action proposal",
-      "requirement_ids": ["REQ-ACT-001"],
-      "risk_ids": ["RSK-001", "RSK-006", "RSK-009"],
-      "implementation_refs": ["src/polaris/domain.py", "src/polaris/services/actions.py"],
-      "verification_ids": ["VER-AUT-008"],
-      "evidence_ids": ["EVD-VER-001"],
-      "framework_reference_ids": ["FW-ASI02", "FW-ASI09", "FW-AIRMF-MANAGE"]
+      "requirement_ids": [
+        "REQ-ACT-001"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-006",
+        "RSK-009"
+      ],
+      "implementation_refs": [
+        "src/polaris/domain.py",
+        "src/polaris/services/actions.py",
+        "src/polaris/agent/tools.py",
+        "src/polaris/agent/orchestrator.py"
+      ],
+      "verification_ids": [
+        "VER-AUT-008",
+        "VER-AGT-001",
+        "VER-AGT-002"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-M06-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI02",
+        "FW-ASI09",
+        "FW-AIRMF-MANAGE"
+      ]
     },
     {
       "id": "CTL-ACT-002",
@@ -256,12 +776,38 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Every write approval",
-      "requirement_ids": ["REQ-ACT-002", "REQ-ACT-003"],
-      "risk_ids": ["RSK-006", "RSK-007", "RSK-009"],
-      "implementation_refs": ["src/polaris/services/actions.py", "src/polaris/config.py"],
-      "verification_ids": ["VER-AUT-009", "VER-AUT-010", "VER-PLN-008"],
-      "evidence_ids": ["EVD-VER-001", "EVD-PLN-008"],
-      "framework_reference_ids": ["FW-ASI02", "FW-ASI09", "FW-CSF-PR-AA"]
+      "requirement_ids": [
+        "REQ-ACT-002",
+        "REQ-ACT-003"
+      ],
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007",
+        "RSK-009"
+      ],
+      "implementation_refs": [
+        "src/polaris/services/actions.py",
+        "src/polaris/config.py",
+        "src/polaris/presentation/approval.py",
+        "src/polaris/security/digest.py",
+        "docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-009",
+        "VER-AUT-010",
+        "VER-PLN-008",
+        "VER-PRS-002"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-008",
+        "EVD-M07-001"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI02",
+        "FW-ASI09",
+        "FW-CSF-PR-AA"
+      ]
     },
     {
       "id": "CTL-ACT-003",
@@ -271,12 +817,41 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Every write execution and reconciliation",
-      "requirement_ids": ["REQ-ACT-004", "REQ-ACT-005"],
-      "risk_ids": ["RSK-005", "RSK-006", "RSK-016", "RSK-021"],
-      "implementation_refs": ["src/polaris/services/actions.py", "src/polaris/services/container.py", "src/polaris/services/state.py", "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md"],
-      "verification_ids": ["VER-AUT-010", "VER-AUT-011", "VER-AUT-019", "VER-PLN-007"],
-      "evidence_ids": ["EVD-VER-001", "EVD-M04-001", "EVD-PLN-007"],
-      "framework_reference_ids": ["FW-ASI02", "FW-ASI03", "FW-ASI08", "FW-HIPAA-TECH"]
+      "requirement_ids": [
+        "REQ-ACT-004",
+        "REQ-ACT-005"
+      ],
+      "risk_ids": [
+        "RSK-005",
+        "RSK-006",
+        "RSK-016",
+        "RSK-021"
+      ],
+      "implementation_refs": [
+        "src/polaris/services/actions.py",
+        "src/polaris/services/container.py",
+        "src/polaris/services/state.py",
+        "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md",
+        "docs/architecture/decisions/ADR-009-production-persistence-and-recovery-targets.md",
+        "docs/operations/persistence-recovery-exercises.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-010",
+        "VER-AUT-011",
+        "VER-AUT-019",
+        "VER-PLN-007"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-M04-001",
+        "EVD-PLN-007"
+      ],
+      "framework_reference_ids": [
+        "FW-ASI02",
+        "FW-ASI03",
+        "FW-ASI08",
+        "FW-HIPAA-TECH"
+      ]
     },
     {
       "id": "CTL-ACT-004",
@@ -286,12 +861,32 @@
       "status": "planned",
       "control_type": "detective",
       "frequency": "Continuous with periodic human-factors review",
-      "requirement_ids": ["REQ-ACT-006"],
-      "risk_ids": ["RSK-007", "RSK-015", "RSK-019"],
-      "implementation_refs": ["docs/risk/clinical-safety-hazard-analysis.md", "docs/risk/abuse-and-misuse-cases.md"],
-      "verification_ids": ["VER-PLN-008"],
-      "evidence_ids": ["EVD-PLN-008"],
-      "framework_reference_ids": ["FW-AIRMF-MEASURE", "FW-AIRMF-MANAGE", "FW-ASI09"]
+      "requirement_ids": [
+        "REQ-ACT-006"
+      ],
+      "risk_ids": [
+        "RSK-007",
+        "RSK-015",
+        "RSK-019"
+      ],
+      "implementation_refs": [
+        "docs/risk/clinical-safety-hazard-analysis.md",
+        "docs/risk/abuse-and-misuse-cases.md",
+        "docs/assurance/human-factors-validation-protocol.md"
+      ],
+      "verification_ids": [
+        "VER-PLN-008",
+        "VER-PLN-011"
+      ],
+      "evidence_ids": [
+        "EVD-PLN-008",
+        "EVD-PLN-011"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MEASURE",
+        "FW-AIRMF-MANAGE",
+        "FW-ASI09"
+      ]
     },
     {
       "id": "CTL-APP-001",
@@ -301,27 +896,77 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Every API request",
-      "requirement_ids": ["REQ-APP-001", "REQ-APP-003"],
-      "risk_ids": ["RSK-003", "RSK-006", "RSK-015"],
-      "implementation_refs": ["src/polaris/domain.py", "src/polaris/main.py", "src/polaris/security/policy.py"],
-      "verification_ids": ["VER-AUT-001", "VER-AUT-002", "VER-AUT-004", "VER-AUT-011", "VER-PLN-005"],
-      "evidence_ids": ["EVD-VER-001", "EVD-PLN-005"],
-      "framework_reference_ids": ["FW-CSF-PR-PS", "FW-SSDF-PW", "FW-HIPAA-TECH"]
+      "requirement_ids": [
+        "REQ-APP-001",
+        "REQ-APP-003"
+      ],
+      "risk_ids": [
+        "RSK-003",
+        "RSK-006",
+        "RSK-015"
+      ],
+      "implementation_refs": [
+        "src/polaris/domain.py",
+        "src/polaris/main.py",
+        "src/polaris/security/policy.py"
+      ],
+      "verification_ids": [
+        "VER-AUT-001",
+        "VER-AUT-002",
+        "VER-AUT-004",
+        "VER-AUT-011",
+        "VER-PLN-005"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-005"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-PS",
+        "FW-SSDF-PW",
+        "FW-HIPAA-TECH"
+      ]
     },
     {
       "id": "CTL-APP-002",
       "title": "Inert accessible output rendering",
       "objective": "Render untrusted output with contextual encoding, restrictive CSP, safe links, no remote active content, and an accessible trusted preview.",
       "owner": "Frontend Lead",
-      "status": "planned",
+      "status": "partial",
       "control_type": "preventive",
       "frequency": "Every rendered response and proposal",
-      "requirement_ids": ["REQ-APP-002"],
-      "risk_ids": ["RSK-002", "RSK-006", "RSK-007", "RSK-014", "RSK-020"],
-      "implementation_refs": ["docs/risk/threat-model.md", "docs/risk/clinical-safety-hazard-analysis.md"],
-      "verification_ids": ["VER-PLN-008"],
-      "evidence_ids": ["EVD-PLN-008"],
-      "framework_reference_ids": ["FW-CSF-PR-DS", "FW-CSF-PR-PS", "FW-SSDF-PW", "FW-ASI09"]
+      "requirement_ids": [
+        "REQ-APP-002"
+      ],
+      "risk_ids": [
+        "RSK-002",
+        "RSK-006",
+        "RSK-007",
+        "RSK-014",
+        "RSK-020"
+      ],
+      "implementation_refs": [
+        "docs/risk/threat-model.md",
+        "docs/risk/clinical-safety-hazard-analysis.md",
+        "src/polaris/presentation/rendering.py",
+        "src/polaris/presentation/views.py",
+        "docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md"
+      ],
+      "verification_ids": [
+        "VER-PLN-008",
+        "VER-PRS-001",
+        "VER-PRS-003"
+      ],
+      "evidence_ids": [
+        "EVD-PLN-008",
+        "EVD-M07-001"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-DS",
+        "FW-CSF-PR-PS",
+        "FW-SSDF-PW",
+        "FW-ASI09"
+      ]
     },
     {
       "id": "CTL-APP-003",
@@ -331,12 +976,39 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Startup, deployment, and rotation schedule",
-      "requirement_ids": ["REQ-APP-004", "REQ-APP-006"],
-      "risk_ids": ["RSK-005", "RSK-006", "RSK-012", "RSK-014", "RSK-017"],
-      "implementation_refs": ["src/polaris/config.py", ".env.example"],
-      "verification_ids": ["VER-AUT-001", "VER-PLN-009"],
-      "evidence_ids": ["EVD-VER-001", "EVD-PLN-009"],
-      "framework_reference_ids": ["FW-CSF-PR-AA", "FW-CSF-PR-PS", "FW-SSDF-PS", "FW-HIPAA-TECH"]
+      "requirement_ids": [
+        "REQ-APP-004",
+        "REQ-APP-006"
+      ],
+      "risk_ids": [
+        "RSK-005",
+        "RSK-006",
+        "RSK-012",
+        "RSK-014",
+        "RSK-017"
+      ],
+      "implementation_refs": [
+        "src/polaris/config.py",
+        ".env.example",
+        "src/polaris/supplychain/policy.py",
+        "docs/architecture/decisions/ADR-013-supply-chain-and-release-policy.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-001",
+        "VER-PLN-009",
+        "VER-SDL-001"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-009",
+        "EVD-M08-001"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-AA",
+        "FW-CSF-PR-PS",
+        "FW-SSDF-PS",
+        "FW-HIPAA-TECH"
+      ]
     },
     {
       "id": "CTL-SAF-001",
@@ -346,27 +1018,79 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Every input, output, proposal, and write",
-      "requirement_ids": ["REQ-SAF-001", "REQ-SAF-002"],
-      "risk_ids": ["RSK-009", "RSK-019"],
-      "implementation_refs": ["src/polaris/services/actions.py", "docs/governance/approved-prohibited-use.md"],
-      "verification_ids": ["VER-AUT-008", "VER-PLN-008"],
-      "evidence_ids": ["EVD-VER-001", "EVD-PLN-008"],
-      "framework_reference_ids": ["FW-AIRMF-MANAGE", "FW-ASI09", "FW-ASI10"]
+      "requirement_ids": [
+        "REQ-SAF-001",
+        "REQ-SAF-002"
+      ],
+      "risk_ids": [
+        "RSK-009",
+        "RSK-019"
+      ],
+      "implementation_refs": [
+        "src/polaris/services/actions.py",
+        "docs/governance/approved-prohibited-use.md",
+        "src/polaris/presentation/emergency.py",
+        "src/polaris/agent/orchestrator.py"
+      ],
+      "verification_ids": [
+        "VER-AUT-008",
+        "VER-PLN-008",
+        "VER-SAF-001"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-PLN-008",
+        "EVD-M07-001"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-ASI09",
+        "FW-ASI10"
+      ]
     },
     {
       "id": "CTL-SAF-002",
       "title": "Trusted state, comprehension, and accessibility",
       "objective": "Make identity, source, uncertainty, action, destination, state, and material changes understandable and accessible with a non-AI path.",
       "owner": "Product Owner",
-      "status": "planned",
+      "status": "partial",
       "control_type": "preventive",
       "frequency": "Each design/release and representative user study",
-      "requirement_ids": ["REQ-SAF-003", "REQ-SAF-004", "REQ-SAF-005"],
-      "risk_ids": ["RSK-006", "RSK-007", "RSK-019", "RSK-020"],
-      "implementation_refs": ["docs/risk/ai-impact-assessment.md", "docs/risk/clinical-safety-hazard-analysis.md"],
-      "verification_ids": ["VER-PLN-008"],
-      "evidence_ids": ["EVD-PLN-008"],
-      "framework_reference_ids": ["FW-AIRMF-MEASURE", "FW-AIRMF-MANAGE", "FW-PRIVACY-CM-P", "FW-ASI09"]
+      "requirement_ids": [
+        "REQ-SAF-003",
+        "REQ-SAF-004",
+        "REQ-SAF-005"
+      ],
+      "risk_ids": [
+        "RSK-006",
+        "RSK-007",
+        "RSK-019",
+        "RSK-020"
+      ],
+      "implementation_refs": [
+        "docs/risk/ai-impact-assessment.md",
+        "docs/risk/clinical-safety-hazard-analysis.md",
+        "src/polaris/presentation/views.py",
+        "src/polaris/presentation/answer.py",
+        "docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md",
+        "docs/assurance/human-factors-validation-protocol.md"
+      ],
+      "verification_ids": [
+        "VER-PLN-008",
+        "VER-PRS-003",
+        "VER-PLN-011"
+      ],
+      "evidence_ids": [
+        "EVD-PLN-008",
+        "EVD-M07-001",
+        "EVD-PLN-011"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MEASURE",
+        "FW-AIRMF-MANAGE",
+        "FW-PRIVACY-CM-P",
+        "FW-ASI09"
+      ]
     },
     {
       "id": "CTL-SAF-003",
@@ -376,12 +1100,33 @@
       "status": "planned",
       "control_type": "detective",
       "frequency": "Continuous with each gate review",
-      "requirement_ids": ["REQ-SAF-006"],
-      "risk_ids": ["RSK-007", "RSK-008", "RSK-009", "RSK-019", "RSK-020", "RSK-021"],
-      "implementation_refs": ["docs/risk/clinical-safety-hazard-analysis.md"],
-      "verification_ids": ["VER-PLN-006", "VER-PLN-008"],
-      "evidence_ids": ["EVD-PLN-006", "EVD-PLN-008"],
-      "framework_reference_ids": ["FW-AIRMF-MEASURE", "FW-AIRMF-MANAGE", "FW-CSF-DE"]
+      "requirement_ids": [
+        "REQ-SAF-006"
+      ],
+      "risk_ids": [
+        "RSK-007",
+        "RSK-008",
+        "RSK-009",
+        "RSK-019",
+        "RSK-020",
+        "RSK-021"
+      ],
+      "implementation_refs": [
+        "docs/risk/clinical-safety-hazard-analysis.md"
+      ],
+      "verification_ids": [
+        "VER-PLN-006",
+        "VER-PLN-008"
+      ],
+      "evidence_ids": [
+        "EVD-PLN-006",
+        "EVD-PLN-008"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MEASURE",
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-DE"
+      ]
     },
     {
       "id": "CTL-OPS-001",
@@ -391,12 +1136,58 @@
       "status": "partial",
       "control_type": "detective",
       "frequency": "Every security-relevant event",
-      "requirement_ids": ["REQ-OPS-001", "REQ-OPS-002"],
-      "risk_ids": ["RSK-014", "RSK-018", "RSK-021", "RSK-025"],
-      "implementation_refs": ["src/polaris/services/audit.py", "src/polaris/services/state.py", "src/polaris/security/identity_signals.py", "src/polaris/security/signal_delivery.py", "src/polaris/security/ssf_stream_state.py", "src/polaris/security/ssf_verification.py", "src/polaris/security/ssf_recovery.py", "src/polaris/main.py", "src/polaris/domain.py", "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md", "docs/architecture/decisions/ADR-007-durable-identity-signals.md", "docs/operations/continuous-access-recovery.md", "docs/operations/ssf-recovery-scheduling.md", "docs/operations/ssf-verification-policy.md"],
-      "verification_ids": ["VER-AUT-012", "VER-AUT-019", "VER-AUT-020", "VER-AUT-021", "VER-AUT-023", "VER-AUT-025", "VER-AUT-026", "VER-AUT-027", "VER-AUT-028", "VER-PLN-006"],
-      "evidence_ids": ["EVD-VER-001", "EVD-M04-001", "EVD-PLN-006"],
-      "framework_reference_ids": ["FW-CSF-DE", "FW-HIPAA-TECH", "FW-FHIR-AUDIT", "FW-ASI10"]
+      "requirement_ids": [
+        "REQ-OPS-001",
+        "REQ-OPS-002"
+      ],
+      "risk_ids": [
+        "RSK-014",
+        "RSK-018",
+        "RSK-021",
+        "RSK-025"
+      ],
+      "implementation_refs": [
+        "src/polaris/services/audit.py",
+        "src/polaris/services/state.py",
+        "src/polaris/security/identity_signals.py",
+        "src/polaris/security/signal_delivery.py",
+        "src/polaris/security/ssf_stream_state.py",
+        "src/polaris/security/ssf_verification.py",
+        "src/polaris/security/ssf_recovery.py",
+        "src/polaris/main.py",
+        "src/polaris/domain.py",
+        "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "docs/operations/continuous-access-recovery.md",
+        "docs/operations/ssf-recovery-scheduling.md",
+        "docs/operations/ssf-verification-policy.md",
+        "src/polaris/operations/telemetry.py"
+      ],
+      "verification_ids": [
+        "VER-AUT-012",
+        "VER-AUT-019",
+        "VER-AUT-020",
+        "VER-AUT-021",
+        "VER-AUT-023",
+        "VER-AUT-025",
+        "VER-AUT-026",
+        "VER-AUT-027",
+        "VER-AUT-028",
+        "VER-PLN-006",
+        "VER-OPS-001"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-M04-001",
+        "EVD-PLN-006",
+        "EVD-M10-001"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-DE",
+        "FW-HIPAA-TECH",
+        "FW-FHIR-AUDIT",
+        "FW-ASI10"
+      ]
     },
     {
       "id": "CTL-OPS-002",
@@ -406,12 +1197,57 @@
       "status": "partial",
       "control_type": "detective",
       "frequency": "Continuous detection and scheduled exercises",
-      "requirement_ids": ["REQ-OPS-003", "REQ-OPS-004"],
-      "risk_ids": ["RSK-001", "RSK-002", "RSK-011", "RSK-014", "RSK-015", "RSK-017", "RSK-018", "RSK-021"],
-      "implementation_refs": ["src/polaris/security/ssf_recovery.py", "src/polaris/security/okta_recovery.py", "src/polaris/services/state.py", "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md", "docs/operations/ssf-recovery-scheduling.md", "docs/operations/okta-continuous-access-gap-recovery.md", "docs/risk/threat-model.md", "docs/assurance/release-gates.md"],
-      "verification_ids": ["VER-AUT-028", "VER-AUT-029", "VER-PLN-006"],
-      "evidence_ids": ["EVD-M04-001", "EVD-PLN-006"],
-      "framework_reference_ids": ["FW-CSF-DE", "FW-CSF-RS", "FW-ASI01", "FW-ASI04", "FW-ASI10"]
+      "requirement_ids": [
+        "REQ-OPS-003",
+        "REQ-OPS-004"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-011",
+        "RSK-014",
+        "RSK-015",
+        "RSK-017",
+        "RSK-018",
+        "RSK-021"
+      ],
+      "implementation_refs": [
+        "src/polaris/security/ssf_recovery.py",
+        "src/polaris/security/okta_recovery.py",
+        "src/polaris/services/state.py",
+        "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md",
+        "docs/operations/ssf-recovery-scheduling.md",
+        "docs/operations/okta-continuous-access-gap-recovery.md",
+        "docs/risk/threat-model.md",
+        "docs/assurance/release-gates.md",
+        "src/polaris/security/okta_gap_recovery.py",
+        "src/polaris/operations/detections.py",
+        "docs/operations/ai-incident-playbooks.md",
+        "docs/assurance/M10-incident-tabletop-protocol.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-028",
+        "VER-AUT-029",
+        "VER-AUT-030",
+        "VER-PLN-006",
+        "VER-OPS-002",
+        "VER-PLN-012"
+      ],
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-006",
+        "EVD-M04-003",
+        "EVD-M04-002",
+        "EVD-M10-001",
+        "EVD-PLN-012"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-DE",
+        "FW-CSF-RS",
+        "FW-ASI01",
+        "FW-ASI04",
+        "FW-ASI10"
+      ]
     },
     {
       "id": "CTL-OPS-003",
@@ -421,12 +1257,51 @@
       "status": "partial",
       "control_type": "corrective",
       "frequency": "Each release and scheduled resilience exercise",
-      "requirement_ids": ["REQ-OPS-005", "REQ-OPS-006"],
-      "risk_ids": ["RSK-015", "RSK-016", "RSK-017", "RSK-021"],
-      "implementation_refs": ["src/polaris/services/state.py", "src/polaris/security/ssf_stream_state.py", "src/polaris/security/ssf_recovery.py", "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md", "docs/operations/continuous-access-recovery.md", "docs/operations/ssf-recovery-scheduling.md", "docs/risk/clinical-safety-hazard-analysis.md", "docs/assurance/release-gates.md"],
-      "verification_ids": ["VER-AUT-019", "VER-AUT-026", "VER-AUT-028", "VER-PLN-007"],
-      "evidence_ids": ["EVD-M04-001", "EVD-PLN-007"],
-      "framework_reference_ids": ["FW-AIRMF-MANAGE", "FW-CSF-RS", "FW-CSF-RC", "FW-ASI08", "FW-ASI10"]
+      "requirement_ids": [
+        "REQ-OPS-005",
+        "REQ-OPS-006"
+      ],
+      "risk_ids": [
+        "RSK-015",
+        "RSK-016",
+        "RSK-017",
+        "RSK-021"
+      ],
+      "implementation_refs": [
+        "src/polaris/services/state.py",
+        "src/polaris/security/ssf_stream_state.py",
+        "src/polaris/security/ssf_recovery.py",
+        "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md",
+        "docs/operations/continuous-access-recovery.md",
+        "docs/operations/ssf-recovery-scheduling.md",
+        "docs/risk/clinical-safety-hazard-analysis.md",
+        "docs/assurance/release-gates.md",
+        "docs/architecture/decisions/ADR-009-production-persistence-and-recovery-targets.md",
+        "docs/operations/persistence-recovery-exercises.md",
+        "src/polaris/operations/gameday.py",
+        "scripts/operations.py",
+        "docs/operations/ai-incident-playbooks.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-019",
+        "VER-AUT-026",
+        "VER-AUT-028",
+        "VER-PLN-007",
+        "VER-OPS-003"
+      ],
+      "evidence_ids": [
+        "EVD-M04-001",
+        "EVD-PLN-007",
+        "EVD-M10-001",
+        "EVD-M10-002"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MANAGE",
+        "FW-CSF-RS",
+        "FW-CSF-RC",
+        "FW-ASI08",
+        "FW-ASI10"
+      ]
     },
     {
       "id": "CTL-SDL-001",
@@ -436,12 +1311,46 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Every change and release",
-      "requirement_ids": ["REQ-SDL-001", "REQ-SDL-002"],
-      "risk_ids": ["RSK-012", "RSK-017", "RSK-025"],
-      "implementation_refs": [".github/workflows/ci.yml", "uv.lock", ".github/dependabot.yml"],
-      "verification_ids": ["VER-AUT-013", "VER-PLN-009"],
-      "evidence_ids": ["EVD-M03-002", "EVD-TRC-001", "EVD-PLN-009"],
-      "framework_reference_ids": ["FW-CSF-PR-PS", "FW-SSDF-PS", "FW-SSDF-PW", "FW-ASI04"]
+      "requirement_ids": [
+        "REQ-SDL-001",
+        "REQ-SDL-002"
+      ],
+      "risk_ids": [
+        "RSK-012",
+        "RSK-017",
+        "RSK-025"
+      ],
+      "implementation_refs": [
+        ".github/workflows/ci.yml",
+        "uv.lock",
+        ".github/dependabot.yml",
+        "src/polaris/supplychain/policy.py",
+        "src/polaris/supplychain/sbom.py",
+        "src/polaris/supplychain/aibom.py",
+        "infrastructure/container/Dockerfile",
+        "infrastructure/local/compose.polaris.yml",
+        "docs/architecture/decisions/ADR-013-supply-chain-and-release-policy.md",
+        "docs/assurance/exceptions/NS-EXC-005-artifact-signing-provenance-and-scanning.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-013",
+        "VER-PLN-009",
+        "VER-SDL-001",
+        "VER-SDL-002"
+      ],
+      "evidence_ids": [
+        "EVD-M03-002",
+        "EVD-TRC-001",
+        "EVD-PLN-009",
+        "EVD-M08-001",
+        "EVD-M08-002"
+      ],
+      "framework_reference_ids": [
+        "FW-CSF-PR-PS",
+        "FW-SSDF-PS",
+        "FW-SSDF-PW",
+        "FW-ASI04"
+      ]
     },
     {
       "id": "CTL-SDL-002",
@@ -451,27 +1360,103 @@
       "status": "partial",
       "control_type": "preventive",
       "frequency": "Every release and material change",
-      "requirement_ids": ["REQ-SDL-003", "REQ-SDL-004"],
-      "risk_ids": ["RSK-001", "RSK-002", "RSK-006", "RSK-008", "RSK-009", "RSK-015", "RSK-017", "RSK-019", "RSK-020"],
-      "implementation_refs": ["tests", "docs/risk/abuse-and-misuse-cases.md", "docs/assurance/release-gates.md"],
-      "verification_ids": ["VER-AUT-013", "VER-PLN-005", "VER-PLN-008", "VER-PLN-009"],
-      "evidence_ids": ["EVD-VER-001", "EVD-M02-001", "EVD-M03-002", "EVD-PLN-009"],
-      "framework_reference_ids": ["FW-AIRMF-MEASURE", "FW-AIRMF-MANAGE", "FW-SSDF-PW", "FW-SSDF-RV", "FW-ASI01"]
+      "requirement_ids": [
+        "REQ-SDL-003",
+        "REQ-SDL-004"
+      ],
+      "risk_ids": [
+        "RSK-001",
+        "RSK-002",
+        "RSK-006",
+        "RSK-008",
+        "RSK-009",
+        "RSK-015",
+        "RSK-017",
+        "RSK-019",
+        "RSK-020"
+      ],
+      "implementation_refs": [
+        "tests",
+        "docs/risk/abuse-and-misuse-cases.md",
+        "docs/assurance/release-gates.md",
+        "src/polaris/assurance/redteam.py",
+        "src/polaris/assurance/release_eval.py",
+        "scripts/red_team.py",
+        "docs/assurance/M09-remediation-ledger.md",
+        "docs/assurance/M09-independent-review.md"
+      ],
+      "verification_ids": [
+        "VER-AUT-013",
+        "VER-PLN-005",
+        "VER-PLN-008",
+        "VER-PLN-009",
+        "VER-SDL-003",
+        "VER-SDL-004"
+      ],
+      "evidence_ids": [
+        "EVD-VER-001",
+        "EVD-M02-001",
+        "EVD-M03-002",
+        "EVD-PLN-009",
+        "EVD-M09-001",
+        "EVD-M09-002"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-MEASURE",
+        "FW-AIRMF-MANAGE",
+        "FW-SSDF-PW",
+        "FW-SSDF-RV",
+        "FW-ASI01"
+      ]
     },
     {
       "id": "CTL-LCM-001",
       "title": "Role training, support, rights, fallback, and retirement",
       "objective": "Provide competent role-specific use and escalation, accessible support/correction/fallback, and verified secure retirement.",
       "owner": "Product Owner",
-      "status": "planned",
+      "status": "partial",
       "control_type": "governance",
       "frequency": "Before access, annually, and at retirement",
-      "requirement_ids": ["REQ-LCM-001", "REQ-LCM-002", "REQ-LCM-004"],
-      "risk_ids": ["RSK-009", "RSK-016", "RSK-018", "RSK-019", "RSK-020", "RSK-021"],
-      "implementation_refs": ["training/README.md", "docs/risk/privacy-impact-assessment.md", "docs/risk/clinical-safety-hazard-analysis.md"],
-      "verification_ids": ["VER-PLN-010"],
-      "evidence_ids": ["EVD-PLN-010"],
-      "framework_reference_ids": ["FW-AIRMF-GOV", "FW-PRIVACY-CM-P", "FW-CSF-RC", "FW-HIPAA-ADMIN"]
+      "requirement_ids": [
+        "REQ-LCM-001",
+        "REQ-LCM-002",
+        "REQ-LCM-004"
+      ],
+      "risk_ids": [
+        "RSK-009",
+        "RSK-016",
+        "RSK-018",
+        "RSK-019",
+        "RSK-020",
+        "RSK-021"
+      ],
+      "implementation_refs": [
+        "training/README.md",
+        "docs/risk/privacy-impact-assessment.md",
+        "docs/risk/clinical-safety-hazard-analysis.md",
+        "src/polaris/lifecycle/retirement.py",
+        "docs/program/pilot-protocol.md",
+        "docs/assurance/M11-governance-board-decision.md",
+        "src/polaris/portfolio/claims.py",
+        "portfolio/case-study.md"
+      ],
+      "verification_ids": [
+        "VER-PLN-010",
+        "VER-LCM-002",
+        "VER-LCM-004"
+      ],
+      "evidence_ids": [
+        "EVD-PLN-010",
+        "EVD-M11-001",
+        "EVD-M12-001",
+        "EVD-M12-002"
+      ],
+      "framework_reference_ids": [
+        "FW-AIRMF-GOV",
+        "FW-PRIVACY-CM-P",
+        "FW-CSF-RC",
+        "FW-HIPAA-ADMIN"
+      ]
     }
   ]
 }

@@ -37,6 +37,27 @@ jobs:
       - name: Validate governance traceability and evidence report
         run: uv run python scripts/validate_traceability.py --check
 
+      - name: Run the retrieval evaluation set and check the generated report
+        run: uv run python scripts/evaluate_retrieval.py --check
+
+      - name: Check the release supply-chain policy and generated SBOM/AIBOM
+        run: uv run python scripts/supply_chain.py --check
+
+      - name: Run the adversarial campaign and check the release evaluation
+        run: uv run python scripts/red_team.py --check
+
+      - name: Execute the operational game-day drills
+        run: uv run python scripts/operations.py --check
+
+      - name: Assemble the audit package and execute the retirement exercise
+        run: uv run python scripts/lifecycle.py --check
+
+      - name: Verify that portfolio and training claims trace to artifacts
+        run: uv run python scripts/portfolio.py --check
+
+      - name: Verify synthetic dataset integrity and safety
+        run: uv run python scripts/synthetic_fhir.py verify
+
       - name: Verify formatting
         run: uv run ruff format --check .
 

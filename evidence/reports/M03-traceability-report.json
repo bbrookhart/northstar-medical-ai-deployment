@@ -4,7 +4,8 @@
     {
       "control_type": "preventive",
       "evidence_ids": [
-        "EVD-VER-001"
+        "EVD-VER-001",
+        "EVD-M06-001"
       ],
       "framework_reference_ids": [
         "FW-ASI02",
@@ -15,7 +16,9 @@
       "id": "CTL-ACT-001",
       "implementation_refs": [
         "src/polaris/domain.py",
-        "src/polaris/services/actions.py"
+        "src/polaris/services/actions.py",
+        "src/polaris/agent/tools.py",
+        "src/polaris/agent/orchestrator.py"
       ],
       "objective": "Restrict model-originated actions to allowlisted reversible administrative schemas and reject clinical content.",
       "owner": "Engineering Lead",
@@ -30,14 +33,17 @@
       "status": "implemented",
       "title": "Typed non-clinical reversible proposal boundary",
       "verification_ids": [
-        "VER-AUT-008"
+        "VER-AUT-008",
+        "VER-AGT-001",
+        "VER-AGT-002"
       ]
     },
     {
       "control_type": "preventive",
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-008"
+        "EVD-PLN-008",
+        "EVD-M07-001"
       ],
       "framework_reference_ids": [
         "FW-ASI02",
@@ -48,7 +54,10 @@
       "id": "CTL-ACT-002",
       "implementation_refs": [
         "src/polaris/services/actions.py",
-        "src/polaris/config.py"
+        "src/polaris/config.py",
+        "src/polaris/presentation/approval.py",
+        "src/polaris/security/digest.py",
+        "docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md"
       ],
       "objective": "Require an independent authorized approver and bind the decision to canonical action context with purpose-separated keys.",
       "owner": "Engineering Lead",
@@ -66,7 +75,8 @@
       "verification_ids": [
         "VER-AUT-009",
         "VER-AUT-010",
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PRS-002"
       ]
     },
     {
@@ -88,7 +98,9 @@
         "src/polaris/services/actions.py",
         "src/polaris/services/container.py",
         "src/polaris/services/state.py",
-        "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md"
+        "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md",
+        "docs/architecture/decisions/ADR-009-production-persistence-and-recovery-targets.md",
+        "docs/operations/persistence-recovery-exercises.md"
       ],
       "objective": "Verify receipt, digest, expiry, single-use state, destination, current authorization, policy, idempotency, and outcome before execution.",
       "owner": "Engineering Lead",
@@ -114,7 +126,8 @@
     {
       "control_type": "detective",
       "evidence_ids": [
-        "EVD-PLN-008"
+        "EVD-PLN-008",
+        "EVD-PLN-011"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MEASURE",
@@ -125,7 +138,8 @@
       "id": "CTL-ACT-004",
       "implementation_refs": [
         "docs/risk/clinical-safety-hazard-analysis.md",
-        "docs/risk/abuse-and-misuse-cases.md"
+        "docs/risk/abuse-and-misuse-cases.md",
+        "docs/assurance/human-factors-validation-protocol.md"
       ],
       "objective": "Detect and constrain proposal floods, bulk approval, approval fatigue, and rubber-stamping.",
       "owner": "Product Owner",
@@ -140,13 +154,15 @@
       "status": "planned",
       "title": "Approval workload and anti-fatigue monitoring",
       "verification_ids": [
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PLN-011"
       ]
     },
     {
       "control_type": "preventive",
       "evidence_ids": [
-        "EVD-PLN-004"
+        "EVD-PLN-004",
+        "EVD-M06-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MAP",
@@ -158,7 +174,9 @@
       "id": "CTL-AI-001",
       "implementation_refs": [
         "docs/architecture/system-context.md",
-        "docs/risk/data-flow-inventory.md"
+        "docs/risk/data-flow-inventory.md",
+        "src/polaris/agent/model.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
       ],
       "objective": "Broker model use through a typed interface only after data-use, security, continuity, and exit criteria are approved.",
       "owner": "AI Platform Lead",
@@ -172,17 +190,19 @@
         "RSK-016",
         "RSK-017"
       ],
-      "status": "planned",
+      "status": "partial",
       "title": "Provider-neutral model boundary and vendor decision",
       "verification_ids": [
-        "VER-PLN-004"
+        "VER-PLN-004",
+        "VER-AGT-004"
       ]
     },
     {
       "control_type": "preventive",
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-005"
+        "EVD-PLN-005",
+        "EVD-M06-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",
@@ -196,7 +216,11 @@
       "implementation_refs": [
         "src/polaris/services/actions.py",
         "src/polaris/main.py",
-        "src/polaris/config.py"
+        "src/polaris/config.py",
+        "src/polaris/agent/budget.py",
+        "src/polaris/agent/orchestrator.py",
+        "src/polaris/agent/killswitch.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
       ],
       "objective": "Constrain state, steps, tools, time, retries, concurrency, cost, and memory; exclude generic high-risk capabilities.",
       "owner": "Engineering Lead",
@@ -218,14 +242,17 @@
       "verification_ids": [
         "VER-AUT-001",
         "VER-AUT-008",
-        "VER-PLN-005"
+        "VER-PLN-005",
+        "VER-AGT-003",
+        "VER-AGT-004"
       ]
     },
     {
       "control_type": "preventive",
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-005"
+        "EVD-PLN-005",
+        "EVD-M06-001"
       ],
       "framework_reference_ids": [
         "FW-ASI02",
@@ -237,7 +264,10 @@
       "id": "CTL-AI-003",
       "implementation_refs": [
         "src/polaris/domain.py",
-        "src/polaris/services/actions.py"
+        "src/polaris/services/actions.py",
+        "src/polaris/agent/tools.py",
+        "src/polaris/agent/orchestrator.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
       ],
       "objective": "Expose only approved versioned tools with narrow schemas, per-call authorization, and separated read/write authority.",
       "owner": "AI Security Lead",
@@ -256,14 +286,17 @@
       "verification_ids": [
         "VER-AUT-008",
         "VER-AUT-011",
-        "VER-PLN-005"
+        "VER-PLN-005",
+        "VER-AGT-001"
       ]
     },
     {
       "control_type": "preventive",
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-005"
+        "EVD-PLN-005",
+        "EVD-M06-001",
+        "EVD-M09-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MEASURE",
@@ -277,7 +310,10 @@
       "implementation_refs": [
         "src/polaris/domain.py",
         "src/polaris/services/retrieval.py",
-        "src/polaris/services/actions.py"
+        "src/polaris/services/actions.py",
+        "src/polaris/agent/validators.py",
+        "src/polaris/agent/orchestrator.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
       ],
       "objective": "Validate structure, meaning, authorization, data loss, grounding, and clinical scope before use and fail without fabricated success.",
       "owner": "Engineering Lead",
@@ -298,7 +334,10 @@
         "VER-AUT-006",
         "VER-AUT-008",
         "VER-AUT-011",
-        "VER-PLN-005"
+        "VER-PLN-005",
+        "VER-AGT-002",
+        "VER-AGT-003",
+        "VER-SDL-003"
       ]
     },
     {
@@ -343,7 +382,8 @@
     {
       "control_type": "preventive",
       "evidence_ids": [
-        "EVD-PLN-008"
+        "EVD-PLN-008",
+        "EVD-M07-001"
       ],
       "framework_reference_ids": [
         "FW-CSF-PR-DS",
@@ -355,7 +395,10 @@
       "id": "CTL-APP-002",
       "implementation_refs": [
         "docs/risk/threat-model.md",
-        "docs/risk/clinical-safety-hazard-analysis.md"
+        "docs/risk/clinical-safety-hazard-analysis.md",
+        "src/polaris/presentation/rendering.py",
+        "src/polaris/presentation/views.py",
+        "docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md"
       ],
       "objective": "Render untrusted output with contextual encoding, restrictive CSP, safe links, no remote active content, and an accessible trusted preview.",
       "owner": "Frontend Lead",
@@ -369,17 +412,20 @@
         "RSK-014",
         "RSK-020"
       ],
-      "status": "planned",
+      "status": "partial",
       "title": "Inert accessible output rendering",
       "verification_ids": [
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PRS-001",
+        "VER-PRS-003"
       ]
     },
     {
       "control_type": "preventive",
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-009"
+        "EVD-PLN-009",
+        "EVD-M08-001"
       ],
       "framework_reference_ids": [
         "FW-CSF-PR-AA",
@@ -391,7 +437,9 @@
       "id": "CTL-APP-003",
       "implementation_refs": [
         "src/polaris/config.py",
-        ".env.example"
+        ".env.example",
+        "src/polaris/supplychain/policy.py",
+        "docs/architecture/decisions/ADR-013-supply-chain-and-release-policy.md"
       ],
       "objective": "Keep secrets outside code/model context, separate cryptographic purposes, rotate keys, and prevent silent production bypass.",
       "owner": "AppSec Lead",
@@ -410,7 +458,8 @@
       "title": "Purpose-separated secrets and production configuration",
       "verification_ids": [
         "VER-AUT-001",
-        "VER-PLN-009"
+        "VER-PLN-009",
+        "VER-SDL-001"
       ]
     },
     {
@@ -437,7 +486,8 @@
         "data/synthetic/toolchain-lock.json",
         "infrastructure/local/compose.fhir.yml",
         "docs/risk/data-flow-inventory.md",
-        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md"
+        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md",
+        "docs/architecture/authoritative-relationship-and-consent-integration.md"
       ],
       "objective": "Keep repository data demonstrably synthetic and minimize labeled data throughout authorized workflows.",
       "owner": "Data Steward",
@@ -467,7 +517,8 @@
     {
       "control_type": "governance",
       "evidence_ids": [
-        "EVD-PLN-002"
+        "EVD-PLN-002",
+        "EVD-M11-001"
       ],
       "framework_reference_ids": [
         "FW-PRIVACY-ID-P",
@@ -478,7 +529,9 @@
       "id": "CTL-DAT-002",
       "implementation_refs": [
         "docs/risk/data-flow-inventory.md",
-        "docs/risk/privacy-impact-assessment.md"
+        "docs/risk/privacy-impact-assessment.md",
+        "docs/architecture/authoritative-relationship-and-consent-integration.md",
+        "src/polaris/lifecycle/retirement.py"
       ],
       "objective": "Define and test lifecycle handling for each data object, derivative, backup, and provider copy.",
       "owner": "Records Owner",
@@ -492,10 +545,11 @@
         "RSK-016",
         "RSK-023"
       ],
-      "status": "planned",
+      "status": "partial",
       "title": "Processing inventory, retention, deletion, and legal hold",
       "verification_ids": [
-        "VER-PLN-002"
+        "VER-PLN-002",
+        "VER-LCM-002"
       ]
     },
     {
@@ -513,7 +567,8 @@
       "id": "CTL-DAT-003",
       "implementation_refs": [
         "src/polaris/services/audit.py",
-        "src/polaris/domain.py"
+        "src/polaris/domain.py",
+        "docs/architecture/authoritative-relationship-and-consent-integration.md"
       ],
       "objective": "Keep raw restricted content, secrets, tokens, and hidden reasoning out of routine telemetry.",
       "owner": "SRE Lead",
@@ -574,7 +629,9 @@
         "EVD-DES-002",
         "EVD-GOV-003",
         "EVD-M02-001",
-        "EVD-PLN-010"
+        "EVD-PLN-010",
+        "EVD-M12-001",
+        "EVD-M12-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-GOV",
@@ -588,7 +645,9 @@
         "docs/governance/approved-prohibited-use.md",
         "docs/governance/ai-system-card.md",
         "README.md",
-        "training/README.md"
+        "training/README.md",
+        "src/polaris/portfolio/claims.py",
+        "portfolio/case-study.md"
       ],
       "objective": "Enforce approved uses and data boundaries and prevent unsupported compliance, clinical, or production-readiness claims.",
       "owner": "Compliance Lead",
@@ -609,7 +668,8 @@
       "verification_ids": [
         "VER-AUT-008",
         "VER-REV-002",
-        "VER-PLN-010"
+        "VER-PLN-010",
+        "VER-LCM-004"
       ]
     },
     {
@@ -619,7 +679,10 @@
         "EVD-RSK-001",
         "EVD-M02-001",
         "EVD-M03-001",
-        "EVD-TRC-001"
+        "EVD-TRC-001",
+        "EVD-M09-001",
+        "EVD-M11-001",
+        "EVD-M11-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-GOV",
@@ -636,7 +699,10 @@
         "docs/assurance/templates/residual-risk-decision.md",
         "docs/assurance/templates/release-decision.md",
         "docs/risk/risk-register.md",
-        "PROJECT_STATUS.md"
+        "PROJECT_STATUS.md",
+        "src/polaris/lifecycle/change_impact.py",
+        "src/polaris/lifecycle/audit_package.py",
+        "docs/assurance/M11-governance-board-decision.md"
       ],
       "objective": "Gate material changes and exceptions through attributable, time-bound, evidence-backed review.",
       "owner": "AI Security Program Lead",
@@ -657,7 +723,10 @@
       "verification_ids": [
         "VER-GOV-001",
         "VER-REV-001",
-        "VER-REV-004"
+        "VER-REV-004",
+        "VER-SDL-003",
+        "VER-LCM-001",
+        "VER-LCM-003"
       ]
     },
     {
@@ -665,7 +734,9 @@
       "evidence_ids": [
         "EVD-VER-001",
         "EVD-M04-001",
-        "EVD-PLN-001"
+        "EVD-PLN-001",
+        "EVD-M04-003",
+        "EVD-M04-002"
       ],
       "framework_reference_ids": [
         "FW-CSF-PR-AA",
@@ -695,7 +766,8 @@
         "docs/operations/continuous-access-recovery.md",
         "docs/operations/okta-continuous-access-gap-recovery.md",
         "docs/operations/ssf-recovery-scheduling.md",
-        "docs/operations/ssf-verification-policy.md"
+        "docs/operations/ssf-verification-policy.md",
+        "src/polaris/security/okta_gap_recovery.py"
       ],
       "objective": "Validate enterprise identity and carry bound end-user context into every downstream decision without token passthrough.",
       "owner": "IAM Lead",
@@ -727,6 +799,7 @@
         "VER-AUT-027",
         "VER-AUT-028",
         "VER-AUT-029",
+        "VER-AUT-030",
         "VER-REV-005",
         "VER-PLN-001"
       ]
@@ -756,7 +829,8 @@
         "src/polaris/services/state.py",
         "docs/architecture/decisions/ADR-004-central-authorization-contract.md",
         "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
-        "docs/architecture/authorization-decision-table.md"
+        "docs/architecture/authorization-decision-table.md",
+        "docs/architecture/authoritative-relationship-and-consent-integration.md"
       ],
       "objective": "Authorize independently of model content using role, facility, patient relationship, purpose, sensitivity, resource, action, and current state.",
       "owner": "IAM Lead",
@@ -794,7 +868,10 @@
     {
       "control_type": "governance",
       "evidence_ids": [
-        "EVD-PLN-010"
+        "EVD-PLN-010",
+        "EVD-M11-001",
+        "EVD-M12-001",
+        "EVD-M12-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-GOV",
@@ -807,7 +884,12 @@
       "implementation_refs": [
         "training/README.md",
         "docs/risk/privacy-impact-assessment.md",
-        "docs/risk/clinical-safety-hazard-analysis.md"
+        "docs/risk/clinical-safety-hazard-analysis.md",
+        "src/polaris/lifecycle/retirement.py",
+        "docs/program/pilot-protocol.md",
+        "docs/assurance/M11-governance-board-decision.md",
+        "src/polaris/portfolio/claims.py",
+        "portfolio/case-study.md"
       ],
       "objective": "Provide competent role-specific use and escalation, accessible support/correction/fallback, and verified secure retirement.",
       "owner": "Product Owner",
@@ -824,10 +906,12 @@
         "RSK-020",
         "RSK-021"
       ],
-      "status": "planned",
+      "status": "partial",
       "title": "Role training, support, rights, fallback, and retirement",
       "verification_ids": [
-        "VER-PLN-010"
+        "VER-PLN-010",
+        "VER-LCM-002",
+        "VER-LCM-004"
       ]
     },
     {
@@ -835,7 +919,8 @@
       "evidence_ids": [
         "EVD-VER-001",
         "EVD-M04-001",
-        "EVD-PLN-006"
+        "EVD-PLN-006",
+        "EVD-M10-001"
       ],
       "framework_reference_ids": [
         "FW-CSF-DE",
@@ -859,7 +944,8 @@
         "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
         "docs/operations/continuous-access-recovery.md",
         "docs/operations/ssf-recovery-scheduling.md",
-        "docs/operations/ssf-verification-policy.md"
+        "docs/operations/ssf-verification-policy.md",
+        "src/polaris/operations/telemetry.py"
       ],
       "objective": "Record sufficient versioned decision context without prohibited content and protect evidence integrity and access.",
       "owner": "SRE Lead",
@@ -885,14 +971,19 @@
         "VER-AUT-026",
         "VER-AUT-027",
         "VER-AUT-028",
-        "VER-PLN-006"
+        "VER-PLN-006",
+        "VER-OPS-001"
       ]
     },
     {
       "control_type": "detective",
       "evidence_ids": [
         "EVD-M04-001",
-        "EVD-PLN-006"
+        "EVD-PLN-006",
+        "EVD-M04-003",
+        "EVD-M04-002",
+        "EVD-M10-001",
+        "EVD-PLN-012"
       ],
       "framework_reference_ids": [
         "FW-CSF-DE",
@@ -911,7 +1002,11 @@
         "docs/operations/ssf-recovery-scheduling.md",
         "docs/operations/okta-continuous-access-gap-recovery.md",
         "docs/risk/threat-model.md",
-        "docs/assurance/release-gates.md"
+        "docs/assurance/release-gates.md",
+        "src/polaris/security/okta_gap_recovery.py",
+        "src/polaris/operations/detections.py",
+        "docs/operations/ai-incident-playbooks.md",
+        "docs/assurance/M10-incident-tabletop-protocol.md"
       ],
       "objective": "Detect identity, injection, poisoning, DLP, tool, action, resource, drift, and control-disablement events and execute tested playbooks.",
       "owner": "Incident Response Lead",
@@ -934,14 +1029,19 @@
       "verification_ids": [
         "VER-AUT-028",
         "VER-AUT-029",
-        "VER-PLN-006"
+        "VER-AUT-030",
+        "VER-PLN-006",
+        "VER-OPS-002",
+        "VER-PLN-012"
       ]
     },
     {
       "control_type": "corrective",
       "evidence_ids": [
         "EVD-M04-001",
-        "EVD-PLN-007"
+        "EVD-PLN-007",
+        "EVD-M10-001",
+        "EVD-M10-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",
@@ -960,7 +1060,12 @@
         "docs/operations/continuous-access-recovery.md",
         "docs/operations/ssf-recovery-scheduling.md",
         "docs/risk/clinical-safety-hazard-analysis.md",
-        "docs/assurance/release-gates.md"
+        "docs/assurance/release-gates.md",
+        "docs/architecture/decisions/ADR-009-production-persistence-and-recovery-targets.md",
+        "docs/operations/persistence-recovery-exercises.md",
+        "src/polaris/operations/gameday.py",
+        "scripts/operations.py",
+        "docs/operations/ai-incident-playbooks.md"
       ],
       "objective": "Stop read/write/model capabilities independently and recover through tested rollback, fallback, backup, restore, and reconciliation.",
       "owner": "SRE Lead",
@@ -980,14 +1085,17 @@
         "VER-AUT-019",
         "VER-AUT-026",
         "VER-AUT-028",
-        "VER-PLN-007"
+        "VER-PLN-007",
+        "VER-OPS-003"
       ]
     },
     {
       "control_type": "preventive",
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-003"
+        "EVD-PLN-003",
+        "EVD-M05-001",
+        "EVD-M05-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",
@@ -999,7 +1107,11 @@
       "id": "CTL-RAG-001",
       "implementation_refs": [
         "src/polaris/services/retrieval.py",
-        "src/polaris/services/container.py"
+        "src/polaris/services/container.py",
+        "src/polaris/services/corpus.py",
+        "src/polaris/services/secure_retrieval.py",
+        "src/polaris/domain.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md"
       ],
       "objective": "Admit only reviewed versioned sources and treat retrieved content as untrusted data with safe conflict and rollback behavior.",
       "owner": "Data Steward",
@@ -1021,7 +1133,9 @@
       "verification_ids": [
         "VER-AUT-006",
         "VER-AUT-007",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-001",
+        "VER-RAG-003"
       ]
     },
     {
@@ -1029,7 +1143,9 @@
       "evidence_ids": [
         "EVD-VER-001",
         "EVD-M04-001",
-        "EVD-PLN-003"
+        "EVD-PLN-003",
+        "EVD-M05-001",
+        "EVD-M05-002"
       ],
       "framework_reference_ids": [
         "FW-CSF-PR-AA",
@@ -1044,7 +1160,10 @@
         "src/polaris/services/patients.py",
         "src/polaris/services/fhir_http.py",
         "src/polaris/security/policy.py",
-        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md"
+        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md",
+        "src/polaris/services/corpus.py",
+        "src/polaris/services/secure_retrieval.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md"
       ],
       "objective": "Prevent unauthorized chunks, metadata, embeddings, caches, or exports from entering model context.",
       "owner": "Data Steward",
@@ -1065,13 +1184,17 @@
         "VER-AUT-007",
         "VER-AUT-015",
         "VER-AUT-017",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-002",
+        "VER-RAG-004"
       ]
     },
     {
       "control_type": "preventive",
       "evidence_ids": [
-        "EVD-VER-001"
+        "EVD-VER-001",
+        "EVD-M05-001",
+        "EVD-M05-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MEASURE",
@@ -1082,7 +1205,10 @@
       "id": "CTL-RAG-003",
       "implementation_refs": [
         "src/polaris/services/retrieval.py",
-        "src/polaris/domain.py"
+        "src/polaris/domain.py",
+        "src/polaris/services/secure_retrieval.py",
+        "src/polaris/services/retrieval_eval.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md"
       ],
       "objective": "Return approved source identifiers and versions for grounded answers or abstain explicitly.",
       "owner": "Business Owner",
@@ -1096,14 +1222,17 @@
       "status": "implemented",
       "title": "Server-verifiable citations and abstention",
       "verification_ids": [
-        "VER-AUT-006"
+        "VER-AUT-006",
+        "VER-RAG-002",
+        "VER-RAG-004"
       ]
     },
     {
       "control_type": "preventive",
       "evidence_ids": [
         "EVD-VER-001",
-        "EVD-PLN-008"
+        "EVD-PLN-008",
+        "EVD-M07-001"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",
@@ -1114,7 +1243,9 @@
       "id": "CTL-SAF-001",
       "implementation_refs": [
         "src/polaris/services/actions.py",
-        "docs/governance/approved-prohibited-use.md"
+        "docs/governance/approved-prohibited-use.md",
+        "src/polaris/presentation/emergency.py",
+        "src/polaris/agent/orchestrator.py"
       ],
       "objective": "Block clinical decisions, writes, patient communication, and urgency assessment while returning approved fixed emergency guidance.",
       "owner": "Clinical Safety Officer",
@@ -1130,13 +1261,16 @@
       "title": "Clinical-scope and fixed emergency boundary",
       "verification_ids": [
         "VER-AUT-008",
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-SAF-001"
       ]
     },
     {
       "control_type": "preventive",
       "evidence_ids": [
-        "EVD-PLN-008"
+        "EVD-PLN-008",
+        "EVD-M07-001",
+        "EVD-PLN-011"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MEASURE",
@@ -1148,7 +1282,11 @@
       "id": "CTL-SAF-002",
       "implementation_refs": [
         "docs/risk/ai-impact-assessment.md",
-        "docs/risk/clinical-safety-hazard-analysis.md"
+        "docs/risk/clinical-safety-hazard-analysis.md",
+        "src/polaris/presentation/views.py",
+        "src/polaris/presentation/answer.py",
+        "docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md",
+        "docs/assurance/human-factors-validation-protocol.md"
       ],
       "objective": "Make identity, source, uncertainty, action, destination, state, and material changes understandable and accessible with a non-AI path.",
       "owner": "Product Owner",
@@ -1163,10 +1301,12 @@
         "RSK-019",
         "RSK-020"
       ],
-      "status": "planned",
+      "status": "partial",
       "title": "Trusted state, comprehension, and accessibility",
       "verification_ids": [
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PRS-003",
+        "VER-PLN-011"
       ]
     },
     {
@@ -1210,7 +1350,9 @@
       "evidence_ids": [
         "EVD-M03-002",
         "EVD-TRC-001",
-        "EVD-PLN-009"
+        "EVD-PLN-009",
+        "EVD-M08-001",
+        "EVD-M08-002"
       ],
       "framework_reference_ids": [
         "FW-CSF-PR-PS",
@@ -1223,7 +1365,14 @@
       "implementation_refs": [
         ".github/workflows/ci.yml",
         "uv.lock",
-        ".github/dependabot.yml"
+        ".github/dependabot.yml",
+        "src/polaris/supplychain/policy.py",
+        "src/polaris/supplychain/sbom.py",
+        "src/polaris/supplychain/aibom.py",
+        "infrastructure/container/Dockerfile",
+        "infrastructure/local/compose.polaris.yml",
+        "docs/architecture/decisions/ADR-013-supply-chain-and-release-policy.md",
+        "docs/assurance/exceptions/NS-EXC-005-artifact-signing-provenance-and-scanning.md"
       ],
       "objective": "Review changes; pin dependencies/actions; scan source and artifacts; and produce SBOM/AIBOM, provenance, vulnerability, and signature evidence.",
       "owner": "AppSec Lead",
@@ -1240,7 +1389,9 @@
       "title": "Reviewed, locked, and attestable software supply chain",
       "verification_ids": [
         "VER-AUT-013",
-        "VER-PLN-009"
+        "VER-PLN-009",
+        "VER-SDL-001",
+        "VER-SDL-002"
       ]
     },
     {
@@ -1249,7 +1400,9 @@
         "EVD-VER-001",
         "EVD-M02-001",
         "EVD-M03-002",
-        "EVD-PLN-009"
+        "EVD-PLN-009",
+        "EVD-M09-001",
+        "EVD-M09-002"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MEASURE",
@@ -1263,7 +1416,12 @@
       "implementation_refs": [
         "tests",
         "docs/risk/abuse-and-misuse-cases.md",
-        "docs/assurance/release-gates.md"
+        "docs/assurance/release-gates.md",
+        "src/polaris/assurance/redteam.py",
+        "src/polaris/assurance/release_eval.py",
+        "scripts/red_team.py",
+        "docs/assurance/M09-remediation-ledger.md",
+        "docs/assurance/M09-independent-review.md"
       ],
       "objective": "Require versioned functional, authorization, privacy, security, safety, grounding, robustness, accessibility, performance, cost, and recovery evaluation.",
       "owner": "AI Security Lead",
@@ -1288,7 +1446,9 @@
         "VER-AUT-013",
         "VER-PLN-005",
         "VER-PLN-008",
-        "VER-PLN-009"
+        "VER-PLN-009",
+        "VER-SDL-003",
+        "VER-SDL-004"
       ]
     }
   ],
@@ -1363,6 +1523,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-VER-001"
       ],
       "framework_reference_ids": [
@@ -1380,6 +1541,8 @@
       ],
       "statement": "The model MUST be limited to proposing only allowlisted, reversible, non-clinical administrative actions with strict arguments.",
       "verification_ids": [
+        "VER-AGT-001",
+        "VER-AGT-002",
         "VER-AUT-008"
       ]
     },
@@ -1389,6 +1552,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M07-001",
         "EVD-PLN-008",
         "EVD-VER-001"
       ],
@@ -1409,7 +1573,8 @@
       "verification_ids": [
         "VER-AUT-009",
         "VER-AUT-010",
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PRS-002"
       ]
     },
     {
@@ -1418,6 +1583,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M07-001",
         "EVD-PLN-008",
         "EVD-VER-001"
       ],
@@ -1438,7 +1604,8 @@
       "verification_ids": [
         "VER-AUT-009",
         "VER-AUT-010",
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PRS-002"
       ]
     },
     {
@@ -1513,7 +1680,8 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
-        "EVD-PLN-008"
+        "EVD-PLN-008",
+        "EVD-PLN-011"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",
@@ -1530,7 +1698,8 @@
       ],
       "statement": "Approval workload and rate MUST be monitored to prevent fatigue, bulk rubber-stamping, or denial of service.",
       "verification_ids": [
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PLN-011"
       ]
     },
     {
@@ -1539,6 +1708,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-004"
       ],
       "framework_reference_ids": [
@@ -1558,6 +1728,7 @@
       ],
       "statement": "Model access MUST be behind a typed provider-neutral adapter; credentials MUST remain in a trusted broker and never in model context.",
       "verification_ids": [
+        "VER-AGT-004",
         "VER-PLN-004"
       ]
     },
@@ -1567,6 +1738,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-004"
       ],
       "framework_reference_ids": [
@@ -1586,6 +1758,7 @@
       ],
       "statement": "Model/provider use MUST meet approved data-use, no-training, retention, region, subprocessor, security, change-notice, incident, audit, continuity, and exit criteria.",
       "verification_ids": [
+        "VER-AGT-004",
         "VER-PLN-004"
       ]
     },
@@ -1595,6 +1768,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1617,6 +1791,8 @@
       ],
       "statement": "Orchestration MUST be an explicit bounded state machine with caps for input/output tokens, steps, tools, fan-out, time, concurrency, retries, and cost.",
       "verification_ids": [
+        "VER-AGT-003",
+        "VER-AGT-004",
         "VER-AUT-001",
         "VER-AUT-008",
         "VER-PLN-005"
@@ -1628,6 +1804,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1650,6 +1827,8 @@
       ],
       "statement": "Persistent cross-session memory MUST remain disabled in v1; any future write MUST be privileged, scoped, reviewable, expiring, and reassessed.",
       "verification_ids": [
+        "VER-AGT-003",
+        "VER-AGT-004",
         "VER-AUT-001",
         "VER-AUT-008",
         "VER-PLN-005"
@@ -1661,6 +1840,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1682,6 +1862,7 @@
       ],
       "statement": "Tools MUST be statically approved, typed, narrowly scoped, versioned, authenticated, independently authorized per call, and separated into read and write capabilities.",
       "verification_ids": [
+        "VER-AGT-001",
         "VER-AUT-008",
         "VER-AUT-011",
         "VER-PLN-005"
@@ -1693,6 +1874,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1715,6 +1897,8 @@
       ],
       "statement": "Generic shell, code execution, browser, filesystem, database, email, and unrestricted network tools MUST NOT be present in v1.",
       "verification_ids": [
+        "VER-AGT-003",
+        "VER-AGT-004",
         "VER-AUT-001",
         "VER-AUT-008",
         "VER-PLN-005"
@@ -1726,6 +1910,8 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
+        "EVD-M09-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1748,10 +1934,13 @@
       ],
       "statement": "Model output MUST receive structural, semantic, authorization, data-loss, citation, and clinical-safety validation before use.",
       "verification_ids": [
+        "VER-AGT-002",
+        "VER-AGT-003",
         "VER-AUT-006",
         "VER-AUT-008",
         "VER-AUT-011",
-        "VER-PLN-005"
+        "VER-PLN-005",
+        "VER-SDL-003"
       ]
     },
     {
@@ -1760,6 +1949,8 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
+        "EVD-M09-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1782,10 +1973,13 @@
       ],
       "statement": "Model, provider, prompt, and tool failures MUST degrade safely without fabricated success or bypassed control.",
       "verification_ids": [
+        "VER-AGT-002",
+        "VER-AGT-003",
         "VER-AUT-006",
         "VER-AUT-008",
         "VER-AUT-011",
-        "VER-PLN-005"
+        "VER-PLN-005",
+        "VER-SDL-003"
       ]
     },
     {
@@ -1825,6 +2019,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M07-001",
         "EVD-PLN-008"
       ],
       "framework_reference_ids": [
@@ -1845,7 +2040,9 @@
       ],
       "statement": "Model/retrieved output MUST render as inert data with contextual encoding, restrictive CSP, no remote active content, and safe link handling.",
       "verification_ids": [
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PRS-001",
+        "VER-PRS-003"
       ]
     },
     {
@@ -1885,6 +2082,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M08-001",
         "EVD-PLN-009",
         "EVD-VER-001"
       ],
@@ -1907,7 +2105,8 @@
       "statement": "Security keys/secrets MUST be purpose-separated, managed outside source/prompts/logs, rotated, and inaccessible to the model.",
       "verification_ids": [
         "VER-AUT-001",
-        "VER-PLN-009"
+        "VER-PLN-009",
+        "VER-SDL-001"
       ]
     },
     {
@@ -1916,6 +2115,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M06-001",
         "EVD-PLN-005",
         "EVD-VER-001"
       ],
@@ -1938,6 +2138,8 @@
       ],
       "statement": "Rate limits, quotas, timeouts, backpressure, duplicate suppression, and circuit breakers MUST protect users, dependencies, cost, and care operations.",
       "verification_ids": [
+        "VER-AGT-003",
+        "VER-AGT-004",
         "VER-AUT-001",
         "VER-AUT-008",
         "VER-PLN-005"
@@ -1949,6 +2151,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M08-001",
         "EVD-PLN-009",
         "EVD-VER-001"
       ],
@@ -1971,7 +2174,8 @@
       "statement": "Development bypass/debug behavior MUST be impossible to enable silently in production.",
       "verification_ids": [
         "VER-AUT-001",
-        "VER-PLN-009"
+        "VER-PLN-009",
+        "VER-SDL-001"
       ]
     },
     {
@@ -2016,6 +2220,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M11-001",
         "EVD-PLN-002"
       ],
       "framework_reference_ids": [
@@ -2034,6 +2239,7 @@
       ],
       "statement": "Every data element, source, destination, purpose, classification, owner, retention, and deletion path MUST be inventoried before pilot.",
       "verification_ids": [
+        "VER-LCM-002",
         "VER-PLN-002"
       ]
     },
@@ -2145,6 +2351,8 @@
         "EVD-DES-002",
         "EVD-GOV-003",
         "EVD-M02-001",
+        "EVD-M12-001",
+        "EVD-M12-002",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -2165,6 +2373,7 @@
       "statement": "Secondary use for training, marketing, workforce scoring, or unrelated analytics MUST be denied absent a new approved assessment.",
       "verification_ids": [
         "VER-AUT-008",
+        "VER-LCM-004",
         "VER-PLN-010",
         "VER-REV-002"
       ]
@@ -2175,6 +2384,7 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M11-001",
         "EVD-PLN-002"
       ],
       "framework_reference_ids": [
@@ -2193,6 +2403,7 @@
       ],
       "statement": "Retention, legal hold, deletion, backup expiry, and provider deletion MUST be defined and testable per data object.",
       "verification_ids": [
+        "VER-LCM-002",
         "VER-PLN-002"
       ]
     },
@@ -2271,6 +2482,8 @@
         "EVD-DES-002",
         "EVD-GOV-003",
         "EVD-M02-001",
+        "EVD-M12-001",
+        "EVD-M12-002",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -2291,6 +2504,7 @@
       "statement": "Approved/prohibited uses, populations, data, tools, autonomy, and deployment boundaries MUST be technically and procedurally enforced.",
       "verification_ids": [
         "VER-AUT-008",
+        "VER-LCM-004",
         "VER-PLN-010",
         "VER-REV-002"
       ]
@@ -2304,6 +2518,9 @@
         "EVD-GOV-002",
         "EVD-M02-001",
         "EVD-M03-001",
+        "EVD-M09-001",
+        "EVD-M11-001",
+        "EVD-M11-002",
         "EVD-RSK-001",
         "EVD-TRC-001"
       ],
@@ -2325,8 +2542,11 @@
       "statement": "A material change to model, prompt, corpus, policy, tool, data, provider, population, jurisdiction, or autonomy MUST trigger impact review and versioned evaluation.",
       "verification_ids": [
         "VER-GOV-001",
+        "VER-LCM-001",
+        "VER-LCM-003",
         "VER-REV-001",
-        "VER-REV-004"
+        "VER-REV-004",
+        "VER-SDL-003"
       ]
     },
     {
@@ -2338,6 +2558,9 @@
         "EVD-GOV-002",
         "EVD-M02-001",
         "EVD-M03-001",
+        "EVD-M09-001",
+        "EVD-M11-001",
+        "EVD-M11-002",
         "EVD-RSK-001",
         "EVD-TRC-001"
       ],
@@ -2359,8 +2582,11 @@
       "statement": "Exceptions MUST identify scope, owner, rationale, compensating controls, residual risk, approver, and expiry.",
       "verification_ids": [
         "VER-GOV-001",
+        "VER-LCM-001",
+        "VER-LCM-003",
         "VER-REV-001",
-        "VER-REV-004"
+        "VER-REV-004",
+        "VER-SDL-003"
       ]
     },
     {
@@ -2372,6 +2598,8 @@
         "EVD-DES-002",
         "EVD-GOV-003",
         "EVD-M02-001",
+        "EVD-M12-001",
+        "EVD-M12-002",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -2392,6 +2620,7 @@
       "statement": "Public/internal claims MUST trace to evidence and MUST NOT assert compliance, certification, clinical validity, or production readiness without authority.",
       "verification_ids": [
         "VER-AUT-008",
+        "VER-LCM-004",
         "VER-PLN-010",
         "VER-REV-002"
       ]
@@ -2433,6 +2662,8 @@
       "disposition": "partial",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M04-002",
+        "EVD-M04-003",
         "EVD-PLN-001",
         "EVD-VER-001"
       ],
@@ -2467,6 +2698,7 @@
         "VER-AUT-027",
         "VER-AUT-028",
         "VER-AUT-029",
+        "VER-AUT-030",
         "VER-PLN-001",
         "VER-REV-005"
       ]
@@ -2478,6 +2710,8 @@
       "disposition": "partial",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M04-002",
+        "EVD-M04-003",
         "EVD-PLN-001",
         "EVD-VER-001"
       ],
@@ -2512,6 +2746,7 @@
         "VER-AUT-027",
         "VER-AUT-028",
         "VER-AUT-029",
+        "VER-AUT-030",
         "VER-PLN-001",
         "VER-REV-005"
       ]
@@ -2609,6 +2844,8 @@
       "disposition": "partial",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M04-002",
+        "EVD-M04-003",
         "EVD-PLN-001",
         "EVD-VER-001"
       ],
@@ -2643,6 +2880,7 @@
         "VER-AUT-027",
         "VER-AUT-028",
         "VER-AUT-029",
+        "VER-AUT-030",
         "VER-PLN-001",
         "VER-REV-005"
       ]
@@ -2739,6 +2977,9 @@
       ],
       "disposition": "planned",
       "evidence_ids": [
+        "EVD-M11-001",
+        "EVD-M12-001",
+        "EVD-M12-002",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -2760,6 +3001,8 @@
       ],
       "statement": "Users, approvers, operators, responders, developers, and auditors MUST receive role-specific limitations, safe-use, escalation, and incident training.",
       "verification_ids": [
+        "VER-LCM-002",
+        "VER-LCM-004",
         "VER-PLN-010"
       ]
     },
@@ -2769,6 +3012,9 @@
       ],
       "disposition": "planned",
       "evidence_ids": [
+        "EVD-M11-001",
+        "EVD-M12-001",
+        "EVD-M12-002",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -2790,6 +3036,8 @@
       ],
       "statement": "Users MUST have support, feedback, correction, privacy complaint, safety report, and non-AI fallback paths.",
       "verification_ids": [
+        "VER-LCM-002",
+        "VER-LCM-004",
         "VER-PLN-010"
       ]
     },
@@ -2802,6 +3050,8 @@
         "EVD-DES-002",
         "EVD-GOV-003",
         "EVD-M02-001",
+        "EVD-M12-001",
+        "EVD-M12-002",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -2822,6 +3072,7 @@
       "statement": "Training labs MUST use isolated synthetic targets, explicit authorization/rules of engagement, resets, and no real credentials/data.",
       "verification_ids": [
         "VER-AUT-008",
+        "VER-LCM-004",
         "VER-PLN-010",
         "VER-REV-002"
       ]
@@ -2832,6 +3083,9 @@
       ],
       "disposition": "planned",
       "evidence_ids": [
+        "EVD-M11-001",
+        "EVD-M12-001",
+        "EVD-M12-002",
         "EVD-PLN-010"
       ],
       "framework_reference_ids": [
@@ -2853,6 +3107,8 @@
       ],
       "statement": "Retirement MUST revoke access/credentials, stop providers/tools, export required records, delete data/embeddings per schedule, dispose artifacts, update inventory, and verify downstream termination.",
       "verification_ids": [
+        "VER-LCM-002",
+        "VER-LCM-004",
         "VER-PLN-010"
       ]
     },
@@ -2863,6 +3119,7 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M10-001",
         "EVD-PLN-006",
         "EVD-VER-001"
       ],
@@ -2892,6 +3149,7 @@
         "VER-AUT-026",
         "VER-AUT-027",
         "VER-AUT-028",
+        "VER-OPS-001",
         "VER-PLN-006"
       ]
     },
@@ -2902,6 +3160,7 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M10-001",
         "EVD-PLN-006",
         "EVD-VER-001"
       ],
@@ -2931,6 +3190,7 @@
         "VER-AUT-026",
         "VER-AUT-027",
         "VER-AUT-028",
+        "VER-OPS-001",
         "VER-PLN-006"
       ]
     },
@@ -2941,7 +3201,11 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M04-001",
-        "EVD-PLN-006"
+        "EVD-M04-002",
+        "EVD-M04-003",
+        "EVD-M10-001",
+        "EVD-PLN-006",
+        "EVD-PLN-012"
       ],
       "framework_reference_ids": [
         "FW-ASI01",
@@ -2967,7 +3231,10 @@
       "verification_ids": [
         "VER-AUT-028",
         "VER-AUT-029",
-        "VER-PLN-006"
+        "VER-AUT-030",
+        "VER-OPS-002",
+        "VER-PLN-006",
+        "VER-PLN-012"
       ]
     },
     {
@@ -2977,7 +3244,11 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M04-001",
-        "EVD-PLN-006"
+        "EVD-M04-002",
+        "EVD-M04-003",
+        "EVD-M10-001",
+        "EVD-PLN-006",
+        "EVD-PLN-012"
       ],
       "framework_reference_ids": [
         "FW-ASI01",
@@ -3003,7 +3274,10 @@
       "verification_ids": [
         "VER-AUT-028",
         "VER-AUT-029",
-        "VER-PLN-006"
+        "VER-AUT-030",
+        "VER-OPS-002",
+        "VER-PLN-006",
+        "VER-PLN-012"
       ]
     },
     {
@@ -3013,6 +3287,8 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M10-001",
+        "EVD-M10-002",
         "EVD-PLN-007"
       ],
       "framework_reference_ids": [
@@ -3036,6 +3312,7 @@
         "VER-AUT-019",
         "VER-AUT-026",
         "VER-AUT-028",
+        "VER-OPS-003",
         "VER-PLN-007"
       ]
     },
@@ -3046,6 +3323,8 @@
       "disposition": "planned",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M10-001",
+        "EVD-M10-002",
         "EVD-PLN-007"
       ],
       "framework_reference_ids": [
@@ -3069,6 +3348,7 @@
         "VER-AUT-019",
         "VER-AUT-026",
         "VER-AUT-028",
+        "VER-OPS-003",
         "VER-PLN-007"
       ]
     },
@@ -3078,6 +3358,8 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M05-001",
+        "EVD-M05-002",
         "EVD-PLN-003",
         "EVD-VER-001"
       ],
@@ -3101,7 +3383,9 @@
       "verification_ids": [
         "VER-AUT-006",
         "VER-AUT-007",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-001",
+        "VER-RAG-003"
       ]
     },
     {
@@ -3111,6 +3395,8 @@
       "disposition": "partial",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M05-001",
+        "EVD-M05-002",
         "EVD-PLN-003",
         "EVD-VER-001"
       ],
@@ -3135,7 +3421,9 @@
         "VER-AUT-007",
         "VER-AUT-015",
         "VER-AUT-017",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-002",
+        "VER-RAG-004"
       ]
     },
     {
@@ -3144,6 +3432,8 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M05-001",
+        "EVD-M05-002",
         "EVD-PLN-003",
         "EVD-VER-001"
       ],
@@ -3167,7 +3457,9 @@
       "verification_ids": [
         "VER-AUT-006",
         "VER-AUT-007",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-001",
+        "VER-RAG-003"
       ]
     },
     {
@@ -3176,6 +3468,8 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M05-001",
+        "EVD-M05-002",
         "EVD-VER-001"
       ],
       "framework_reference_ids": [
@@ -3192,7 +3486,9 @@
       ],
       "statement": "Policy answers MUST use server-verifiable approved citations and source versions or explicitly abstain.",
       "verification_ids": [
-        "VER-AUT-006"
+        "VER-AUT-006",
+        "VER-RAG-002",
+        "VER-RAG-004"
       ]
     },
     {
@@ -3201,6 +3497,8 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M05-001",
+        "EVD-M05-002",
         "EVD-PLN-003",
         "EVD-VER-001"
       ],
@@ -3224,7 +3522,9 @@
       "verification_ids": [
         "VER-AUT-006",
         "VER-AUT-007",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-001",
+        "VER-RAG-003"
       ]
     },
     {
@@ -3234,6 +3534,8 @@
       "disposition": "partial",
       "evidence_ids": [
         "EVD-M04-001",
+        "EVD-M05-001",
+        "EVD-M05-002",
         "EVD-PLN-003",
         "EVD-VER-001"
       ],
@@ -3258,7 +3560,9 @@
         "VER-AUT-007",
         "VER-AUT-015",
         "VER-AUT-017",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-002",
+        "VER-RAG-004"
       ]
     },
     {
@@ -3267,6 +3571,8 @@
       ],
       "disposition": "partial",
       "evidence_ids": [
+        "EVD-M05-001",
+        "EVD-M05-002",
         "EVD-PLN-003",
         "EVD-VER-001"
       ],
@@ -3290,7 +3596,9 @@
       "verification_ids": [
         "VER-AUT-006",
         "VER-AUT-007",
-        "VER-PLN-003"
+        "VER-PLN-003",
+        "VER-RAG-001",
+        "VER-RAG-003"
       ]
     },
     {
@@ -3299,6 +3607,7 @@
       ],
       "disposition": "planned",
       "evidence_ids": [
+        "EVD-M07-001",
         "EVD-PLN-008",
         "EVD-VER-001"
       ],
@@ -3317,7 +3626,8 @@
       "statement": "Diagnosis, prescribing, treatment recommendation, emergency triage, autonomous clinical decision/write, and patient communication MUST be blocked in v1.",
       "verification_ids": [
         "VER-AUT-008",
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-SAF-001"
       ]
     },
     {
@@ -3326,6 +3636,7 @@
       ],
       "disposition": "planned",
       "evidence_ids": [
+        "EVD-M07-001",
         "EVD-PLN-008",
         "EVD-VER-001"
       ],
@@ -3344,7 +3655,8 @@
       "statement": "Urgent/emergency language MUST trigger fixed established-channel guidance and no autonomous action; the system MUST NOT assess urgency.",
       "verification_ids": [
         "VER-AUT-008",
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-SAF-001"
       ]
     },
     {
@@ -3353,7 +3665,9 @@
       ],
       "disposition": "planned",
       "evidence_ids": [
-        "EVD-PLN-008"
+        "EVD-M07-001",
+        "EVD-PLN-008",
+        "EVD-PLN-011"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",
@@ -3372,7 +3686,9 @@
       ],
       "statement": "The UI MUST distinguish draft/proposal/approved/executed/failed states and MUST NOT imply completion before trusted confirmation.",
       "verification_ids": [
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PLN-011",
+        "VER-PRS-003"
       ]
     },
     {
@@ -3381,7 +3697,9 @@
       ],
       "disposition": "planned",
       "evidence_ids": [
-        "EVD-PLN-008"
+        "EVD-M07-001",
+        "EVD-PLN-008",
+        "EVD-PLN-011"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",
@@ -3400,7 +3718,9 @@
       ],
       "statement": "Patient identity, source/version, uncertainty, destination, exact action, and material changes MUST be understandable at decision points.",
       "verification_ids": [
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PLN-011",
+        "VER-PRS-003"
       ]
     },
     {
@@ -3409,7 +3729,9 @@
       ],
       "disposition": "planned",
       "evidence_ids": [
-        "EVD-PLN-008"
+        "EVD-M07-001",
+        "EVD-PLN-008",
+        "EVD-PLN-011"
       ],
       "framework_reference_ids": [
         "FW-AIRMF-MANAGE",
@@ -3428,7 +3750,9 @@
       ],
       "statement": "The supported workflow and approval MUST meet current Northstar accessibility target (at least WCAG 2.2 AA design target) with a non-AI alternative.",
       "verification_ids": [
-        "VER-PLN-008"
+        "VER-PLN-008",
+        "VER-PLN-011",
+        "VER-PRS-003"
       ]
     },
     {
@@ -3469,6 +3793,8 @@
       "disposition": "partial",
       "evidence_ids": [
         "EVD-M03-002",
+        "EVD-M08-001",
+        "EVD-M08-002",
         "EVD-PLN-009",
         "EVD-TRC-001"
       ],
@@ -3489,7 +3815,9 @@
       "statement": "Source changes MUST receive review, required tests, secret/SAST/SCA scanning, and protected-branch release gates.",
       "verification_ids": [
         "VER-AUT-013",
-        "VER-PLN-009"
+        "VER-PLN-009",
+        "VER-SDL-001",
+        "VER-SDL-002"
       ]
     },
     {
@@ -3499,6 +3827,8 @@
       "disposition": "partial",
       "evidence_ids": [
         "EVD-M03-002",
+        "EVD-M08-001",
+        "EVD-M08-002",
         "EVD-PLN-009",
         "EVD-TRC-001"
       ],
@@ -3519,7 +3849,9 @@
       "statement": "Dependencies and CI actions MUST be locked or immutable-SHA pinned; build artifacts MUST have SBOM/AIBOM, provenance, vulnerability results, and signatures before promotion.",
       "verification_ids": [
         "VER-AUT-013",
-        "VER-PLN-009"
+        "VER-PLN-009",
+        "VER-SDL-001",
+        "VER-SDL-002"
       ]
     },
     {
@@ -3530,6 +3862,8 @@
       "evidence_ids": [
         "EVD-M02-001",
         "EVD-M03-002",
+        "EVD-M09-001",
+        "EVD-M09-002",
         "EVD-PLN-009",
         "EVD-VER-001"
       ],
@@ -3559,7 +3893,9 @@
         "VER-AUT-013",
         "VER-PLN-005",
         "VER-PLN-008",
-        "VER-PLN-009"
+        "VER-PLN-009",
+        "VER-SDL-003",
+        "VER-SDL-004"
       ]
     },
     {
@@ -3570,6 +3906,8 @@
       "evidence_ids": [
         "EVD-M02-001",
         "EVD-M03-002",
+        "EVD-M09-001",
+        "EVD-M09-002",
         "EVD-PLN-009",
         "EVD-VER-001"
       ],
@@ -3599,7 +3937,9 @@
         "VER-AUT-013",
         "VER-PLN-005",
         "VER-PLN-008",
-        "VER-PLN-009"
+        "VER-PLN-009",
+        "VER-SDL-003",
+        "VER-SDL-004"
       ]
     },
     {
@@ -3611,6 +3951,9 @@
         "EVD-GOV-002",
         "EVD-M02-001",
         "EVD-M03-001",
+        "EVD-M09-001",
+        "EVD-M11-001",
+        "EVD-M11-002",
         "EVD-RSK-001",
         "EVD-TRC-001"
       ],
@@ -3632,8 +3975,11 @@
       "statement": "A release MUST NOT proceed with an open critical/high gate blocker; accepted residual risk MUST be named, evidence-based, time-bound, monitored, and approved.",
       "verification_ids": [
         "VER-GOV-001",
+        "VER-LCM-001",
+        "VER-LCM-003",
         "VER-REV-001",
-        "VER-REV-004"
+        "VER-REV-004",
+        "VER-SDL-003"
       ]
     },
     {
@@ -3645,6 +3991,9 @@
         "EVD-GOV-002",
         "EVD-M02-001",
         "EVD-M03-001",
+        "EVD-M09-001",
+        "EVD-M11-001",
+        "EVD-M11-002",
         "EVD-RSK-001",
         "EVD-TRC-001"
       ],
@@ -3666,8 +4015,11 @@
       "statement": "Evidence MUST be reproducible, minimal, public-safe where published, and traceable to a revision, configuration, test corpus, owner, and decision.",
       "verification_ids": [
         "VER-GOV-001",
+        "VER-LCM-001",
+        "VER-LCM-003",
         "VER-REV-001",
-        "VER-REV-004"
+        "VER-REV-004",
+        "VER-SDL-003"
       ]
     }
   ],
@@ -5106,18 +5458,18 @@
     "controls": {
       "by_status": {
         "implemented": 2,
-        "partial": 22,
-        "planned": 7
+        "partial": 27,
+        "planned": 2
       },
       "total": 31
     },
     "evidence": {
       "by_status": {
-        "existing": 11,
-        "generated": 1,
-        "planned": 10
+        "existing": 21,
+        "generated": 7,
+        "planned": 12
       },
-      "total": 22
+      "total": 40
     },
     "framework_sources": {
       "by_status": {
@@ -5155,10 +5507,10 @@
     },
     "verifications": {
       "by_status": {
-        "planned": 10,
-        "verified": 35
+        "planned": 12,
+        "verified": 59
       },
-      "total": 45
+      "total": 71
     }
   },
   "validation": {

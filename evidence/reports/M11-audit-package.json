@@ -1,0 +1,309 @@
+{
+  "artifacts": [
+    {
+      "bytes": 4522,
+      "evidence_id": "EVD-DES-002",
+      "owner": "Compliance Lead",
+      "path": "docs/governance/approved-prohibited-use.md",
+      "present": true,
+      "sha256": "ee2940d56cfd10c127e71c968d9b46d6bb889fb0e879f5db27c6e1e4be398930",
+      "status": "existing",
+      "title": "Approved and prohibited use baseline"
+    },
+    {
+      "bytes": 9012,
+      "evidence_id": "EVD-DES-003",
+      "owner": "Data Steward",
+      "path": "docs/risk/data-flow-inventory.md",
+      "present": true,
+      "sha256": "b9d985918a979d5485507d766e26a81e954ecfb30cd0529413fc858058f6c598",
+      "status": "existing",
+      "title": "Data-flow and trust-boundary inventory"
+    },
+    {
+      "bytes": 4417,
+      "evidence_id": "EVD-GOV-001",
+      "owner": "AI System Owner",
+      "path": "docs/executive/stakeholder-raci.md",
+      "present": true,
+      "sha256": "a2cd465fe57bf8207ca314cd1b01ce91e1faf44f6e257227b5ef0c7078413942",
+      "status": "existing",
+      "title": "Stakeholder accountability matrix"
+    },
+    {
+      "bytes": 5015,
+      "evidence_id": "EVD-GOV-002",
+      "owner": "AI Security Program Lead",
+      "path": "docs/governance/control-standard.md",
+      "present": true,
+      "sha256": "4f4cd73526d4de51ac4d3ba78b6a5c90694d91ca8e8b65251959d41e002b430c",
+      "status": "existing",
+      "title": "Control statement and evidence standard"
+    },
+    {
+      "bytes": 12369,
+      "evidence_id": "EVD-GOV-003",
+      "owner": "AI System Owner",
+      "path": "docs/governance/ai-system-card.md",
+      "present": true,
+      "sha256": "b16482f2d267c49cef21358d0b1136854463cb8bdcd5b51d3a69830c5f3d0c97",
+      "status": "existing",
+      "title": "Polaris AI system card"
+    },
+    {
+      "bytes": 6190,
+      "evidence_id": "EVD-M02-001",
+      "owner": "AI Security Program Lead",
+      "path": "docs/assurance/M02-multidisciplinary-review.md",
+      "present": true,
+      "sha256": "60625db2d28c01bd118d39d05395d8614aa76f968717d8cd1075994fa30cb89d",
+      "status": "existing",
+      "title": "M02 simulated multidisciplinary review"
+    },
+    {
+      "bytes": 5817,
+      "evidence_id": "EVD-M03-001",
+      "owner": "AI Security Program Lead",
+      "path": "docs/assurance/M03-control-owner-review.md",
+      "present": true,
+      "sha256": "09de9554bad3db214a748991f784b1db2b20df232cba311f08c91b3f87416cdb",
+      "status": "existing",
+      "title": "M03 simulated control-owner review"
+    },
+    {
+      "bytes": 2497,
+      "evidence_id": "EVD-M03-002",
+      "owner": "Engineering Lead",
+      "path": "evidence/milestones/M03-local-verification.md",
+      "present": true,
+      "sha256": "c0bf144a1b29d8952d334bffd66cf6e3b718d0bf341818f223441c7ec0bb88bf",
+      "status": "existing",
+      "title": "M02/M03 assurance baseline local verification"
+    },
+    {
+      "bytes": 33352,
+      "evidence_id": "EVD-M04-001",
+      "owner": "Engineering Lead",
+      "path": "evidence/milestones/M04-identity-fhir-foundation.md",
+      "present": true,
+      "sha256": "124a245a3343790a72bbce5878f97886c1fba82e057b00e02e923a1cdcb94ff5",
+      "status": "existing",
+      "title": "M04 identity, continuous-access signals, synthetic FHIR, and transactional-state foundation local verification"
+    },
+    {
+      "bytes": 4900,
+      "evidence_id": "EVD-M04-002",
+      "owner": "Engineering Lead",
+      "path": "evidence/milestones/M04-hosted-ci.md",
+      "present": true,
+      "sha256": "e2a80ab74e5130e16ea70ac15a4bb360c7cba286ba6fe2df6fe9e28ba21877ab",
+      "status": "existing",
+      "title": "First hosted continuous-integration execution of the repository quality gate"
+    },
+    {
+      "bytes": 7215,
+      "evidence_id": "EVD-M04-003",
+      "owner": "AI Security Program Lead",
+      "path": "evidence/milestones/M04-gate-decision.md",
+      "present": true,
+      "sha256": "09d9a809eb766d0a0110253ebf7f7e60efa5500c7ccf18c3993ba269ef847b32",
+      "status": "existing",
+      "title": "M04 gate decision with durable gap recovery, deferral exceptions, and residual risk"
+    },
+    {
+      "bytes": 6627,
+      "evidence_id": "EVD-M05-001",
+      "owner": "Data Steward",
+      "path": "evidence/milestones/M05-secure-retrieval.md",
+      "present": true,
+      "sha256": "bca4a7c585471711127c437324daefbb524cc67e27ed554776b126d1d3245713",
+      "status": "existing",
+      "title": "M05 secure retrieval corpus admission, authorization, and evaluation verification"
+    },
+    {
+      "bytes": 2068,
+      "evidence_id": "EVD-M05-002",
+      "owner": "AI Security Lead",
+      "path": "evidence/reports/M05-retrieval-evaluation.json",
+      "present": true,
+      "sha256": "dc9cf138568a001ddb04587a9fae55ad849d58b235e9b258f82231c19801e7b3",
+      "status": "generated",
+      "title": "M05 retrieval evaluation report with security and quality thresholds"
+    },
+    {
+      "bytes": 5933,
+      "evidence_id": "EVD-M06-001",
+      "owner": "AI Security Lead",
+      "path": "evidence/milestones/M06-bounded-agent.md",
+      "present": true,
+      "sha256": "42d0c2c571e3032462684b7360fd4cc6c2f599524651a6a23f1665140275b6e1",
+      "status": "existing",
+      "title": "M06 bounded agent and untrusted-model boundary compromised-model verification"
+    },
+    {
+      "bytes": 5562,
+      "evidence_id": "EVD-M07-001",
+      "owner": "Clinical Safety Lead",
+      "path": "evidence/milestones/M07-trusted-presentation.md",
+      "present": true,
+      "sha256": "a3e53f8c1674dec98150259f86e3fa4c95470cb9ea18f1105c52b39ab4261af8",
+      "status": "existing",
+      "title": "M07 trusted presentation contract verification"
+    },
+    {
+      "bytes": 5638,
+      "evidence_id": "EVD-M08-001",
+      "owner": "AppSec Lead",
+      "path": "evidence/milestones/M08-supply-chain.md",
+      "present": true,
+      "sha256": "c0d0375aec8ed21d1cb72323708ea74fac0588d274dbfa8b08a37621b23b0fab",
+      "status": "existing",
+      "title": "M08 supply-chain release policy, bills of materials, and hardened container verification"
+    },
+    {
+      "bytes": 117348,
+      "evidence_id": "EVD-M08-002",
+      "owner": "Engineering Lead",
+      "path": "evidence/reports/M08-sbom.cdx.json",
+      "present": true,
+      "sha256": "6f5bd6881b375a9777e25cdf097c6d9ea69e6e6badadec0bcc0b71e2351a009f",
+      "status": "generated",
+      "title": "Generated CycloneDX SBOM and AI bill of materials"
+    },
+    {
+      "bytes": 5889,
+      "evidence_id": "EVD-M09-001",
+      "owner": "AI Security Lead",
+      "path": "evidence/milestones/M09-assurance-and-red-team.md",
+      "present": true,
+      "sha256": "4a79085ce2b7f01ea72587837e64fda2158df4b095afd955bc7f8bc51879df4d",
+      "status": "existing",
+      "title": "M09 adversarial campaign and release evaluation with a refused release decision"
+    },
+    {
+      "bytes": 5742,
+      "evidence_id": "EVD-M09-002",
+      "owner": "AI Security Lead",
+      "path": "evidence/reports/M09-red-team.json",
+      "present": true,
+      "sha256": "29ccfdaaf3759c2666fdeae1e62a2025c086336411ee6e670f522e95434f778e",
+      "status": "generated",
+      "title": "Generated adversarial campaign and release evaluation reports"
+    },
+    {
+      "bytes": 6183,
+      "evidence_id": "EVD-M10-001",
+      "owner": "SRE Lead",
+      "path": "evidence/milestones/M10-operations.md",
+      "present": true,
+      "sha256": "91189128533ddbb8e2a8b6607a71792f160cc12739e2ddd408eaf77057621d8c",
+      "status": "existing",
+      "title": "M10 telemetry, detection-as-code, and executed local game-day drills"
+    },
+    {
+      "bytes": 2377,
+      "evidence_id": "EVD-M10-002",
+      "owner": "SRE Lead",
+      "path": "evidence/reports/M10-game-day.json",
+      "present": true,
+      "sha256": "b3a341bf8be71d95febe1690b7c6ee8cb247eae73614443d8def0a8fab6954ff",
+      "status": "generated",
+      "title": "Generated game-day drill report"
+    },
+    {
+      "bytes": 5910,
+      "evidence_id": "EVD-M11-001",
+      "owner": "AI Security Program Lead",
+      "path": "evidence/milestones/M11-lifecycle.md",
+      "present": true,
+      "sha256": "cf7ca3b1ac6d17319d650cd3bcc8ffe95c9aac10cd4739f61c16e49b05597f7b",
+      "status": "existing",
+      "title": "M11 change impact, audit package, executed retirement, and refused pilot authorization"
+    },
+    {
+      "bytes": 11160,
+      "evidence_id": "EVD-M11-002",
+      "owner": "Records Owner",
+      "path": "evidence/reports/M11-audit-package.json",
+      "present": true,
+      "sha256": "2ff9d978eb776c4f4844df5c933032fbc080d4ca36b6c78795b2d4f55458b91c",
+      "status": "generated",
+      "title": "Generated audit package index and retirement exercise report"
+    },
+    {
+      "bytes": 5064,
+      "evidence_id": "EVD-M12-001",
+      "owner": "AI Security Program Lead",
+      "path": "evidence/milestones/M12-portfolio-and-training.md",
+      "present": true,
+      "sha256": "1179de597641ca55b784589d816f4656556a830f3d935fb1b796982eecca3ece",
+      "status": "existing",
+      "title": "M12 portfolio case study, evidence tour, demo, and training package with verified claims"
+    },
+    {
+      "bytes": 877,
+      "evidence_id": "EVD-M12-002",
+      "owner": "AI Security Program Lead",
+      "path": "evidence/reports/M12-portfolio-claims.json",
+      "present": true,
+      "sha256": "e40d6dfa81885e4333c206d38c200b9555dd52b1635f112619bcda9ce50ad06a",
+      "status": "generated",
+      "title": "Generated portfolio and training claims verification report"
+    },
+    {
+      "bytes": 7887,
+      "evidence_id": "EVD-RSK-001",
+      "owner": "AI System Owner",
+      "path": "docs/risk/risk-register.md",
+      "present": true,
+      "sha256": "19cfed41a5a733f1f877aec7dbfd71c5af23bd4d59f1f46e40ee03c4e5825df1",
+      "status": "existing",
+      "title": "Initial inherent-risk register"
+    },
+    {
+      "bytes": 136842,
+      "evidence_id": "EVD-TRC-001",
+      "owner": "AI Security Lead",
+      "path": "evidence/reports/M03-traceability-report.json",
+      "present": true,
+      "sha256": "6cbb0f80db22ca8fb9a510033fd3a7286875243fd439bdb5eb9d79f356e757ee",
+      "status": "generated",
+      "title": "Generated M03 coverage and traceability report"
+    },
+    {
+      "bytes": 1643,
+      "evidence_id": "EVD-VER-001",
+      "owner": "Engineering Lead",
+      "path": "evidence/milestones/M01-local-verification.md",
+      "present": true,
+      "sha256": "839b5e9bf9f4acf5c9240432b20b5ac344da59fa57aba62043cfb62c45b83905",
+      "status": "existing",
+      "title": "M01 local verification record"
+    }
+  ],
+  "open_blockers": [
+    "BLK-001",
+    "BLK-002",
+    "BLK-003",
+    "BLK-004",
+    "BLK-005",
+    "BLK-006"
+  ],
+  "summary": {
+    "artifacts": 28,
+    "complete": true,
+    "controls": 31,
+    "missing": 0,
+    "note": "This index lets an assessor sample evidence and confirm each artifact exists at a known digest. It is not an assurance opinion, and a complete index does not mean the gates it references passed.",
+    "present": 28,
+    "verifications": 71
+  },
+  "unmet_gates": [
+    "M04: conditional pass",
+    "M07: gate not met",
+    "M08: conditional pass",
+    "M09: gate not met",
+    "M10: gate not met",
+    "M11: gate not met"
+  ]
+}

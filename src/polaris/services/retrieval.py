@@ -1,111 +1,48 @@
 from __future__ import annotations
 
-import hashlib
-import re
-from collections.abc import Iterable
-
 from polaris.domain import (
     Citation,
-    PolicyDocument,
     PolicyQueryResponse,
     Principal,
     PurposeOfUse,
+    RetrievalOutcome,
 )
 from polaris.errors import AuthorizationError
 from polaris.security.policy import PolicyEngine
 from polaris.security.text import normalize_untrusted_text
 from polaris.services.audit import AuditLedger
+from polaris.services.secure_retrieval import CorpusRegistry, RetrievalResult
 
-_TOKEN = re.compile(r"[a-z0-9]+")
-_STOP_WORDS = {
-    "a",
-    "an",
-    "and",
-    "are",
-    "for",
-    "how",
-    "i",
-    "in",
-    "is",
-    "it",
-    "of",
-    "on",
-    "or",
-    "the",
-    "to",
-    "what",
-    "where",
-    "which",
-    "who",
-}
-
-
-def _document(
-    *, document_id: str, title: str, version: str, content: str, roles: set[str]
-) -> PolicyDocument:
-    checksum = hashlib.sha256(content.encode()).hexdigest()
-    return PolicyDocument(
-        document_id=document_id,
-        title=title,
-        version=version,
-        classification="INTERNAL",
-        allowed_roles=frozenset(roles),
-        approved=True,
-        content=content,
-        checksum=checksum,
-    )
-
-
-def seed_policy_documents() -> tuple[PolicyDocument, ...]:
-    workforce = {"care_coordinator", "nurse", "compliance_analyst"}
-    return (
-        _document(
-            document_id="POL-AI-001",
-            title="Workforce Use of Polaris",
-            version="2026.08.11",
-            roles=workforce,
-            content=(
-                "Polaris may be used for approved policy retrieval and non-clinical administrative "
-                "support. Users must review cited sources. Polaris must not diagnose, prescribe, "
-                "recommend treatment, or independently communicate with patients."
-            ),
-        ),
-        _document(
-            document_id="POL-CC-014",
-            title="Care Coordination Follow-up Tasks",
-            version="2026.07.15",
-            roles={"care_coordinator", "nurse"},
-            content=(
-                "A routine follow-up task must identify the assigned patient, approved facility, "
-                "care-coordination queue, due date, and administrative purpose. An authorized "
-                "independent approver must review the exact task before execution."
-            ),
-        ),
-        _document(
-            document_id="POL-PRIV-007",
-            title="Minimum Necessary Administrative Access",
-            version="2026.06.30",
-            roles=workforce,
-            content=(
-                "Workforce access must be limited to the information needed for the approved "
-                "purpose. Role, facility, patient relationship, purpose of use, and sensitivity "
-                "restrictions "
-                "must be evaluated before information is returned."
-            ),
-        ),
-    )
+_ABSTAIN_NO_MATCH = (
+    "I could not find an approved source that answers this question. "
+    "Use the established policy escalation process."
+)
+_ABSTAIN_CONFLICT = (
+    "Approved sources disagree on this topic, so I cannot give a single answer. "
+    "Review the cited sources and follow the policy conflict escalation process."
+)
 
 
 class PolicyRetrievalService:
+    """Grounded policy answers drawn from the serving corpus version.
+
+    Authorization runs twice and in this order: the policy engine decides whether this principal may
+    query at all, and the index then decides which chunks that principal may see before any text is
+    scored. The service never sees an unauthorized chunk, so it cannot leak one.
+    """
+
     def __init__(
         self,
-        documents: Iterable[PolicyDocument],
+        registry: CorpusRegistry,
         policy: PolicyEngine,
         audit: AuditLedger,
+        *,
+        max_chunks: int = 3,
     ) -> None:
-        self._documents = tuple(documents)
+        self._registry = registry
         self._policy = policy
         self._audit = audit
+        self._max_chunks = max_chunks
 
     def query(
         self,
@@ -126,51 +63,28 @@ class PolicyRetrievalService:
             )
             raise AuthorizationError(decision.code)
 
-        normalized_question, changed = normalize_untrusted_text(question)
-        query_terms = _terms(normalized_question)
-        candidates: list[tuple[int, PolicyDocument]] = []
-        for document in self._documents:
-            if not document.approved or not principal.roles & document.allowed_roles:
-                continue
-            score = len(query_terms & _terms(f"{document.title} {document.content}"))
-            if score:
-                candidates.append((score, document))
-        candidates.sort(key=lambda pair: (-pair[0], pair[1].document_id))
-
-        selected = [document for _, document in candidates[:2]]
-        citations = [
-            Citation(
-                document_id=document.document_id,
-                title=document.title,
-                version=document.version,
-                excerpt=_excerpt(document.content),
-            )
-            for document in selected
-        ]
-        if not selected:
-            answer = (
-                "I could not find an approved source that answers this question. "
-                "Use the established policy escalation process."
-            )
-            abstained = True
-        else:
-            source_list = ", ".join(
-                f"{document.document_id} v{document.version}" for document in selected
-            )
-            answer = (
-                f"Approved Northstar sources relevant to this question are {source_list}. "
-                "Review the cited excerpts and source documents before acting."
-            )
-            abstained = False
+        index = self._registry.active_index()
+        result = index.search(
+            principal=principal,
+            question=question,
+            max_chunks=self._max_chunks,
+        )
+        answer = _answer(result)
+        citations = _citations(result)
 
         self._audit.append(
             actor=principal.subject,
             event_type="policy.query",
-            outcome="POLICY_QUERY_ABSTAINED" if abstained else "POLICY_QUERY_ANSWERED",
+            outcome=_outcome_code(result.outcome),
             correlation_id=correlation_id,
             metadata={
-                "document_ids": ",".join(document.document_id for document in selected),
-                "input_normalized": str(changed).lower(),
+                "document_ids": ",".join(sorted({chunk.document_id for chunk in result.chunks})),
+                "chunk_ids": ",".join(chunk.chunk_id for chunk in result.chunks),
+                "corpus_version": result.corpus_version,
+                "manifest_checksum": result.manifest_checksum,
+                "candidates_scanned": str(result.candidates_scanned),
+                "conflicting_topics": ",".join(result.conflicting_topics),
+                "input_normalized": str(result.normalized_input).lower(),
                 "purpose": purpose.value,
                 "policy_version": decision.policy_version,
             },
@@ -178,17 +92,49 @@ class PolicyRetrievalService:
         return PolicyQueryResponse(
             answer=answer,
             citations=citations,
-            abstained=abstained,
-            normalized_input=changed,
+            abstained=result.outcome is not RetrievalOutcome.ANSWERED,
+            normalized_input=result.normalized_input,
         )
 
 
-def _terms(value: str) -> set[str]:
-    return {
-        token
-        for token in _TOKEN.findall(value.casefold())
-        if len(token) >= 3 and token not in _STOP_WORDS
-    }
+def _answer(result: RetrievalResult) -> str:
+    if result.outcome is RetrievalOutcome.ABSTAINED_NO_MATCH:
+        return _ABSTAIN_NO_MATCH
+    if result.outcome is RetrievalOutcome.ABSTAINED_CONFLICT:
+        return _ABSTAIN_CONFLICT
+    sources = ", ".join(
+        sorted({f"{chunk.document_id} v{chunk.document_version}" for chunk in result.chunks})
+    )
+    return (
+        f"Approved Northstar sources relevant to this question are {sources}. "
+        "Review the cited excerpts and source documents before acting."
+    )
+
+
+def _citations(result: RetrievalResult) -> list[Citation]:
+    citations: list[Citation] = []
+    seen: set[str] = set()
+    for chunk in result.chunks:
+        if chunk.document_id in seen:
+            continue
+        seen.add(chunk.document_id)
+        citations.append(
+            Citation(
+                document_id=chunk.document_id,
+                title=chunk.document_title,
+                version=chunk.document_version,
+                excerpt=_excerpt(chunk.text),
+            )
+        )
+    return citations
+
+
+def _outcome_code(outcome: RetrievalOutcome) -> str:
+    if outcome is RetrievalOutcome.ANSWERED:
+        return "POLICY_QUERY_ANSWERED"
+    if outcome is RetrievalOutcome.ABSTAINED_CONFLICT:
+        return "POLICY_QUERY_ABSTAINED_CONFLICT"
+    return "POLICY_QUERY_ABSTAINED"
 
 
 def _excerpt(value: str, limit: int = 300) -> str:

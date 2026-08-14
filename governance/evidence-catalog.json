@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "catalog_id": "NS-EVD-001",
-  "as_of_date": "2026-08-11",
+  "as_of_date": "2026-08-14",
   "claim_rule": "Existing and generated evidence supports only the stated local synthetic simulation scope. Planned evidence supports no implementation claim.",
   "evidence": [
     {
@@ -83,6 +83,150 @@
       "owner": "Engineering Lead",
       "artifact_path": "evidence/milestones/M04-identity-fhir-foundation.md",
       "scope": "Local trusted OIDC discovery/JWKS rotation, isolated audience-bound token exchange, and a strict signed-SET subset with durable CAEP invalidation including final-SSF credential-change, authenticated/bounded RFC 8935-shaped push, injected final-SSF stream configuration/status/delete/subject operations, durable desired/observed status reconciliation, bounded rate-limit-aware safe status-read recovery, a restart-safe lease/cadence/alert-state controller seam with concurrency, lease-reclaim, stale-worker, escalation/clear, clock, and tamper tests, signed stream-updated handling, durable single-use correlated verification health, an explicit default-reject/opt-in delivery-only unsolicited-verification policy with durable quota, and an Okta reference profile with a constrained, separately authorized System Log cursor read/normalization adapter; reproducible Synthea-derived FHIR R4, explicit Consent/Provenance, pinned loopback HAPI interoperability, and minimizing broker; plus single-node SQLite workflow/audit durability with atomic rollback, restart, concurrent-idempotency, tamper, and readiness tests. No enterprise IdP/STS, TLS/mTLS edge, live provider operation or approved unsolicited-event enablement, live final-SSF provider conformance, durable provider-page application/cursor state, complete event-gap recovery, deployed HA scheduler, metric/SIEM/page delivery, approved production SLO, production FHIR/SMART conformance, PostgreSQL/HA, backup/restore, retention/legal hold, external-task outbox/reconciliation, or hosted CI claim"
+    },
+    {
+      "id": "EVD-M04-002",
+      "title": "First hosted continuous-integration execution of the repository quality gate",
+      "status": "existing",
+      "owner": "Engineering Lead",
+      "artifact_path": "evidence/milestones/M04-hosted-ci.md",
+      "scope": "Version-control landing of the previously untracked working tree and a green hosted GitHub Actions run of governance traceability, formatting, lint, strict typing, tests, and the coverage floor on a clean runner at a named revision. Closes LIM-006 for hosted execution only. Branch protection is not assessed because the private repository plan rejects it; no supply-chain, secret-scanning, SBOM, signing, or provenance control is claimed"
+    },
+    {
+      "id": "EVD-M04-003",
+      "title": "M04 gate decision with durable gap recovery, deferral exceptions, and residual risk",
+      "status": "existing",
+      "owner": "AI Security Program Lead",
+      "artifact_path": "evidence/milestones/M04-gate-decision.md",
+      "scope": "Conditional-pass M04 gate record covering durable Okta gap-recovery page application with compare-and-swap cursor sequencing and a multi-signal exit gate, the ADR-009 persistence and recovery target design, the authoritative relationship/Consent integration design, and four owner-approved time-bound exception records for enterprise identity, live provider conformance, deployed scheduling/telemetry, and production persistence. Simulated role review only; no real accountable approval, pilot, production, real-PHI, or conformance authorization"
+    },
+    {
+      "id": "EVD-M05-001",
+      "title": "M05 secure retrieval corpus admission, authorization, and evaluation verification",
+      "status": "existing",
+      "owner": "Data Steward",
+      "artifact_path": "evidence/milestones/M05-secure-retrieval.md",
+      "scope": "Local synthetic policy corpus only. Deny-by-default corpus admission with promotion records, second-person approval, provenance and checksum binding, content scanning for instruction-shaped text and credential material, label continuity onto chunks, authorization computed before any scoring, post-selection integrity and freshness recheck, topic conflict abstention, data-only context rendering, manifest identity binding labels as well as text, and durable schema-10 corpus activation with audited rollback surviving restart. No model, embedding, vector store, or answer-quality claim; no authoritative ingestion pipeline, malware scanning, human review workflow, or durable corpus content storage"
+    },
+    {
+      "id": "EVD-M05-002",
+      "title": "M05 retrieval evaluation report with security and quality thresholds",
+      "status": "generated",
+      "owner": "AI Security Lead",
+      "artifact_path": "evidence/reports/M05-retrieval-evaluation.json",
+      "scope": "Deterministic golden-set result over a separately versioned evaluation corpus containing a deliberate conflict and canary material. Security cases (authorization, poison canary) require a 100% pass rate and quality cases (grounded, unanswerable, conflict) require 90%; make verify and CI fail on an unmet threshold or a stale report. Measures the retrieval controls, not model or RAG answer quality"
+    },
+    {
+      "id": "EVD-M06-001",
+      "title": "M06 bounded agent and untrusted-model boundary compromised-model verification",
+      "status": "existing",
+      "owner": "AI Security Lead",
+      "artifact_path": "evidence/milestones/M06-bounded-agent.md",
+      "scope": "Local synthetic simulation with a deterministic model adapter and no hosted provider. Scripted hostile model intents cannot reach an unapproved tool, broaden retrieval beyond the caller, read an unassigned patient, execute rather than propose, draft clinical direction, emit secrets or context-envelope markers, answer without grounding, exceed step/tool/output budgets, or fabricate success on model failure. Model requests carry no credential, identity, or prior-run state, and MODEL/READ/WRITE kill switches are independent and survive restart. No claim about language-model behavior or answer quality, no red-team campaign against a real provider, no provider due diligence or authorized hosted connection, no concurrency/retry/cost controls, and no user-facing surface"
+    },
+    {
+      "id": "EVD-M07-001",
+      "title": "M07 trusted presentation contract verification",
+      "status": "existing",
+      "owner": "Clinical Safety Lead",
+      "artifact_path": "evidence/milestones/M07-trusted-presentation.md",
+      "scope": "Server-side presentation contract only. Inert rendering of untrusted text against script, attribute, executable-scheme, terminal-escape, bidirectional-override, and control-character cases; approval preview derived from the canonical action with a recomputed digest and a display-binding check that fails on any field divergence; workflow states where only execution implies completion and severity is never the only carrier of meaning; uncertainty that cannot be dropped so an abstention cannot render as an answer; and fixed emergency routing whose result type cannot record an urgency assessment. Establishes no human comprehension, no WCAG conformance, no user interface, and no approval-workload monitoring; the M07 gate does not pass"
+    },
+    {
+      "id": "EVD-M08-001",
+      "title": "M08 supply-chain release policy, bills of materials, and hardened container verification",
+      "status": "existing",
+      "owner": "AppSec Lead",
+      "artifact_path": "evidence/milestones/M08-supply-chain.md",
+      "scope": "Offline release policy enforcing SHA-pinned Actions, digest-pinned images, bounded dependency declarations, hashed locked artifacts, container and compose hardening markers, and a tracked-secret scan exempting only detector modules, each proven by a test that breaks it; a CycloneDX 1.6 SBOM built from the lockfile and an AIBOM generated from the running model, corpus, tool, bound, kill-switch, and evaluation definitions, both committed and drift-checked; and a container built and smoke-tested as non-root on a read-only filesystem with no package manager, compiler, or fetch tool. Establishes no artifact signature, no build provenance, no vulnerability scan result, no bit-for-bit reproducibility, and no published artifact"
+    },
+    {
+      "id": "EVD-M08-002",
+      "title": "Generated CycloneDX SBOM and AI bill of materials",
+      "status": "generated",
+      "owner": "Engineering Lead",
+      "artifact_path": "evidence/reports/M08-sbom.cdx.json",
+      "scope": "CycloneDX 1.6 document covering every locked dependency with its PURL and pinned artifact hashes, direct dependencies distinguished from transitive. Accompanied by evidence/reports/M08-aibom.json describing the model adapter, serving and evaluation corpora with admission decisions, tool inventory, agent bounds, kill switches, and evaluation thresholds. Both are regenerated by make supply-chain and enforced current by make verify and CI"
+    },
+    {
+      "id": "EVD-M09-001",
+      "title": "M09 adversarial campaign and release evaluation with a refused release decision",
+      "status": "existing",
+      "owner": "AI Security Lead",
+      "artifact_path": "evidence/milestones/M09-assurance-and-red-team.md",
+      "scope": "Twenty-one attacks across all fourteen classes REQ-SDL-004 requires, run against a real stack rebuilt per case, each naming the control expected to stop it; all contained, deterministic across runs, class coverage asserted by test. Release evaluation declaring all eleven REQ-SDL-003 dimensions with four not assessed, separating blocking gaps from missing evidence so release_ready is false despite zero blocking gaps. The M09 gate does not pass: four high-severity findings are open. Establishes nothing about a real language model, independent adversarial authorship, fuzzing, load, cost, accessibility, or executed recovery, and records no residual-risk acceptance"
+    },
+    {
+      "id": "EVD-M09-002",
+      "title": "Generated adversarial campaign and release evaluation reports",
+      "status": "generated",
+      "owner": "AI Security Lead",
+      "artifact_path": "evidence/reports/M09-red-team.json",
+      "scope": "Per-case containment with attack class, severity, the control that held, and observed detail, plus a summary with containment rate and class coverage. Accompanied by evidence/reports/M09-release-evaluation.json declaring per-dimension status, thresholds, and the release decision. Both are regenerated by make red-team and enforced current by make verify and CI"
+    },
+    {
+      "id": "EVD-M10-001",
+      "title": "M10 telemetry, detection-as-code, and executed local game-day drills",
+      "status": "existing",
+      "owner": "SRE Lead",
+      "artifact_path": "evidence/milestones/M10-operations.md",
+      "scope": "Telemetry content rules checked in both directions over a real request flow; ten detection rules covering all ten REQ-OPS-003 categories with threshold and window behavior proven by test; and five executed drills covering the independent kill switch, corpus rollback, safe degraded mode, restart recovery, and SQLite backup and restore with audit-chain verification. Recovery moves from not assessed to partial. Establishes no operator demonstration, no tabletop, no exercised playbook, no SIEM, dashboard, alert routing, or paging, no tuned thresholds, no production recovery exercise, and no approved SLO, RTO, or RPO"
+    },
+    {
+      "id": "EVD-M10-002",
+      "title": "Generated game-day drill report",
+      "status": "generated",
+      "owner": "SRE Lead",
+      "artifact_path": "evidence/reports/M10-game-day.json",
+      "scope": "Per-drill objective, outcome, observed detail, and the scope each drill actually exercised, with an explicit statement that the PostgreSQL failover, point-in-time recovery, audit custody separation, and outbox reconciliation exercises remain unexecuted. Regenerated by make game-day and enforced current by make verify and CI"
+    },
+    {
+      "id": "EVD-M11-001",
+      "title": "M11 change impact, audit package, executed retirement, and refused pilot authorization",
+      "status": "existing",
+      "owner": "AI Security Program Lead",
+      "artifact_path": "evidence/milestones/M11-lifecycle.md",
+      "scope": "Change-impact analysis diffing the AI bill of materials across model, prompt, corpus, tool, autonomy, evaluation, and dependency classes with the obligations each triggers; an audit package indexing every existing evidence artifact by digest alongside open blockers and unmet gates read from the gate record; and an executed retirement revoking every capability before deletion, removing operational records, retaining the audit chain and revocation state, and confirming the retired deployment serves nothing. The M11 gate does not pass: pilot authorization is refused because all seven entry conditions are unmet and no accountable person exists to authorize it"
+    },
+    {
+      "id": "EVD-M11-002",
+      "title": "Generated audit package index and retirement exercise report",
+      "status": "generated",
+      "owner": "Records Owner",
+      "artifact_path": "evidence/reports/M11-audit-package.json",
+      "scope": "Evidence index with per-artifact presence, SHA-256, and size, plus open gate blockers and unmet or conditional gates. Accompanied by evidence/reports/M11-retirement.json recording each retirement step, its objective, and what was observed, with an explicit statement that no provider deletion, backup expiry, legal hold, or downstream termination was exercised. Regenerated by make lifecycle and enforced current by make verify and CI"
+    },
+    {
+      "id": "EVD-M12-001",
+      "title": "M12 portfolio case study, evidence tour, demo, and training package with verified claims",
+      "status": "existing",
+      "owner": "AI Security Program Lead",
+      "artifact_path": "evidence/milestones/M12-portfolio-and-training.md",
+      "scope": "Case study leading with six unmet or conditional gates and four defects found by running rather than reading; an evidence tour walking three chains from risk to gate decision including one that ends at a failed gate; a demo script whose closing minute is the refused pilot authorization; and a training package with a lab safety contract, three fully worked labs with assessments and rubrics, and nine modules explicitly outlined rather than claimed complete. Every identifier, link, and documented command is verified against the repository and prohibited claim language is rejected, with denial of a claim permitted and tested. The material has never been taught, nine modules are outlines, no accessibility review exists, and licensing remains undecided"
+    },
+    {
+      "id": "EVD-M12-002",
+      "title": "Generated portfolio and training claims verification report",
+      "status": "generated",
+      "owner": "AI Security Program Lead",
+      "artifact_path": "evidence/reports/M12-portfolio-claims.json",
+      "scope": "Per-document verification that every cited identifier resolves to a catalog entry, decision record, exception, or generated case report; that every markdown link target exists; that every documented make command is a declared target; and that no prohibited compliance, certification, clearance, readiness, absolute-security, or gate-overstatement language appears. Regenerated by make portfolio and enforced current by make verify and CI. Checks traceability and boundedness, not teaching quality"
+    },
+    {
+      "id": "EVD-PLN-012",
+      "title": "AI incident tabletop after-action record",
+      "status": "planned",
+      "owner": "Incident Response Lead",
+      "planned_artifact_path": "evidence/operations/incident-tabletop/",
+      "scope": "Seven scenarios covering disclosure, injection, poisoning, provider compromise, unsafe output, outage, and supply chain. No tabletop has been run; the results table is empty and BLK-005 remains open"
+    },
+    {
+      "id": "EVD-PLN-011",
+      "title": "Approval human-factors validation results",
+      "status": "planned",
+      "owner": "Clinical Safety Lead",
+      "scope": "Eight specified tasks covering informed approval, substituted-action detection, abstention comprehension, state comprehension, emergency routing, untrusted content, accessibility with assistive technology, and approval workload. No session has been run; the results table is empty and BLK-003 remains open",
+      "planned_artifact_path": "evidence/assurance/human-factors/"
     },
     {
       "id": "EVD-VER-001",

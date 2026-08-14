@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "catalog_id": "NS-VER-001",
-  "as_of_date": "2026-08-11",
+  "as_of_date": "2026-08-14",
   "verifications": [
     {
       "id": "VER-GOV-001",
@@ -9,7 +9,9 @@
       "kind": "automated_test",
       "status": "verified",
       "owner": "AI Security Lead",
-      "test_locations": ["tests/test_traceability.py::test_repository_traceability_is_complete"]
+      "test_locations": [
+        "tests/test_traceability.py::test_repository_traceability_is_complete"
+      ]
     },
     {
       "id": "VER-REV-001",
@@ -17,7 +19,9 @@
       "kind": "document_review",
       "status": "verified",
       "owner": "AI Security Program Lead",
-      "artifact_refs": ["docs/assurance/M02-multidisciplinary-review.md"]
+      "artifact_refs": [
+        "docs/assurance/M02-multidisciplinary-review.md"
+      ]
     },
     {
       "id": "VER-REV-002",
@@ -25,7 +29,10 @@
       "kind": "document_review",
       "status": "verified",
       "owner": "Compliance Lead",
-      "artifact_refs": ["docs/governance/approved-prohibited-use.md", "docs/assurance/M02-multidisciplinary-review.md"]
+      "artifact_refs": [
+        "docs/governance/approved-prohibited-use.md",
+        "docs/assurance/M02-multidisciplinary-review.md"
+      ]
     },
     {
       "id": "VER-REV-003",
@@ -33,7 +40,10 @@
       "kind": "document_review",
       "status": "verified",
       "owner": "Data Steward",
-      "artifact_refs": ["docs/risk/data-flow-inventory.md", "docs/risk/privacy-impact-assessment.md"]
+      "artifact_refs": [
+        "docs/risk/data-flow-inventory.md",
+        "docs/risk/privacy-impact-assessment.md"
+      ]
     },
     {
       "id": "VER-REV-004",
@@ -41,7 +51,11 @@
       "kind": "document_review",
       "status": "verified",
       "owner": "AI Security Program Lead",
-      "artifact_refs": ["docs/assurance/M03-control-owner-review.md", "docs/governance/control-standard.md", "docs/governance/ai-system-card.md"]
+      "artifact_refs": [
+        "docs/assurance/M03-control-owner-review.md",
+        "docs/governance/control-standard.md",
+        "docs/governance/ai-system-card.md"
+      ]
     },
     {
       "id": "VER-REV-005",
@@ -49,7 +63,14 @@
       "kind": "document_review",
       "status": "verified",
       "owner": "AI Security Lead",
-      "artifact_refs": ["docs/architecture/decisions/ADR-003-oidc-and-delegation.md", "docs/architecture/decisions/ADR-004-central-authorization-contract.md", "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md", "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md", "docs/architecture/decisions/ADR-007-durable-identity-signals.md", "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md"]
+      "artifact_refs": [
+        "docs/architecture/decisions/ADR-003-oidc-and-delegation.md",
+        "docs/architecture/decisions/ADR-004-central-authorization-contract.md",
+        "docs/architecture/decisions/ADR-005-synthetic-fhir-r4-boundary.md",
+        "docs/architecture/decisions/ADR-006-transactional-state-audit-and-recovery.md",
+        "docs/architecture/decisions/ADR-007-durable-identity-signals.md",
+        "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md"
+      ]
     },
     {
       "id": "VER-AUT-001",
@@ -81,7 +102,9 @@
       "kind": "automated_test",
       "status": "verified",
       "owner": "IAM Lead",
-      "test_locations": ["tests/test_health_and_auth.py::test_missing_or_invalid_purpose_is_rejected"]
+      "test_locations": [
+        "tests/test_health_and_auth.py::test_missing_or_invalid_purpose_is_rejected"
+      ]
     },
     {
       "id": "VER-AUT-004",
@@ -101,7 +124,9 @@
       "kind": "automated_test",
       "status": "verified",
       "owner": "Privacy Officer",
-      "test_locations": ["tests/test_patient_access.py::test_part2_style_data_requires_specific_authorization"]
+      "test_locations": [
+        "tests/test_patient_access.py::test_part2_style_data_requires_specific_authorization"
+      ]
     },
     {
       "id": "VER-AUT-006",
@@ -131,7 +156,9 @@
       "kind": "automated_test",
       "status": "verified",
       "owner": "Engineering Lead",
-      "test_locations": ["tests/test_actions.py::test_clinical_action_content_is_rejected"]
+      "test_locations": [
+        "tests/test_actions.py::test_clinical_action_content_is_rejected"
+      ]
     },
     {
       "id": "VER-AUT-009",
@@ -518,6 +545,494 @@
         "docs/operations/okta-continuous-access-gap-recovery.md",
         "evidence/milestones/M04-identity-fhir-foundation.md"
       ]
+    },
+    {
+      "id": "VER-AUT-030",
+      "title": "Durable Okta gap-recovery page application, cursor compare-and-swap, and multi-signal exit gate",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "IAM Lead",
+      "test_locations": [
+        "tests/test_okta_gap_recovery.py::test_pages_apply_exactly_once_and_only_invalidate",
+        "tests/test_okta_gap_recovery.py::test_duplicate_provider_event_is_counted_and_never_reapplied",
+        "tests/test_okta_gap_recovery.py::test_stale_worker_page_is_discarded_on_cursor_conflict",
+        "tests/test_okta_gap_recovery.py::test_audit_failure_rolls_back_the_whole_page",
+        "tests/test_okta_gap_recovery.py::test_applied_cursor_and_events_survive_restart",
+        "tests/test_okta_gap_recovery.py::test_exit_requires_every_recovery_signal",
+        "tests/test_okta_gap_recovery.py::test_empty_first_page_alone_never_recovers",
+        "tests/test_okta_gap_recovery.py::test_cursor_sequencing_rejects_skips_rewinds_and_rebinding",
+        "tests/test_okta_gap_recovery.py::test_tampered_incident_counters_fail_integrity",
+        "tests/test_okta_gap_recovery.py::test_controller_rejects_unsafe_configuration",
+        "tests/test_okta_gap_recovery.py::test_recovered_events_and_incidents_reject_unsafe_shapes",
+        "tests/test_okta_gap_recovery.py::test_one_open_incident_per_stream"
+      ],
+      "artifact_refs": [
+        "src/polaris/security/okta_gap_recovery.py",
+        "src/polaris/security/okta_recovery.py",
+        "src/polaris/services/state.py",
+        "src/polaris/domain.py",
+        "docs/architecture/decisions/ADR-008-okta-continuous-access-profile.md",
+        "docs/operations/okta-continuous-access-gap-recovery.md",
+        "evidence/milestones/M04-gate-decision.md"
+      ]
+    },
+    {
+      "id": "VER-RAG-001",
+      "title": "Corpus admission, provenance, separation of duties, and content scanning",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Data Steward",
+      "test_locations": [
+        "tests/test_corpus_ingestion.py::test_seed_corpus_admits_only_approved_current_sources",
+        "tests/test_corpus_ingestion.py::test_a_policy_that_forbids_clinical_action_is_still_admissible",
+        "tests/test_corpus_ingestion.py::test_content_scanning_refuses_poisoned_sources",
+        "tests/test_corpus_ingestion.py::test_invisible_characters_cannot_hide_an_injected_instruction",
+        "tests/test_corpus_ingestion.py::test_unapproved_self_approved_and_tampered_sources_are_refused",
+        "tests/test_corpus_ingestion.py::test_manifest_checksum_binds_labels_not_just_text",
+        "tests/test_corpus_ingestion.py::test_duplicate_candidate_identifiers_are_rejected",
+        "tests/test_corpus_ingestion.py::test_source_metadata_rejects_incoherent_lifecycles"
+      ],
+      "artifact_refs": [
+        "src/polaris/services/corpus.py",
+        "src/polaris/domain.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md",
+        "evidence/milestones/M05-secure-retrieval.md"
+      ]
+    },
+    {
+      "id": "VER-RAG-002",
+      "title": "Pre-scoring retrieval authorization, integrity recheck, conflict abstention, and untrusted context",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Data Steward",
+      "test_locations": [
+        "tests/test_secure_retrieval.py::test_unauthorized_chunks_are_never_scored",
+        "tests/test_secure_retrieval.py::test_role_partitions_do_not_leak_across_workforce_roles",
+        "tests/test_secure_retrieval.py::test_expired_and_future_chunks_are_excluded_by_the_serving_clock",
+        "tests/test_secure_retrieval.py::test_conflicting_current_sources_abstain_instead_of_ranking",
+        "tests/test_secure_retrieval.py::test_tampered_chunk_text_fails_closed",
+        "tests/test_secure_retrieval.py::test_index_construction_rejects_a_manifest_that_does_not_match_its_chunks",
+        "tests/test_secure_retrieval.py::test_retrieved_text_is_rendered_as_data_that_cannot_close_its_envelope"
+      ],
+      "artifact_refs": [
+        "src/polaris/services/secure_retrieval.py",
+        "src/polaris/services/retrieval.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md",
+        "evidence/milestones/M05-secure-retrieval.md"
+      ]
+    },
+    {
+      "id": "VER-RAG-003",
+      "title": "Durable corpus version activation, rollback, and registry integrity",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Data Steward",
+      "test_locations": [
+        "tests/test_secure_retrieval.py::test_corpus_rollback_is_durable_and_auditable",
+        "tests/test_secure_retrieval.py::test_registry_refuses_unknown_versions_and_checksum_drift",
+        "tests/test_secure_retrieval.py::test_registry_requires_a_shared_state_boundary"
+      ],
+      "artifact_refs": [
+        "src/polaris/services/secure_retrieval.py",
+        "src/polaris/services/state.py",
+        "src/polaris/services/container.py",
+        "docs/architecture/decisions/ADR-010-secure-retrieval-boundary.md"
+      ]
+    },
+    {
+      "id": "VER-RAG-004",
+      "title": "Retrieval golden set with citation, abstention, conflict, authorization, and poison canaries",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Lead",
+      "test_locations": [
+        "tests/test_retrieval_evaluation.py::test_golden_set_meets_security_and_quality_thresholds",
+        "tests/test_retrieval_evaluation.py::test_every_kind_is_represented_and_security_cases_admit_no_partial_credit",
+        "tests/test_retrieval_evaluation.py::test_a_leaked_forbidden_document_fails_regardless_of_case_kind",
+        "tests/test_retrieval_evaluation.py::test_generated_evaluation_report_is_committed_and_current"
+      ],
+      "artifact_refs": [
+        "src/polaris/services/retrieval_eval.py",
+        "scripts/evaluate_retrieval.py",
+        "evidence/reports/M05-retrieval-evaluation.json",
+        "evidence/milestones/M05-secure-retrieval.md"
+      ]
+    },
+    {
+      "id": "VER-AGT-001",
+      "title": "Static least-agency tool registry with read/write separation and prohibited-capability refusal",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Lead",
+      "test_locations": [
+        "tests/test_agent_boundary.py::test_the_registry_contains_only_approved_read_and_write_tools",
+        "tests/test_agent_boundary.py::test_registry_construction_refuses_a_prohibited_capability",
+        "tests/test_agent_boundary.py::test_a_compromised_model_cannot_invent_or_reach_an_unapproved_tool",
+        "tests/test_agent_boundary.py::test_a_compromised_model_cannot_execute_only_propose"
+      ],
+      "artifact_refs": [
+        "src/polaris/agent/tools.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md",
+        "evidence/milestones/M06-bounded-agent.md"
+      ]
+    },
+    {
+      "id": "VER-AGT-002",
+      "title": "Compromised-model containment across retrieval, patient access, approval, and clinical scope",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Lead",
+      "test_locations": [
+        "tests/test_agent_boundary.py::test_a_compromised_model_cannot_widen_retrieval_beyond_the_caller",
+        "tests/test_agent_boundary.py::test_a_compromised_model_cannot_read_an_unassigned_patient",
+        "tests/test_agent_boundary.py::test_a_compromised_model_cannot_propose_clinical_direction",
+        "tests/test_agent_boundary.py::test_a_compromised_model_cannot_emit_secrets_or_clinical_direction",
+        "tests/test_agent_boundary.py::test_an_ungrounded_answer_is_refused",
+        "tests/test_agent_boundary.py::test_the_model_never_receives_credentials_identity_or_prior_runs"
+      ],
+      "artifact_refs": [
+        "src/polaris/agent/orchestrator.py",
+        "src/polaris/agent/validators.py",
+        "src/polaris/agent/model.py",
+        "evidence/milestones/M06-bounded-agent.md"
+      ]
+    },
+    {
+      "id": "VER-AGT-003",
+      "title": "Bounded orchestration budgets, safe model failure, and disabled cross-session memory",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Engineering Lead",
+      "test_locations": [
+        "tests/test_agent_boundary.py::test_a_looping_model_is_halted_by_the_step_budget",
+        "tests/test_agent_boundary.py::test_oversized_model_output_is_refused_rather_than_truncated",
+        "tests/test_agent_boundary.py::test_model_failure_degrades_without_fabricated_success",
+        "tests/test_agent_boundary.py::test_the_deterministic_adapter_answers_with_citations_from_context"
+      ],
+      "artifact_refs": [
+        "src/polaris/agent/budget.py",
+        "src/polaris/agent/orchestrator.py",
+        "docs/architecture/decisions/ADR-011-bounded-agent-and-model-boundary.md"
+      ]
+    },
+    {
+      "id": "VER-AGT-004",
+      "title": "Independent durable capability kill switches and unapproved hosted-provider refusal",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "SRE Lead",
+      "test_locations": [
+        "tests/test_agent_boundary.py::test_kill_switches_are_independent_and_durable",
+        "tests/test_agent_boundary.py::test_disabling_the_model_leaves_deterministic_retrieval_available",
+        "tests/test_agent_boundary.py::test_a_hosted_provider_is_unusable_until_its_criteria_are_approved"
+      ],
+      "artifact_refs": [
+        "src/polaris/agent/killswitch.py",
+        "src/polaris/agent/model.py",
+        "src/polaris/services/state.py",
+        "evidence/milestones/M06-bounded-agent.md"
+      ]
+    },
+    {
+      "id": "VER-PRS-001",
+      "title": "Inert rendering of untrusted retrieved and drafted text",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AppSec Lead",
+      "test_locations": [
+        "tests/test_trusted_presentation.py::test_untrusted_text_renders_inert",
+        "tests/test_trusted_presentation.py::test_unusual_source_content_is_flagged_for_the_reviewer",
+        "tests/test_trusted_presentation.py::test_ordinary_punctuation_is_not_flagged_as_active_content",
+        "tests/test_trusted_presentation.py::test_inert_rendering_preserves_readable_policy_text",
+        "tests/test_trusted_presentation.py::test_inert_rendering_bounds_length_and_marks_truncation",
+        "tests/test_trusted_presentation.py::test_source_excerpts_are_rendered_inert_and_flagged"
+      ],
+      "artifact_refs": [
+        "src/polaris/presentation/rendering.py",
+        "docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md",
+        "evidence/milestones/M07-trusted-presentation.md"
+      ]
+    },
+    {
+      "id": "VER-PRS-002",
+      "title": "Approval preview bound to the canonical action and its recomputed digest",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Engineering Lead",
+      "test_locations": [
+        "tests/test_trusted_presentation.py::test_approval_preview_is_bound_to_the_canonical_action",
+        "tests/test_trusted_presentation.py::test_a_proposal_whose_stored_digest_drifted_is_refused_not_displayed",
+        "tests/test_trusted_presentation.py::test_an_executed_proposal_has_no_approval_preview",
+        "tests/test_trusted_presentation.py::test_untrusted_summary_content_is_rendered_inert_and_warned_about",
+        "tests/test_trusted_presentation.py::test_the_approval_preview_endpoint_requires_approver_authorization"
+      ],
+      "artifact_refs": [
+        "src/polaris/presentation/approval.py",
+        "src/polaris/security/digest.py",
+        "src/polaris/services/actions.py",
+        "src/polaris/main.py"
+      ]
+    },
+    {
+      "id": "VER-PRS-003",
+      "title": "Workflow state, uncertainty, and accessibility presentation contract",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Clinical Safety Lead",
+      "test_locations": [
+        "tests/test_trusted_presentation.py::test_only_execution_implies_completion",
+        "tests/test_trusted_presentation.py::test_a_view_cannot_mislabel_its_own_state",
+        "tests/test_trusted_presentation.py::test_an_abstention_cannot_be_presented_as_an_answer",
+        "tests/test_trusted_presentation.py::test_a_conflict_must_be_presented_as_an_abstention"
+      ],
+      "artifact_refs": [
+        "src/polaris/presentation/views.py",
+        "src/polaris/presentation/answer.py",
+        "docs/architecture/decisions/ADR-012-trusted-presentation-boundary.md"
+      ]
+    },
+    {
+      "id": "VER-SAF-001",
+      "title": "Fixed emergency-channel routing without urgency assessment",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Clinical Safety Lead",
+      "test_locations": [
+        "tests/test_trusted_presentation.py::test_emergency_language_returns_fixed_guidance_without_assessing_urgency",
+        "tests/test_trusted_presentation.py::test_routine_administrative_text_does_not_trigger_emergency_routing",
+        "tests/test_agent_boundary.py::test_emergency_language_stops_the_run_before_the_model_is_reached"
+      ],
+      "artifact_refs": [
+        "src/polaris/presentation/emergency.py",
+        "src/polaris/agent/orchestrator.py",
+        "evidence/milestones/M07-trusted-presentation.md"
+      ]
+    },
+    {
+      "id": "VER-SDL-001",
+      "title": "Offline release supply-chain policy: pinning, locking, hardening, and tracked secrets",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AppSec Lead",
+      "test_locations": [
+        "tests/test_supply_chain.py::test_the_repository_passes_its_own_release_supply_chain_policy",
+        "tests/test_supply_chain.py::test_an_unpinned_action_is_a_release_blocker",
+        "tests/test_supply_chain.py::test_an_unpinned_container_image_is_a_release_blocker",
+        "tests/test_supply_chain.py::test_a_missing_container_control_is_a_release_blocker",
+        "tests/test_supply_chain.py::test_an_unbounded_requirement_is_a_release_blocker",
+        "tests/test_supply_chain.py::test_a_tracked_secret_marker_is_a_release_blocker",
+        "tests/test_supply_chain.py::test_policy_findings_separate_blockers_from_warnings"
+      ],
+      "artifact_refs": [
+        "src/polaris/supplychain/policy.py",
+        "scripts/supply_chain.py",
+        "infrastructure/container/Dockerfile",
+        "infrastructure/local/compose.polaris.yml",
+        "docs/architecture/decisions/ADR-013-supply-chain-and-release-policy.md"
+      ]
+    },
+    {
+      "id": "VER-SDL-002",
+      "title": "Generated CycloneDX SBOM and AI bill of materials with drift enforcement",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Engineering Lead",
+      "test_locations": [
+        "tests/test_supply_chain.py::test_the_sbom_describes_the_lockfile_not_the_environment",
+        "tests/test_supply_chain.py::test_the_sbom_is_byte_stable_across_runs",
+        "tests/test_supply_chain.py::test_the_sbom_rejects_an_unsupported_artifact_hash",
+        "tests/test_supply_chain.py::test_the_aibom_describes_what_a_dependency_sbom_cannot",
+        "tests/test_supply_chain.py::test_generated_supply_chain_documents_are_committed_and_current"
+      ],
+      "artifact_refs": [
+        "src/polaris/supplychain/sbom.py",
+        "src/polaris/supplychain/aibom.py",
+        "evidence/reports/M08-sbom.cdx.json",
+        "evidence/reports/M08-aibom.json"
+      ]
+    },
+    {
+      "id": "VER-SDL-003",
+      "title": "Adversarial campaign covering every required attack class with control attribution",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Lead",
+      "test_locations": [
+        "tests/test_red_team.py::test_the_campaign_covers_every_required_attack_class",
+        "tests/test_red_team.py::test_every_attack_is_contained_by_the_deterministic_stack",
+        "tests/test_red_team.py::test_critical_and_high_cases_admit_no_partial_credit",
+        "tests/test_red_team.py::test_the_campaign_report_is_deterministic"
+      ],
+      "artifact_refs": [
+        "src/polaris/assurance/attacks.py",
+        "src/polaris/assurance/redteam.py",
+        "scripts/red_team.py",
+        "evidence/reports/M09-red-team.json",
+        "evidence/milestones/M09-assurance-and-red-team.md"
+      ]
+    },
+    {
+      "id": "VER-SDL-004",
+      "title": "Release evaluation manifest separating blocking gaps from unassessed dimensions",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Program Lead",
+      "test_locations": [
+        "tests/test_red_team.py::test_the_release_evaluation_separates_blocking_gaps_from_missing_evidence",
+        "tests/test_red_team.py::test_every_required_evaluation_dimension_is_declared",
+        "tests/test_red_team.py::test_generated_assurance_reports_are_committed_and_current"
+      ],
+      "artifact_refs": [
+        "src/polaris/assurance/release_eval.py",
+        "evidence/reports/M09-release-evaluation.json",
+        "docs/assurance/M09-remediation-ledger.md",
+        "docs/assurance/M09-independent-review.md"
+      ]
+    },
+    {
+      "id": "VER-OPS-001",
+      "title": "Telemetry carries required investigative context and no prohibited content",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Incident Response Lead",
+      "test_locations": [
+        "tests/test_operations.py::test_a_real_request_flow_emits_investigable_telemetry",
+        "tests/test_operations.py::test_prohibited_content_in_telemetry_is_detected",
+        "tests/test_operations.py::test_missing_required_context_is_detected"
+      ],
+      "artifact_refs": [
+        "src/polaris/operations/telemetry.py",
+        "evidence/milestones/M10-operations.md"
+      ]
+    },
+    {
+      "id": "VER-OPS-002",
+      "title": "Detection-as-code covering every required category with threshold and window behavior",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Incident Response Lead",
+      "test_locations": [
+        "tests/test_operations.py::test_detections_cover_every_required_category",
+        "tests/test_operations.py::test_each_detection_fires_on_its_own_signal",
+        "tests/test_operations.py::test_a_detection_below_its_threshold_does_not_fire",
+        "tests/test_operations.py::test_an_old_cluster_does_not_keep_a_rule_permanently_lit",
+        "tests/test_operations.py::test_critical_detections_are_declared_for_containment_relevant_signals"
+      ],
+      "artifact_refs": [
+        "src/polaris/operations/detections.py",
+        "docs/operations/ai-incident-playbooks.md"
+      ]
+    },
+    {
+      "id": "VER-OPS-003",
+      "title": "Executed game-day drills for kill switch, rollback, degraded mode, restart, and restore",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "SRE Lead",
+      "test_locations": [
+        "tests/test_operations.py::test_game_day_drills_meet_their_objectives",
+        "tests/test_operations.py::test_the_generated_game_day_report_is_committed_and_current"
+      ],
+      "artifact_refs": [
+        "src/polaris/operations/gameday.py",
+        "scripts/operations.py",
+        "evidence/reports/M10-game-day.json",
+        "evidence/milestones/M10-operations.md"
+      ]
+    },
+    {
+      "id": "VER-LCM-001",
+      "title": "Change-impact analysis over the AI bill of materials with required actions",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Program Lead",
+      "test_locations": [
+        "tests/test_lifecycle.py::test_an_unchanged_bill_of_materials_requires_no_review",
+        "tests/test_lifecycle.py::test_introducing_a_hosted_provider_is_material",
+        "tests/test_lifecycle.py::test_a_changed_system_contract_is_a_prompt_change",
+        "tests/test_lifecycle.py::test_a_changed_corpus_names_what_moved",
+        "tests/test_lifecycle.py::test_adding_a_write_tool_requires_safety_and_human_factors_review",
+        "tests/test_lifecycle.py::test_loosening_a_bound_is_an_autonomy_change",
+        "tests/test_lifecycle.py::test_removing_a_kill_switch_is_an_autonomy_change",
+        "tests/test_lifecycle.py::test_lowering_an_evaluation_threshold_is_material",
+        "tests/test_lifecycle.py::test_every_change_kind_can_be_detected"
+      ],
+      "artifact_refs": [
+        "src/polaris/lifecycle/change_impact.py",
+        "evidence/milestones/M11-lifecycle.md"
+      ]
+    },
+    {
+      "id": "VER-LCM-002",
+      "title": "Executed retirement revoking capability, deleting operational data, and retaining audit",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "Records Owner",
+      "test_locations": [
+        "tests/test_lifecycle.py::test_retirement_deletes_operational_data_and_keeps_the_audit_record",
+        "tests/test_lifecycle.py::test_generated_lifecycle_reports_are_committed_and_current"
+      ],
+      "artifact_refs": [
+        "src/polaris/lifecycle/retirement.py",
+        "scripts/lifecycle.py",
+        "evidence/reports/M11-retirement.json"
+      ]
+    },
+    {
+      "id": "VER-LCM-003",
+      "title": "Audit package indexing every existing artifact with open blockers and unmet gates",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Program Lead",
+      "test_locations": [
+        "tests/test_lifecycle.py::test_the_audit_package_indexes_every_existing_artifact_and_states_what_is_open"
+      ],
+      "artifact_refs": [
+        "src/polaris/lifecycle/audit_package.py",
+        "evidence/reports/M11-audit-package.json",
+        "docs/assurance/M11-governance-board-decision.md"
+      ]
+    },
+    {
+      "id": "VER-LCM-004",
+      "title": "Portfolio and training claims resolve to artifacts with no overstated language",
+      "kind": "automated_test",
+      "status": "verified",
+      "owner": "AI Security Program Lead",
+      "test_locations": [
+        "tests/test_portfolio_claims.py::test_every_portfolio_and_training_claim_traces_to_an_artifact",
+        "tests/test_portfolio_claims.py::test_the_material_covers_both_the_portfolio_and_the_training_package",
+        "tests/test_portfolio_claims.py::test_an_unresolved_identifier_is_a_finding",
+        "tests/test_portfolio_claims.py::test_a_broken_link_is_a_finding",
+        "tests/test_portfolio_claims.py::test_an_undeclared_command_is_a_finding",
+        "tests/test_portfolio_claims.py::test_prose_mentioning_make_is_not_treated_as_a_command",
+        "tests/test_portfolio_claims.py::test_overstated_claims_are_rejected",
+        "tests/test_portfolio_claims.py::test_denying_a_claim_is_permitted",
+        "tests/test_portfolio_claims.py::test_the_generated_claims_report_is_committed_and_current"
+      ],
+      "artifact_refs": [
+        "src/polaris/portfolio/claims.py",
+        "scripts/portfolio.py",
+        "portfolio/case-study.md",
+        "training/curriculum.md",
+        "evidence/reports/M12-portfolio-claims.json"
+      ]
+    },
+    {
+      "id": "VER-PLN-012",
+      "title": "AI incident tabletop across all required incident classes",
+      "kind": "planned_exercise",
+      "status": "planned",
+      "owner": "Incident Response Lead",
+      "acceptance": "Run NS-ASR-008 with six to eight participants across SOC, SRE, AI security, engineering, clinical safety, and privacy. Containment precedes investigation in every scenario with the correct capability disabled; TT-05 produces an unprompted clinical safety notification; TT-06 produces no proposal to relax a freshness bound; and the after-action record names at least one playbook defect."
+    },
+    {
+      "id": "VER-PLN-011",
+      "title": "Approval human-factors validation sessions with clinician participants",
+      "kind": "planned_study",
+      "status": "planned",
+      "owner": "Clinical Safety Lead",
+      "acceptance": "Run NS-ASR-005 with 8-12 clinician participants including assistive-technology users. Informed approval and substituted-action detection at 90%, abstention comprehension and emergency routing at 100%, state comprehension at 95%, and accessibility completion without facilitator assistance. Any abstention or emergency failure is critical."
     },
     {
       "id": "VER-PLN-001",

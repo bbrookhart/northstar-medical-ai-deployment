@@ -25,6 +25,7 @@ from polaris.domain import (
     PurposeOfUse,
 )
 from polaris.errors import AuthenticationError, AuthorizationError, PolarisError
+from polaris.presentation.views import ActionApprovalView
 from polaris.security.auth import TokenAuthenticator
 from polaris.security.signal_delivery import (
     JSON_MEDIA_TYPE,
@@ -215,6 +216,26 @@ def create_app(
             status=proposal.status,
             created_at=proposal.created_at,
             expires_at=proposal.expires_at,
+        )
+
+    @app.get(
+        "/v1/actions/proposals/{proposal_id}/preview",
+        response_model=ActionApprovalView,
+        tags=["actions"],
+    )
+    def preview_action(
+        proposal_id: str,
+        request: Request,
+        principal: Annotated[Principal, Depends(_principal)],
+        purpose: Annotated[PurposeOfUse, Depends(_purpose)],
+    ) -> ActionApprovalView:
+        """Render the trusted approval preview an approver must read before deciding."""
+
+        return _services(request).actions.approval_preview(
+            proposal_id=proposal_id,
+            approver=principal,
+            purpose=purpose,
+            correlation_id=request.state.request_id,
         )
 
     @app.post(

@@ -18,6 +18,9 @@ from polaris.domain import (
     PurposeOfUse,
 )
 from polaris.errors import AuthorizationError, ConflictError, NotFoundError, PolarisError
+from polaris.presentation.approval import build_approval_view
+from polaris.presentation.views import ActionApprovalView
+from polaris.security.digest import action_digest
 from polaris.security.policy import PolicyEngine
 from polaris.security.text import contains_prohibited_clinical_action
 from polaris.services.audit import AuditLedger, utc_now
@@ -453,6 +456,43 @@ class ActionService:
             raise StateIntegrityError
         return result.model_copy(deep=True)
 
+    def approval_preview(
+        self,
+        *,
+        proposal_id: str,
+        approver: Principal,
+        purpose: PurposeOfUse,
+        correlation_id: str,
+    ) -> ActionApprovalView:
+        """Return the trusted approval preview for an authorized approver.
+
+        The preview is built from the canonical action and recomputes its digest, so the approver
+        reads exactly what a decision would bind to. Authorization is the same check the decision
+        endpoint performs, so a reader who could not approve cannot preview either.
+        """
+
+        with self._state.transaction() as transaction:
+            proposal = self._get_proposal(transaction, proposal_id)
+        decision = self._policy.approve_action(
+            approver,
+            proposal.requester,
+            purpose,
+            proposal.action.facility_id,
+        )
+        self._audit.append(
+            actor=approver.subject,
+            event_type="action.preview",
+            outcome=decision.code if not decision.allowed else "ACTION_PREVIEW_RENDERED",
+            correlation_id=correlation_id,
+            metadata={
+                "proposal_id": proposal_id,
+                "policy_version": decision.policy_version,
+            },
+        )
+        if not decision.allowed:
+            raise AuthorizationError(decision.code)
+        return build_approval_view(proposal)
+
     def get_proposal(self, proposal_id: str) -> ActionProposal:
         with self._state.transaction() as transaction:
             return self._get_proposal(transaction, proposal_id).model_copy(deep=True)
@@ -510,16 +550,6 @@ class ActionService:
             "policy_version": receipt.policy_version,
         }
         return hmac.compare_digest(receipt.signature, self._sign_receipt(payload))
-
-
-def action_digest(action: FollowUpAction) -> str:
-    canonical = json.dumps(
-        action.model_dump(mode="json"),
-        sort_keys=True,
-        separators=(",", ":"),
-        ensure_ascii=True,
-    ).encode()
-    return hashlib.sha256(canonical).hexdigest()
 
 
 def _canonical_receipt_payload(payload: Mapping[str, object]) -> bytes:

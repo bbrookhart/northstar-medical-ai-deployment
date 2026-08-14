@@ -137,11 +137,25 @@ class IdentitySignalRecord(BaseModel):
 
 
 class IdentitySubjectState(BaseModel):
+    """Monotonic subject invalidation watermark attributed to exactly one source.
+
+    A signed SET and a compensating provider-log record are both allowed to invalidate, but they are
+    never conflated: `signal_id` names a verified security event token, `recovered_event_id` names a
+    minimized System Log record applied during gap recovery.
+    """
+
     model_config = ConfigDict(frozen=True)
 
     subject: Identifier
     invalid_before: datetime
-    signal_id: Identifier
+    signal_id: Identifier | None = None
+    recovered_event_id: Identifier | None = None
+
+    @model_validator(mode="after")
+    def validate_source(self) -> IdentitySubjectState:
+        if (self.signal_id is None) == (self.recovered_event_id is None):
+            raise ValueError("Subject invalidation requires exactly one attributable source")
+        return self
 
 
 class IdentityTokenRevocation(BaseModel):
@@ -484,6 +498,240 @@ class IdentityStreamObservedState(BaseModel):
         return self
 
 
+class IdentityGapIncidentStatus(StrEnum):
+    OPEN = "OPEN"
+    RECOVERING = "RECOVERING"
+    RECOVERED = "RECOVERED"
+    ABANDONED = "ABANDONED"
+
+
+INVALIDATING_IDENTITY_SIGNAL_TYPES: frozenset[IdentitySignalType] = frozenset(
+    {IdentitySignalType.SESSION_REVOKED, IdentitySignalType.CREDENTIAL_CHANGE}
+)
+
+
+class IdentityGapRecoveryState(BaseModel):
+    """Durable per-incident cursor and application counters for compensating gap recovery.
+
+    ``cursor_sequence`` is the compare-and-swap token. A page may only be applied against the
+    sequence the worker read, and every commit advances it by exactly one, so a duplicate or stale
+    worker cannot apply the same page twice or rewind the cursor.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    incident_id: Identifier
+    stream_id: Identifier
+    status: IdentityGapIncidentStatus
+    cursor_sequence: int = Field(ge=0, le=2_147_483_647)
+    next_cursor_url: str = Field(min_length=1, max_length=4096)
+    opened_at: datetime
+    updated_at: datetime
+    pages_applied: int = Field(ge=0, le=1_000_000)
+    events_applied: int = Field(ge=0, le=10_000_000)
+    events_ignored: int = Field(ge=0, le=10_000_000)
+    events_duplicate: int = Field(ge=0, le=10_000_000)
+    last_page_at: datetime | None = None
+    caught_up_at: datetime | None = None
+    closed_at: datetime | None = None
+
+    @model_validator(mode="after")
+    def validate_lifecycle(self) -> IdentityGapRecoveryState:
+        timestamps = (
+            self.opened_at,
+            self.updated_at,
+            self.last_page_at,
+            self.caught_up_at,
+            self.closed_at,
+        )
+        if any(
+            value is not None and (value.tzinfo is None or value.utcoffset() is None)
+            for value in timestamps
+        ):
+            raise ValueError("Gap recovery timestamps must be timezone-aware")
+        if self.updated_at < self.opened_at:
+            raise ValueError("Gap recovery update precedes its incident")
+        for value in (self.last_page_at, self.caught_up_at, self.closed_at):
+            if value is not None and not self.opened_at <= value <= self.updated_at:
+                raise ValueError("Gap recovery lifecycle time is outside the incident")
+        if self.cursor_sequence == 0 and (
+            self.pages_applied != 0
+            or self.events_applied != 0
+            or self.events_ignored != 0
+            or self.events_duplicate != 0
+            or self.last_page_at is not None
+            or self.caught_up_at is not None
+        ):
+            raise ValueError("An unstarted gap recovery incident has applied nothing")
+        if self.cursor_sequence != self.pages_applied:
+            raise ValueError("Gap recovery cursor sequence must count applied pages")
+        if self.last_page_at is None and self.cursor_sequence != 0:
+            raise ValueError("Applied gap recovery pages require an application time")
+        if self.status is IdentityGapIncidentStatus.OPEN and self.cursor_sequence != 0:
+            raise ValueError("An open gap recovery incident has applied no page")
+        if self.status is IdentityGapIncidentStatus.RECOVERED and (
+            self.caught_up_at is None or self.closed_at is None
+        ):
+            raise ValueError("A recovered gap incident must have caught up and closed")
+        if self.status is IdentityGapIncidentStatus.ABANDONED and self.closed_at is None:
+            raise ValueError("An abandoned gap incident must be closed")
+        if (
+            self.status in {IdentityGapIncidentStatus.OPEN, IdentityGapIncidentStatus.RECOVERING}
+            and self.closed_at is not None
+        ):
+            raise ValueError("An unresolved gap incident is not closed")
+        return self
+
+
+class IdentityGapRecoveredEvent(BaseModel):
+    """One minimized provider record applied exactly once during compensating gap recovery.
+
+    Recovered events may only invalidate. The provider feed is not an authorization source, so no
+    role, entitlement, or claim value survives normalization into this record.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    provider_event_id: Identifier
+    incident_id: Identifier
+    stream_id: Identifier
+    provider_event_type: str = Field(min_length=1, max_length=128)
+    signal_type: IdentitySignalType
+    subject: Identifier
+    effective_at: datetime
+    applied_at: datetime
+    cursor_sequence: int = Field(ge=1, le=2_147_483_647)
+
+    @model_validator(mode="after")
+    def validate_invalidating_event(self) -> IdentityGapRecoveredEvent:
+        if any(
+            value.tzinfo is None or value.utcoffset() is None
+            for value in (self.effective_at, self.applied_at)
+        ):
+            raise ValueError("Recovered event timestamps must be timezone-aware")
+        if self.signal_type not in INVALIDATING_IDENTITY_SIGNAL_TYPES:
+            raise ValueError("Recovered provider events may only invalidate")
+        return self
+
+
+class AgentCapability(StrEnum):
+    """Independently killable capabilities. Disabling one must not require disabling the others."""
+
+    MODEL = "MODEL"
+    READ = "READ"
+    WRITE = "WRITE"
+
+
+class AgentCapabilityState(BaseModel):
+    """Durable kill-switch state for one capability.
+
+    A kill switch that forgets on restart is not a kill switch, so this is persisted and
+    append-sequenced rather than held in memory.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    capability: AgentCapability
+    enabled: bool
+    sequence: int = Field(ge=1, le=2_147_483_647)
+    changed_at: datetime
+    changed_by: Identifier
+    reason: SafeText
+
+    @model_validator(mode="after")
+    def validate_change(self) -> AgentCapabilityState:
+        if self.changed_at.tzinfo is None or self.changed_at.utcoffset() is None:
+            raise ValueError("Capability change time must be timezone-aware")
+        return self
+
+
+class AgentRunState(StrEnum):
+    """Explicit orchestration states. Every transition is checked; there is no implicit path."""
+
+    RECEIVED = "RECEIVED"
+    AUTHORIZED = "AUTHORIZED"
+    RETRIEVING = "RETRIEVING"
+    MODEL_TURN = "MODEL_TURN"
+    TOOL_CALL = "TOOL_CALL"
+    VALIDATING = "VALIDATING"
+    COMPLETED = "COMPLETED"
+    REFUSED = "REFUSED"
+    HALTED = "HALTED"
+    FAILED = "FAILED"
+
+
+class AgentIntentKind(StrEnum):
+    """What the model asked for. A request, never an instruction."""
+
+    ANSWER = "ANSWER"
+    CALL_TOOL = "CALL_TOOL"
+    ABSTAIN = "ABSTAIN"
+
+
+class AgentRefusalReason(StrEnum):
+    CAPABILITY_DISABLED = "CAPABILITY_DISABLED"
+    UNAUTHORIZED = "UNAUTHORIZED"
+    UNKNOWN_TOOL = "UNKNOWN_TOOL"
+    PROHIBITED_TOOL = "PROHIBITED_TOOL"
+    INVALID_TOOL_ARGUMENTS = "INVALID_TOOL_ARGUMENTS"
+    BUDGET_EXCEEDED = "BUDGET_EXCEEDED"
+    UNGROUNDED_ANSWER = "UNGROUNDED_ANSWER"
+    FABRICATED_CITATION = "FABRICATED_CITATION"
+    SENSITIVE_DISCLOSURE = "SENSITIVE_DISCLOSURE"
+    PROHIBITED_CLINICAL_CONTENT = "PROHIBITED_CLINICAL_CONTENT"
+    OVERSIZED_OUTPUT = "OVERSIZED_OUTPUT"
+    MODEL_UNAVAILABLE = "MODEL_UNAVAILABLE"
+    EMERGENCY_ROUTED = "EMERGENCY_ROUTED"
+
+
+class AgentStep(BaseModel):
+    """One recorded transition, kept for the run transcript without model reasoning."""
+
+    model_config = ConfigDict(frozen=True)
+
+    ordinal: int = Field(ge=0, le=100)
+    state: AgentRunState
+    detail: SafeText
+
+
+class AgentRunResult(BaseModel):
+    """The outcome of one bounded run. There is no cross-run state."""
+
+    model_config = ConfigDict(frozen=True)
+
+    run_id: Identifier
+    state: AgentRunState
+    answer: str = ""
+    citations: tuple[Citation, ...] = ()
+    proposal_id: Identifier | None = None
+    refusal_reason: AgentRefusalReason | None = None
+    # Fixed, pre-approved safety text. It is not drafted content and is allowed on a refusal.
+    safety_guidance: str = ""
+    steps: tuple[AgentStep, ...] = ()
+    tool_calls: int = Field(default=0, ge=0, le=100)
+
+    @model_validator(mode="after")
+    def validate_outcome(self) -> AgentRunResult:
+        terminal = {
+            AgentRunState.COMPLETED,
+            AgentRunState.REFUSED,
+            AgentRunState.HALTED,
+            AgentRunState.FAILED,
+        }
+        if self.state not in terminal:
+            raise ValueError("An agent run result must be terminal")
+        if self.state is AgentRunState.COMPLETED:
+            if self.refusal_reason is not None:
+                raise ValueError("A completed run has no refusal reason")
+        elif self.refusal_reason is None:
+            raise ValueError("A non-completed run must record why")
+        if self.state is not AgentRunState.COMPLETED and (self.answer or self.citations):
+            raise ValueError("A refused, halted, or failed run returns no drafted content")
+        if self.safety_guidance and self.refusal_reason is not AgentRefusalReason.EMERGENCY_ROUTED:
+            raise ValueError("Fixed safety guidance belongs only to an emergency routing")
+        return self
+
+
 class AuthorizationRequest(BaseModel):
     """Immutable, payload-free input contract for every deterministic policy decision."""
 
@@ -530,6 +778,203 @@ class PolicyQueryResponse(BaseModel):
     citations: list[Citation]
     abstained: bool
     normalized_input: bool
+
+
+class CorpusRejectionReason(StrEnum):
+    """Why a candidate source was refused admission to the retrieval index."""
+
+    NOT_APPROVED = "NOT_APPROVED"
+    UNATTRIBUTED = "UNATTRIBUTED"
+    SELF_APPROVED = "SELF_APPROVED"
+    CHECKSUM_MISMATCH = "CHECKSUM_MISMATCH"
+    NOT_YET_EFFECTIVE = "NOT_YET_EFFECTIVE"
+    EXPIRED = "EXPIRED"
+    REVOKED = "REVOKED"
+    SUPERSEDED = "SUPERSEDED"
+    NO_AUTHORIZED_ROLE = "NO_AUTHORIZED_ROLE"
+    EMBEDDED_INSTRUCTION = "EMBEDDED_INSTRUCTION"
+    PROHIBITED_CLINICAL_DIRECTION = "PROHIBITED_CLINICAL_DIRECTION"
+    CREDENTIAL_MATERIAL = "CREDENTIAL_MATERIAL"
+    UNSAFE_TEXT = "UNSAFE_TEXT"
+
+
+class CorpusSource(BaseModel):
+    """A candidate document offered for corpus promotion.
+
+    Being a valid `CorpusSource` means the metadata is well formed. It does not mean the document is
+    admissible: `CorpusIngestionService` decides that, and only admitted documents are indexed.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    document_id: Identifier
+    title: SafeText
+    version: Identifier
+    classification: Literal["INTERNAL", "CONFIDENTIAL"]
+    allowed_roles: frozenset[str]
+    topics: frozenset[str]
+    owner: Identifier
+    approved_by: Identifier | None = None
+    approved_at: datetime | None = None
+    effective_from: datetime
+    expires_at: datetime | None = None
+    revoked: bool = False
+    supersedes: Identifier | None = None
+    source_uri: str = Field(pattern=r"^https://[^\s?#]+$", max_length=300)
+    content: str = Field(min_length=1, max_length=10_000)
+    checksum: str = Field(pattern=r"^[a-f0-9]{64}$")
+
+    @model_validator(mode="after")
+    def validate_lifecycle(self) -> CorpusSource:
+        timestamps = (self.approved_at, self.effective_from, self.expires_at)
+        if any(
+            value is not None and (value.tzinfo is None or value.utcoffset() is None)
+            for value in timestamps
+        ):
+            raise ValueError("Corpus source timestamps must be timezone-aware")
+        if self.expires_at is not None and self.expires_at <= self.effective_from:
+            raise ValueError("Corpus source expiry must follow its effective time")
+        if (self.approved_by is None) != (self.approved_at is None):
+            raise ValueError("Corpus approval requires both an approver and a decision time")
+        if self.supersedes == self.document_id:
+            raise ValueError("A corpus source cannot supersede itself")
+        return self
+
+
+class CorpusChunk(BaseModel):
+    """One retrievable unit, carrying the labels of the document it came from.
+
+    Labels are copied onto the chunk rather than looked up at retrieval time so that an
+    authorization decision cannot be separated from the text it governs.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    chunk_id: Identifier
+    document_id: Identifier
+    document_title: SafeText
+    document_version: Identifier
+    ordinal: int = Field(ge=0, le=10_000)
+    text: str = Field(min_length=1, max_length=2_000)
+    checksum: str = Field(pattern=r"^[a-f0-9]{64}$")
+    classification: Literal["INTERNAL", "CONFIDENTIAL"]
+    allowed_roles: frozenset[str]
+    topics: frozenset[str]
+    effective_from: datetime
+    expires_at: datetime | None = None
+    source_uri: str = Field(pattern=r"^https://[^\s?#]+$", max_length=300)
+
+    @model_validator(mode="after")
+    def validate_labels(self) -> CorpusChunk:
+        if not self.allowed_roles:
+            raise ValueError("A corpus chunk must name at least one authorized role")
+        if self.effective_from.tzinfo is None or self.effective_from.utcoffset() is None:
+            raise ValueError("Corpus chunk timestamps must be timezone-aware")
+        if self.expires_at is not None and (
+            self.expires_at.tzinfo is None or self.expires_at <= self.effective_from
+        ):
+            raise ValueError("Corpus chunk expiry is invalid")
+        return self
+
+
+class CorpusPromotion(BaseModel):
+    """The admission decision for one candidate, retained whether or not it was admitted."""
+
+    model_config = ConfigDict(frozen=True)
+
+    document_id: Identifier
+    version: Identifier
+    admitted: bool
+    reasons: tuple[CorpusRejectionReason, ...] = ()
+    chunk_count: int = Field(default=0, ge=0, le=10_000)
+    content_checksum: str = Field(pattern=r"^[a-f0-9]{64}$")
+    decided_at: datetime
+
+    @model_validator(mode="after")
+    def validate_decision(self) -> CorpusPromotion:
+        if self.admitted and (self.reasons or self.chunk_count == 0):
+            raise ValueError("An admitted document has no rejection reasons and at least one chunk")
+        if not self.admitted and (not self.reasons or self.chunk_count != 0):
+            raise ValueError("A rejected document has reasons and no chunks")
+        return self
+
+
+class CorpusManifest(BaseModel):
+    """An immutable description of one corpus version, used for evaluation and rollback."""
+
+    model_config = ConfigDict(frozen=True)
+
+    corpus_id: Identifier
+    version: Identifier
+    built_at: datetime
+    document_ids: tuple[Identifier, ...]
+    chunk_count: int = Field(ge=0, le=100_000)
+    rejected_count: int = Field(ge=0, le=100_000)
+    manifest_checksum: str = Field(pattern=r"^[a-f0-9]{64}$")
+
+    @model_validator(mode="after")
+    def validate_manifest(self) -> CorpusManifest:
+        if self.built_at.tzinfo is None or self.built_at.utcoffset() is None:
+            raise ValueError("Corpus manifest time must be timezone-aware")
+        if len(set(self.document_ids)) != len(self.document_ids):
+            raise ValueError("Corpus manifest document identifiers must be unique")
+        if len(self.document_ids) > self.chunk_count:
+            raise ValueError("Corpus manifest cannot hold fewer chunks than documents")
+        return self
+
+
+class CorpusActivation(BaseModel):
+    """Durable record of which corpus version is serving retrieval.
+
+    Rollback is an ordinary activation of an earlier version. Recording it explicitly — rather than
+    mutating a pointer — keeps the corpus version that answered any given query attributable.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    corpus_id: Identifier
+    sequence: int = Field(ge=1, le=2_147_483_647)
+    version: Identifier
+    manifest_checksum: str = Field(pattern=r"^[a-f0-9]{64}$")
+    activated_at: datetime
+    activated_by: Identifier
+    previous_version: Identifier | None = None
+    rollback: bool = False
+
+    @model_validator(mode="after")
+    def validate_activation(self) -> CorpusActivation:
+        if self.activated_at.tzinfo is None or self.activated_at.utcoffset() is None:
+            raise ValueError("Corpus activation time must be timezone-aware")
+        if self.sequence == 1 and self.previous_version is not None:
+            raise ValueError("The first corpus activation has no predecessor")
+        if self.sequence > 1 and self.previous_version is None:
+            raise ValueError("A later corpus activation must name its predecessor")
+        if self.previous_version == self.version:
+            raise ValueError("A corpus activation must change the serving version")
+        if self.rollback and self.previous_version is None:
+            raise ValueError("A rollback must name the version it replaces")
+        return self
+
+
+class RetrievalOutcome(StrEnum):
+    ANSWERED = "ANSWERED"
+    ABSTAINED_NO_MATCH = "ABSTAINED_NO_MATCH"
+    ABSTAINED_CONFLICT = "ABSTAINED_CONFLICT"
+
+
+class RetrievedChunk(BaseModel):
+    """A chunk that passed authorization and integrity checks, carried as data only."""
+
+    model_config = ConfigDict(frozen=True)
+
+    chunk_id: Identifier
+    document_id: Identifier
+    document_title: SafeText
+    document_version: Identifier
+    ordinal: int = Field(ge=0, le=10_000)
+    text: str = Field(min_length=1, max_length=2_000)
+    checksum: str = Field(pattern=r"^[a-f0-9]{64}$")
+    topics: frozenset[str]
 
 
 class SyntheticPatient(BaseModel):

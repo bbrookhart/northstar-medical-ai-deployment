@@ -2,7 +2,8 @@
 
 ## Before changing the project
 
-Read `AGENTS.md`, `CODEX_MASTER_PROMPT.md`, `PROJECT_STATUS.md`, and the relevant design/risk artifacts.
+Read `AGENTS.md`, `PROJECT_STATUS.md`, `docs/program/master-roadmap.md`, and the relevant
+design/risk artifacts.
 
 ## Change expectations
 

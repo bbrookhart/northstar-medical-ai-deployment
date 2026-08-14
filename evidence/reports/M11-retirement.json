@@ -1,0 +1,47 @@
+{
+  "executed_at": "2026-08-14T00:00:00+00:00",
+  "retirement_version": "2026.08.14",
+  "steps": [
+    {
+      "name": "Preconditions",
+      "objective": "The deployment holds live operational data before retirement begins",
+      "objective_met": true,
+      "observed": "proposal_present=True corpus_active=True",
+      "step_id": "RT-01"
+    },
+    {
+      "name": "Capability revocation",
+      "objective": "Every agent capability is revoked before any data is deleted",
+      "objective_met": true,
+      "observed": "capabilities={'MODEL': False, 'READ': False, 'WRITE': False}",
+      "step_id": "RT-02"
+    },
+    {
+      "name": "Operational data deletion",
+      "objective": "Every operational record is deleted and none remains readable",
+      "objective_met": true,
+      "observed": "deleted=2 remaining=0",
+      "step_id": "RT-03"
+    },
+    {
+      "name": "Audit retention and integrity",
+      "objective": "The tamper-evident audit chain survives deletion and still verifies",
+      "objective_met": true,
+      "observed": "events=8 expected=8 chain_verifies=True",
+      "step_id": "RT-04"
+    },
+    {
+      "name": "No service after retirement",
+      "objective": "The retired deployment refuses agent runs, serves no corpus, and has no proposals",
+      "objective_met": true,
+      "observed": "agent=CAPABILITY_DISABLED corpus_unavailable=True proposal_gone=True",
+      "step_id": "RT-05"
+    }
+  ],
+  "summary": {
+    "objectives_met": 5,
+    "passed": true,
+    "scope": "Synthetic local data only. Operational records are deleted and the tamper-evident audit chain is retained as the record that retirement occurred. This exercises no provider deletion, no backup expiry, no legal hold, and no downstream termination, and no retention schedule is approved (BLK-001, REQ-DAT-007).",
+    "steps": 5
+  }
+}
