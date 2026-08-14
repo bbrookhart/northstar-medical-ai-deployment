@@ -251,7 +251,7 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 | LIM-012 | Content scanning is pattern-based with known false negatives, and topic-conflict detection depends on honest topic tagging | Treat retrieved text as data as the primary control; expand the adversarial corpus in M09 red-team work |
 | LIM-013 | The model adapter is a deterministic policy, not a language model; the compromised-model suite scripts hostile intents rather than exercising a real provider | Keep the deterministic adapter as the regression oracle; no hosted connection until `REQ-AI-002` and `BLK-004` close, then run the M09 injection campaign against it |
 | LIM-014 | Agent capabilities default to enabled when no record exists, and the agent has no user-facing surface, approval workload monitoring, concurrency, retry, or cost control | Invert the default to explicit enablement before deployment; add the M07 trusted renderer, `CTL-ACT-004` monitoring, and provider-side bounds when a provider exists |
-| LIM-006 | Branch protection and change control are unproven, so reviewed source changes hold by convention rather than enforcement | Enable protection at publication (gated on `DEC-001`); the CI/Makefile divergence closed in M08 |
+| LIM-006 | Branch protection is enabled on `main` requiring the CI check and forbidding force-push and deletion; its effectiveness over a sustained change history is still unproven | Keep the protection required; the CI/Makefile divergence closed in M08 and `DEC-001` closed at publication |
 | LIM-017 | Detection thresholds and windows are engineering defaults that have never been tuned against real traffic, and detections evaluate an in-process event list with no SIEM, dashboard, or paging | `NS-EXC-003`; tune against representative traffic and integrate delivery before any pilot |
 | LIM-016 | The adversarial campaign runs against a deterministic adapter and its cases were authored by the implementer, so it encodes the same assumptions as the controls | `RT-F1`/`RT-F3`; rerun against a hosted provider once `BLK-004` closes, and obtain independent adversarial authorship before any release claim |
 | LIM-015 | No artifact signature, build provenance, or vulnerability scan result exists, and the build is reproducible in the pinning sense only | `NS-EXC-005`; add non-blocking scanning with a review cadence, then provenance attestation and signing with a verification step a consumer runs, before publishing anything |
@@ -259,7 +259,7 @@ See `evidence/milestones/M01-local-verification.md` for the M01 result and
 | LIM-008 | The presentation contract and fixed emergency behavior are implemented, but no human-factors session has been run, no UI exists, and WCAG conformance is unassessed | `BLK-003`; run `NS-ASR-005` with clinician and assistive-technology participants before any pilot, and design `CTL-ACT-004` from its HF-08 result |
 | LIM-009 | Provider due diligence and operating/resilience evidence do not exist | `BLK-004`/`BLK-005`; no hosted model or pilot until verified |
 | LIM-010 | Exact OWASP GenAI LLM Top 10 2026 category mapping is provisional | `BLK-006`; acquire and review the official category artifact before exact coverage claims |
-| DEC-001 | Repository and training-content licensing/IP terms are undecided | Select deliberately before public release; do not assume open-source rights |
+| DEC-001 | **Decided 2026-08-14.** Source code is Apache-2.0; documentation, portfolio, and training material are CC BY-NC-ND 4.0, preserving the training package's commercial value while making the engineering reusable. Third-party attribution is recorded in `NOTICE` | Closed; the repository is published under these terms |
 
 ## Where the program stands
 
@@ -288,8 +288,11 @@ simulation does not have:
 - a named accountable owner who can hold the rest.
 
 Until then the correct action is to change nothing and claim nothing. The five exceptions expire on
-2027-02-14 and fail closed; `DEC-001` licensing must be decided before anything is published; and no
-hosted model, real PHI, production service, or broader autonomy may be added.
+2027-02-14 and fail closed, and no hosted model, real PHI, production service, or broader autonomy
+may be added.
+
+`DEC-001` is closed: the repository is published with source under Apache-2.0 and documentation,
+portfolio, and training material under CC BY-NC-ND 4.0.
 
 Do not connect a hosted provider. `REQ-AI-002`'s criteria and `BLK-004`'s due diligence are both
 still open, and the adapter is deliberately inert until they close.

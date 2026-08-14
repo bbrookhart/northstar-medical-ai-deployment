@@ -19,3 +19,8 @@ design/risk artifacts.
 
 Use focused commits with an imperative subject. Do not mix generated runtime artifacts, secrets, or unrelated formatting changes into feature commits.
 
+## Licensing of contributions
+
+Source-code contributions are accepted under the Apache License 2.0. Documentation and training
+contributions are accepted under CC BY-NC-ND 4.0. By submitting a contribution you confirm you hold
+the rights to license it on those terms. See [LICENSE](LICENSE) and [LICENSE-DOCS.md](LICENSE-DOCS.md).
