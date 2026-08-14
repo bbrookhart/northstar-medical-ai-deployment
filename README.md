@@ -3,11 +3,14 @@
 **An end-to-end simulation of safe and secure adoption of an internal, constrained agentic AI
 capability at the fictional healthcare enterprise Northstar Medical.**
 
+[![CI](https://github.com/bbrookhart/northstar-medical-ai-deployment/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bbrookhart/northstar-medical-ai-deployment/actions/workflows/ci.yml)
 ![Tests](https://img.shields.io/badge/tests-482%20passing-2ea44f?style=flat-square)
 ![Coverage](https://img.shields.io/badge/coverage-88.02%25-2ea44f?style=flat-square)
 ![Typing](https://img.shields.io/badge/mypy-strict-1f6feb?style=flat-square)
 ![Python](https://img.shields.io/badge/python-3.13-1f6feb?style=flat-square)
 ![Data](https://img.shields.io/badge/data-synthetic%20only-8957e5?style=flat-square)
+![License](https://img.shields.io/badge/code-Apache--2.0-1f6feb?style=flat-square)
+![Docs](https://img.shields.io/badge/docs-CC%20BY--NC--ND%204.0-8957e5?style=flat-square)
 
 Most AI portfolios show that a model can answer a question. This one shows the harder half: what the
 system **cannot** do, who decided that, how it is enforced in code, and how you would prove it to an
